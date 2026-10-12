@@ -7,7 +7,7 @@
   <meta name="description" content="Portfolio of Nika Saracuta, digital creator and Digital Design & Development student.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@125,400;125,700&display=swap">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@125,400;125,700&family=Italiana&family=Unbounded:wght@300;400;500&display=swap">
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -47,6 +47,18 @@
     <section class="sec" id="work" style="top:1698px" aria-labelledby="mywork">
       <h2 class="l type" id="mywork" style="--x:477.79px;--y:24.45px"><img src="assets/type-my-work.svg" width="487" height="129" alt="My work"></h2>
       <p class="l t-eyebrow" style="--x:575px;--y:178px">Select the projects</p>
+      <p class="l hint" style="--x:420px;--y:222px;--w:600px">One chameleon, five projects. Bring your cursor close to a name and watch it change colour — click to open the project.</p>
+
+      <!-- One chameleon, project names around it (from the portfolio artifact) -->
+      <div class="cham-tint" aria-hidden="true"></div>
+      <div class="cham-stage" id="chamStage">
+        <div class="bigcham" id="bigcham" aria-hidden="true">
+          <div class="body" id="chamBody"></div>
+          <span class="tongue"></span>
+          <span class="eye" id="eye"><span class="pupil" id="pupil"></span></span>
+        </div>
+        <div class="peek" id="peek" aria-hidden="true"><div class="peek-img" id="peekImg"></div><span class="peek-cap" id="peekCap"></span></div>
+      </div>
     </section>
 
     <!-- Contact -->
@@ -60,6 +72,36 @@
     </section>
 
   </main>
+
+  <!-- Project sheet: opens when a project name is clicked -->
+  <div class="sheet" id="sheet" hidden>
+    <article class="panel" id="panel" role="dialog" aria-modal="true" aria-labelledby="pTitle" tabindex="-1">
+      <div class="p-top">
+        <span class="label" id="pCount">01 / 05</span>
+        <div class="p-nav">
+          <button class="iconbtn" id="pPrev" aria-label="Previous project">←</button>
+          <button class="iconbtn" id="pNext" aria-label="Next project">→</button>
+          <button class="iconbtn" id="pClose" aria-label="Close project">✕</button>
+        </div>
+      </div>
+      <div class="p-head">
+        <div>
+          <h3 id="pTitle"></h3>
+          <p class="tagline" id="pTag"></p>
+          <ul class="pills" id="pPills"></ul>
+        </div>
+        <div class="p-mini" aria-hidden="true"></div>
+      </div>
+      <div class="tabs" role="tablist" aria-label="Case study">
+        <button class="tab" role="tab" id="t-brief" aria-selected="true" aria-controls="pane">The Brief</button>
+        <button class="tab" role="tab" id="t-process" aria-selected="false" aria-controls="pane">The Process</button>
+        <button class="tab" role="tab" id="t-result" aria-selected="false" aria-controls="pane">The Result</button>
+      </div>
+      <div class="tabpane" id="pane" role="tabpanel"></div>
+    </article>
+  </div>
+
   <script src="script.js"></script>
+  <script src="chameleon.js"></script>
 </body>
 </html>

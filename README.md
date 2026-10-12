@@ -9,3 +9,8 @@ Static one-page portfolio built from the Figma frame **Main** (node `315:133`) i
 - `fonts/` — drop the Roc Grotesk Wide and Area Inktrap Extended `.woff2` files here (names in
   `styles.css`) for the nav and body text. Until then, Archivo is used as a stand-in.
 - The 1440px design is scaled to the viewport width by `script.js`.
+- **Projects** (the chameleon in the Work section and the project sheet) live in `chameleon.js`:
+  edit the `PROJECTS` list there (name, colour, preview image, brief, process, result, live link).
+  Preview images go in `assets/projects/`.
+- CSS masks (chameleon, coral) need the page served over http(s) — e.g. GitHub Pages or
+  `python3 -m http.server` — not opened as a local file.
