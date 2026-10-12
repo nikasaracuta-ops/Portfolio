@@ -89,7 +89,8 @@
 
   const names = PROJECTS.map((p, i) => {
     const b = document.createElement('button');
-    b.className = 'pname'; b.style.setProperty('--pc', p.hex);
+    b.className = 'pname reveal'; b.style.setProperty('--pc', p.hex);
+    b.style.setProperty('--d', (.45 + i * .1).toFixed(2) + 's'); // appear one by one after the chameleon
     b.setAttribute('aria-label', `Open project ${i + 1}: ${p.name}`);
     b.innerHTML = `<span class="num">${String(i + 1).padStart(2, '0')}</span><span class="nm">${p.name}</span><span class="tg">${p.tags.slice(0, 3).join(' · ')}</span>`;
     b.addEventListener('click', () => { lick(); openProject(i, b); });
@@ -178,6 +179,7 @@
     }
     requestAnimationFrame(tick);
   }
+  if (window.observeReveals) observeReveals(stage); // the names are created after script.js ran
   requestAnimationFrame(tick);
 
   /* ───── Project sheet ───── */

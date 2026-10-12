@@ -321,3 +321,22 @@ a:focus-visible { outline: 2px solid var(--white); outline-offset: 4px; }
   .bigcham .body { animation: none; }
   .sheet, .panel, .peek, .pname, .cham-tint { transition: none; }
 }
+
+/* ---------- Scroll reveals ----------
+   Elements marked .reveal fade in, rise and un-blur as they scroll into view
+   (script.js adds .in, then removes both classes once the animation is done so
+   hover transitions behave normally). --d staggers items within a section.
+   Uses the individual `translate` property so existing transforms are kept. */
+.js .reveal {
+  transition: opacity .9s ease var(--d, 0s), translate 1.1s cubic-bezier(.2, .8, .2, 1) var(--d, 0s), filter .9s ease var(--d, 0s);
+}
+.js .reveal:not(.in) { opacity: 0; translate: 0 40px; filter: blur(6px); }
+.js .pname.reveal {
+  transition: transform .4s cubic-bezier(.3, 1.5, .5, 1), background .35s,
+              opacity .8s ease var(--d, 0s), translate 1s cubic-bezier(.2, .8, .2, 1) var(--d, 0s), filter .8s ease var(--d, 0s);
+}
+.js .pname.reveal:not(.in) { translate: 0 24px; }
+@media (prefers-reduced-motion: reduce) {
+  .js .reveal { transition: opacity .4s ease; }
+  .js .reveal:not(.in) { translate: none; filter: none; }
+}
