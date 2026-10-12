@@ -21,7 +21,7 @@
       process: [['Styleboard', 'Archive photography, couture sketches and a soft, powdery palette to set the tone of the story.'], ['Iterations', 'From a wall of wireframes to a scroll-driven prototype, chapter by chapter.']],
       result: 'A responsive, mobile-first long-scroll story, animated with GSAP & ScrollTrigger and deployed online.',
       art: ['The Art of Dressmaking by Christian Dior', 'MoMu · interactive story'],
-      link: ''   // paste the live URL here
+      link: 'https://nikasaracuta.github.io/Integration-3/'
     },
     {
       id: 'type01', name: 'Type01', hex: '#00FF59', img: 'assets/projects/p-type01.webp',
@@ -35,7 +35,7 @@
       process: [['Styleboard', 'Two directions — a loud pink-and-green editorial grid and a dark, poster-like variant.'], ['Iterations', 'Programme, speakers and ticket flows tested across breakpoints until the type could carry the page.']],
       result: 'A bold, type-led prototype for the TYPE01 conference — typography in print, motion design and branding, all on one stage.',
       art: ['TYPE01 MAGAZINE', 'Conference prototype'],
-      link: ''
+      link: 'https://www.figma.com/proto/PsD6Cg8ngFq6yRWCCm5I9q/Type01?page-id=0%3A1&node-id=468-7480&viewport=-2609%2C-2191%2C0.15&t=KQAR1eAcC8Ls4MeP-1&scaling=min-zoom&content-scaling=fixed&starting-point-node-id=580%3A48961'
     },
     {
       id: 'antwerp', name: 'Antwerp', hex: '#FB72BE', img: '',
@@ -46,7 +46,7 @@
       process: [['Styleboard', 'Coming soon.'], ['Iterations', 'Coming soon.']],
       result: 'Final designs will be published here once the case study is ready.',
       art: ['Antwerp', 'Coming soon'],
-      link: ''
+      link: ''   // paste the live URL here when it's ready
     },
     {
       id: 'miles', name: 'Miles & meals', hex: '#D5FF59', img: 'assets/projects/p-miles.webp',
@@ -57,7 +57,7 @@
       process: [['Brandboard', 'Brand photography and a social-media look built around bright, appetising food shots.'], ['Iterations', 'From onboarding to recipe screens, refined into a navy-and-coral app with yellow accents.']],
       result: 'An app prototype that invites you to “Discover the world in your kitchen”.',
       art: ['Discover the world in your kitchen', 'App prototype'],
-      link: ''
+      link: 'https://www.figma.com/proto/JhFdOzlcgGCV38btM2Tumv/Miles---Meals?page-id=6817%3A1887&node-id=59585-34744&viewport=-13885%2C-407%2C0.32&t=BZlwAt149MrtAhmE-1&scaling=min-zoom&content-scaling=fixed&starting-point-node-id=59585%3A34763&show-proto-sidebar=1'
     },
     {
       id: 'thrive', name: 'Thrive', hex: '#1A5BA4', img: 'assets/projects/p-thrive.webp',
@@ -68,7 +68,7 @@
       process: [['Styleboard', 'Liquid 3D shapes, deep teal gradients, gold accents and a light-to-heavy type scale.']],
       result: 'A can range “in Harmony” and a landing page that asks you to taste the sound of harmony.',
       art: ['TASTE the sound OF HARMONY', 'Branding · cans · web'],
-      link: ''
+      link: 'https://www.figma.com/proto/7OqEPVGJHATgZZsEbFb6fZ/Thrive?page-id=0%3A1&node-id=460-622&viewport=-5783%2C946%2C0.11&t=9A2yE4wjbfxCKI9d-1&scaling=min-zoom&content-scaling=fixed&starting-point-node-id=452%3A4229'
     }
   ];
 

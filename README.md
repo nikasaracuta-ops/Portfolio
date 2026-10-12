@@ -12,5 +12,7 @@ Static one-page portfolio built from the Figma frame **Main** (node `315:133`) i
 - **Projects** (the chameleon in the Work section and the project sheet) live in `chameleon.js`:
   edit the `PROJECTS` list there (name, colour, preview image, brief, process, result, live link).
   Preview images go in `assets/projects/`.
+- **About pop-up** ("About me" link/button or the "?"): content is in `index.html` (`#aboutPop`);
+  set your photo in `about.js` (`ME_PHOTO = 'assets/me.jpg'`).
 - CSS masks (chameleon, coral) need the page served over http(s) — e.g. GitHub Pages or
   `python3 -m http.server` — not opened as a local file.
