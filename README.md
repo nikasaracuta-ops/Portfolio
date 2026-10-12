@@ -3,7 +3,9 @@
 Static one-page portfolio built from the Figma frame **Main** (node `315:133`) in the
 `PORTFOLIO` file. Open `index.html` in a browser — no build step.
 
-- `assets/` — images exported from Figma. Run `scripts/fetch-assets.sh` to download them.
-- `fonts/` — drop the design's font files here (see the `@font-face` rules at the top of
-  `styles.css` for expected file names). Until then, Google Fonts stand-ins are used.
+- `assets/background.webp` — all artwork, exported from the Figma frame with text and icons hidden.
+- `assets/type-*.svg` — display headings exported from Figma as outlined SVGs (exact letterforms).
+- `assets/icon-*.svg` — LinkedIn / Behance icons.
+- `fonts/` — drop the Roc Grotesk Wide and Area Inktrap Extended `.woff2` files here (names in
+  `styles.css`) for the nav and body text. Until then, Archivo is used as a stand-in.
 - The 1440px design is scaled to the viewport width by `script.js`.

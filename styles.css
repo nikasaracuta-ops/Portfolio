@@ -1,30 +1,19 @@
 /* ---------- Fonts ----------
-   The design uses commercial / demo typefaces. Drop their .woff2 files into
-   /fonts with the names below and they take over; until then the Google Fonts
-   listed after each family are used as the closest stand-ins. */
+   Display headings are SVGs (see index.html). The UI/body faces are commercial:
+   drop their .woff2 files into /fonts with the names below and they take over;
+   until then Archivo (expanded width) stands in. */
 @font-face { font-family: "Roc Grotesk Wide"; src: local("Roc Grotesk Wide"), url("fonts/RocGrotesk-Wide.woff2") format("woff2"); font-display: swap; }
 @font-face { font-family: "Area Inktrap Extended"; src: local("Area Inktrap Extended"), url("fonts/AreaInktrap-Extended.woff2") format("woff2"); font-weight: 400; font-display: swap; }
 @font-face { font-family: "Area Inktrap Extended"; src: local("Area Inktrap Extended Bold"), url("fonts/AreaInktrap-ExtendedBold.woff2") format("woff2"); font-weight: 700; font-display: swap; }
-@font-face { font-family: "The Seasons"; src: local("The Seasons"), url("fonts/TheSeasons-Regular.woff2") format("woff2"); font-weight: 400; font-display: swap; }
-@font-face { font-family: "The Seasons"; src: local("The Seasons Bold"), url("fonts/TheSeasons-Bold.woff2") format("woff2"); font-weight: 700; font-display: swap; }
-@font-face { font-family: "Wasted Vindey"; src: local("Wasted Vindey"), url("fonts/WastedVindey.woff2") format("woff2"); font-display: swap; }
-@font-face { font-family: "Bugery Gantik"; src: local("Bugery Gantik"), url("fonts/BugeryGantik.woff2") format("woff2"); font-display: swap; }
 
 :root {
   --font-ui: "Roc Grotesk Wide", "Archivo", sans-serif;
   --font-body: "Area Inktrap Extended", "Archivo", sans-serif;
-  --font-serif: "The Seasons", "Playfair Display", serif;
-  --font-display: "Wasted Vindey", "Bodoni Moda", serif;
-  --font-script: "Bugery Gantik", "Josefin Sans", sans-serif;
 
   --white: #fff;
   --ice: #ecf5ff;
-  --sky: #1a5ba4;
-  --teal: #1bb2c4;
-  --pink: #f940a7;
   --pink-soft: #e97db9;
   --pink-button: #e770b2;
-  --pink-question: #fb72be;
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -44,11 +33,12 @@ body {
   width: 1440px;
   height: 4237px;
   overflow: hidden;
-  background: #fff;
+  /* All artwork, exported from the Figma frame with text and icons hidden */
+  background: #fff url("assets/background.webp") top left / 1440px 4237px no-repeat;
   /* script.js sets `zoom` so the 1440px design fills the viewport width */
 }
 
-/* Generic absolutely positioned layer: geometry comes from inline custom props */
+/* Absolutely positioned element: geometry comes from inline custom props */
 .l {
   position: absolute;
   left: var(--x, 0);
@@ -57,64 +47,11 @@ body {
   height: var(--h, auto);
 }
 
-.anchor { position: absolute; top: var(--y); left: 0; }
-
-.center { display: flex; align-items: center; justify-content: center; }
-
-.fill {
-  /* --bt/--br/--bb/--bl: how far an exported SVG bleeds past its layer box */
-  position: absolute;
-  display: block;
-  max-width: none;
-  top: var(--bt, 0);
-  left: var(--bl, 0);
-  width: calc(100% - var(--bl, 0%) - var(--br, 0%));
-  height: calc(100% - var(--bt, 0%) - var(--bb, 0%));
-}
-.cover { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; pointer-events: none; }
-
-.o54 { opacity: .54; }
-.o74 { opacity: .74; }
-.flip-x { transform: scaleX(-1); }
-.flip-y { transform: scaleY(-1); }
-
-/* Cloud sizes and their SVG bleed */
-.cloud-lg { width: 484.999px; height: 317.198px; }
-.cloud-md { width: 448px; height: 293px; }
-.cloud-sm { width: 239.957px; height: 156.936px; }
-.cloud-lg > img { --bt: -6.02%; --bb: -6.02%; --bl: -3.94%; --br: -3.94%; }
-.cloud-md > img { --bt: -6.52%; --bb: -6.52%; --bl: -4.26%; --br: -4.26%; }
-.cloud-sm > img { --bt: -12.17%; --bb: -12.17%; --bl: -7.96%; --br: -7.96%; }
-
-/* Alpha masks exported from Figma */
-.mask {
-  -webkit-mask-image: var(--m);
-          mask-image: var(--m);
-  -webkit-mask-position: var(--mp);
-          mask-position: var(--mp);
-  -webkit-mask-size: var(--ms);
-          mask-size: var(--ms);
-  -webkit-mask-repeat: no-repeat;
-          mask-repeat: no-repeat;
-  mask-mode: alpha;
-}
-
-.chameleon {
-  --y: 2039.62px;
-  --w: 571.654px;
-  --h: 489.302px;
-  --m: url(assets/mask-chameleon.png);
-  --mp: 68.828px 80.248px;
-  --ms: 468.262px 323.997px;
-}
-
-/* ---------- Background washes ---------- */
-.rect-pink { background: linear-gradient(to bottom, #fdc2e3, #ff008e); filter: blur(50px); }
-.rect-blue { background: var(--sky); filter: blur(115.3px); }
-.rect-teal { background: var(--teal); filter: blur(115.3px); }
-.texture { width: 3150px; height: 2100px; filter: blur(8.45px); }
+/* Section anchors; children are positioned relative to the section's top */
+.sec { position: absolute; left: 0; width: 100%; }
 
 /* ---------- Type ---------- */
+.type img { display: block; }
 :where(.l):where(p, h1, h2, a, nav) { white-space: nowrap; color: var(--white); font-weight: 400; }
 
 .nav {
@@ -124,11 +61,8 @@ body {
   font: 20px var(--font-ui);
 }
 .nav a, .social { color: inherit; text-decoration: none; transition: opacity .2s; }
+.social img { display: block; width: 100%; height: 100%; }
 .nav a:hover, .social:hover { opacity: .7; }
-
-.t-portfolio { font: 391.458px/normal var(--font-display); }
-.t-tagline { font: 50.345px/normal var(--font-script); }
-.t-hello { font: 128px/normal var(--font-serif); transform: translateX(-50%); }
 
 .t-intro {
   font: 20px/30px var(--font-body);
@@ -137,17 +71,8 @@ body {
 }
 .t-intro p + p { margin-top: 30px; }
 
-.t-question { font: 279.474px/normal var(--font-display); color: var(--pink-question); }
-
-.t-mywork { font: 700 128px/normal var(--font-serif); color: var(--pink); }
 .t-eyebrow { font: 700 20px/30px var(--font-body); color: var(--pink-soft); text-transform: uppercase; }
 
-.t-open {
-  width: 698px;
-  transform: translateX(-50%);
-  font: 64px/90px var(--font-serif);
-  text-align: center;
-}
 .t-body { font: 20px/normal var(--font-body); }
 .t-email {
   font: 20px/27px var(--font-body);
