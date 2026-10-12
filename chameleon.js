@@ -183,6 +183,34 @@
   if (window.observeReveals) observeReveals(stage); // the names are created after script.js ran
   requestAnimationFrame(tick);
 
+  /* ───── Project cards (visible without hovering, and on touch screens) ───── */
+  const cards = $('#cards');
+  if (cards) PROJECTS.forEach((p, i) => {
+    const li = document.createElement('li');
+    const b = document.createElement('button');
+    b.className = 'card'; b.style.setProperty('--pc', p.hex);
+    b.setAttribute('aria-label', `Open project ${i + 1}: ${p.name}`);
+    b.innerHTML = `<span class="thumb"${p.img ? ` style="background-image:url('${p.img}')"` : ''}>${p.img ? '' : 'Coming soon'}</span><span class="nm">${p.name}</span>`;
+    b.addEventListener('click', () => openProject(i, b));
+    li.appendChild(b); cards.appendChild(li);
+  });
+
+  /* ───── Laptop screen: types each project name in turn; click opens it ───── */
+  const screen = $('#screen'), scr = $('#scrText');
+  let shown = 0, typeTimer = 0;
+  function setScreen(i) {
+    shown = i; const text = PROJECTS[i].name;
+    clearInterval(typeTimer);
+    if (reduce) { scr.textContent = text; return; }
+    let n = 0; scr.textContent = '';
+    typeTimer = setInterval(() => { scr.textContent = text.slice(0, ++n); if (n >= text.length) clearInterval(typeTimer); }, 70);
+  }
+  if (screen) {
+    setScreen(0);
+    setInterval(() => { if (!document.hidden) setScreen((shown + 1) % PROJECTS.length); }, 3200);
+    screen.addEventListener('click', () => openProject(shown, screen));
+  }
+
   /* ───── Project sheet ───── */
   const sheet = $('#sheet'), panel = $('#panel'), pane = $('#pane');
   let cur = 0, tab = 'brief', opener = null;

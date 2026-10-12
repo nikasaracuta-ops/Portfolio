@@ -8,8 +8,9 @@ Static one-page portfolio built from the Figma frame **Main** (node `315:133`) i
 - `assets/icon-*.svg` — LinkedIn / Behance icons.
 - `fonts/` — drop the Roc Grotesk Wide and Area Inktrap Extended `.woff2` files here (names in
   `styles.css`) for the nav and body text. Until then, Archivo is used as a stand-in.
-- The 1440px design is scaled to the viewport width by `script.js`.
-- **Projects** (the chameleon in the Work section and the project sheet) live in `chameleon.js`:
+- On screens wider than 760px the 1440px design is scaled to the window by `script.js`; on phones the
+  sections stack instead (see the "Phones" block at the end of `styles.css`).
+- **Projects** (the chameleon, the project cards, the laptop screen and the project sheet) live in `chameleon.js`:
   edit the `PROJECTS` list there (name, colour, preview image, brief, process, result, live link).
   Preview images go in `assets/projects/`.
 - **About pop-up** ("About me" link/button or the "?"): content is in `index.html` (`#aboutPop`);
