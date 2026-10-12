@@ -600,3 +600,18 @@ html.sparkle-on, html.sparkle-on * { cursor: none !important; }
 .sparkle.big.press img { scale: 1.2; }
 @keyframes sparkle-spin { to { rotate: 360deg; } }
 @media (prefers-reduced-motion: reduce) { .sparkle img { animation: none; } }
+
+/* ---------- Loading screen ---------- */
+.loader { display: none; }
+.js .loader {
+  position: fixed; inset: 0; z-index: 1000; display: grid; place-content: center; justify-items: center; gap: 18px;
+  background: linear-gradient(#678ec3, #4976b2);
+  transition: opacity .7s ease, visibility .7s;
+}
+.loader.done { opacity: 0; visibility: hidden; }
+.loader-logo { width: clamp(120px, 14vw, 170px); height: auto; animation: loader-spin 3.2s linear infinite; }
+.loader-text { margin: 0; font: 400 12px var(--f-label); letter-spacing: .22em; text-transform: uppercase; color: #fff; font-variant-numeric: tabular-nums; }
+.loader-text span { display: inline-block; min-width: 3ch; text-align: right; }
+.is-loading, .is-loading body { overflow: hidden; }
+@keyframes loader-spin { to { transform: rotate(360deg); } }
+@media (prefers-reduced-motion: reduce) { .loader-logo { animation-duration: 12s; } }

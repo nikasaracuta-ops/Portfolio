@@ -5,13 +5,21 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Nika Saracuta — Portfolio</title>
   <meta name="description" content="Portfolio of Nika Saracuta, digital creator and Digital Design & Development student.">
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="assets/favicon-192.png">
+  <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@125,400;125,700&family=Italiana&family=Unbounded:wght@300;400;500&display=swap">
-  <link rel="stylesheet" href="styles.css?v=86f98db1">
-  <script>document.documentElement.classList.add('js')</script>
+  <link rel="stylesheet" href="styles.css?v=ebbfb6e1">
+  <script>document.documentElement.classList.add('js', 'is-loading')</script>
 </head>
 <body>
+  <!-- Loading screen: the spinning logo and a percentage, driven by loader.js -->
+  <div class="loader" id="loader" role="progressbar" aria-label="Loading" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+    <img class="loader-logo" src="assets/loader-logo.webp" alt="" width="256" height="256">
+    <p class="loader-text">Loading <span id="loaderNum">0</span>%</p>
+  </div>
   <!-- Built from Figma frame "Main" (1440 × 4237). The artwork is one exported
        background image (bird, fish, sun, water lines and laptop are separate layers on top); display headings are outlined SVGs exported from Figma
        (exact letterforms); body text, nav, button and icons are live HTML at
@@ -177,7 +185,8 @@
   </section>
   </div>
 
-  <script src="script.js?v=ca500f4e"></script>
+  <script src="loader.js?v=68ee955a"></script>
+  <script src="script.js?v=6de3912a"></script>
   <script src="about.js?v=37dfe53c"></script>
   <script src="chameleon.js?v=fe8024ba"></script>
 </body>

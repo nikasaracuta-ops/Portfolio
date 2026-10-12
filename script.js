@@ -43,6 +43,7 @@ function reveal(el) {
 let queued = false;
 function checkReveals() {
   queued = false;
+  if (document.documentElement.classList.contains('is-loading')) return;   // wait for the loader
   const line = window.innerHeight * 0.88;
   // at the very bottom of the page everything left is in view
   const atBottom = window.scrollY + window.innerHeight >= document.documentElement.scrollHeight - 2;
@@ -57,6 +58,7 @@ window.observeReveals = (root = document) => {
   queueCheck();
 };
 observeReveals();
+window.addEventListener('site:loaded', queueCheck);
 window.addEventListener('scroll', queueCheck, { passive: true });
 window.addEventListener('resize', queueCheck);
 
