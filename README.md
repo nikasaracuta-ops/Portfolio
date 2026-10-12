@@ -16,3 +16,9 @@ Static one-page portfolio built from the Figma frame **Main** (node `315:133`) i
   set your photo in `about.js` (`ME_PHOTO = 'assets/me.jpg'`).
 - CSS masks (chameleon, coral) need the page served over http(s) — e.g. GitHub Pages or
   `python3 -m http.server` — not opened as a local file.
+
+## Updating
+
+After changing `styles.css` or any `.js` file, run `scripts/bump-versions.sh` before committing.
+It stamps the links in `index.html` with a content hash (`?v=…`) so visitors' browsers load the
+new files instead of mixing the new page with old cached ones.

@@ -345,7 +345,7 @@ a:focus-visible { outline: 2px solid var(--white); outline-offset: 4px; }
    Ported from the portfolio artifact: clicking "About me" or the "?" grows the
    cloud silhouette (puff.webp) from the click into a full-screen field-guide
    page about Nika. Fixed to the screen, outside the zoomed stage. */
-.qbtn { border: 0; padding: 0; background: none; cursor: pointer; }
+.qbtn { -webkit-appearance: none; appearance: none; border: 0; padding: 0; background: none; cursor: pointer; }
 .qbtn img { display: block; animation: bob 4s ease-in-out infinite; transition: filter .3s; }
 .qbtn:hover img { filter: hue-rotate(-95deg) saturate(1.4); }
 .qbtn:focus-visible { outline: 2px solid #fff; outline-offset: 6px; border-radius: 12px; }

@@ -44,7 +44,8 @@
       setTimeout(() => plate.classList.add('in'), 250);
       closeBtn.focus({ preventScroll: true });
     };
-    if (reduce) { finish(); return; }
+    // the cloud mask can't load when the page is opened as a local file: open without it
+    if (reduce || location.protocol === 'file:') { finish(); return; }
     pop.classList.remove('full'); setMask(origin.w, origin.x, origin.y);
     requestAnimationFrame(() => animateMask(origin.w, bigSize(), finish));
   }
@@ -54,7 +55,7 @@
       pop.hidden = true; pop.classList.remove('full'); document.body.style.overflow = '';
       if (opener) opener.focus({ preventScroll: true });
     };
-    if (reduce) { end(); return; }
+    if (reduce || location.protocol === 'file:') { end(); return; }
     pop.classList.remove('full'); animateMask(bigSize(), origin.w, end);
   }
 
