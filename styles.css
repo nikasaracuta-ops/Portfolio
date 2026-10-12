@@ -52,16 +52,9 @@ body {
 
 /* ---------- Creatures ----------
    Blur/opacity fitted to the Figma render (Figma blur values are 2× CSS blur). */
-.bird {
-  opacity: .3;
-  filter: blur(3px);
-  animation: glide 7s ease-in-out infinite alternate;
-}
-@keyframes glide {
-  from { transform: translate(0, 0); }
-  50%  { transform: translate(40px, -14px); }
-  to   { transform: translate(80px, 4px); }
-}
+/* The bird is the original 7-frame GIF from Figma (decoded and re-encoded as
+   an animated WebP, 330ms per frame), on the same canvas mapping as in Figma. */
+.bird { opacity: .3; filter: blur(3px); }
 /* The fish swims behind the pink coral (baked into the background): cut the
    coral's shape out of the fish. Coral sits at (1053.8, 3823.8) on the stage. */
 .fish {
@@ -80,7 +73,7 @@ body {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .bird, body::after { animation: none; }
+  body::after { animation: none; }
 }
 
 /* ---------- Film grain ----------
