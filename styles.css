@@ -83,6 +83,8 @@ body {
   .bird { animation: none; }
 }
 
+.grain { position: absolute; inset: 0; pointer-events: none; }
+
 /* ---------- Type ---------- */
 .type img { display: block; }
 :where(.l):where(p, h1, h2, a, nav) { white-space: nowrap; color: var(--white); font-weight: 400; }
