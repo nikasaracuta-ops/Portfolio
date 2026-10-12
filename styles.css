@@ -50,6 +50,39 @@ body {
 /* Section anchors; children are positioned relative to the section's top */
 .sec { position: absolute; left: 0; width: 100%; }
 
+/* ---------- Creatures ----------
+   Blur/opacity fitted to the Figma render (Figma blur values are 2× CSS blur). */
+.bird {
+  opacity: .3;
+  filter: blur(3px);
+  animation: glide 7s ease-in-out infinite alternate;
+}
+@keyframes glide {
+  from { transform: translate(0, 0); }
+  50%  { transform: translate(40px, -14px); }
+  to   { transform: translate(80px, 4px); }
+}
+/* The fish swims behind the pink coral (baked into the background): cut the
+   coral's shape out of the fish. Coral sits at (1053.8, 3823.8) on the stage. */
+.fish {
+  filter: blur(4.2px);
+  pointer-events: none;
+  -webkit-mask-image: linear-gradient(#000, #000), url("assets/coral.svg");
+          mask-image: linear-gradient(#000, #000), url("assets/coral.svg");
+  -webkit-mask-position: 0 0, 1224.8px 506.8px;
+          mask-position: 0 0, 1224.8px 506.8px;
+  -webkit-mask-size: 100% 100%, 339px 406px;
+          mask-size: 100% 100%, 339px 406px;
+  -webkit-mask-repeat: no-repeat;
+          mask-repeat: no-repeat;
+  -webkit-mask-composite: xor;
+          mask-composite: exclude;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bird { animation: none; }
+}
+
 /* ---------- Type ---------- */
 .type img { display: block; }
 :where(.l):where(p, h1, h2, a, nav) { white-space: nowrap; color: var(--white); font-weight: 400; }
