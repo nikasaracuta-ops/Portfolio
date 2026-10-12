@@ -8,19 +8,25 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@125,400;125,700&family=Italiana&family=Unbounded:wght@300;400;500&display=swap">
-  <link rel="stylesheet" href="styles.css?v=c2dd69b6">
+  <link rel="stylesheet" href="styles.css?v=46f8f333">
   <script>document.documentElement.classList.add('js')</script>
 </head>
 <body>
   <!-- Built from Figma frame "Main" (1440 × 4237). The artwork is one exported
-       background image (minus the bird and fish, layered on top); display headings are outlined SVGs exported from Figma
+       background image (bird, fish, sun, water lines and laptop are separate layers on top); display headings are outlined SVGs exported from Figma
        (exact letterforms); body text, nav, button and icons are live HTML at
        their Figma positions. script.js scales the 1440px stage to the viewport. -->
   <main class="stage" id="home">
 
     <!-- Animated creatures, layered over the background at their Figma positions -->
     <img class="l bird" style="--x:-6.61px;--y:239.23px;--w:1328.29px;--h:558.57px" src="assets/bird.webp" alt="">
+
+    <!-- Sunset: the sun rises from small on the right into place as you scroll (script.js);
+         water lines and laptop sit on top of it, as in Figma -->
+    <img class="l sun" id="sun" style="--x:390px;--y:2796px" src="assets/sun.svg" width="661" height="661" alt="">
+    <img class="l" style="--x:0px;--y:3331px" src="assets/waves.svg" width="1440" height="264" alt="">
     <img class="l fish" style="--x:-171px;--y:3317px;--w:3150px;--h:2100px" src="assets/fish.gif" alt="">
+    <img class="l" style="--x:513.1px;--y:3073px" src="assets/laptop.svg" width="553" height="496" alt="">
 
     <nav class="l reveal nav" style="--d:.35s;--x:1075.5px;--y:34px" aria-label="Main">
       <a href="#home">Home</a>
@@ -37,8 +43,8 @@
     <section class="sec" id="about" style="top:859px" aria-labelledby="hello">
       <h2 class="l reveal type" id="hello" style="--d:0s;--x:178.65px;--y:11.58px"><img src="assets/type-hello.svg" width="306" height="121" alt="Hello,"></h2>
       <div class="l reveal t-intro" style="--d:.15s;--x:176px;--y:156px;--w:473px">
-        <p>I’m Nika ,  a third-year student in Digital Design &amp; Development, currently specialising in Visual Design and Experience Design.</p>
-        <p>Inspired by all kind of creative fields, I’m Passionate about creating useful and inspiring projects.</p>
+        <p>I’m Nika, a third-year student in Digital Design &amp; Development, currently specialising in visual design and experience design.</p>
+        <p>Inspired by all kinds of creative fields, I’m passionate about creating useful and inspiring projects.</p>
       </div>
       <a class="l reveal btn" style="--d:.3s;--x:176px;--y:450px;--w:229px;--h:48px" href="#about" data-about>About me</a>
       <button class="l reveal qbtn" style="--d:.2s;--x:958.66px;--y:131.37px" data-about aria-label="Who is behind the question mark? Meet Nika"><img src="assets/type-question.svg" width="106" height="196" alt=""></button>
@@ -147,8 +153,8 @@
   </section>
   </div>
 
-  <script src="script.js?v=5da16400"></script>
+  <script src="script.js?v=d3dccaa7"></script>
   <script src="about.js?v=37dfe53c"></script>
-  <script src="chameleon.js?v=3ab5d1e9"></script>
+  <script src="chameleon.js?v=43d26cf4"></script>
 </body>
 </html>

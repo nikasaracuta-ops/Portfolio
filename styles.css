@@ -115,7 +115,6 @@ body::before {
 .t-intro {
   font: 20px/30px var(--font-body);
   color: var(--ice);
-  text-transform: uppercase;
 }
 .t-intro p + p { margin-top: 30px; }
 
@@ -125,7 +124,6 @@ body::before {
 .t-email {
   font: 20px/27px var(--font-body);
   color: var(--ice);
-  text-transform: uppercase;
   text-decoration: none;
 }
 .t-email:hover { text-decoration: underline; }
@@ -160,9 +158,7 @@ a:focus-visible { outline: 2px solid var(--white); outline-offset: 4px; }
 }
 
 .hint {
-  font: 14px/1.6 var(--font-body);
-  letter-spacing: .04em;
-  text-transform: uppercase;
+  font: 15px/1.6 var(--font-body);
   text-align: center;
   color: var(--c-body);
   white-space: normal !important;
@@ -176,7 +172,8 @@ a:focus-visible { outline: 2px solid var(--white); outline-offset: 4px; }
           mask: linear-gradient(180deg, transparent, #000 25%, #000 75%, transparent);
 }
 
-.cham-stage { position: absolute; left: 130px; top: 330px; width: 1180px; height: 600px; }
+/* scaled to fit the white space between "Select the projects" and the leaves */
+.cham-stage { position: absolute; left: 130px; top: 290px; width: 1180px; height: 600px; transform: scale(.82); transform-origin: 50% 0; }
 
 .bigcham { position: absolute; left: 50%; top: 50%; width: 620px; aspect-ratio: 600 / 400; transform: translate(-50%, -50%); pointer-events: none; }
 .bigcham .body {
@@ -243,7 +240,7 @@ a:focus-visible { outline: 2px solid var(--white); outline-offset: 4px; }
 }
 .sheet[hidden] { display: none; }
 .sheet.show { opacity: 1; }
-.sheet p, .sheet li, .sheet dd { text-transform: uppercase; letter-spacing: .04em; font-size: .9rem; }
+.sheet p, .sheet li, .sheet dd { font-size: .95rem; }
 .sheet p.tagline { text-transform: none; letter-spacing: normal; }
 .sheet button { font: inherit; color: inherit; }
 .sheet .label { font: 400 .72rem var(--f-label); letter-spacing: .14em; text-transform: uppercase; }
@@ -384,7 +381,7 @@ a:focus-visible { outline: 2px solid var(--white); outline-offset: 4px; }
 .notes { list-style: none; margin: 0; padding: 0; display: grid; gap: clamp(28px, 4vw, 48px); }
 .notes li { position: relative; display: grid; gap: 6px; font-size: 1rem; }
 .notes b { font: 400 .64rem var(--f-label); letter-spacing: .16em; text-transform: uppercase; color: var(--c-pink); }
-.notes li > span { font: .86rem/1.6 var(--font-body); letter-spacing: .04em; text-transform: uppercase; color: var(--c-body); }
+.notes li > span { font: .92rem/1.6 var(--font-body); color: var(--c-body); }
 .notes.left li { text-align: right; justify-items: end; padding-right: 26px; }
 .notes.right li { padding-left: 26px; }
 /* leader lines, like the annotations on a botanical plate */
@@ -458,3 +455,6 @@ a:focus-visible { outline: 2px solid var(--white); outline-offset: 4px; }
   .qbtn img, .pulse { animation: none; }
   .cloudpop .field-head, .cloudpop .plate, .cloudpop .toolbox, .portrait .frame, .notes li::before, .notes li::after { transition: none; }
 }
+
+/* ---------- Sunset ---------- */
+.sun { transform-origin: 50% 50%; will-change: transform; }

@@ -83,9 +83,10 @@
   const page = $('.stage'), work = $('#work');
   const stage = $('#chamStage'), cham = $('#bigcham'), chamBody = $('#chamBody'), eye = $('#eye'), pupil = $('#pupil');
   const peek = $('#peek'), peekImg = $('#peekImg'), peekCap = $('#peekCap');
-  // the page is scaled with CSS zoom; rects come back in screen pixels, so
-  // positions written back inside the stage are divided by the zoom
-  const zoom = () => parseFloat(page.style.zoom) || 1;
+  // the page is zoomed and the stage itself is scaled: rects come back in screen
+  // pixels, so offsets written back inside the stage are divided by this factor
+  const STAGE_W = 1180;
+  const zoom = () => stage.getBoundingClientRect().width / STAGE_W || 1;
 
   const names = PROJECTS.map((p, i) => {
     const b = document.createElement('button');
