@@ -59,3 +59,29 @@ window.observeReveals = (root = document) => {
 observeReveals();
 window.addEventListener('scroll', queueCheck, { passive: true });
 window.addEventListener('resize', queueCheck);
+
+// Sparkle cursor: only for a real mouse/trackpad (touch screens keep their own behaviour)
+const sparkle = document.getElementById('sparkle');
+if (sparkle && matchMedia('(hover: hover) and (pointer: fine)').matches) {
+  const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const CLICKABLE = 'a, button, [role="tab"], .words li, .pname, .card, .qbtn, .screen';
+  let x = -100, y = -100, sx = x, sy = y, raf = 0;
+  document.documentElement.classList.add('sparkle-on');
+  const move = () => {
+    sx += (x - sx) * (reduceMotion ? 1 : .35);
+    sy += (y - sy) * (reduceMotion ? 1 : .35);
+    sparkle.style.transform = `translate(${sx.toFixed(1)}px, ${sy.toFixed(1)}px)`;
+    raf = Math.abs(x - sx) + Math.abs(y - sy) > .2 ? requestAnimationFrame(move) : 0;
+  };
+  addEventListener('pointermove', (e) => {
+    if (e.pointerType !== 'mouse') return;
+    x = e.clientX; y = e.clientY;
+    if (!sparkle.classList.contains('show')) { sx = x; sy = y; sparkle.classList.add('show'); }
+    sparkle.classList.toggle('big', !!e.target.closest(CLICKABLE));
+    if (!raf) raf = requestAnimationFrame(move);
+  }, { passive: true });
+  document.addEventListener('pointerleave', () => sparkle.classList.remove('show'));
+  addEventListener('blur', () => sparkle.classList.remove('show'));
+  addEventListener('pointerdown', () => sparkle.classList.add('press'));
+  addEventListener('pointerup', () => sparkle.classList.remove('press'));
+}
