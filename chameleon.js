@@ -1,16 +1,17 @@
-// One chameleon, five projects (ported from the portfolio artifact).
-// Bring the cursor near a project name: the chameleon takes its colour, the eye
-// follows, a preview floats beside the name. Click a name to open its sheet.
+// One chameleon, five projects (ported from the work-page artifact).
+// The chameleon stays put while the project list scrolls past; it catches the
+// project in the middle of the screen with its tongue and takes on its colour.
+// Click a project to open its sheet.
 (() => {
   const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
   const $ = s => document.querySelector(s);
 
   /* ───── Projects: edit here ───── */
-  // To add a project, copy one block. 'hex' and 'img' are optional: without
-  // 'hex' it takes the next palette colour, without 'img' the preview says "Coming soon".
+  // To add a project, copy one block. 'hex' is the chameleon's colour, 'tint'
+  // (optional) the card's placeholder colour; without 'img' the card says "Coming soon".
   const PROJECTS = [
     {
-      id: 'dior', name: 'Dior', hex: '#3BBDCC', img: 'assets/projects/p-dior.webp',
+      id: 'dior', name: 'Dior', hex: '#FB72BE', kind: 'UI · UX · Web design', img: 'assets/projects/p-dior.webp',
       title: 'The Art of Dressmaking', tagline: 'by Christian Dior — an interactive longread for MoMu',
       tags: ['UI', 'UX', 'Web-design', 'Web-development'],
       brief: [
@@ -24,7 +25,7 @@
       link: 'https://nikasaracuta.github.io/Integration-3/'
     },
     {
-      id: 'type01', name: 'Type01', hex: '#00FF59', img: 'assets/projects/p-type01.webp',
+      id: 'type01', name: 'Type01', hex: '#1A5BA4', tint: '#6f9bd4', kind: 'UI · UX · Web design', img: 'assets/projects/p-type01.webp',
       title: 'TYPE01 Conference', tagline: 'Typography in print, motion design and branding',
       tags: ['UI', 'UX', 'Web-design'],
       brief: [
@@ -38,7 +39,7 @@
       link: 'https://www.figma.com/proto/PsD6Cg8ngFq6yRWCCm5I9q/Type01?page-id=0%3A1&node-id=468-7480&viewport=-2609%2C-2191%2C0.15&t=KQAR1eAcC8Ls4MeP-1&scaling=min-zoom&content-scaling=fixed&starting-point-node-id=580%3A48961'
     },
     {
-      id: 'antwerp', name: 'Antwerp', hex: '#FB72BE', img: '',
+      id: 'antwerp', name: 'Antwerp', hex: '#3BBDCC', kind: 'Interactive longread', img: '',
       title: 'Antwerp', tagline: 'A web project about the city — case study in progress',
       tags: ['UI', 'UX', 'Web-design'],
       brief: ['This chameleon is still changing colour. The full Antwerp case study — brief, styleboard and iterations — lands here soon.'],
@@ -49,7 +50,7 @@
       link: ''   // paste the live URL here when it's ready
     },
     {
-      id: 'miles', name: 'Miles & meals', hex: '#D5FF59', img: 'assets/projects/p-miles.webp',
+      id: 'miles', name: 'Miles & Meals', hex: '#D5FF59', kind: 'App · Demo', img: 'assets/projects/p-miles.webp',
       title: 'Miles & Meals', tagline: 'Discover the world in your kitchen',
       tags: ['UI', 'UX', 'App-design'],
       brief: ['An app that brings iconic local dishes and street food from cities around the world straight to your kitchen — so you can travel by recipe.'],
@@ -60,7 +61,7 @@
       link: 'https://www.figma.com/proto/JhFdOzlcgGCV38btM2Tumv/Miles---Meals?page-id=6817%3A1887&node-id=59585-34744&viewport=-13885%2C-407%2C0.32&t=BZlwAt149MrtAhmE-1&scaling=min-zoom&content-scaling=fixed&starting-point-node-id=59585%3A34763&show-proto-sidebar=1'
     },
     {
-      id: 'thrive', name: 'Thrive', hex: '#1A5BA4', img: 'assets/projects/p-thrive.webp',
+      id: 'thrive', name: 'Thrive', hex: '#00FF59', tint: '#5cff8f', kind: 'Branding · Packaging · Web design', img: 'assets/projects/p-thrive.webp',
       title: 'Thrive', tagline: 'Taste the sound of harmony',
       tags: ['Branding', 'Packaging', 'Web-design'],
       brief: ['A drink brand built around balance and calm: low-calorie cans with added magnesium, and a visual world that feels like sound turned into colour.'],
@@ -72,128 +73,76 @@
     }
   ];
 
-  const PALETTE = ['#3BBDCC', '#00FF59', '#FB72BE', '#D5FF59', '#1A5BA4'];
-  PROJECTS.forEach((p, i) => { if (!p.hex) p.hex = PALETTE[i % PALETTE.length]; });
+  const page = $('.stage');
+  const list = $('#workList'), workStage = $('.work-stage'), nowName = $('#nowName');
+  const mouth = $('#mouth'), tongue = $('#tongue'), tip = $('#tongueTip');
 
-  const rgb = h => [1, 3, 5].map(k => parseInt(h.slice(k, k + 2), 16));
-  const mix = (a, b, t) => a.map((v, k) => Math.round(v + (b[k] - v) * t));
-  const css = c => `rgb(${c.join(',')})`;
-  const IDLE = [183, 230, 236], BLUE = rgb('#1A5BA4');
-
-  const page = $('.stage'), work = $('#work');
-  const stage = $('#chamStage'), cham = $('#bigcham'), chamBody = $('#chamBody'), eye = $('#eye'), pupil = $('#pupil');
-  const peek = $('#peek'), peekImg = $('#peekImg'), peekCap = $('#peekCap');
-  // the page is zoomed and the stage itself is scaled: rects come back in screen
-  // pixels, so offsets written back inside the stage are divided by this factor
-  const STAGE_W = 1180;
-  const zoom = () => stage.getBoundingClientRect().width / STAGE_W || 1;
-
-  const names = PROJECTS.map((p, i) => {
-    const b = document.createElement('button');
-    b.className = 'pname reveal'; b.style.setProperty('--pc', p.hex);
-    b.style.setProperty('--d', (.45 + i * .1).toFixed(2) + 's'); // appear one by one after the chameleon
-    b.setAttribute('aria-label', `Open project ${i + 1}: ${p.name}`);
-    b.innerHTML = `<span class="num">${String(i + 1).padStart(2, '0')}</span><span class="nm">${p.name}</span><span class="tg">${p.tags.slice(0, 3).join(' · ')}</span>`;
-    b.addEventListener('click', () => { lick(); openProject(i, b); });
-    b.addEventListener('focus', () => { focusIdx = i; });
-    b.addEventListener('blur', () => { if (focusIdx === i) focusIdx = -1; });
-    stage.appendChild(b);
-    return b;
-  });
-  // names on an ellipse around the chameleon, first one at the top
-  names.forEach((b, i) => {
-    const ang = -Math.PI / 2 + i * 2 * Math.PI / names.length, x = Math.cos(ang), y = Math.sin(ang);
-    b.style.left = (50 + 42 * x).toFixed(2) + '%';
-    b.style.top = (50 + 44 * y).toFixed(2) + '%';
-    b.classList.toggle('side-l', x < -.25);
-    b.classList.toggle('side-c', Math.abs(x) <= .25);
-  });
-
-  let mouse = null, active = -1, focusIdx = -1, k = 0, col = IDLE.slice(), lickT;
-  function lick() {
-    if (reduce) return;
-    cham.classList.add('lick'); clearTimeout(lickT);
-    lickT = setTimeout(() => cham.classList.remove('lick'), 380);
-  }
-  addEventListener('pointermove', e => { mouse = { x: e.clientX, y: e.clientY }; }, { passive: true });
-  stage.addEventListener('pointerleave', () => { if (mouse) mouse.out = true; });
-
-  function setActive(i) {
-    if (i === active) return;
-    names.forEach((n, j) => n.classList.toggle('on', j === i));
-    active = i;
-    work.style.setProperty('--tint', i < 0 ? 'transparent' : PROJECTS[i].hex);
-    if (i < 0) { peek.classList.remove('show'); return; }
-    const p = PROJECTS[i];
-    peek.style.setProperty('--pc', p.hex);
-    if (p.img) { peekImg.style.backgroundImage = `url("${p.img}")`; peekImg.textContent = ''; }
-    else { peekImg.style.backgroundImage = 'none'; peekImg.textContent = 'Coming soon'; }
-    peekCap.textContent = `${p.name} — ${p.tagline.split('—')[0].trim()}`;
-    peek.classList.add('show');
-    lick();
-  }
-
-  function tick() {
-    const z = zoom();
-    let best = -1, bestD = 1e9;
-    if (focusIdx >= 0) { best = focusIdx; bestD = 0; }
-    else if (mouse && !mouse.out) {
-      names.forEach((n, i) => {
-        const r = n.getBoundingClientRect();
-        const dx = Math.max(r.left - mouse.x, 0, mouse.x - r.right), dy = Math.max(r.top - mouse.y, 0, mouse.y - r.bottom);
-        const d = Math.hypot(dx, dy);
-        if (d < bestD) { bestD = d; best = i; }
-      });
-    }
-    const R = 200 * z, near = best >= 0 && bestD < R;
-    setActive(near ? best : -1);
-    const target = near ? Math.min(1, 1.15 - bestD / R) : 0;
-    k += (target - k) * (reduce ? 1 : .12);
-    const goal = near ? mix(IDLE, rgb(PROJECTS[best].hex), k) : IDLE;
-    col = mix(col, goal, reduce ? 1 : .14);
-    cham.style.setProperty('--cham', css(col));
-    cham.style.setProperty('--cham-dark', css(mix(col, BLUE, .28)));
-
-    // the eye follows the cursor (or the focused name)
-    const er = eye.getBoundingClientRect(), ex = er.left + er.width / 2, ey = er.top + er.height / 2;
-    let tx = mouse ? mouse.x : ex - 100, ty = mouse ? mouse.y : ey;
-    if (focusIdx >= 0) { const r = names[focusIdx].getBoundingClientRect(); tx = r.left + r.width / 2; ty = r.top + r.height / 2; }
-    const a = Math.atan2(ty - ey, tx - ex), dist = Math.min(1, Math.hypot(tx - ex, ty - ey) / (160 * z)), m = er.width * .28 * dist / z;
-    pupil.style.setProperty('--px', (Math.cos(a) * m).toFixed(1) + 'px');
-    pupil.style.setProperty('--py', (Math.sin(a) * m).toFixed(1) + 'px');
-
-    // the preview floats beside the active name
-    if (active >= 0) {
-      const sr = stage.getBoundingClientRect(), r = names[active].getBoundingClientRect(), pr = peek.getBoundingClientRect();
-      const w = pr.width, h = pr.height, cx = r.left + r.width / 2 - sr.left;
-      let px, py;
-      if (Math.abs(cx - sr.width / 2) < sr.width * .15) { px = cx - w / 2; py = r.top - sr.top - h - 18 * z; }      // centre name: above it
-      else if (cx < sr.width / 2) { px = r.right - sr.left + 24 * z; py = r.top - sr.top + r.height / 2 - h / 2; } // left names: to the right
-      else { px = r.left - sr.left - w - 24 * z; py = r.top - sr.top + r.height / 2 - h / 2; }                      // right names: to the left
-      if (mouse && focusIdx < 0) { // drift a little with the cursor
-        px += Math.max(-18 * z, Math.min(18 * z, (mouse.x - (r.left + r.width / 2)) * .12));
-        py += Math.max(-18 * z, Math.min(18 * z, (mouse.y - (r.top + r.height / 2)) * .12));
-      }
-      px = Math.min(Math.max(px, 0), sr.width - w); py = Math.min(Math.max(py, 0), sr.height - h);
-      peek.style.setProperty('--x', px / z + 'px');
-      peek.style.setProperty('--y', py / z + 'px');
-    }
-    requestAnimationFrame(tick);
-  }
-  if (window.observeReveals) observeReveals(stage); // the names are created after script.js ran
-  requestAnimationFrame(tick);
-
-  /* ───── Project cards (visible without hovering, and on touch screens) ───── */
-  const cards = $('#cards');
-  if (cards) PROJECTS.forEach((p, i) => {
+  // one card per project
+  const cards = PROJECTS.map((p, i) => {
     const li = document.createElement('li');
     const b = document.createElement('button');
-    b.className = 'card'; b.style.setProperty('--pc', p.hex);
+    b.className = 'wcard'; b.style.setProperty('--c', p.tint || p.hex);
     b.setAttribute('aria-label', `Open project ${i + 1}: ${p.name}`);
-    b.innerHTML = `<span class="thumb"${p.img ? ` style="background-image:url('${p.img}')"` : ''}>${p.img ? '' : 'Coming soon'}</span><span class="nm">${p.name}</span>`;
+    b.innerHTML = `<span class="thumb"${p.img ? ` style="background-image:url('${p.img}')"` : ''}>${p.img ? '' : 'Coming soon'}</span>
+      <span class="meta"><span class="num">${String(i + 1).padStart(2, '0')}</span><span class="open">Open project →</span></span>
+      <span class="nm">${p.name.replace('&', '&amp;')}</span><span class="tg">${p.kind}</span>`;
     b.addEventListener('click', () => openProject(i, b));
-    li.appendChild(b); cards.appendChild(li);
+    b.addEventListener('mouseenter', () => activate(i));
+    b.addEventListener('focus', () => activate(i));
+    li.appendChild(b); list.appendChild(li);
+    return b;
   });
+
+  // switching project: pull the tongue back first, then shoot it at the new one
+  let target = -1, pending = -1, ext = 0, goal = 0;
+  function activate(i) {
+    if (i === pending || (i === target && pending < 0)) return;
+    cards.forEach((c, j) => c.classList.toggle('active', j === i));
+    if (target >= 0) cards[target].classList.remove('stuck');
+    page.style.setProperty('--cham', PROJECTS[i].hex);
+    nowName.innerHTML = `<span class="swatch"></span>${PROJECTS[i].name.replace('&', '&amp;')}`;
+    pending = i; goal = 0;
+  }
+  activate(0);
+
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) activate(cards.indexOf(e.target)); });
+  }, { rootMargin: '-45% 0px -45% 0px' });
+  cards.forEach(c => io.observe(c));
+
+  const centre = el => { const r = el.getBoundingClientRect(); return { x: r.left + r.width / 2, y: r.top + r.height / 2 }; };
+  const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
+  const easeOut = t => 1 - Math.pow(1 - t, 3);
+  const hidden = () => workStage.classList.contains('reveal') && !workStage.classList.contains('in');
+
+  let last = performance.now();
+  function frame(now) {
+    const dt = Math.min(.05, (now - last) / 1000); last = now;
+    if (goal === 0 && ext <= 0 && pending >= 0) { target = pending; pending = -1; goal = 1; }
+    if (target >= 0 && pending < 0) {
+      const r = cards[target].getBoundingClientRect();
+      // let go when the project leaves the screen (or before the chameleon has appeared)
+      goal = r.bottom > 0 && r.top < innerHeight && !hidden() ? 1 : 0;
+    }
+    if (reduce) ext = goal;
+    else if (goal > ext) ext = Math.min(1, ext + dt / .2);
+    else if (goal < ext) ext = Math.max(0, ext - dt / .12);
+
+    if (target >= 0) {
+      const z = parseFloat(page.style.zoom) || 1;        // tongue thickness follows the page zoom
+      const m = centre(mouth), r = cards[target].querySelector('.thumb').getBoundingClientRect();
+      const t = { x: clamp(m.x, r.left + 28 * z, r.right - 28 * z), y: clamp(m.y, r.top + 28 * z, r.bottom - 28 * z) };
+      const k = easeOut(ext), x = m.x + (t.x - m.x) * k, y = m.y + (t.y - m.y) * k;
+      const dist = Math.hypot(x - m.x, y - m.y);
+      const sag = ext >= 1 ? dist * .08 + Math.sin(now / 350) * 3 * z : 0;
+      tongue.setAttribute('d', dist > 2 ? `M${m.x},${m.y} Q${(m.x + x) / 2},${(m.y + y) / 2 + sag} ${x},${y}` : '');
+      tongue.setAttribute('stroke-width', 7 * z);
+      tip.setAttribute('cx', x); tip.setAttribute('cy', y); tip.setAttribute('r', dist > 2 ? 11 * z : 0);
+      cards[target].classList.toggle('stuck', ext >= 1);
+    }
+    requestAnimationFrame(frame);
+  }
+  requestAnimationFrame(frame);
 
   /* ───── Laptop screen: types each project name in turn; click opens it ───── */
   const screen = $('#screen'), scr = $('#scrText');

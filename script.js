@@ -11,7 +11,6 @@ function fit() {
   if (MOBILE.matches) {
     stage.style.zoom = '';
     stage.style.setProperty('--mz', (w / 840).toFixed(4));               // sunset artwork: 840px-wide crop
-    stage.style.setProperty('--cs', ((w - 32) / 1180).toFixed(4));       // chameleon: 1180px-wide stage
   } else {
     stage.style.zoom = w / DESIGN_WIDTH;
   }

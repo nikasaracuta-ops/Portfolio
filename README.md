@@ -4,6 +4,8 @@ Static one-page portfolio built from the Figma frame **Main** (node `315:133`) i
 `PORTFOLIO` file. Open `index.html` in a browser — no build step.
 
 - `assets/background.webp` — all artwork, exported from the Figma frame with text and icons hidden.
+  The white band in the Work section is stretched by 2320px (the page is 6557px tall instead of
+  Figma's 4237px) to make room for the scrolling project list.
 - `assets/type-*.svg` — display headings exported from Figma as outlined SVGs (exact letterforms).
 - `assets/icon-*.svg` — LinkedIn / Behance icons.
 - `fonts/` — drop the Roc Grotesk Wide and Area Inktrap Extended `.woff2` files here (names in
@@ -11,7 +13,7 @@ Static one-page portfolio built from the Figma frame **Main** (node `315:133`) i
 - On screens wider than 760px the 1440px design is scaled to the window by `script.js`; on phones the
   sections stack instead (see the "Phones" block at the end of `styles.css`).
 - **Projects** (the chameleon, the project cards, the laptop screen and the project sheet) live in `chameleon.js`:
-  edit the `PROJECTS` list there (name, colour, preview image, brief, process, result, live link).
+  edit the `PROJECTS` list there (name, colour, card label, preview image, brief, process, result, live link).
   Preview images go in `assets/projects/`.
 - **About pop-up** ("About me" link/button or the "?"): content is in `index.html` (`#aboutPop`);
   set your photo in `about.js` (`ME_PHOTO = 'assets/me.jpg'`).
