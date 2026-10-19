@@ -14,6 +14,7 @@
   --ice: #ecf5ff;
   /* one accessible pink for text and buttons (4.6:1 with white) */
   --pink: #D62E88;
+  --btn-pink: #E770B2;
   --navy: #0E3F73;
 }
 
@@ -118,7 +119,6 @@ body::before {
 }
 .t-intro p + p { margin-top: 30px; }
 
-.t-eyebrow { font: 700 18px/30px var(--font-body); letter-spacing: .06em; color: var(--pink); text-transform: uppercase; }
 
 /* contact: small text on the light sea is navy; the email is a clear button */
 .t-body { font: 18px/1.4 var(--font-body); color: var(--navy) !important; text-align: center; }
@@ -144,7 +144,7 @@ body::before {
   align-items: center;
   justify-content: center;
   border-radius: 9px;
-  background: var(--pink);
+  background: var(--btn-pink);
   font: 20px/normal var(--font-ui);
   color: var(--white);
   text-decoration: none;
@@ -169,12 +169,6 @@ a:focus-visible { outline: 2px solid var(--white); outline-offset: 4px; }
   --noise: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 .9 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
 }
 
-.hint {
-  font: 15px/1.6 var(--font-body);
-  text-align: center;
-  color: var(--c-body);
-  white-space: normal !important;
-}
 
 .work-layout { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 72px; align-items: start; white-space: normal; }
 
@@ -504,7 +498,7 @@ a:focus-visible { outline: 2px solid var(--white); outline-offset: 4px; }
 @media (max-width: 760px) {
   .stage { width: 100%; height: auto; background: #fff; display: flex; flex-direction: column; }
   .hero { order: 1; } #about { order: 2; } #work { order: 3; } .sunset { order: 4; } #contact { order: 5; }
-  .bird, .fish, .stage .nav, .hint { display: none !important; }
+  .bird, .fish, .stage .nav { display: none !important; }
 
   .sec {
     position: relative; top: auto !important; width: 100%; padding: 0 20px;
@@ -532,7 +526,6 @@ a:focus-visible { outline: 2px solid var(--white); outline-offset: 4px; }
 
   #work { --y0: 1700; --s: 1; padding-top: 56px; padding-bottom: 40px; text-align: center; background-color: #fff; }
   #mywork { width: 66%; max-width: 300px; margin: 0 auto; }
-  .t-eyebrow { margin-top: 14px; font-size: 14px; white-space: normal !important; }
   /* the chameleon pins under the menu, facing left; its tongue reaches down to the list */
   .work-layout { grid-template-columns: minmax(0, 1fr); gap: 24px; margin-top: 24px; }
   .work-stage {
