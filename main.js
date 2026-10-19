@@ -1,28 +1,36 @@
-// The journey from sky to sea. Smooth scrolling (Lenis) drives GSAP's
-// ScrollTrigger: the sky drifts, the introduction lights up word by word, the
-// work gallery scrolls sideways, the sun rises behind the leaves.
-// Phones get the same page without pinning; reduced motion gets it still.
+// Night to day, cloud to sea. Smooth scrolling (Lenis) drives GSAP's
+// ScrollTrigger: the clouds drift, text rises in, the leaves part around the
+// sun as it rises behind the laptop. The bar switches between night and day.
+// Reduced motion gets the page still.
 (() => {
   const $ = (s, r = document) => r.querySelector(s);
   const $$ = (s, r = document) => [...r.querySelectorAll(s)];
+  const root = document.documentElement;
   const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
   const ok = !!(window.gsap && window.ScrollTrigger);
 
-  // Behance profile: the ring around the sun and the Behance button link here.
+  // Behance profile: the laptop and the Behance icon link here.
   // TODO: paste the profile URL, e.g. 'https://www.behance.net/yourname'.
   const BEHANCE_URL = '';
   $$('[data-behance]').forEach(a => { if (BEHANCE_URL) a.href = BEHANCE_URL; else a.removeAttribute('target'); });
 
-  // local time in Antwerp, top right
-  const clock = $('#clock');
-  const tick = () => { clock.textContent = new Intl.DateTimeFormat('en-GB', { hour: '2-digit', minute: '2-digit', timeZone: 'Europe/Brussels' }).format(new Date()); };
-  tick(); setInterval(tick, 15000);
+  /* ───── Day / night ───── */
+  const themeBtn = $('#theme'), themeMeta = $('meta[name="theme-color"]');
+  const showTheme = () => {
+    const day = root.dataset.theme === 'day';
+    themeBtn.setAttribute('aria-pressed', day);
+    themeBtn.setAttribute('aria-label', day ? 'Switch to night mode' : 'Switch to day mode');
+    $('.theme-txt', themeBtn).textContent = day ? 'Day' : 'Night';
+    themeMeta.content = day ? '#f6f6f6' : '#000000';
+  };
+  themeBtn.addEventListener('click', () => {
+    root.dataset.theme = root.dataset.theme === 'day' ? 'night' : 'day';
+    try { localStorage.setItem('theme', root.dataset.theme); } catch (e) {}
+    showTheme();
+  });
+  showTheme();
 
-  // the introduction, split into words so they can light up one by one
-  const manifesto = $('#manifesto');
-  manifesto.innerHTML = manifesto.innerHTML.trim().split(/\s+/).map(w => `<span class="w">${w}</span>`).join(' ');
-
-  if (!ok) { document.documentElement.classList.add('no-motion'); return; }
+  if (!ok) return;
   gsap.registerPlugin(ScrollTrigger);
 
   /* ───── Smooth scrolling ───── */
@@ -39,7 +47,7 @@
     : target.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth' });
   $$('a[href^="#"]:not([data-about])').forEach(a => a.addEventListener('click', e => {
     const id = a.getAttribute('href');
-    if (id === '#work' && a.classList.contains('project')) return;   // panels open their sheet
+    if (a.classList.contains('project') || a.hasAttribute('data-behance')) return;   // cards open their sheet
     const el = id === '#top' ? 0 : $(id);
     if (el === null) return;
     e.preventDefault(); goTo(el);
@@ -48,88 +56,60 @@
   const pauseFor = el => new MutationObserver(() => { if (!lenis) return; el.hidden ? lenis.start() : lenis.stop(); }).observe(el, { attributes: true, attributeFilter: ['hidden'] });
   pauseFor($('#sheet')); pauseFor($('#aboutPop'));
 
-  /* ───── Intro: after the loading screen ───── */
-  const intro = gsap.timeline({ paused: true, defaults: { ease: 'expo.out' } })
-    .from('.hero-title img', { yPercent: 105, duration: 1.8 })
-    .from('.hero-meta .mask > span', { yPercent: 110, duration: 1.2, stagger: .08 }, '-=1.3')
-    .from('.hero-cue i', { scaleY: 0, duration: 1 }, '-=.8')
-    .from('.bar', { y: -30, opacity: 0, duration: 1.2 }, '-=1.2');
-  const start = () => { intro.play(); lenis && lenis.start(); };
-  if (document.documentElement.classList.contains('is-loading')) addEventListener('site:loaded', start, { once: true });
-  else start();
-
-  const mm = gsap.matchMedia();
-
-  // the bird belongs to the sky: it leaves before the gallery
-  gsap.to('.bird', { opacity: 0, ease: 'none', scrollTrigger: { trigger: '.work', start: 'top bottom', end: 'top 30%', scrub: true } });
-
-  /* ───── Desktop & tablet, with motion ───── */
-  mm.add('(min-width: 761px) and (prefers-reduced-motion: no-preference)', () => {
-    // the title floats away slower than the page, the bird crosses the sky
-    gsap.to('.hero-title', { yPercent: -60, scale: 1.08, opacity: 0, ease: 'none', scrollTrigger: { trigger: '.hero', start: 'top top', end: 'bottom top', scrub: true } });
-    gsap.to('.hero-meta', { yPercent: -120, opacity: 0, ease: 'none', scrollTrigger: { trigger: '.hero', start: 'center center', end: 'bottom top', scrub: true } });
-    gsap.fromTo('.bird', { x: '-5vw', y: '0vh' }, { x: '55vw', y: '-30vh', ease: 'none', scrollTrigger: { trigger: '.hero', start: 'top top', endTrigger: '.about', end: 'bottom top', scrub: 1.5 } });
-
-    // the introduction: pinned, words light up as you scroll
-    const words = $$('.manifesto .w');
-    gsap.timeline({ scrollTrigger: { trigger: '.about', start: 'top top', end: '+=140%', pin: true, scrub: .6 } })
-      .to(words, { opacity: 1, stagger: .1, ease: 'none' })
-      .from('.about-actions', { y: 30, opacity: 0, duration: 1.5 }, '-=1')
-      .to({}, { duration: 1.5 });
-    gsap.from('.qbtn', { scale: .4, opacity: 0, rotate: -30, duration: 1.4, ease: 'back.out(1.6)', scrollTrigger: { trigger: '.about', start: 'top 70%' } });
-
-    // work: the gallery scrolls sideways; the chameleon follows the project in view
-    const track = $('#workTrack');
-    const distance = () => Math.max(0, track.scrollWidth - innerWidth);
-    gsap.to(track, {
-      x: () => -distance(), ease: 'none',
-      scrollTrigger: {
-        trigger: '.work-pin', start: 'top top', end: () => '+=' + distance(), pin: true, scrub: .8, invalidateOnRefresh: true,
-        onUpdate: self => window.Work && Work.setActive(Math.round(self.progress * (Work.count - 1)))
-      }
-    });
-    gsap.from('.work-title', { yPercent: 40, opacity: 0, duration: 1.4, ease: 'expo.out', scrollTrigger: { trigger: '.work', start: 'top 75%' } });
-
-    // sunset: held while the sun rises (sky.js); the title and the Behance ring arrive
-    gsap.timeline({ scrollTrigger: { trigger: '.sunset-pin', start: 'top top', end: '+=110%', pin: true, scrub: .8 } })
-      .from('.sunset-title', { yPercent: 60, opacity: 0, ease: 'power2.out', duration: .5 }, 0)
-      .from('.badge', { scale: .6, opacity: 0, rotate: -40, ease: 'power3.out', duration: .7 }, .2)
-      .to({}, { duration: .8 });
-
-    // the sea: the headline rises in
-    gsap.from('.contact-title', { yPercent: 30, opacity: 0, duration: 1.6, ease: 'expo.out', scrollTrigger: { trigger: '.contact', start: 'top 65%' } });
-    gsap.from('.contact-inner > :not(.contact-title)', { y: 30, opacity: 0, duration: 1.2, stagger: .1, ease: 'expo.out', scrollTrigger: { trigger: '.contact', start: 'top 55%' } });
-  });
-
-  /* ───── Phones, with motion: lighter touches, no pinning ───── */
-  mm.add('(max-width: 760px) and (prefers-reduced-motion: no-preference)', () => {
-    $$('.manifesto .w').forEach(w => { w.style.opacity = 1; });
-    gsap.from('.badge', { scale: .6, opacity: 0, ease: 'none', scrollTrigger: { trigger: '.sunset', start: 'top 80%', end: 'center center', scrub: .6 } });
-  });
-
-  /* ───── Reduced motion: everything in its resting place ───── */
-  mm.add('(prefers-reduced-motion: reduce)', () => {});
-
-  /* ───── Bar: dark type over the white parts, current section marked ───── */
-  const bar = $('#bar'), links = $$('.bar-nav a');
-  ScrollTrigger.create({ trigger: '.work', start: 'top 40px', endTrigger: '.sunset', end: 'bottom 40px', toggleClass: { targets: bar, className: 'on-light' } });
-  [['.about', 0], ['.work', 1], ['.contact', 2]].forEach(([sel, i]) => ScrollTrigger.create({
-    trigger: sel, start: 'top 45%', end: 'bottom 45%', onToggle: self => links[i].classList.toggle('current', self.isActive)
+  /* ───── Bar: the section in view is marked ───── */
+  const links = $$('.bar-nav a');
+  [['.hero', 0], ['.hello', 1], ['.work', 2], ['.contact', 3]].forEach(([sel, i]) => ScrollTrigger.create({
+    trigger: sel, start: 'top 45%', end: 'bottom 45%', onToggle: self => self.isActive && links.forEach((l, n) => l.classList.toggle('current', n === i))
   }));
 
-  // fonts and images change sizes: measure again once everything has loaded
   addEventListener('load', () => ScrollTrigger.refresh());
   document.fonts && document.fonts.ready.then(() => ScrollTrigger.refresh());
+
+  if (reduce) return;
+
+  /* ───── Intro: after the loading screen ───── */
+  const intro = gsap.timeline({ paused: true, defaults: { ease: 'expo.out' } })
+    .from('.hero-title .mask > span', { yPercent: 105, duration: 1.8 })
+    .from('.hero-meta .mask > span', { yPercent: 110, duration: 1.2, stagger: .08 }, '-=1.3')
+    .from('.cloud', { opacity: 0, x: (i) => i ? 120 : -120, duration: 2.4, ease: 'power2.out' }, '-=1.6')
+    .from('.bar', { y: -30, opacity: 0, duration: 1.2 }, '-=2');
+  const start = () => { intro.play(); lenis && lenis.start(); };
+  if (root.classList.contains('is-loading')) addEventListener('site:loaded', start, { once: true });
+  else start();
+
+  /* ───── Hero: the clouds drift, the bird crosses ───── */
+  gsap.to('.c1', { xPercent: -8, yPercent: -10, ease: 'none', scrollTrigger: { trigger: '.hero', start: 'top top', end: 'bottom top', scrub: true } });
+  gsap.to('.c2', { xPercent: 10, yPercent: -30, ease: 'none', scrollTrigger: { trigger: '.hero', start: 'top top', end: 'bottom top', scrub: true } });
+  gsap.to('.hero-title', { yPercent: -30, opacity: .2, ease: 'none', scrollTrigger: { trigger: '.hero', start: 'top top', end: 'bottom top', scrub: true } });
+  gsap.fromTo('.bird', { x: 0, y: 0 }, { x: '70vw', y: '-25vh', rotate: -8, ease: 'none', scrollTrigger: { trigger: '.hero', start: 'top top', end: 'bottom top', scrub: 1.5 } });
+
+  /* ───── Text rises in ───── */
+  $$('[data-reveal]').forEach(el => gsap.from(el, {
+    y: 40, opacity: 0, duration: 1.3, ease: 'expo.out', scrollTrigger: { trigger: el, start: 'top 88%' }
+  }));
+  gsap.from('.puff', { scale: .7, opacity: 0, duration: 2, ease: 'power2.out', scrollTrigger: { trigger: '.hello', start: 'top 70%' } });
+  gsap.from('.qbtn', { scale: .4, opacity: 0, rotate: -30, duration: 1.4, ease: 'back.out(1.6)', scrollTrigger: { trigger: '.hello', start: 'top 55%' } });
+  gsap.from('.project', { y: 60, opacity: 0, duration: 1.2, ease: 'expo.out', stagger: .1, scrollTrigger: { trigger: '.work-list', start: 'top 85%' } });
+
+  /* ───── Horizon: the leaves part, the sun rises, the laptop lands ───── */
+  gsap.timeline({ scrollTrigger: { trigger: '.scene', start: 'top 85%', end: 'bottom bottom', scrub: 1 } })
+    .from('.sun', { yPercent: 55, scale: .8, ease: 'none' }, 0)
+    .fromTo('.leaf-l', { x: '14vw', rotate: 20 }, { x: 0, rotate: 0, ease: 'none' }, 0)
+    .fromTo('.leaf-r', { x: '-14vw', rotate: -20 }, { x: 0, rotate: 0, ease: 'none' }, 0)
+    .from('.laptop', { yPercent: 40, opacity: 0, ease: 'none' }, .3);
+
+  /* ───── Contact: the fish swims across ───── */
+  gsap.fromTo('.fish', { x: '-10vw' }, { x: '30vw', ease: 'none', scrollTrigger: { trigger: '.contact', start: 'top bottom', end: 'bottom bottom', scrub: 1 } });
 
   /* ───── Sparkle cursor (mouse / trackpad only) ───── */
   const sparkle = $('#sparkle');
   if (sparkle && matchMedia('(hover: hover) and (pointer: fine)').matches) {
     const CLICKABLE = 'a, button, [role="tab"], .tool, .qbtn';
     let x = -100, y = -100, sx = x, sy = y, raf = 0;
-    document.documentElement.classList.add('sparkle-on');
+    root.classList.add('sparkle-on');
     const move = () => {
-      sx += (x - sx) * (reduce ? 1 : .3);
-      sy += (y - sy) * (reduce ? 1 : .3);
+      sx += (x - sx) * .3;
+      sy += (y - sy) * .3;
       sparkle.style.transform = `translate(${sx.toFixed(1)}px, ${sy.toFixed(1)}px)`;
       raf = Math.abs(x - sx) + Math.abs(y - sy) > .2 ? requestAnimationFrame(move) : 0;
     };

@@ -3,7 +3,7 @@
 /* ---------- Project sheet ---------- */
 .sheet {
   position: fixed; inset: 0; z-index: 80; display: grid; place-items: end center;
-  background: rgba(26, 91, 164, .35); backdrop-filter: blur(6px);
+  background: rgba(0, 0, 0, .35); backdrop-filter: blur(6px);
   opacity: 0; transition: opacity .35s;
   font-family: var(--font-body); font-size: 16px; line-height: 1.6; color: var(--c-body);
 }
@@ -30,7 +30,7 @@
 .p-nav { display: flex; gap: 8px; }
 .iconbtn {
   width: 44px; height: 44px; border-radius: 50%; border: 0; cursor: pointer; display: grid; place-items: center; background: #fff;
-  box-shadow: 0 4px 16px -8px rgba(26, 91, 164, .4), 0 0 14px -2px color-mix(in srgb, var(--c-pink) 35%, transparent);
+  box-shadow: 0 4px 16px -8px rgba(0, 0, 0, .4), 0 0 14px -2px color-mix(in srgb, var(--c-pink) 35%, transparent);
   font-size: 1.1rem; transition: transform .3s cubic-bezier(.3, 1.6, .5, 1);
 }
 .iconbtn:hover { transform: scale(1.1); }
@@ -50,7 +50,7 @@
 }
 .tabs {
   display: flex; gap: 6px; margin: 28px 0 0; padding: 5px; border-radius: 40px; background: #fff; width: fit-content; max-width: 100%;
-  box-shadow: 0 6px 20px -14px rgba(26, 91, 164, .45); overflow-x: auto;
+  box-shadow: 0 6px 20px -14px rgba(0, 0, 0, .45); overflow-x: auto;
 }
 .tab {
   border: 0; background: none; cursor: pointer; border-radius: 30px; padding: 10px 18px; white-space: nowrap;
@@ -64,7 +64,7 @@
 .sheet .steps li { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 14px; align-items: start; }
 .steps .n { font: 400 1.8rem/1 var(--f-seasons); color: var(--c-pink); min-width: 1.4ch; }
 .steps b { font: 400 1.2rem var(--f-seasons); display: block; text-transform: none; }
-.facts { background: #fff; border-radius: 24px; padding: 22px; display: grid; gap: 14px; box-shadow: 0 10px 30px -22px rgba(26, 91, 164, .6); margin: 0; }
+.facts { background: #fff; border-radius: 24px; padding: 22px; display: grid; gap: 14px; box-shadow: 0 10px 30px -22px rgba(0, 0, 0, .6); margin: 0; }
 .facts div { display: grid; gap: 2px; }
 .facts dt { font: 400 .62rem var(--f-label); letter-spacing: .14em; text-transform: uppercase; color: var(--c-body); }
 .facts dd { margin: 0; font-weight: 500; }
