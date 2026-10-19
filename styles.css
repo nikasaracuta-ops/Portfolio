@@ -180,7 +180,7 @@ a:focus-visible { outline: 2px solid var(--white); outline-offset: 4px; }
 
 /* the chameleon: the photo's silhouette, blurred and grainy, glowing green */
 .work-stage { position: sticky; top: 170px; display: grid; gap: 22px; justify-items: center; text-align: center; }
-.cham { position: relative; width: 100%; max-width: 470px; aspect-ratio: 640 / 322; transform: scaleX(-1); }
+.cham { position: relative; width: 100%; max-width: 470px; aspect-ratio: 1200 / 623; transform: scaleX(-1); }
 .cham .layer { position: absolute; inset: 0; }
 .cham .layer > i {
   position: absolute; inset: 0;
@@ -192,11 +192,11 @@ a:focus-visible { outline: 2px solid var(--white); outline-offset: 4px; }
 .cham .aura > i { background: color-mix(in srgb, #00ff59 45%, #fff); }
 .cham .halo { filter: blur(9px); }
 .cham .halo > i { background: color-mix(in srgb, #00ff59 60%, #fff); }
-.cham .body { filter: blur(2.5px); }
+.cham .body { filter: blur(1.2px); }
 .cham .body > i { background: var(--cham); transition: background .8s ease; }
 .cham .grain > i { background: var(--noise); mix-blend-mode: soft-light; opacity: .9; }
 @keyframes cham-breathe { 0%, 100% { opacity: .4; } 50% { opacity: .75; } }
-#mouth { position: absolute; left: 12.6%; top: 34.8%; width: 2px; height: 2px; }
+#mouth { position: absolute; left: 12%; top: 33.5%; width: 2px; height: 2px; }
 
 .now { display: grid; gap: 6px; }
 .now small { font: 400 11px var(--f-label); letter-spacing: .2em; text-transform: uppercase; color: var(--c-body); }
