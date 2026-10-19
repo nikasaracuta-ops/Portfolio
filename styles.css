@@ -33,10 +33,10 @@ body {
 .stage {
   position: relative;
   width: 1440px;
-  height: 7557px;
+  height: 7257px;
   overflow: clip;   /* not hidden: that would stop the sticky chameleon */
   /* All artwork, exported from the Figma frame with text and icons hidden */
-  background: #fff url("assets/background.webp?v=4") top left / 1440px 7557px no-repeat;
+  background: #fff url("assets/background.webp?v=5") top left / 1440px 7257px no-repeat;
   /* script.js sets `zoom` so the 1440px design fills the viewport width */
 }
 
@@ -58,7 +58,7 @@ body {
    an animated WebP, 330ms per frame), on the same canvas mapping as in Figma. */
 .bird { opacity: .3; filter: blur(3px); }
 /* The fish swims behind the pink coral (baked into the background): cut the
-   coral's shape out of the fish. Coral sits at (1053.8, 7143.8) on the stage. */
+   coral's shape out of the fish. Coral sits at (1053.8, 6843.8) on the stage. */
 .fish {
   filter: blur(4.2px);
   pointer-events: none;
@@ -75,16 +75,16 @@ body {
 }
 
 /* About, pinned (script.js): the wrapper is the scene (1500px, stage y 459–1959)
-   plus 1000px of scrolling during which the scene stays on screen. --pin-top
+   plus 700px of scrolling during which the scene stays on screen. --pin-top
    (script.js) sticks it so the screen's bottom edge sits at stage y 1720. */
-.pin-wrap { position: absolute; left: 0; top: 459px; width: 1440px; height: 2500px; }
+.pin-wrap { position: absolute; left: 0; top: 459px; width: 1440px; height: 2200px; }
 .pin {
-  position: sticky; top: var(--pin-top, -361px); width: 1440px; height: 1500px;
-  background: #fff url("assets/background.webp?v=4") 0 -459px / 1440px 7557px no-repeat;
+  position: sticky; top: var(--pin-top, -361px); width: 1440px; height: 1500px; overflow: clip;
+  background: #fff url("assets/background.webp?v=5") 0 -459px / 1440px 7257px no-repeat;
 }
 
 /* moved by script.js while pinned: the white cloud shape settles in the centre,
-   the blue cloud bank parts left and right */
+   the blue cloud bank parts left and right, then the shape sinks out of sight */
 .sky-puff, .clouds-px { pointer-events: none; will-change: transform, opacity; }
 .sky-puff { transform-origin: 50% 100%; }
 /* the two halves cross-fade over the middle third, so parting them leaves no seam */
@@ -532,7 +532,7 @@ a:focus-visible { outline: 2px solid var(--white); outline-offset: 4px; }
 
   .sec {
     position: relative; top: auto !important; width: 100%; padding: 0 20px;
-    background: url("assets/background.webp?v=4") no-repeat;
+    background: url("assets/background.webp?v=5") no-repeat;
     background-size: calc(1440px * var(--s, 1)) auto;
     background-position: center calc(var(--y0, 0) * var(--s, 1) * -1px);
   }
@@ -550,7 +550,7 @@ a:focus-visible { outline: 2px solid var(--white); outline-offset: 4px; }
      second background, and the crop fades into the white of the Work section */
   #about {
     --y0: 750; --s: .8; min-height: 690px; padding-top: 40px; padding-bottom: 110px;
-    background-image: url("assets/clouds.webp"), url("assets/background.webp?v=4");
+    background-image: url("assets/clouds.webp"), url("assets/background.webp?v=5");
     background-size: calc(1440px * var(--s)) auto;
     background-position: calc(-60px * var(--s)) calc((1190 - var(--y0)) * var(--s) * 1px), calc(-60px * var(--s)) calc(var(--y0) * var(--s) * -1px);
   }
@@ -581,10 +581,10 @@ a:focus-visible { outline: 2px solid var(--white); outline-offset: 4px; }
   .wcard .thumb { font-size: 22px; }
 
   .sunset { padding: 0; overflow: hidden; background: none; }
-  .sunset-art { zoom: var(--mz, .45); margin-left: -300px; background: url("assets/background.webp?v=4") 0 -6100px / 1440px 7557px no-repeat; }
+  .sunset-art { zoom: var(--mz, .45); margin-left: -300px; background: url("assets/background.webp?v=5") 0 -5800px / 1440px 7257px no-repeat; }
   .sunset-art .l { position: absolute; left: var(--x); top: var(--y); width: auto; height: auto; }
 
-  #contact { --y0: 6920; --s: .9; min-height: 600px; padding-top: 44px; padding-bottom: 110px; text-align: center; }
+  #contact { --y0: 6620; --s: .9; min-height: 600px; padding-top: 44px; padding-bottom: 110px; text-align: center; }
   #open { width: 92%; max-width: 420px; margin: 0 auto; }
   .t-body { margin-top: 28px; font-size: 16px; white-space: normal !important; }
   .t-email { width: 100% !important; max-width: 340px; height: 54px !important; margin: 12px auto 0; font-size: 17px; }

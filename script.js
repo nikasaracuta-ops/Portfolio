@@ -90,12 +90,13 @@ if (sparkle && matchMedia('(hover: hover) and (pointer: fine)').matches) {
 // About, pinned. The scene (stage y 459–1959) sticks once the screen's bottom edge
 // reaches stage y 1720 and stays for the next HOLD px of scrolling (styles.css).
 // Over that stretch: the About text and "?" fade, the blue cloud bank parts to
-// the sides, the white cloud shape sinks into the centre — then the bare sky
-// holds for a moment before the scene lets go and Work scrolls up.
+// the sides, the white cloud shape glides to the centre and sinks until only the
+// sky's straight bottom edge is left — which holds for a moment before the scene
+// lets go and Work scrolls up.
 const about = document.getElementById('about');
 const puff = document.getElementById('skyPuff');
 const cloudsL = document.getElementById('cloudsL'), cloudsR = document.getElementById('cloudsR');
-const PIN_TOP = 459, PIN_BOTTOM = 1720, HOLD = 1000;
+const PIN_TOP = 459, PIN_BOTTOM = 1720, HOLD = 700;
 const PUFF_CX = 661 + 695 / 2;                        // the shape's centre line on the stage
 const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)');
 const ramp = (t, a, b) => { const x = Math.max(0, Math.min(1, (t - a) / (b - a))); return x * x * (3 - 2 * x); };
@@ -110,7 +111,7 @@ function moveSky() {
   }
   // 0 when the scene pins, 1 when it lets go
   const t = Math.max(0, Math.min(1, (-stage.getBoundingClientRect().top / z - (PIN_BOTTOM - vh)) / HOLD));
-  const fade = ramp(t, 0, .3), part = ramp(t, .05, .5), glide = ramp(t, .1, .6);
+  const fade = ramp(t, 0, .25), part = ramp(t, .05, .45), glide = ramp(t, .1, .45), sink = ramp(t, .45, .78);
   about.style.opacity = fade ? (1 - fade).toFixed(3) : '';
   about.style.visibility = fade >= 1 ? 'hidden' : '';
   const move = !reduceMotion.matches;
@@ -118,9 +119,11 @@ function moveSky() {
   cloudsL.style.transform = move && part ? `translate(${-cx}px, ${cy}px)` : '';
   cloudsR.style.transform = move && part ? `translate(${cx}px, ${cy}px)` : '';
   cloudsL.style.opacity = cloudsR.style.opacity = part ? (1 - part).toFixed(3) : '';
-  // the shape ends centred, a little smaller and lower: only its peak rises out of the white
-  const g = move ? glide : 0;
-  puff.style.transform = g ? `translate(${((720 - PUFF_CX) * g).toFixed(1)}px, ${(289 * g).toFixed(1)}px) scale(${(1 - .2 * g).toFixed(3)})` : '';
+  // the shape glides to the centre (a little smaller and lower), then sinks below the
+  // sky's edge into the white, leaving just a horizontal line
+  const g = move ? glide : 0, dy = 289 * g + (move ? 500 * sink : 0);
+  puff.style.transform = g ? `translate(${((720 - PUFF_CX) * g).toFixed(1)}px, ${dy.toFixed(1)}px) scale(${(1 - .2 * g).toFixed(3)})` : '';
+  puff.style.opacity = sink ? (1 - ramp(t, .62, .78)).toFixed(3) : '';
 }
 if (about && puff && cloudsL && cloudsR) {
   const queueSky = () => { if (!skyQueued) { skyQueued = true; requestAnimationFrame(moveSky); } };
