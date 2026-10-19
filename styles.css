@@ -70,9 +70,8 @@ body::after {
 @keyframes grain { 0%, 100% { transform: translate(0, 0); } 25% { transform: translate(-3%, 2%); } 50% { transform: translate(2%, -3%); } 75% { transform: translate(-2%, -1%); } }
 
 /* ---------- The sky (fixed) ---------- */
-.world { position: fixed; inset: 0; z-index: -1; overflow: hidden; background: var(--sky); }
-.world-sky { position: absolute; left: 0; top: 0; width: 100%; will-change: transform; }
-.world-sky img { width: 100%; height: max(119.4vw, 135vh); object-fit: cover; object-position: 50% 0; }
+.world { position: fixed; inset: 0; z-index: -1; overflow: hidden; background: linear-gradient(#0b3a8c, #4f86d8 60%, #dfeafb); }
+#sky { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
 .bird { position: absolute; left: -10vw; top: 22vh; width: min(92vw, 1330px); height: auto; opacity: .32; filter: blur(3px); pointer-events: none; }
 
 /* ---------- Bar ---------- */
@@ -112,6 +111,7 @@ body::after {
 .about-inner { max-width: min(760px, 47vw); display: grid; gap: clamp(24px, 4vh, 44px); }   /* stays on the blue, clear of the white cloud */
 .manifesto { font: 400 clamp(28px, 3.5vw, 60px)/1.1 var(--f-display); letter-spacing: -.01em; text-wrap: pretty; }
 .manifesto .w { opacity: .18; }
+.manifesto { text-shadow: 0 2px 28px color-mix(in srgb, var(--ink) 30%, transparent); }
 .about-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 18px 28px; }
 .pill {
   display: inline-flex; align-items: center; gap: 12px; padding: 16px 28px; border-radius: 999px;
@@ -131,11 +131,8 @@ body::after {
 @keyframes bob { 0%, 100% { transform: translateY(0) rotate(-3deg); } 50% { transform: translateY(-14px) rotate(4deg); } }
 
 /* ---------- 3 · Work ---------- */
-.work { position: relative; background: var(--white); }
-.work::before { /* the sky's white cloud fades into the gallery */
-  content: ""; position: absolute; left: 0; right: 0; bottom: 100%; height: 40vh; pointer-events: none;
-  background: linear-gradient(to bottom, transparent, var(--white));
-}
+.work { position: relative; }
+html:not(.has-sky) .work, html:not(.has-sky) .sunset { background: var(--white); }
 .work-pin { position: relative; height: 100svh; overflow: hidden; display: grid; grid-template-rows: auto 1fr; padding-top: clamp(90px, 13vh, 130px); }
 .work-head { display: grid; justify-items: start; gap: 12px; padding: 0 var(--gutter); }
 .work-head .eyebrow { color: var(--c-blue); }
@@ -183,35 +180,24 @@ body::after {
 .swatch { display: inline-block; width: 10px; height: 10px; border-radius: 50%; background: var(--cham); margin-right: 10px; vertical-align: middle; transition: background .8s; }
 
 /* ---------- 4 · Sunset ---------- */
-.sunset { position: relative; background: linear-gradient(to bottom, var(--white) 0%, #fff7ef 55%, #e9fbfd 100%); }
+.sunset { position: relative; }
 .sunset-pin { position: relative; height: 100svh; overflow: hidden; }
 .sunset-eyebrow { position: absolute; top: clamp(90px, 13vh, 130px); left: var(--gutter); color: var(--c-blue); z-index: 3; }
-.sunset-title { position: absolute; left: 0; right: 0; top: 24vh; z-index: 1; text-align: center; font: 400 clamp(44px, 7vw, 120px)/.95 var(--f-display); color: var(--ink); letter-spacing: -.01em; }
-.sunset-title em { font-style: normal; color: var(--pink); }
-.sunset-art { position: absolute; left: 50%; bottom: 0; width: min(100vw, 1440px); height: 100%; transform: translateX(-50%); }
-.sun { position: absolute; left: 50%; bottom: 14%; width: min(46vw, 64vh); height: auto; transform: translateX(-50%); filter: blur(.5px); }
-.horizon {
-  position: absolute; left: -10vw; right: -10vw; bottom: 0; height: 26%;
-  background: linear-gradient(to bottom, color-mix(in srgb, var(--teal) 0%, #fff) 0%, color-mix(in srgb, var(--teal) 55%, #fff) 30%, var(--teal) 100%);
-  -webkit-mask: linear-gradient(to bottom, transparent, #000 25%); mask: linear-gradient(to bottom, transparent, #000 25%);
-}
-.laptop { position: absolute; left: 50%; bottom: 6%; width: min(38vw, 52vh); transform: translateX(-50%); text-decoration: none; }
-.laptop img { width: 100%; height: auto; }
-.laptop .screen {
-  position: absolute; left: 7.4%; top: 24.2%; width: 56.8%; height: 42%; transform-origin: 0 0; transform: rotate(-10.5deg);
-  display: grid; place-content: center; gap: 4px; text-align: center; color: var(--white);
-}
-.laptop .screen small { font: 400 clamp(8px, .75vw, 11px) var(--f-ui); letter-spacing: .14em; text-transform: uppercase; opacity: .85; }
-.laptop .screen strong { font: 400 clamp(18px, 2.2vw, 34px)/1.05 var(--f-display); white-space: nowrap; }
-.laptop:hover .screen strong, .laptop:focus-visible .screen strong { text-decoration: underline; text-underline-offset: 6px; text-decoration-thickness: 1px; }
-.leaf { position: absolute; top: 4%; width: min(42vw, 600px); height: auto; pointer-events: none; z-index: 2; }
-.leaf-l { left: -4vw; transform-origin: 0% 72%; }
-.leaf-r { right: -4vw; transform: scaleX(-1); transform-origin: 0% 72%; }
+.sunset-title { position: absolute; left: 0; right: 0; top: 13vh; z-index: 1; text-align: center; font: 400 clamp(40px, 5.4vw, 92px)/1 var(--f-display); color: var(--ink); letter-spacing: -.01em; }
+.sunset-title em { font-style: normal; color: #e0479a; }
+/* the ring of text circles the sun that sky.js paints in the middle of the screen */
+.badge { position: absolute; left: 50%; top: 52%; width: min(58vh, 74vw); aspect-ratio: 1; transform: translate(-50%, -50%); display: grid; place-items: center; text-decoration: none; color: var(--ink); border-radius: 50%; }
+.badge svg { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; animation: spin 26s linear infinite; }
+.badge text { font: 400 11.5px var(--f-ui); letter-spacing: .32em; text-transform: uppercase; fill: currentColor; }
+.badge-arrow { font: 300 clamp(40px, 6vh, 64px)/1 var(--f-ui); color: var(--white); transition: transform .6s var(--ease-out); text-shadow: 0 4px 30px rgba(224, 71, 154, .5); }
+.badge:hover .badge-arrow, .badge:focus-visible .badge-arrow { transform: translate(6px, -6px) scale(1.15); }
+.badge:hover svg { animation-duration: 8s; }
+@keyframes spin { to { transform: rotate(360deg); } }
 
 /* ---------- 5 · The sea ---------- */
+html:not(.has-sky) .contact { background: linear-gradient(#3bbdcc, #0a4f6b); }
 .contact {
   position: relative; min-height: 100svh; color: var(--white); overflow: hidden;
-  background: var(--teal) url("assets/scenes/sea.webp") center bottom / cover no-repeat;
   display: grid; grid-template-rows: 1fr auto; padding: clamp(110px, 16vh, 180px) var(--gutter) 0;
 }
 .contact-inner { display: grid; justify-items: start; align-content: start; gap: clamp(22px, 4vh, 40px); max-width: 1180px; position: relative; z-index: 1; }
@@ -234,7 +220,7 @@ body::after {
 .foot {
   position: relative; z-index: 1; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 10px 24px;
   padding: 22px 0 26px; margin-top: 12vh; border-top: 1px solid rgba(255, 255, 255, .4);
-  font: 400 11px var(--f-ui); letter-spacing: .1em; text-transform: uppercase; color: var(--ink);
+  font: 400 11px var(--f-ui); letter-spacing: .1em; text-transform: uppercase; color: rgba(255, 255, 255, .8);
 }
 .to-top { text-decoration: none; }
 .to-top:hover { text-decoration: underline; }
@@ -285,19 +271,15 @@ html.sparkle-on, html.sparkle-on * { cursor: none !important; }
   .project-tags { grid-column: 1 / -1; text-align: left; }
   .work-cham { position: sticky; top: auto; right: auto; bottom: 16px; margin: 30px var(--gutter) 0 auto; width: 118px; }
   .sunset-title { top: 20vh; z-index: 3; }
-  .world-sky img { object-position: 12% 0; }   /* keeps the white cloud off to the side, clear of the text */
-  .manifesto { text-shadow: 0 2px 24px color-mix(in srgb, var(--ink) 35%, transparent); }
   .lava { filter: url(#goo-sm); }
-  .sunset-pin { height: 82svh; }
-  .sun { width: 78vw; bottom: 18%; }
-  .laptop { width: 70vw; }
-  .leaf { width: 62vw; }
+  .sunset-pin { height: 90svh; }
+  .badge { width: 80vw; }
   .contact { padding-top: 120px; }
   .fish { width: 120vw; }
 }
 
 /* ---------- Reduced motion ---------- */
 @media (prefers-reduced-motion: reduce) {
-  body::after, .hero-cue i, .qbtn img, .pulse, .cham .aura, .lava b, .fish, .loader-logo, .sparkle img { animation: none; }
+  body::after, .hero-cue i, .qbtn img, .pulse, .cham .aura, .lava b, .fish, .loader-logo, .sparkle img, .badge svg { animation: none; }
   .manifesto .w { opacity: 1; }
 }

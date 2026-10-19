@@ -11,7 +11,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@125,300;125,400;125,600&family=Italiana&family=Unbounded:wght@300;400;500&display=swap">
-  <link rel="stylesheet" href="styles.css?v=9b01e19c">
+  <link rel="stylesheet" href="styles.css?v=62b4ef10">
   <link rel="stylesheet" href="popups.css?v=ab761dc7">
   <script>document.documentElement.classList.add('js', 'is-loading')</script>
 </head>
@@ -22,10 +22,10 @@
     <p class="loader-text">Loading <span id="loaderNum">0</span>%</p>
   </div>
 
-  <!-- The sky behind the first two scenes: fixed to the screen and drifted upwards
-       by main.js as you scroll, from the deep blue down to the white cloud. -->
+  <!-- The world behind the page: sky, clouds, sun and sea painted live by sky.js
+       (WebGL), changing scene as you scroll. The gradient is the fallback. -->
   <div class="world" aria-hidden="true">
-    <div class="world-sky"><img src="assets/scenes/sky.webp" width="1440" height="1720" alt=""></div>
+    <canvas id="sky"></canvas>
     <img class="bird" src="assets/bird.webp" width="1328" height="559" alt="">
   </div>
 
@@ -86,21 +86,18 @@
       </div>
     </section>
 
-    <!-- 4 · Sunset: the leaves swing open, the sun rises out of the sea, the laptop links to Behance -->
-    <section class="sunset" id="sunset" aria-label="More projects on Behance">
+    <!-- 4 · Sunset: the sun rises over the sea (sky.js); the ring around it links to Behance -->
+    <section class="sunset" id="sunset" aria-labelledby="sunset-title">
       <div class="sunset-pin">
         <p class="eyebrow sunset-eyebrow"><span>(03)</span> More</p>
-        <h2 class="sunset-title">More on the<br><em>horizon</em></h2>
-        <div class="sunset-art">
-          <img class="sun" src="assets/sun.svg" width="661" height="661" alt="">
-          <div class="horizon" aria-hidden="true"></div>
-          <a class="laptop" href="#" data-behance target="_blank" rel="noopener">
-            <img src="assets/laptop.svg" width="553" height="496" alt="">
-            <span class="screen"><small>Discover more projects</small><strong>on Behance <span aria-hidden="true">↗</span></strong></span>
-          </a>
-        </div>
-        <img class="leaf leaf-l" src="assets/leaf.webp" width="600" height="735" alt="">
-        <img class="leaf leaf-r" src="assets/leaf.webp" width="600" height="735" alt="">
+        <h2 class="sunset-title" id="sunset-title">More on the <em>horizon</em></h2>
+        <a class="badge" href="#" data-behance target="_blank" rel="noopener" aria-label="Discover more projects on Behance">
+          <svg viewBox="0 0 200 200" aria-hidden="true">
+            <defs><path id="ring" d="M100 100m-84 0a84 84 0 1 1 168 0a84 84 0 1 1-168 0"/></defs>
+            <text><textPath href="#ring">Discover more projects · on Behance · Discover more projects · on Behance ·</textPath></text>
+          </svg>
+          <span class="badge-arrow" aria-hidden="true">↗</span>
+        </a>
       </div>
     </section>
 
@@ -211,6 +208,7 @@
   <script src="loader.js?v=68ee955a"></script>
   <script src="about.js?v=37dfe53c"></script>
   <script src="work.js?v=664acf3f"></script>
-  <script src="main.js?v=9569c931"></script>
+  <script src="sky.js?v=37097f1f"></script>
+  <script src="main.js?v=5a8a55eb"></script>
 </body>
 </html>

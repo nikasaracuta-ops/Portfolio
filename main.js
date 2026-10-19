@@ -8,7 +8,7 @@
   const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
   const ok = !!(window.gsap && window.ScrollTrigger);
 
-  // Behance profile: the laptop screen and the Behance button link here.
+  // Behance profile: the ring around the sun and the Behance button link here.
   // TODO: paste the profile URL, e.g. 'https://www.behance.net/yourname'.
   const BEHANCE_URL = '';
   $$('[data-behance]').forEach(a => { if (BEHANCE_URL) a.href = BEHANCE_URL; else a.removeAttribute('target'); });
@@ -60,14 +60,11 @@
 
   const mm = gsap.matchMedia();
 
+  // the bird belongs to the sky: it leaves before the gallery
+  gsap.to('.bird', { opacity: 0, ease: 'none', scrollTrigger: { trigger: '.work', start: 'top bottom', end: 'top 30%', scrub: true } });
+
   /* ───── Desktop & tablet, with motion ───── */
   mm.add('(min-width: 761px) and (prefers-reduced-motion: no-preference)', () => {
-    // the sky drifts up behind the hero and the introduction
-    const sky = $('.world-sky');
-    gsap.to(sky, {
-      y: () => -(sky.offsetHeight - innerHeight), ease: 'none',
-      scrollTrigger: { trigger: '.hero', start: 'top top', endTrigger: '.about', end: 'bottom bottom', scrub: true, invalidateOnRefresh: true }
-    });
     // the title floats away slower than the page, the bird crosses the sky
     gsap.to('.hero-title', { yPercent: -60, scale: 1.08, opacity: 0, ease: 'none', scrollTrigger: { trigger: '.hero', start: 'top top', end: 'bottom top', scrub: true } });
     gsap.to('.hero-meta', { yPercent: -120, opacity: 0, ease: 'none', scrollTrigger: { trigger: '.hero', start: 'center center', end: 'bottom top', scrub: true } });
@@ -80,8 +77,6 @@
       .from('.about-actions', { y: 30, opacity: 0, duration: 1.5 }, '-=1')
       .to({}, { duration: 1.5 });
     gsap.from('.qbtn', { scale: .4, opacity: 0, rotate: -30, duration: 1.4, ease: 'back.out(1.6)', scrollTrigger: { trigger: '.about', start: 'top 70%' } });
-    // leaving the sky: it fades to the white of the gallery
-    gsap.to('.world', { opacity: 0, ease: 'none', scrollTrigger: { trigger: '.work', start: 'top bottom', end: 'top top', scrub: true } });
 
     // work: the gallery scrolls sideways; the chameleon follows the project in view
     const track = $('#workTrack');
@@ -95,15 +90,11 @@
     });
     gsap.from('.work-title', { yPercent: 40, opacity: 0, duration: 1.4, ease: 'expo.out', scrollTrigger: { trigger: '.work', start: 'top 75%' } });
 
-    // sunset: the leaves swing open, the sun rises out of the sea, the laptop lands on it
-    gsap.timeline({ scrollTrigger: { trigger: '.sunset-pin', start: 'top top', end: '+=130%', pin: true, scrub: .8 } })
-      .from('.sunset-title', { yPercent: 40, opacity: 0, ease: 'power2.out', duration: .5 }, 0)
-      .to('.sunset-title', { yPercent: -60, opacity: 0, ease: 'power2.in', duration: .5 }, .75)
-      .fromTo('.leaf-l', { rotate: 18 }, { rotate: -55, ease: 'power2.inOut', duration: 1 }, 0)
-      .fromTo('.leaf-r', { rotate: 18 }, { rotate: -55, ease: 'power2.inOut', duration: 1 }, 0)
-      .fromTo('.sun', { yPercent: 55, scale: .8 }, { yPercent: 0, scale: 1, ease: 'power2.out', duration: 1.2 }, .15)
-      .fromTo('.laptop', { yPercent: 60, opacity: 0 }, { yPercent: 0, opacity: 1, ease: 'power3.out', duration: .9 }, .6)
-      .to({}, { duration: .5 });
+    // sunset: held while the sun rises (sky.js); the title and the Behance ring arrive
+    gsap.timeline({ scrollTrigger: { trigger: '.sunset-pin', start: 'top top', end: '+=110%', pin: true, scrub: .8 } })
+      .from('.sunset-title', { yPercent: 60, opacity: 0, ease: 'power2.out', duration: .5 }, 0)
+      .from('.badge', { scale: .6, opacity: 0, rotate: -40, ease: 'power3.out', duration: .7 }, .2)
+      .to({}, { duration: .8 });
 
     // the sea: the headline rises in
     gsap.from('.contact-title', { yPercent: 30, opacity: 0, duration: 1.6, ease: 'expo.out', scrollTrigger: { trigger: '.contact', start: 'top 65%' } });
@@ -113,19 +104,11 @@
   /* ───── Phones, with motion: lighter touches, no pinning ───── */
   mm.add('(max-width: 760px) and (prefers-reduced-motion: no-preference)', () => {
     $$('.manifesto .w').forEach(w => { w.style.opacity = 1; });
-    gsap.to('.world', { opacity: 0, ease: 'none', scrollTrigger: { trigger: '.work', start: 'top bottom', end: 'top 20%', scrub: true } });
-    const sky = $('.world-sky');
-    gsap.to(sky, { y: () => -(sky.offsetHeight - innerHeight), ease: 'none', scrollTrigger: { trigger: '.hero', start: 'top top', endTrigger: '.about', end: 'bottom bottom', scrub: true, invalidateOnRefresh: true } });
-    gsap.timeline({ scrollTrigger: { trigger: '.sunset', start: 'top 80%', end: 'bottom 70%', scrub: .6 } })
-      .fromTo('.leaf-l, .leaf-r', { rotate: 18 }, { rotate: -55, ease: 'none' }, 0)
-      .fromTo('.sun', { yPercent: 40 }, { yPercent: 0, ease: 'none' }, 0);
+    gsap.from('.badge', { scale: .6, opacity: 0, ease: 'none', scrollTrigger: { trigger: '.sunset', start: 'top 80%', end: 'center center', scrub: .6 } });
   });
 
   /* ───── Reduced motion: everything in its resting place ───── */
-  mm.add('(prefers-reduced-motion: reduce)', () => {
-    gsap.set('.leaf-l, .leaf-r', { rotate: -55 });
-    gsap.to('.world', { opacity: 0, ease: 'none', scrollTrigger: { trigger: '.work', start: 'top bottom', end: 'top top', scrub: true } });
-  });
+  mm.add('(prefers-reduced-motion: reduce)', () => {});
 
   /* ───── Bar: dark type over the white parts, current section marked ───── */
   const bar = $('#bar'), links = $$('.bar-nav a');
