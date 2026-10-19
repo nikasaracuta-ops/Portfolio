@@ -36,7 +36,7 @@ body {
   height: 7257px;
   overflow: clip;   /* not hidden: that would stop the sticky chameleon */
   /* All artwork, exported from the Figma frame with text and icons hidden */
-  background: #fff url("assets/background.webp?v=5") top left / 1440px 7257px no-repeat;
+  background: #fff url("assets/background.webp?v=6") top left / 1440px 7257px no-repeat;
   /* script.js sets `zoom` so the 1440px design fills the viewport width */
 }
 
@@ -80,7 +80,7 @@ body {
 .pin-wrap { position: absolute; left: 0; top: 459px; width: 1440px; height: 2200px; }
 .pin {
   position: sticky; top: var(--pin-top, -361px); width: 1440px; height: 1500px; overflow: clip;
-  background: #fff url("assets/background.webp?v=5") 0 -459px / 1440px 7257px no-repeat;
+  background: #fff url("assets/background.webp?v=6") 0 -459px / 1440px 7257px no-repeat;
 }
 
 /* moved by script.js while pinned: the white cloud shape settles in the centre,
@@ -502,6 +502,9 @@ a:focus-visible { outline: 2px solid var(--white); outline-offset: 4px; }
 
 /* ---------- Sunset ---------- */
 .sunset-art { position: relative; width: 1440px; height: 860px; }
+/* leaf doors (script.js): pivot on the blade's centre; the right one is mirrored */
+.leaf { width: 600px; height: 735px; pointer-events: none; will-change: transform; transform-origin: 239px 353px; }
+.leaf-r { transform-origin: 361px 353px; transform: scaleX(-1); }
 /* laptop screen: shows the projects one by one; click opens the one on screen */
 .screen {
   width: 314px; height: 208px; transform-origin: 0 0; transform: rotate(-10.5deg);
@@ -532,7 +535,7 @@ a:focus-visible { outline: 2px solid var(--white); outline-offset: 4px; }
 
   .sec {
     position: relative; top: auto !important; width: 100%; padding: 0 20px;
-    background: url("assets/background.webp?v=5") no-repeat;
+    background: url("assets/background.webp?v=6") no-repeat;
     background-size: calc(1440px * var(--s, 1)) auto;
     background-position: center calc(var(--y0, 0) * var(--s, 1) * -1px);
   }
@@ -550,7 +553,7 @@ a:focus-visible { outline: 2px solid var(--white); outline-offset: 4px; }
      second background, and the crop fades into the white of the Work section */
   #about {
     --y0: 750; --s: .8; min-height: 690px; padding-top: 40px; padding-bottom: 110px;
-    background-image: url("assets/clouds.webp"), url("assets/background.webp?v=5");
+    background-image: url("assets/clouds.webp"), url("assets/background.webp?v=6");
     background-size: calc(1440px * var(--s)) auto;
     background-position: calc(-60px * var(--s)) calc((1190 - var(--y0)) * var(--s) * 1px), calc(-60px * var(--s)) calc(var(--y0) * var(--s) * -1px);
   }
@@ -581,7 +584,7 @@ a:focus-visible { outline: 2px solid var(--white); outline-offset: 4px; }
   .wcard .thumb { font-size: 22px; }
 
   .sunset { padding: 0; overflow: hidden; background: none; }
-  .sunset-art { zoom: var(--mz, .45); margin-left: -300px; background: url("assets/background.webp?v=5") 0 -5800px / 1440px 7257px no-repeat; }
+  .sunset-art { zoom: var(--mz, .45); margin-left: -300px; background: url("assets/background.webp?v=6") 0 -5800px / 1440px 7257px no-repeat; }
   .sunset-art .l { position: absolute; left: var(--x); top: var(--y); width: auto; height: auto; }
 
   #contact { --y0: 6620; --s: .9; min-height: 600px; padding-top: 44px; padding-bottom: 110px; text-align: center; }

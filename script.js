@@ -132,3 +132,27 @@ if (about && puff && cloudsL && cloudsR) {
   addEventListener('resize', queueSky);
   moveSky();
 }
+
+// Leaf doors: the Figma leaf and its mirror meet over the sun and laptop, then
+// swing open together as the sunset scrolls up, ending at the leaves' Figma spot.
+const sunsetArt = document.querySelector('.sunset-art');
+const leafL = document.getElementById('leafL'), leafR = document.getElementById('leafR');
+// closed: blade centres moved from their Figma spot (239, -209) / (1201, -209) to (560, 400) / (880, 400)
+const DOOR = { dx: 321, dy: 609, rot: 12, scale: 1.9 };
+let leavesQueued = false;
+function moveLeaves() {
+  leavesQueued = false;
+  const vh = innerHeight, r = sunsetArt.getBoundingClientRect();
+  // 0 (closed) until the sunset's top reaches 45% of the screen, 1 (open) once it reaches the top
+  let p = reduceMotion.matches ? 1 : Math.max(0, Math.min(1, (.45 * vh - r.top) / (.45 * vh)));
+  p = p * p * (3 - 2 * p);
+  const k = 1 - p, s = 1 + (DOOR.scale - 1) * k, ty = DOOR.dy * k, rot = DOOR.rot * k;
+  leafL.style.transform = `translate(${(DOOR.dx * k).toFixed(1)}px, ${ty.toFixed(1)}px) rotate(${rot.toFixed(2)}deg) scale(${s.toFixed(3)})`;
+  leafR.style.transform = `translate(${(-DOOR.dx * k).toFixed(1)}px, ${ty.toFixed(1)}px) rotate(${(-rot).toFixed(2)}deg) scale(${(-s).toFixed(3)}, ${s.toFixed(3)})`;
+}
+if (sunsetArt && leafL && leafR) {
+  const queueLeaves = () => { if (!leavesQueued) { leavesQueued = true; requestAnimationFrame(moveLeaves); } };
+  addEventListener('scroll', queueLeaves, { passive: true });
+  addEventListener('resize', queueLeaves);
+  moveLeaves();
+}
