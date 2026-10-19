@@ -4,8 +4,10 @@ Static one-page portfolio built from the Figma frame **Main** (node `315:133`) i
 `PORTFOLIO` file. Open `index.html` in a browser — no build step.
 
 - `assets/background.webp` — all artwork, exported from the Figma frame with text and icons hidden.
-  The white band in the Work section is stretched by 2320px (the page is 6557px tall instead of
-  Figma's 4237px) to make room for the scrolling project list.
+  The page is 7557px tall instead of Figma's 4237px: 1000px of white at y 1960 for the pinned
+  About scene to hold, and 2320px in the Work section for the scrolling project list. The white
+  cloud shape and the blue cloud bank between About and Work are separate layers
+  (`sky-puff.webp`, `clouds.webp`) so they can move while About is pinned.
 - `assets/type-*.svg` — display headings exported from Figma as outlined SVGs (exact letterforms).
 - `assets/icon-*.svg` — LinkedIn / Behance icons.
 - `fonts/` — drop the Roc Grotesk Wide and Area Inktrap Extended `.woff2` files here (names in

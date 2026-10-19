@@ -33,10 +33,10 @@ body {
 .stage {
   position: relative;
   width: 1440px;
-  height: 6557px;
+  height: 7557px;
   overflow: clip;   /* not hidden: that would stop the sticky chameleon */
   /* All artwork, exported from the Figma frame with text and icons hidden */
-  background: #fff url("assets/background.webp?v=3") top left / 1440px 6557px no-repeat;
+  background: #fff url("assets/background.webp?v=4") top left / 1440px 7557px no-repeat;
   /* script.js sets `zoom` so the 1440px design fills the viewport width */
 }
 
@@ -58,7 +58,7 @@ body {
    an animated WebP, 330ms per frame), on the same canvas mapping as in Figma. */
 .bird { opacity: .3; filter: blur(3px); }
 /* The fish swims behind the pink coral (baked into the background): cut the
-   coral's shape out of the fish. Coral sits at (1053.8, 6143.8) on the stage. */
+   coral's shape out of the fish. Coral sits at (1053.8, 7143.8) on the stage. */
 .fish {
   filter: blur(4.2px);
   pointer-events: none;
@@ -74,8 +74,17 @@ body {
           mask-composite: exclude;
 }
 
-/* About → Work transition (script.js moves these with the scroll): the white
-   cloud shape glides to the centre, the blue cloud bank parts left and right */
+/* About, pinned (script.js): the wrapper is the scene (1500px, stage y 459–1959)
+   plus 1000px of scrolling during which the scene stays on screen. --pin-top
+   (script.js) sticks it so the screen's bottom edge sits at stage y 1720. */
+.pin-wrap { position: absolute; left: 0; top: 459px; width: 1440px; height: 2500px; }
+.pin {
+  position: sticky; top: var(--pin-top, -361px); width: 1440px; height: 1500px;
+  background: #fff url("assets/background.webp?v=4") 0 -459px / 1440px 7557px no-repeat;
+}
+
+/* moved by script.js while pinned: the white cloud shape settles in the centre,
+   the blue cloud bank parts left and right */
 .sky-puff, .clouds-px { pointer-events: none; will-change: transform, opacity; }
 .sky-puff { transform-origin: 50% 100%; }
 /* the two halves cross-fade over the middle third, so parting them leaves no seam */
@@ -519,10 +528,11 @@ a:focus-visible { outline: 2px solid var(--white); outline-offset: 4px; }
   .stage { width: 100%; height: auto; background: #fff; display: flex; flex-direction: column; }
   .hero { order: 1; } #about { order: 2; } #work { order: 3; } .sunset { order: 4; } #contact { order: 5; }
   .bird, .fish, .sky-puff, .clouds-px, .stage .nav { display: none !important; }
+  .pin-wrap, .pin { display: contents; }   /* no pinned scene on phones: About is a normal section */
 
   .sec {
     position: relative; top: auto !important; width: 100%; padding: 0 20px;
-    background: url("assets/background.webp?v=3") no-repeat;
+    background: url("assets/background.webp?v=4") no-repeat;
     background-size: calc(1440px * var(--s, 1)) auto;
     background-position: center calc(var(--y0, 0) * var(--s, 1) * -1px);
   }
@@ -540,7 +550,7 @@ a:focus-visible { outline: 2px solid var(--white); outline-offset: 4px; }
      second background, and the crop fades into the white of the Work section */
   #about {
     --y0: 750; --s: .8; min-height: 690px; padding-top: 40px; padding-bottom: 110px;
-    background-image: url("assets/clouds.webp"), url("assets/background.webp?v=3");
+    background-image: url("assets/clouds.webp"), url("assets/background.webp?v=4");
     background-size: calc(1440px * var(--s)) auto;
     background-position: calc(-60px * var(--s)) calc((1190 - var(--y0)) * var(--s) * 1px), calc(-60px * var(--s)) calc(var(--y0) * var(--s) * -1px);
   }
@@ -571,10 +581,10 @@ a:focus-visible { outline: 2px solid var(--white); outline-offset: 4px; }
   .wcard .thumb { font-size: 22px; }
 
   .sunset { padding: 0; overflow: hidden; background: none; }
-  .sunset-art { zoom: var(--mz, .45); margin-left: -300px; background: url("assets/background.webp?v=3") 0 -5100px / 1440px 6557px no-repeat; }
+  .sunset-art { zoom: var(--mz, .45); margin-left: -300px; background: url("assets/background.webp?v=4") 0 -6100px / 1440px 7557px no-repeat; }
   .sunset-art .l { position: absolute; left: var(--x); top: var(--y); width: auto; height: auto; }
 
-  #contact { --y0: 5920; --s: .9; min-height: 600px; padding-top: 44px; padding-bottom: 110px; text-align: center; }
+  #contact { --y0: 6920; --s: .9; min-height: 600px; padding-top: 44px; padding-bottom: 110px; text-align: center; }
   #open { width: 92%; max-width: 420px; margin: 0 auto; }
   .t-body { margin-top: 28px; font-size: 16px; white-space: normal !important; }
   .t-email { width: 100% !important; max-width: 340px; height: 54px !important; margin: 12px auto 0; font-size: 17px; }

@@ -11,7 +11,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@125,400;125,700&family=Italiana&family=Unbounded:wght@300;400;500&display=swap">
-  <link rel="stylesheet" href="styles.css?v=a99400b5">
+  <link rel="stylesheet" href="styles.css?v=e82fa424">
   <script>document.documentElement.classList.add('js', 'is-loading')</script>
 </head>
 <body>
@@ -25,6 +25,30 @@
        (exact letterforms); body text, nav, button and icons are live HTML at
        their Figma positions. script.js scales the 1440px stage to the viewport. -->
   <main class="stage" id="home">
+
+    <!-- About, pinned (script.js): once it fills the screen it stays put while the
+         page keeps scrolling; the text and "?" fade, the blue cloud bank parts to the
+         sides and the white cloud shape settles in the centre, then the sky holds for
+         a moment before Work scrolls up. The scene carries its own copy of the
+         background (stage y 459–1959), so the page underneath can move on. Child
+         positions are relative to the scene (stage y − 459). -->
+    <div class="pin-wrap" id="pinWrap">
+      <div class="pin" id="pin">
+        <img class="l sky-puff" id="skyPuff" style="--x:661px;--y:306px;--w:695px;--h:855px" src="assets/sky-puff.webp" alt="">
+        <img class="l clouds-px clouds-l" id="cloudsL" style="--x:0;--y:731px;--w:1440px;--h:700px" src="assets/clouds.webp" alt="">
+        <img class="l clouds-px clouds-r" id="cloudsR" style="--x:0;--y:731px;--w:1440px;--h:700px" src="assets/clouds.webp" alt="">
+
+        <section class="sec" id="about" style="top:400px" aria-labelledby="hello">
+          <h2 class="l reveal type" id="hello" style="--d:0s;--x:178.65px;--y:11.58px"><img src="assets/type-hello.svg" width="306" height="121" alt="Hello,"></h2>
+          <div class="l reveal t-intro" style="--d:.15s;--x:176px;--y:156px;--w:473px">
+            <p>I’m Nika, a third-year student in Digital Design &amp; Development, currently specialising in visual design and experience design.</p>
+            <p>Inspired by all kinds of creative fields, I’m passionate about creating useful and inspiring projects.</p>
+          </div>
+          <a class="l reveal btn" style="--d:.3s;--x:176px;--y:450px;--w:229px;--h:48px" href="#about" data-about>About me</a>
+          <button class="l reveal qbtn" style="--d:.2s;--x:958.66px;--y:131.37px" data-about aria-label="Who is behind the question mark? Meet Nika"><img src="assets/type-question.svg" width="106" height="196" alt=""></button>
+        </section>
+      </div>
+    </div>
 
     <header class="sec hero" style="top:0">
     <!-- Animated bird, layered over the background at its Figma position -->
@@ -44,7 +68,7 @@
 
     <!-- Sunset: sun, water lines and laptop as separate layers, stacked as in Figma.
          The laptop screen shows the projects one by one (chameleon.js). -->
-    <div class="sec sunset" style="top:5100px">
+    <div class="sec sunset" style="top:6100px">
       <div class="sunset-art">
         <img class="l" style="--x:390px;--y:16px" src="assets/sun.svg" width="661" height="661" alt="">
         <img class="l" style="--x:0px;--y:551px" src="assets/waves.svg" width="1440" height="264" alt="">
@@ -54,29 +78,11 @@
         </button>
       </div>
     </div>
-    <img class="l fish" style="--x:-171px;--y:5637px;--w:3150px;--h:2100px" src="assets/fish.gif" alt="">
+    <img class="l fish" style="--x:-171px;--y:6637px;--w:3150px;--h:2100px" src="assets/fish.gif" alt="">
 
-
-    <!-- About -->
-    <!-- About → Work transition (script.js): the white cloud shape behind the "?"
-         glides to the centre while the blue cloud bank parts to the sides. Both are
-         cut out of the background so they can move. -->
-    <img class="l sky-puff" id="skyPuff" style="--x:661px;--y:765px;--w:695px;--h:855px" src="assets/sky-puff.webp" alt="">
-    <img class="l clouds-px clouds-l" id="cloudsL" style="--x:0;--y:1190px;--w:1440px;--h:700px" src="assets/clouds.webp" alt="">
-    <img class="l clouds-px clouds-r" id="cloudsR" style="--x:0;--y:1190px;--w:1440px;--h:700px" src="assets/clouds.webp" alt="">
-
-    <section class="sec" id="about" style="top:859px" aria-labelledby="hello">
-      <h2 class="l reveal type" id="hello" style="--d:0s;--x:178.65px;--y:11.58px"><img src="assets/type-hello.svg" width="306" height="121" alt="Hello,"></h2>
-      <div class="l reveal t-intro" style="--d:.15s;--x:176px;--y:156px;--w:473px">
-        <p>I’m Nika, a third-year student in Digital Design &amp; Development, currently specialising in visual design and experience design.</p>
-        <p>Inspired by all kinds of creative fields, I’m passionate about creating useful and inspiring projects.</p>
-      </div>
-      <a class="l reveal btn" style="--d:.3s;--x:176px;--y:450px;--w:229px;--h:48px" href="#about" data-about>About me</a>
-      <button class="l reveal qbtn" style="--d:.2s;--x:958.66px;--y:131.37px" data-about aria-label="Who is behind the question mark? Meet Nika"><img src="assets/type-question.svg" width="106" height="196" alt=""></button>
-    </section>
 
     <!-- Work -->
-    <section class="sec" id="work" style="top:1698px" aria-labelledby="mywork">
+    <section class="sec" id="work" style="top:2698px" aria-labelledby="mywork">
       <h2 class="l reveal type" id="mywork" style="--d:0s;--x:477.79px;--y:24.45px"><img src="assets/type-my-work.svg?v=2" width="487" height="129" alt="My work"></h2>
       <!-- Sticky chameleon beside the scrolling project list (from the work-page
            artifact): its tongue sticks to the project in the middle of the screen. -->
@@ -97,7 +103,7 @@
     </section>
 
     <!-- Contact -->
-    <section class="sec" id="contact" style="top:5994px" aria-labelledby="open">
+    <section class="sec" id="contact" style="top:6994px" aria-labelledby="open">
       <h2 class="l reveal type" id="open" style="--d:0s;--x:405.7px;--y:16.08px"><img src="assets/type-open.svg" width="630" height="68" alt="Open for new projects"></h2>
       <p class="l reveal t-body" style="--d:.12s;--x:520px;--y:112px;--w:400px">Write directly to</p>
       <a class="l reveal t-email" style="--d:.2s;--x:520px;--y:150px;--w:400px;--h:56px" href="mailto:nikasaracuta@gmail.com">nikasaracuta@gmail.com</a>
@@ -204,7 +210,7 @@
   </div>
 
   <script src="loader.js?v=68ee955a"></script>
-  <script src="script.js?v=2f54cb3b"></script>
+  <script src="script.js?v=5bc7f44e"></script>
   <script src="about.js?v=37dfe53c"></script>
   <script src="chameleon.js?v=6754f284"></script>
 </body>
