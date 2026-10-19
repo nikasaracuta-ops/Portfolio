@@ -74,10 +74,11 @@
     }
   ];
 
-  // black and white: every project colour becomes the grey of the same lightness
+  // black and white site: the chameleon is a black lamp and only its wax keeps the
+  // project's colour; the card placeholders become greys of the same lightness
   const grey = h => { const [r, g, b] = [1, 3, 5].map(k => parseInt(h.slice(k, k + 2), 16));
     const l = Math.round(.299 * r + .587 * g + .114 * b).toString(16).padStart(2, '0'); return '#' + l + l + l; };
-  PROJECTS.forEach(p => { for (const k of ['hex', 'lava', 'tint']) if (p[k]) p[k] = grey(p[k]); });
+  PROJECTS.forEach(p => { p.lava = '#151515'; p.tint = grey(p.tint || p.hex); });
 
   const page = $('.stage');
   const list = $('#workList'), workStage = $('.work-stage'), nowName = $('#nowName');
