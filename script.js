@@ -134,11 +134,12 @@ if (about && puff && cloudsL && cloudsR) {
 }
 
 // Leaf doors: the Figma leaf and its mirror meet over the sun and laptop, then
-// swing open together as the sunset scrolls up, ending at the leaves' Figma spot.
+// swing outwards together on their stems as the sunset scrolls up.
 const sunsetArt = document.querySelector('.sunset-art');
 const leafL = document.getElementById('leafL'), leafR = document.getElementById('leafR');
-// closed: blade centres moved from their Figma spot (239, -209) / (1201, -209) to (560, 400) / (880, 400)
-const DOOR = { dx: 321, dy: 609, rot: 12, scale: 1.9 };
+// one size throughout, hinged on the stem ends at the screen edges: closed, the blades
+// meet over the sun; open, they have swung up and out
+const DOOR = { scale: 1.8, closed: 20, open: -55 };
 let leavesQueued = false;
 function moveLeaves() {
   leavesQueued = false;
@@ -146,13 +147,32 @@ function moveLeaves() {
   // 0 (closed) until the sunset's top reaches 45% of the screen, 1 (open) once it reaches the top
   let p = reduceMotion.matches ? 1 : Math.max(0, Math.min(1, (.45 * vh - r.top) / (.45 * vh)));
   p = p * p * (3 - 2 * p);
-  const k = 1 - p, s = 1 + (DOOR.scale - 1) * k, ty = DOOR.dy * k, rot = DOOR.rot * k;
-  leafL.style.transform = `translate(${(DOOR.dx * k).toFixed(1)}px, ${ty.toFixed(1)}px) rotate(${rot.toFixed(2)}deg) scale(${s.toFixed(3)})`;
-  leafR.style.transform = `translate(${(-DOOR.dx * k).toFixed(1)}px, ${ty.toFixed(1)}px) rotate(${(-rot).toFixed(2)}deg) scale(${(-s).toFixed(3)}, ${s.toFixed(3)})`;
+  const a = DOOR.closed + (DOOR.open - DOOR.closed) * p, s = DOOR.scale;
+  leafL.style.transform = `rotate(${a.toFixed(2)}deg) scale(${s})`;
+  leafR.style.transform = `rotate(${(-a).toFixed(2)}deg) scale(${-s}, ${s})`;
 }
 if (sunsetArt && leafL && leafR) {
   const queueLeaves = () => { if (!leavesQueued) { leavesQueued = true; requestAnimationFrame(moveLeaves); } };
   addEventListener('scroll', queueLeaves, { passive: true });
   addEventListener('resize', queueLeaves);
   moveLeaves();
+}
+
+// Menu colour (desktop): the fixed top menu is white over the sky and the sea and
+// turns blue over the white stretch from Work down to the top of the sunset.
+const nav = document.querySelector('.stage .nav');
+const work = document.getElementById('work');
+let navQueued = false;
+function toneNav() {
+  navQueued = false;
+  if (MOBILE.matches) { nav.classList.remove('on-light'); return; }
+  const z = parseFloat(stage.style.zoom) || 1, y = 45 * z;   // the menu's line on screen
+  const light = work.getBoundingClientRect().top - 100 * z <= y && sunsetArt.getBoundingClientRect().top + 560 * z > y;
+  nav.classList.toggle('on-light', light);
+}
+if (nav && work && sunsetArt) {
+  const queueNav = () => { if (!navQueued) { navQueued = true; requestAnimationFrame(toneNav); } };
+  addEventListener('scroll', queueNav, { passive: true });
+  addEventListener('resize', queueNav);
+  toneNav();
 }

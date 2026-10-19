@@ -4,7 +4,7 @@ Static one-page portfolio built from the Figma frame **Main** (node `315:133`) i
 `PORTFOLIO` file. Open `index.html` in a browser — no build step.
 
 - `assets/background.webp` — all artwork, exported from the Figma frame with text and icons hidden.
-  The page is 7257px tall instead of Figma's 4237px: 700px of white at y 1960 for the pinned
+  The page is 6797px tall instead of Figma's 4237px: 700px of white at y 1960 for the pinned
   About scene to hold, and 2320px in the Work section for the scrolling project list. The white
   cloud shape and the blue cloud bank between About and Work are separate layers
   (`sky-puff.webp`, `clouds.webp`) so they can move while About is pinned. The leaves above the

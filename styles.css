@@ -33,10 +33,10 @@ body {
 .stage {
   position: relative;
   width: 1440px;
-  height: 7257px;
+  height: 6797px;
   overflow: clip;   /* not hidden: that would stop the sticky chameleon */
   /* All artwork, exported from the Figma frame with text and icons hidden */
-  background: #fff url("assets/background.webp?v=6") top left / 1440px 7257px no-repeat;
+  background: #fff url("assets/background.webp?v=7") top left / 1440px 6797px no-repeat;
   /* script.js sets `zoom` so the 1440px design fills the viewport width */
 }
 
@@ -58,7 +58,7 @@ body {
    an animated WebP, 330ms per frame), on the same canvas mapping as in Figma. */
 .bird { opacity: .3; filter: blur(3px); }
 /* The fish swims behind the pink coral (baked into the background): cut the
-   coral's shape out of the fish. Coral sits at (1053.8, 6843.8) on the stage. */
+   coral's shape out of the fish. Coral sits at (1053.8, 6383.8) on the stage. */
 .fish {
   filter: blur(4.2px);
   pointer-events: none;
@@ -80,7 +80,7 @@ body {
 .pin-wrap { position: absolute; left: 0; top: 459px; width: 1440px; height: 2200px; }
 .pin {
   position: sticky; top: var(--pin-top, -361px); width: 1440px; height: 1500px; overflow: clip;
-  background: #fff url("assets/background.webp?v=6") 0 -459px / 1440px 7257px no-repeat;
+  background: #fff url("assets/background.webp?v=7") 0 -459px / 1440px 6797px no-repeat;
 }
 
 /* moved by script.js while pinned: the white cloud shape settles in the centre,
@@ -139,22 +139,28 @@ body::before {
 
 /* contact: small text on the light sea is navy; the email is a clear button */
 .t-body { font: 18px/1.4 var(--font-body); color: var(--navy) !important; text-align: center; }
+/* email and socials: frosted glass over the sea, white type and icons */
+.t-email, .social {
+  border: 1px solid rgba(255, 255, 255, .7);
+  background: rgba(255, 255, 255, .14);
+  -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .35), 0 12px 30px -18px rgba(14, 63, 115, .6);
+}
 .t-email {
   display: flex; align-items: center; justify-content: center;
-  border-radius: 40px; background: #fff; color: var(--c-blue) !important;
+  border-radius: 40px; color: #fff !important;
   font: 20px/1 var(--font-body); text-decoration: none;
-  box-shadow: 0 10px 30px -14px rgba(14, 63, 115, .55);
-  transition: background .25s, color .25s, transform .3s cubic-bezier(.3, 1.6, .5, 1);
+  transition: background .25s, transform .3s cubic-bezier(.3, 1.6, .5, 1);
 }
-.t-email:hover, .t-email:focus-visible { background: var(--c-blue); color: #fff !important; transform: translateY(-2px); }
+.t-email:hover, .t-email:focus-visible { background: rgba(255, 255, 255, .3); transform: translateY(-2px); }
 .socials { display: flex; justify-content: center; gap: 14px; }
 .social {
-  display: grid; place-items: center; width: 56px; height: 56px; border-radius: 50%; background: #fff;
-  box-shadow: 0 10px 30px -14px rgba(14, 63, 115, .55);
-  transition: transform .4s cubic-bezier(.3, 1.6, .5, 1);
+  display: grid; place-items: center; width: 56px; height: 56px; border-radius: 50%;
+  transition: transform .4s cubic-bezier(.3, 1.6, .5, 1), background .25s;
 }
+.social:hover, .social:focus-visible { background: rgba(255, 255, 255, .3); }
 .social:hover, .social:focus-visible { transform: translateY(-3px) rotate(-8deg); }
-.social img { display: block; width: auto; height: 22px; }
+.social img { display: block; width: auto; height: 22px; filter: brightness(0) invert(1); }
 
 .btn {
   display: flex;
@@ -486,7 +492,17 @@ a:focus-visible { outline: 2px solid var(--white); outline-offset: 4px; }
   .cloudpop .field-head, .cloudpop .plate, .cloudpop .toolbox, .portrait .frame, .notes li::before, .notes li::after { transition: none; }
 }
 
-/* ---------- Sticky menu ---------- */
+/* ---------- Menu ----------
+   On desktop the menu at the top of the page stays where it is while scrolling,
+   looking the same; script.js turns it blue over the white parts of the page.
+   The pill-shaped menu below is only used on phones, where that menu is hidden. */
+@media (min-width: 761px) {
+  .stage .nav { position: fixed; z-index: 60; transition: color .35s; }
+  .stage .nav.on-light { color: var(--c-blue); }
+  nav.topbar { display: none; }
+}
+
+/* ---------- Phone menu ---------- */
 .topbar {
   position: fixed; z-index: 70; top: 14px; left: 50%; display: flex; gap: 4px; padding: 6px;
   border-radius: 40px; background: rgba(255, 255, 255, .78); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
@@ -502,9 +518,10 @@ a:focus-visible { outline: 2px solid var(--white); outline-offset: 4px; }
 
 /* ---------- Sunset ---------- */
 .sunset-art { position: relative; width: 1440px; height: 860px; }
-/* leaf doors (script.js): pivot on the blade's centre; the right one is mirrored */
-.leaf { width: 600px; height: 735px; pointer-events: none; will-change: transform; transform-origin: 239px 353px; }
-.leaf-r { transform-origin: 361px 353px; transform: scaleX(-1); }
+/* leaf doors (script.js): same size throughout, hinged on the end of the stem;
+   the right one is mirrored */
+.leaf { width: 600px; height: 735px; pointer-events: none; will-change: transform; transform-origin: 0 529px; }
+.leaf-r { transform: scaleX(-1); }   /* its box starts at the stem end; mirrored, the blade points back in */
 /* laptop screen: shows the projects one by one; click opens the one on screen */
 .screen {
   width: 314px; height: 208px; transform-origin: 0 0; transform: rotate(-10.5deg);
@@ -535,7 +552,7 @@ a:focus-visible { outline: 2px solid var(--white); outline-offset: 4px; }
 
   .sec {
     position: relative; top: auto !important; width: 100%; padding: 0 20px;
-    background: url("assets/background.webp?v=6") no-repeat;
+    background: url("assets/background.webp?v=7") no-repeat;
     background-size: calc(1440px * var(--s, 1)) auto;
     background-position: center calc(var(--y0, 0) * var(--s, 1) * -1px);
   }
@@ -553,7 +570,7 @@ a:focus-visible { outline: 2px solid var(--white); outline-offset: 4px; }
      second background, and the crop fades into the white of the Work section */
   #about {
     --y0: 750; --s: .8; min-height: 690px; padding-top: 40px; padding-bottom: 110px;
-    background-image: url("assets/clouds.webp"), url("assets/background.webp?v=6");
+    background-image: url("assets/clouds.webp"), url("assets/background.webp?v=7");
     background-size: calc(1440px * var(--s)) auto;
     background-position: calc(-60px * var(--s)) calc((1190 - var(--y0)) * var(--s) * 1px), calc(-60px * var(--s)) calc(var(--y0) * var(--s) * -1px);
   }
@@ -584,10 +601,10 @@ a:focus-visible { outline: 2px solid var(--white); outline-offset: 4px; }
   .wcard .thumb { font-size: 22px; }
 
   .sunset { padding: 0; overflow: hidden; background: none; }
-  .sunset-art { zoom: var(--mz, .45); margin-left: -300px; background: url("assets/background.webp?v=6") 0 -5800px / 1440px 7257px no-repeat; }
+  .sunset-art { zoom: var(--mz, .45); margin-left: -300px; background: url("assets/background.webp?v=7") 0 -5340px / 1440px 6797px no-repeat; }
   .sunset-art .l { position: absolute; left: var(--x); top: var(--y); width: auto; height: auto; }
 
-  #contact { --y0: 6620; --s: .9; min-height: 600px; padding-top: 44px; padding-bottom: 110px; text-align: center; }
+  #contact { --y0: 6160; --s: .9; min-height: 600px; padding-top: 44px; padding-bottom: 110px; text-align: center; }
   #open { width: 92%; max-width: 420px; margin: 0 auto; }
   .t-body { margin-top: 28px; font-size: 16px; white-space: normal !important; }
   .t-email { width: 100% !important; max-width: 340px; height: 54px !important; margin: 12px auto 0; font-size: 17px; }

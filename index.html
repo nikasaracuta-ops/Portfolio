@@ -11,7 +11,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@125,400;125,700&family=Italiana&family=Unbounded:wght@300;400;500&display=swap">
-  <link rel="stylesheet" href="styles.css?v=f79cd4f4">
+  <link rel="stylesheet" href="styles.css?v=08648b10">
   <script>document.documentElement.classList.add('js', 'is-loading')</script>
 </head>
 <body>
@@ -68,7 +68,7 @@
 
     <!-- Sunset: sun, water lines and laptop as separate layers, stacked as in Figma.
          The laptop screen shows the projects one by one (chameleon.js). -->
-    <div class="sec sunset" style="top:5800px">
+    <div class="sec sunset" style="top:5340px">
       <div class="sunset-art">
         <img class="l" style="--x:390px;--y:16px" src="assets/sun.svg" width="661" height="661" alt="">
         <img class="l" style="--x:0px;--y:551px" src="assets/waves.svg" width="1440" height="264" alt="">
@@ -77,12 +77,13 @@
           <span class="s-k">Now showing</span><span class="s-t"><span id="scrText">Open for new projects</span><span class="caret" aria-hidden="true"></span></span>
         </button>
         <!-- Two leaves (the Figma leaf and its mirror) close over the sun and laptop and
-             swing open as the sunset scrolls up, ending at the leaves' Figma spot (script.js) -->
-        <img class="l leaf leaf-l" id="leafL" style="--x:0px;--y:-562px" src="assets/leaf.webp" width="600" height="735" alt="">
-        <img class="l leaf leaf-r" id="leafR" style="--x:840px;--y:-562px" src="assets/leaf.webp" width="600" height="735" alt="">
+             swing outwards on their stems as the sunset scrolls up (script.js). Each stem
+             end sits at the screen edge: (-40, 620) and (1480, 620). -->
+        <img class="l leaf leaf-l" id="leafL" style="--x:-40px;--y:91px" src="assets/leaf.webp" width="600" height="735" alt="">
+        <img class="l leaf leaf-r" id="leafR" style="--x:1480px;--y:91px" src="assets/leaf.webp" width="600" height="735" alt="">
       </div>
     </div>
-    <img class="l fish" style="--x:-171px;--y:6337px;--w:3150px;--h:2100px" src="assets/fish.gif" alt="">
+    <img class="l fish" style="--x:-171px;--y:5877px;--w:3150px;--h:2100px" src="assets/fish.gif" alt="">
 
 
     <!-- Work -->
@@ -107,7 +108,7 @@
     </section>
 
     <!-- Contact -->
-    <section class="sec" id="contact" style="top:6694px" aria-labelledby="open">
+    <section class="sec" id="contact" style="top:6234px" aria-labelledby="open">
       <h2 class="l reveal type" id="open" style="--d:0s;--x:405.7px;--y:16.08px"><img src="assets/type-open.svg" width="630" height="68" alt="Open for new projects"></h2>
       <p class="l reveal t-body" style="--d:.12s;--x:520px;--y:112px;--w:400px">Write directly to</p>
       <a class="l reveal t-email" style="--d:.2s;--x:520px;--y:150px;--w:400px;--h:56px" href="mailto:nikasaracuta@gmail.com">nikasaracuta@gmail.com</a>
@@ -214,7 +215,7 @@
   </div>
 
   <script src="loader.js?v=68ee955a"></script>
-  <script src="script.js?v=c0311f63"></script>
+  <script src="script.js?v=bdd87005"></script>
   <script src="about.js?v=37dfe53c"></script>
   <script src="chameleon.js?v=6754f284"></script>
 </body>
