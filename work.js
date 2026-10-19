@@ -1,7 +1,7 @@
-// One chameleon, five projects (ported from the work-page artifact).
-// The chameleon stays put while the project list scrolls past; it catches the
-// project in the middle of the screen with its tongue and takes on its colour.
-// Click a project to open its sheet.
+// Work: the five projects. Builds the gallery panels, keeps the chameleon in the
+// colour of the project in view (main.js tells it which one when the gallery
+// scrolls sideways; on phones it watches the panels itself) and opens the project
+// sheet when a panel is clicked.
 (() => {
   const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
   const $ = s => document.querySelector(s);
@@ -74,83 +74,45 @@
     }
   ];
 
-  // black and white site: the chameleon is a black lamp and only its wax keeps the
-  // project's colour; the card placeholders become greys of the same lightness
-  const grey = h => { const [r, g, b] = [1, 3, 5].map(k => parseInt(h.slice(k, k + 2), 16));
-    const l = Math.round(.299 * r + .587 * g + .114 * b).toString(16).padStart(2, '0'); return '#' + l + l + l; };
-  PROJECTS.forEach(p => { p.lava = '#151515'; p.tint = grey(p.tint || p.hex); });
-
-  const page = $('.stage');
-  const list = $('#workList'), workStage = $('.work-stage'), nowName = $('#nowName');
-  const mouth = $('#mouth'), tongue = $('#tongue'), tip = $('#tongueTip');
-
-  // one card per project
-  const cards = PROJECTS.map((p, i) => {
-    const li = document.createElement('li');
-    const b = document.createElement('button');
-    b.className = 'wcard'; b.style.setProperty('--c', p.tint || p.hex);
-    b.setAttribute('aria-label', `Open project ${i + 1}: ${p.name}`);
-    b.innerHTML = `<span class="thumb"${p.img ? ` style="background-image:url('${p.img}')"` : ''}>${p.img ? '' : 'Coming soon'}</span>
-      <span class="meta"><span class="num">${String(i + 1).padStart(2, '0')}</span><span class="open">Open project →</span></span>
-      <span class="nm">${p.name.replace('&', '&amp;')}</span><span class="tg">${p.kind}</span>`;
-    b.addEventListener('click', () => openProject(i, b));
-    b.addEventListener('mouseenter', () => activate(i));
-    b.addEventListener('focus', () => activate(i));
-    li.appendChild(b); list.appendChild(li);
-    return b;
+  /* ───── Gallery panels ───── */
+  const track = $('#workTrack'), work = $('#work'), nowName = $('#nowName'), workNow = $('#workNow');
+  $('#workTotal').textContent = String(PROJECTS.length).padStart(2, '0');
+  const esc = t => t.replace(/&/g, '&amp;');
+  const panels = PROJECTS.map((p, i) => {
+    const a = document.createElement('a');
+    a.className = 'project'; a.href = '#work'; a.setAttribute('role', 'listitem');
+    a.dataset.cursor = 'view';
+    a.style.setProperty('--c', p.tint || p.hex);
+    a.setAttribute('aria-label', `Open project ${i + 1}: ${p.name}`);
+    a.innerHTML = `<span class="project-media">${p.img ? `<img src="${p.img}" alt="" loading="lazy">` : '<span class="project-soon">Coming soon</span>'}</span>
+      <span class="project-info"><span class="project-num">${String(i + 1).padStart(2, '0')}</span><span class="project-name">${esc(p.name)}</span><span class="project-tags">${p.kind}</span></span>`;
+    a.addEventListener('click', e => { e.preventDefault(); openProject(i, a); });
+    a.addEventListener('mouseenter', () => setActive(i));
+    a.addEventListener('focus', () => setActive(i));
+    track.appendChild(a);
+    return a;
   });
 
-  // switching project: pull the tongue back first, then shoot it at the new one
-  let target = -1, pending = -1, ext = 0, goal = 0;
-  function activate(i) {
-    if (i === pending || (i === target && pending < 0)) return;
-    cards.forEach((c, j) => c.classList.toggle('active', j === i));
-    if (target >= 0) cards[target].classList.remove('stuck');
-    page.style.setProperty('--cham', PROJECTS[i].hex);
-    page.style.setProperty('--lava', PROJECTS[i].lava);
-    nowName.innerHTML = `<span class="swatch"></span>${PROJECTS[i].name.replace('&', '&amp;')}`;
-    pending = i; goal = 0;
+  // the chameleon (and the title's accent) take on the project's colours
+  let active = -1;
+  function setActive(i) {
+    i = Math.max(0, Math.min(PROJECTS.length - 1, i));
+    if (i === active) return;
+    active = i;
+    const p = PROJECTS[i];
+    work.style.setProperty('--cham', p.hex);
+    work.style.setProperty('--lava', p.lava);
+    nowName.innerHTML = `<span class="swatch"></span>${esc(p.name)}`;
+    workNow.textContent = String(i + 1).padStart(2, '0');
   }
-  activate(0);
+  setActive(0);
+  window.Work = { setActive, count: PROJECTS.length };
 
+  // phones (no sideways gallery): follow the panel in the middle of the screen
   const io = new IntersectionObserver(entries => {
-    entries.forEach(e => { if (e.isIntersecting) activate(cards.indexOf(e.target)); });
+    entries.forEach(e => { if (e.isIntersecting) setActive(panels.indexOf(e.target)); });
   }, { rootMargin: '-45% 0px -45% 0px' });
-  cards.forEach(c => io.observe(c));
-
-  const centre = el => { const r = el.getBoundingClientRect(); return { x: r.left + r.width / 2, y: r.top + r.height / 2 }; };
-  const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
-  const easeOut = t => 1 - Math.pow(1 - t, 3);
-  const hidden = () => workStage.classList.contains('reveal') && !workStage.classList.contains('in');
-
-  let last = performance.now();
-  function frame(now) {
-    const dt = Math.min(.05, (now - last) / 1000); last = now;
-    if (goal === 0 && ext <= 0 && pending >= 0) { target = pending; pending = -1; goal = 1; }
-    if (target >= 0 && pending < 0) {
-      const r = cards[target].getBoundingClientRect();
-      // let go when the project leaves the screen (or before the chameleon has appeared)
-      goal = r.bottom > 0 && r.top < innerHeight && !hidden() ? 1 : 0;
-    }
-    if (reduce) ext = goal;
-    else if (goal > ext) ext = Math.min(1, ext + dt / .2);
-    else if (goal < ext) ext = Math.max(0, ext - dt / .12);
-
-    if (target >= 0) {
-      const z = parseFloat(page.style.zoom) || 1;        // tongue thickness follows the page zoom
-      const m = centre(mouth), r = cards[target].querySelector('.thumb').getBoundingClientRect();
-      const t = { x: clamp(m.x, r.left + 28 * z, r.right - 28 * z), y: clamp(m.y, r.top + 28 * z, r.bottom - 28 * z) };
-      const k = easeOut(ext), x = m.x + (t.x - m.x) * k, y = m.y + (t.y - m.y) * k;
-      const dist = Math.hypot(x - m.x, y - m.y);
-      const sag = ext >= 1 ? dist * .08 + Math.sin(now / 350) * 3 * z : 0;
-      tongue.setAttribute('d', dist > 2 ? `M${m.x},${m.y} Q${(m.x + x) / 2},${(m.y + y) / 2 + sag} ${x},${y}` : '');
-      tongue.setAttribute('stroke-width', 7 * z);
-      tip.setAttribute('cx', x); tip.setAttribute('cy', y); tip.setAttribute('r', dist > 2 ? 11 * z : 0);
-      cards[target].classList.toggle('stuck', ext >= 1);
-    }
-    requestAnimationFrame(frame);
-  }
-  requestAnimationFrame(frame);
+  if (matchMedia('(max-width: 760px)').matches) panels.forEach(p => io.observe(p));
 
   /* ───── Project sheet ───── */
   const sheet = $('#sheet'), panel = $('#panel'), pane = $('#pane');

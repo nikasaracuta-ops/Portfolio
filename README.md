@@ -1,30 +1,44 @@
-# Portfolio
+# Portfolio — Nika Saracuta
 
-Static one-page portfolio built from the Figma frame **Main** (node `315:133`) in the
-`PORTFOLIO` file. Open `index.html` in a browser — no build step.
+A one-page portfolio that drifts from sky to sea. Static files, no build step:
+serve the folder (GitHub Pages, or `python3 -m http.server`) and open `index.html`.
+(CSS masks need http(s); opening the file directly won't show the chameleon.)
 
-- `assets/background.webp` — all artwork, exported from the Figma frame with text and icons hidden.
-  The page is 6797px tall instead of Figma's 4237px: 700px of white at y 1960 for the pinned
-  About scene to hold, and 2320px in the Work section for the scrolling project list. The white
-  cloud shape and the blue cloud bank between About and Work are separate layers
-  (`sky-puff.webp`, `clouds.webp`) so they can move while About is pinned. The leaves above the
-  sunset are one leaf (`leaf.webp`) and its mirror, which close over the sun and open on scroll.
-- `assets/type-*.svg` — display headings exported from Figma as outlined SVGs (exact letterforms).
-- `assets/icon-*.svg` — LinkedIn / Behance icons.
-- `fonts/` — drop the Roc Grotesk Wide and Area Inktrap Extended `.woff2` files here (names in
-  `styles.css`) for the nav and body text. Until then, Archivo is used as a stand-in.
-- On screens wider than 760px the 1440px design is scaled to the window by `script.js`; on phones the
-  sections stack instead (see the "Phones" block at the end of `styles.css`).
-- **Projects** (the chameleon, the project cards, the laptop screen and the project sheet) live in `chameleon.js`:
-  edit the `PROJECTS` list there (name, colour, card label, preview image, brief, process, result, live link).
-  Preview images go in `assets/projects/`.
-- **About pop-up** ("About me" link/button or the "?"): content is in `index.html` (`#aboutPop`);
-  set your photo in `about.js` (`ME_PHOTO = 'assets/me.jpg'`).
-- CSS masks (chameleon, coral) need the page served over http(s) — e.g. GitHub Pages or
-  `python3 -m http.server` — not opened as a local file.
+The previous version of the site is kept on the `archive/before-redesign` branch.
+
+## The journey
+
+1. **Sky** — the huge "Portfolio" title slides up after the loading screen; the sky
+   (`assets/scenes/sky.webp`, fixed behind the first two scenes) drifts as you scroll and the
+   bird crosses it.
+2. **The cloud (About)** — pinned while the introduction lights up word by word. The "?",
+   "More about me" and "About" in the menu open the About pop-up.
+3. **Work** — pinned; the project panels scroll sideways. The lava-lamp chameleon takes on the
+   colours of the project in view. Clicking a panel opens its project sheet.
+4. **Sunset** — "More on the horizon": the leaves swing open, the sun rises out of the sea and the
+   laptop links to Behance.
+5. **The sea (Contact)** — email, LinkedIn, Behance, and a footer with the local time.
+
+Phones get the same page without pinning (the gallery becomes a column); visitors who prefer
+reduced motion get it without animation.
+
+## Files
+
+- `index.html` — the page, the project sheet and the About pop-up.
+- `styles.css` — the page; `popups.css` — the project sheet and the About pop-up.
+- `main.js` — smooth scrolling and all scroll animations (GSAP + ScrollTrigger + Lenis, bundled
+  in `vendor/`), the menu, the clock, the sparkle cursor. **Set `BEHANCE_URL` here.**
+- `work.js` — **the projects**: edit the `PROJECTS` list (name, wax colour `hex`, lamp colour
+  `lava`, card label, image, brief, process, result, live link). Images go in `assets/projects/`.
+- `about.js` — the About pop-up; set your photo with `ME_PHOTO = 'assets/me.jpg'`.
+- `loader.js` — the loading screen.
+- `assets/` — artwork from the Figma file (sky and sea scenes, sun, laptop, leaf, bird, fish,
+  chameleon, "Portfolio" and "?" lettering, icons, sparkle cursor, logo).
+
+Still to fill in: the Behance URL (`main.js`), the LinkedIn URL (`index.html`, contact section)
+and your photo (`about.js`).
 
 ## Updating
 
-After changing `styles.css` or any `.js` file, run `scripts/bump-versions.sh` before committing.
-It stamps the links in `index.html` with a content hash (`?v=…`) so visitors' browsers load the
-new files instead of mixing the new page with old cached ones.
+After changing a `.css` or `.js` file, run `scripts/bump-versions.sh` before committing. It stamps
+the links in `index.html` with a content hash (`?v=…`) so browsers load the new files.

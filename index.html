@@ -4,138 +4,135 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Nika Saracuta — Portfolio</title>
-  <meta name="description" content="Portfolio of Nika Saracuta, digital creator and Digital Design & Development student.">
+  <meta name="description" content="Portfolio of Nika Saracuta, digital creator and Digital Design &amp; Development student. Visual and experience design, drifting from sky to sea.">
   <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png">
   <link rel="icon" type="image/png" sizes="192x192" href="assets/favicon-192.png">
   <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@125,400;125,700&family=Italiana&family=Unbounded:wght@300;400;500&display=swap">
-  <link rel="stylesheet" href="styles.css?v=0723b91c">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@125,300;125,400;125,600&family=Italiana&family=Unbounded:wght@300;400;500&display=swap">
+  <link rel="stylesheet" href="styles.css?v=9b01e19c">
+  <link rel="stylesheet" href="popups.css?v=ab761dc7">
   <script>document.documentElement.classList.add('js', 'is-loading')</script>
 </head>
 <body>
   <!-- Loading screen: the spinning logo and a percentage, driven by loader.js -->
   <div class="loader" id="loader" role="progressbar" aria-label="Loading" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
-    <img class="loader-logo" src="assets/loader-logo.webp?v=bw" alt="" width="256" height="256">
+    <img class="loader-logo" src="assets/loader-logo.webp" alt="" width="256" height="256">
     <p class="loader-text">Loading <span id="loaderNum">0</span>%</p>
   </div>
-  <!-- Built from Figma frame "Main" (1440 × 4237). The artwork is one exported
-       background image (bird, fish, sun, water lines and laptop are separate layers on top); display headings are outlined SVGs exported from Figma
-       (exact letterforms); body text, nav, button and icons are live HTML at
-       their Figma positions. script.js scales the 1440px stage to the viewport. -->
-  <main class="stage" id="home">
 
-    <!-- About, pinned (script.js): once it fills the screen it stays put while the
-         page keeps scrolling; the text and "?" fade, the blue cloud bank parts to the
-         sides and the white cloud shape settles in the centre, then the sky holds for
-         a moment before Work scrolls up. The scene carries its own copy of the
-         background (stage y 459–1959), so the page underneath can move on. Child
-         positions are relative to the scene (stage y − 459). -->
-    <div class="pin-wrap" id="pinWrap">
-      <div class="pin" id="pin">
-        <img class="l sky-puff" id="skyPuff" style="--x:661px;--y:306px;--w:695px;--h:855px" src="assets/sky-puff.webp" alt="">
-        <img class="l clouds-px clouds-l" id="cloudsL" style="--x:0;--y:731px;--w:1440px;--h:700px" src="assets/clouds.webp?v=bw2" alt="">
-        <img class="l clouds-px clouds-r" id="cloudsR" style="--x:0;--y:731px;--w:1440px;--h:700px" src="assets/clouds.webp?v=bw2" alt="">
+  <!-- The sky behind the first two scenes: fixed to the screen and drifted upwards
+       by main.js as you scroll, from the deep blue down to the white cloud. -->
+  <div class="world" aria-hidden="true">
+    <div class="world-sky"><img src="assets/scenes/sky.webp" width="1440" height="1720" alt=""></div>
+    <img class="bird" src="assets/bird.webp" width="1328" height="559" alt="">
+  </div>
 
-        <section class="sec" id="about" style="top:400px" aria-labelledby="hello">
-          <h2 class="l reveal type" id="hello" style="--d:0s;--x:178.65px;--y:11.58px"><img src="assets/type-hello.svg?v=bw2" width="306" height="121" alt="Hello,"></h2>
-          <div class="l reveal t-intro" style="--d:.15s;--x:176px;--y:156px;--w:473px">
-            <p>I’m Nika, a third-year student in Digital Design &amp; Development, currently specialising in visual design and experience design.</p>
-            <p>Inspired by all kinds of creative fields, I’m passionate about creating useful and inspiring projects.</p>
-          </div>
-          <a class="l reveal btn" style="--d:.3s;--x:176px;--y:450px;--w:229px;--h:48px" href="#about" data-about>About me</a>
-          <button class="l reveal qbtn" style="--d:.2s;--x:958.66px;--y:131.37px" data-about aria-label="Who is behind the question mark? Meet Nika"><img src="assets/type-question.svg?v=bw2" width="106" height="196" alt=""></button>
-        </section>
+  <header class="bar" id="bar">
+    <a class="brand" href="#top" aria-label="Nika Saracuta, back to the top">
+      <img src="assets/loader-logo.webp" width="256" height="256" alt="">
+      <span>Nika Saracuta</span>
+    </a>
+    <nav class="bar-nav" aria-label="Main">
+      <a href="#about" data-about>About</a>
+      <a href="#work">Work</a>
+      <a href="#contact">Contact</a>
+    </nav>
+    <span class="bar-time" aria-label="Local time in Antwerp"><span class="dot" aria-hidden="true"></span>Antwerp <time id="clock">--:--</time></span>
+  </header>
+
+  <main id="top">
+
+    <!-- 1 · Sky -->
+    <section class="hero" aria-labelledby="hero-title">
+      <h1 class="hero-title" id="hero-title"><span class="mask"><img src="assets/type-portfolio.svg" width="1330" height="277" alt="Portfolio"></span></h1>
+      <div class="hero-meta">
+        <p class="hero-name"><span class="mask"><span>Nika Saracuta</span></span></p>
+        <p class="hero-cue"><span class="mask"><span>Scroll to drift</span></span><i aria-hidden="true"></i></p>
+        <p class="hero-role"><span class="mask"><span>Digital creator · Antwerp</span></span></p>
       </div>
-    </div>
+    </section>
 
-    <header class="sec hero" style="top:0">
-    <!-- Animated bird, layered over the background at its Figma position -->
-    <img class="l bird" style="--x:-6.61px;--y:239.23px;--w:1328.29px;--h:558.57px" src="assets/bird.webp" alt="">
-
-
-    <h1 class="l reveal type" style="--d:0s;--x:56.74px;--y:97.59px"><img src="assets/type-portfolio.svg?v=bw2" width="1330" height="277" alt="Portfolio"></h1>
-    <p class="l reveal type" style="--d:.25s;--x:59px;--y:425.21px"><img src="assets/type-name.svg?v=bw2" width="250" height="36" alt="Nika Saracuta"></p>
-    <p class="l reveal type" style="--d:.3s;--x:1105px;--y:424.72px"><img src="assets/type-digital-creator.svg?v=bw2" width="280" height="43" alt="Digital creator"></p>
-    </header>
-
-    <!-- Sunset: sun, water lines and laptop as separate layers, stacked as in Figma.
-         The laptop screen links to Behance (BEHANCE_URL in script.js). -->
-    <div class="sec sunset" style="top:5340px">
-      <div class="sunset-art">
-        <img class="l" style="--x:390px;--y:16px" src="assets/sun.svg?v=bw2" width="661" height="661" alt="">
-        <img class="l" style="--x:0px;--y:551px" src="assets/waves.svg" width="1440" height="264" alt="">
-        <img class="l" style="--x:513.1px;--y:293px" src="assets/laptop.svg?v=bw2" width="553" height="496" alt="">
-        <a class="l screen" id="screen" style="--x:554.2px;--y:413px" href="#" data-behance target="_blank" rel="noopener">
-          <span class="s-k">Discover more projects</span><span class="s-t"><span id="scrText">on Behance</span><span class="caret" aria-hidden="true"></span></span>
-        </a>
-        <!-- Two leaves (the Figma leaf and its mirror) close over the sun and laptop and
-             swing outwards on their stems as the sunset scrolls up (script.js). Each stem
-             end sits at the screen edge: (-40, 620) and (1480, 620). -->
-        <img class="l leaf leaf-l" id="leafL" style="--x:-40px;--y:91px" src="assets/leaf.webp?v=bw2" width="600" height="735" alt="">
-        <img class="l leaf leaf-r" id="leafR" style="--x:1480px;--y:91px" src="assets/leaf.webp?v=bw2" width="600" height="735" alt="">
+    <!-- 2 · The cloud: pinned while the introduction reveals word by word -->
+    <section class="about" id="about" aria-labelledby="about-title">
+      <div class="about-inner">
+        <p class="eyebrow"><span>(01)</span> About</p>
+        <h2 class="visually-hidden" id="about-title">About Nika</h2>
+        <p class="manifesto" id="manifesto">I’m Nika, a third-year student in Digital Design &amp; Development, specialising in visual design and experience design. Inspired by every kind of creative field, nature and animals, I make things that are useful, inspiring and a little bit dreamy.</p>
+        <div class="about-actions">
+          <button class="pill" type="button" data-about>More about me <span aria-hidden="true">→</span></button>
+          <span class="status"><i class="pulse" aria-hidden="true"></i>Looking for an internship · Feb – May 2027</span>
+        </div>
       </div>
-    </div>
-    <img class="l fish" style="--x:-171px;--y:5877px;--w:3150px;--h:2100px" src="assets/fish.gif" alt="">
+      <button class="qbtn" type="button" data-about aria-label="Who is behind the question mark? Meet Nika"><img src="assets/type-question.svg" width="106" height="196" alt=""></button>
+    </section>
 
-
-    <!-- Work -->
-    <section class="sec" id="work" style="top:2398px" aria-labelledby="mywork">
-      <h2 class="l reveal type" id="mywork" style="--d:0s;--x:477.79px;--y:24.45px"><img src="assets/type-my-work.svg?v=bw2" width="487" height="129" alt="My work"></h2>
-      <!-- Sticky chameleon beside the scrolling project list (from the work-page
-           artifact): its tongue sticks to the project in the middle of the screen. -->
-      <div class="l work-layout" style="--x:130px;--y:210px;--w:1180px">
-        <aside class="work-stage reveal" style="--d:.3s" aria-live="polite">
-          <div class="now">
-            <small>Now viewing</small>
-            <strong id="nowName"><span class="swatch"></span>Dior</strong>
-          </div>
+    <!-- 3 · Work: a pinned, sideways-scrolling gallery; the chameleon takes on each project's colour -->
+    <section class="work" id="work" aria-labelledby="work-title">
+      <div class="work-pin">
+        <div class="work-head">
+          <p class="eyebrow"><span>(02)</span> Selected work</p>
+          <h2 class="work-title" id="work-title">Work that<br><em>changes colour</em></h2>
+          <p class="work-count"><span id="workNow">01</span> / <span id="workTotal">05</span></p>
+        </div>
+        <div class="work-track" id="workTrack" role="list"></div>
+        <div class="work-cham" aria-live="polite">
           <div class="cham" id="cham" aria-hidden="true">
             <div class="layer aura"><i></i></div><div class="layer halo"><i></i></div><div class="layer body"><i><span class="lava"><b style="--x:22%;--y:36%;--s:12%;--t:11s;--dl:-3s;--dx:4cqw"></b><b style="--x:40%;--y:46%;--s:15%;--t:14s;--dl:-8s;--dx:-6cqw"></b><b style="--x:56%;--y:30%;--s:10%;--t:9s;--dl:-1s;--dx:5cqw"></b><b style="--x:70%;--y:48%;--s:13%;--t:13s;--dl:-6s;--dx:-4cqw"></b><b style="--x:32%;--y:20%;--s:8%;--t:10s;--dl:-4s;--dx:8cqw"></b><b style="--x:62%;--y:58%;--s:9%;--t:12s;--dl:-9s;--dx:-8cqw"></b><b style="--x:12%;--y:50%;--s:9%;--t:15s;--dl:-2s;--dx:6cqw"></b><b style="--x:47%;--y:26%;--s:7%;--t:8s;--dl:-5s;--dx:-3cqw"></b></span></i></div><div class="layer grain"><i></i></div>
-            <span id="mouth"></span>
           </div>
-        </aside>
-        <!-- filled in by chameleon.js -->
-        <ol class="work-list" id="workList" aria-label="Projects"></ol>
+          <p class="now"><small>Now viewing</small><strong id="nowName"><span class="swatch"></span>Dior</strong></p>
+        </div>
       </div>
     </section>
 
-    <!-- Contact -->
-    <section class="sec" id="contact" style="top:6234px" aria-labelledby="open">
-      <h2 class="l reveal type" id="open" style="--d:0s;--x:405.7px;--y:16.08px"><img src="assets/type-open.svg?v=bw2" width="630" height="68" alt="Open for new projects"></h2>
-      <p class="l reveal t-body" style="--d:.12s;--x:520px;--y:112px;--w:400px">Write directly to</p>
-      <a class="l reveal t-email" style="--d:.2s;--x:520px;--y:150px;--w:400px;--h:56px" href="mailto:nikasaracuta@gmail.com">nikasaracuta@gmail.com</a>
-      <!-- TODO: replace # with real profile URLs -->
-      <div class="l reveal socials" style="--d:.3s;--x:520px;--y:236px;--w:400px">
-        <a class="social" href="#" aria-label="LinkedIn"><img src="assets/icon-linkedin-blue.svg" width="22" height="22" alt=""></a>
-        <a class="social" href="#" data-behance target="_blank" rel="noopener" aria-label="Behance"><img src="assets/icon-behance-blue.svg" width="35" height="22" alt=""></a>
+    <!-- 4 · Sunset: the leaves swing open, the sun rises out of the sea, the laptop links to Behance -->
+    <section class="sunset" id="sunset" aria-label="More projects on Behance">
+      <div class="sunset-pin">
+        <p class="eyebrow sunset-eyebrow"><span>(03)</span> More</p>
+        <h2 class="sunset-title">More on the<br><em>horizon</em></h2>
+        <div class="sunset-art">
+          <img class="sun" src="assets/sun.svg" width="661" height="661" alt="">
+          <div class="horizon" aria-hidden="true"></div>
+          <a class="laptop" href="#" data-behance target="_blank" rel="noopener">
+            <img src="assets/laptop.svg" width="553" height="496" alt="">
+            <span class="screen"><small>Discover more projects</small><strong>on Behance <span aria-hidden="true">↗</span></strong></span>
+          </a>
+        </div>
+        <img class="leaf leaf-l" src="assets/leaf.webp" width="600" height="735" alt="">
+        <img class="leaf leaf-r" src="assets/leaf.webp" width="600" height="735" alt="">
       </div>
     </section>
 
+    <!-- 5 · The sea -->
+    <section class="contact" id="contact" aria-labelledby="contact-title">
+      <div class="contact-inner">
+        <p class="eyebrow"><span>(04)</span> Contact · open for new projects</p>
+        <h2 class="contact-title" id="contact-title">Let’s make something<br><em>dreamy</em> together</h2>
+        <a class="mail" href="mailto:nikasaracuta@gmail.com"><span>nikasaracuta@gmail.com</span><i aria-hidden="true"></i></a>
+        <ul class="socials">
+          <!-- TODO: replace # with the LinkedIn profile URL -->
+          <li><a href="#" aria-label="LinkedIn"><img src="assets/icon-linkedin.svg" width="22" height="22" alt="">LinkedIn</a></li>
+          <li><a href="#" data-behance target="_blank" rel="noopener" aria-label="Behance"><img src="assets/icon-behance.svg" width="35" height="22" alt="">Behance</a></li>
+        </ul>
+      </div>
+      <img class="fish" src="assets/fish.gif" alt="">
+      <footer class="foot">
+        <span>© 2026 Nika Saracuta</span>
+        <span>Designed &amp; built with a lot of sky</span>
+        <a href="#top" class="to-top">Back to the sky ↑</a>
+      </footer>
+    </section>
   </main>
 
-  <!-- Chameleon tongue: drawn in screen coordinates over the page by chameleon.js -->
-  <svg class="tongue-layer" id="tongueLayer" aria-hidden="true">
-    <defs>
-      <filter id="tsoft" x="-20%" y="-20%" width="140%" height="140%"><feGaussianBlur stdDeviation="1.1"/></filter>
-      <!-- "goo": blur + sharpen the edges back, so the lava-lamp blobs melt into each other -->
-      <filter id="goo"><feGaussianBlur stdDeviation="10"/><feColorMatrix values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 22 -9"/></filter>
-      <filter id="goo-sm"><feGaussianBlur stdDeviation="4"/><feColorMatrix values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 22 -9"/></filter>
-    </defs>
-    <g filter="url(#tsoft)"><path id="tongue" d=""/><circle id="tongueTip" r="0"/></g>
+  <!-- Sparkle cursor (mouse/trackpad only) with a "View" label over projects -->
+  <div class="sparkle" id="sparkle" aria-hidden="true"><img src="assets/sparkle.png" width="160" height="160" alt=""><span class="cursor-label">View</span></div>
+
+  <!-- "goo" filter: blurs and re-sharpens the lava-lamp blobs so touching ones melt together -->
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <filter id="goo"><feGaussianBlur stdDeviation="10"/><feColorMatrix values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 22 -9"/></filter>
+    <filter id="goo-sm"><feGaussianBlur stdDeviation="4"/><feColorMatrix values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 22 -9"/></filter>
   </svg>
-
-  <!-- Sparkle cursor (mouse/trackpad only), driven by script.js -->
-  <div class="sparkle" id="sparkle" aria-hidden="true"><img src="assets/sparkle.png" width="160" height="160" alt=""></div>
-
-  <!-- The menu: fixed at the top for the whole page (styles.css, script.js) -->
-  <nav class="topbar" id="topbar" aria-label="Main">
-    <a href="#home">Home</a>
-    <a href="#about" data-about>About me</a>
-    <a href="#work">Work</a>
-    <a href="#contact">Contact</a>
-  </nav>
 
   <!-- Project sheet: opens when a project name is clicked -->
   <div class="sheet" id="sheet" hidden>
@@ -183,7 +180,7 @@
       <figure class="portrait" id="portrait">
         <div class="frame">
           <img id="me" alt="Portrait of Nika Saracuta" hidden>
-          <div class="placeholder" id="mePh"><img class="q-sm" src="assets/type-question.svg?v=bw2" width="106" height="196" alt=""><span class="label">Your photo here</span></div>
+          <div class="placeholder" id="mePh"><img class="q-sm" src="assets/type-question.svg" width="106" height="196" alt=""><span class="label">Your photo here</span></div>
         </div>
       </figure>
       <ul class="notes right">
@@ -208,9 +205,12 @@
   </section>
   </div>
 
+  <script src="vendor/gsap.min.js"></script>
+  <script src="vendor/ScrollTrigger.min.js"></script>
+  <script src="vendor/lenis.min.js"></script>
   <script src="loader.js?v=68ee955a"></script>
-  <script src="script.js?v=f0a7e9d4"></script>
   <script src="about.js?v=37dfe53c"></script>
-  <script src="chameleon.js?v=d8f12a26"></script>
+  <script src="work.js?v=664acf3f"></script>
+  <script src="main.js?v=9569c931"></script>
 </body>
 </html>
