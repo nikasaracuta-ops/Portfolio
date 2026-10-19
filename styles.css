@@ -36,7 +36,7 @@ body {
   height: 6797px;
   overflow: clip;   /* not hidden: that would stop the sticky chameleon */
   /* All artwork, exported from the Figma frame with text and icons hidden */
-  background: #fff url("assets/background.webp?v=7") top left / 1440px 6797px no-repeat;
+  background: #fff url("assets/background.webp?v=bw") top left / 1440px 6797px no-repeat;
   /* script.js sets `zoom` so the 1440px design fills the viewport width */
 }
 
@@ -80,7 +80,7 @@ body {
 .pin-wrap { position: absolute; left: 0; top: 459px; width: 1440px; height: 2200px; }
 .pin {
   position: sticky; top: var(--pin-top, -361px); width: 1440px; height: 1500px; overflow: clip;
-  background: #fff url("assets/background.webp?v=7") 0 -459px / 1440px 6797px no-repeat;
+  background: #fff url("assets/background.webp?v=bw") 0 -459px / 1440px 6797px no-repeat;
 }
 
 /* moved by script.js while pinned: the white cloud shape settles in the centre,
@@ -557,7 +557,7 @@ a:focus-visible { outline: 2px solid var(--white); outline-offset: 4px; }
 
   .sec {
     position: relative; top: auto !important; width: 100%; padding: 0 20px;
-    background: url("assets/background.webp?v=7") no-repeat;
+    background: url("assets/background.webp?v=bw") no-repeat;
     background-size: calc(1440px * var(--s, 1)) auto;
     background-position: center calc(var(--y0, 0) * var(--s, 1) * -1px);
   }
@@ -575,7 +575,7 @@ a:focus-visible { outline: 2px solid var(--white); outline-offset: 4px; }
      second background, and the crop fades into the white of the Work section */
   #about {
     --y0: 750; --s: .8; min-height: 690px; padding-top: 40px; padding-bottom: 110px;
-    background-image: url("assets/clouds.webp"), url("assets/background.webp?v=7");
+    background-image: url("assets/clouds.webp?v=bw"), url("assets/background.webp?v=bw");
     background-size: calc(1440px * var(--s)) auto;
     background-position: calc(-60px * var(--s)) calc((1190 - var(--y0)) * var(--s) * 1px), calc(-60px * var(--s)) calc(var(--y0) * var(--s) * -1px);
   }
@@ -606,7 +606,7 @@ a:focus-visible { outline: 2px solid var(--white); outline-offset: 4px; }
   .wcard .thumb { font-size: 22px; }
 
   .sunset { padding: 0; overflow: hidden; background: none; }
-  .sunset-art { zoom: var(--mz, .45); margin-left: -300px; background: url("assets/background.webp?v=7") 0 -5340px / 1440px 6797px no-repeat; }
+  .sunset-art { zoom: var(--mz, .45); margin-left: -300px; background: url("assets/background.webp?v=bw") 0 -5340px / 1440px 6797px no-repeat; }
   .sunset-art .l { position: absolute; left: var(--x); top: var(--y); width: auto; height: auto; }
 
   #contact { --y0: 6160; --s: .9; min-height: 600px; padding-top: 44px; padding-bottom: 110px; text-align: center; }
@@ -655,3 +655,49 @@ html.sparkle-on, html.sparkle-on * { cursor: none !important; }
 .is-loading, .is-loading body { overflow: hidden; }
 @keyframes loader-spin { to { transform: rotate(360deg); } }
 @media (prefers-reduced-motion: reduce) { .loader-logo { animation-duration: 12s; } }
+
+/* ---------- Black and white ----------
+   The whole site in black, white and greys: black type on a white page, the
+   artwork baked into pale greys (background, clouds, leaf), photos and the
+   remaining coloured artwork desaturated here, project colours turned into
+   greys in chameleon.js. The colour tokens above are remapped, so everything
+   that uses them follows. */
+:root {
+  --ink: #222;
+  --white: var(--ink);          /* used for type on the stage */
+  --ice: var(--ink);
+  --navy: var(--ink);
+  --pink: var(--ink);
+  --btn-pink: var(--ink);
+  --c-blue: var(--ink);
+  --c-pink: var(--ink);
+  --c-teal: #8c8c8c;
+  --c-body: #555;
+}
+body { color: var(--ink); }
+.btn { color: #fff; }
+.btn:hover { filter: none; background: #000; }
+a:focus-visible { outline-color: var(--ink); }
+.bird { filter: blur(3px) grayscale(1) invert(1); opacity: .22; }      /* the light bird becomes a soft grey ghost */
+.fish, .sunset-art > img, .wcard .thumb, .tongue-layer, .cham, .swatch,
+.peek-img, .result-art, .p-mini, .cloudpop .field-head, .cloudpop .plate, .cloudpop .toolbox, .sheet .panel { filter: grayscale(1); }
+.cham .aura > i, .cham .halo > i { background: #9a9a9a; }
+.screen { color: #fff; }
+.caret { background: #fff; }
+
+/* menu: light glass, black type, everywhere */
+.topbar, .topbar.on-light { background: rgba(255, 255, 255, .6); border-color: rgba(0, 0, 0, .14); box-shadow: 0 12px 30px -20px rgba(0, 0, 0, .35); }
+.topbar a, .topbar.on-light a { color: var(--ink); }
+.topbar a:hover, .topbar a:focus-visible, .topbar a.current,
+.topbar.on-light a:hover, .topbar.on-light a:focus-visible, .topbar.on-light a.current { background: rgba(0, 0, 0, .07); }
+
+/* contact: glass with black type and icons */
+.t-email, .social { border-color: rgba(0, 0, 0, .22); background: rgba(255, 255, 255, .45); box-shadow: 0 12px 30px -20px rgba(0, 0, 0, .35); }
+.t-email { color: var(--ink) !important; }
+.t-email:hover, .t-email:focus-visible, .social:hover, .social:focus-visible { background: rgba(255, 255, 255, .8); }
+.social img { filter: brightness(0); }
+
+/* loading screen and About pop-up */
+.js .loader { background: #fff; }
+.loader-text { color: var(--ink); }
+.cloudpop { background: radial-gradient(120% 70% at 50% 0%, #f1f1f1 0%, #fff 60%); }
