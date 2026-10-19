@@ -97,6 +97,7 @@ const about = document.getElementById('about');
 const puff = document.getElementById('skyPuff');
 const cloudsL = document.getElementById('cloudsL'), cloudsR = document.getElementById('cloudsR');
 const PIN_TOP = 459, PIN_BOTTOM = 1720, HOLD = 700;
+const LEAD = 150;   // the transition starts this much scrolling before the scene pins
 const PUFF_CX = 661 + 695 / 2;                        // the shape's centre line on the stage
 const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)');
 const ramp = (t, a, b) => { const x = Math.max(0, Math.min(1, (t - a) / (b - a))); return x * x * (3 - 2 * x); };
@@ -109,8 +110,8 @@ function moveSky() {
     for (const el of [about, puff, cloudsL, cloudsR]) { el.style.transform = el.style.opacity = el.style.visibility = ''; }
     return;
   }
-  // 0 when the scene pins, 1 when it lets go
-  const t = Math.max(0, Math.min(1, (-stage.getBoundingClientRect().top / z - (PIN_BOTTOM - vh)) / HOLD));
+  // 0 just before the scene pins (LEAD px earlier), 1 when it lets go
+  const t = Math.max(0, Math.min(1, (-stage.getBoundingClientRect().top / z - (PIN_BOTTOM - vh - LEAD)) / (HOLD + LEAD)));
   const fade = ramp(t, 0, .25), part = ramp(t, .05, .45), glide = ramp(t, .1, .45), sink = ramp(t, .45, .78);
   about.style.opacity = fade ? (1 - fade).toFixed(3) : '';
   about.style.visibility = fade >= 1 ? 'hidden' : '';
