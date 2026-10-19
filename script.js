@@ -87,24 +87,37 @@ if (sparkle && matchMedia('(hover: hover) and (pointer: fine)').matches) {
   addEventListener('pointerup', () => sparkle.classList.remove('press'));
 }
 
-// Parallax: the bank of blue clouds between About and Work drifts slower than
-// the page (75% of the scroll speed), so the Work section slides up over the sky.
-const clouds = document.getElementById('cloudsPx');
-const CLOUDS_MID = 1190 + 350;   // the layer's centre on the 1440px stage
+// About → Work transition: as About scrolls away, the white cloud shape (and the
+// "?" sitting on it) glides to the centre and settles a little smaller, while the
+// blue cloud bank parts to the sides, leaving a smooth edge above My work.
+const puff = document.getElementById('skyPuff');
+const cloudsL = document.getElementById('cloudsL'), cloudsR = document.getElementById('cloudsR');
+const qbtn = document.querySelector('#about .qbtn');
+const PUFF_CX = 661 + 695 / 2, PUFF_BOTTOM = 765 + 855;   // the shape's centre line and bottom on the stage
+const Q = { x: 958.66 + 53, y: 859 + 131.37 + 98 };          // centre of the "?" on the stage
 const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)');
-let cloudsQueued = false;
-function moveClouds() {
-  cloudsQueued = false;
-  if (MOBILE.matches || reduceMotion.matches) { clouds.style.transform = ''; return; }
+let skyQueued = false;
+function moveSky() {
+  skyQueued = false;
+  const off = MOBILE.matches || reduceMotion.matches;
+  // progress: 0 while About fills the screen, 1 once My work reaches the upper part of it
   const z = parseFloat(stage.style.zoom) || 1;
-  // distance of the layer's centre from the middle of the screen, in screen px
-  const d = stage.getBoundingClientRect().top + CLOUDS_MID * z - innerHeight / 2;
-  const ty = Math.max(-140, Math.min(140, -.25 * d / z));
-  clouds.style.transform = `translate3d(0, ${ty.toFixed(1)}px, 0)`;
+  const top = -stage.getBoundingClientRect().top / z;        // stage y at the top of the screen
+  const t = off ? 0 : Math.max(0, Math.min(1, (top - 700) / 750));
+  const e = t * t * (3 - 2 * t);                              // ease in and out
+  const s = 1 - .25 * e, dx = (720 - PUFF_CX) * e, dy = 70 * e;
+  puff.style.transform = e ? `translate(${dx.toFixed(1)}px, ${dy.toFixed(1)}px) scale(${s.toFixed(3)})` : '';
+  // the "?" rides along: same move, scaled around the shape's bottom centre
+  const qx = PUFF_CX + (Q.x - PUFF_CX) * s + dx - Q.x, qy = PUFF_BOTTOM + (Q.y - PUFF_BOTTOM) * s + dy - Q.y;
+  if (qbtn) qbtn.style.transform = e ? `translate(${qx.toFixed(1)}px, ${qy.toFixed(1)}px) scale(${s.toFixed(3)})` : '';
+  const cx = 380 * e, cy = -170 * e, o = (1 - .85 * e).toFixed(3);
+  cloudsL.style.transform = e ? `translate(${-cx}px, ${cy}px)` : '';
+  cloudsR.style.transform = e ? `translate(${cx}px, ${cy}px)` : '';
+  cloudsL.style.opacity = cloudsR.style.opacity = e ? o : '';
 }
-if (clouds) {
-  const queueClouds = () => { if (!cloudsQueued) { cloudsQueued = true; requestAnimationFrame(moveClouds); } };
-  addEventListener('scroll', queueClouds, { passive: true });
-  addEventListener('resize', queueClouds);
-  moveClouds();
+if (puff && cloudsL && cloudsR) {
+  const queueSky = () => { if (!skyQueued) { skyQueued = true; requestAnimationFrame(moveSky); } };
+  addEventListener('scroll', queueSky, { passive: true });
+  addEventListener('resize', queueSky);
+  moveSky();
 }

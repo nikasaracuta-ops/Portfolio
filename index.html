@@ -11,7 +11,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@125,400;125,700&family=Italiana&family=Unbounded:wght@300;400;500&display=swap">
-  <link rel="stylesheet" href="styles.css?v=9c980485">
+  <link rel="stylesheet" href="styles.css?v=a99400b5">
   <script>document.documentElement.classList.add('js', 'is-loading')</script>
 </head>
 <body>
@@ -58,9 +58,12 @@
 
 
     <!-- About -->
-    <!-- The bank of blue clouds between About and Work, cut out of the background
-         so it can drift slower than the page (parallax, script.js) -->
-    <img class="l clouds-px" id="cloudsPx" style="--x:0;--y:1190px;--w:1440px;--h:700px" src="assets/clouds.webp" alt="">
+    <!-- About → Work transition (script.js): the white cloud shape behind the "?"
+         glides to the centre while the blue cloud bank parts to the sides. Both are
+         cut out of the background so they can move. -->
+    <img class="l sky-puff" id="skyPuff" style="--x:661px;--y:765px;--w:695px;--h:855px" src="assets/sky-puff.webp" alt="">
+    <img class="l clouds-px clouds-l" id="cloudsL" style="--x:0;--y:1190px;--w:1440px;--h:700px" src="assets/clouds.webp" alt="">
+    <img class="l clouds-px clouds-r" id="cloudsR" style="--x:0;--y:1190px;--w:1440px;--h:700px" src="assets/clouds.webp" alt="">
 
     <section class="sec" id="about" style="top:859px" aria-labelledby="hello">
       <h2 class="l reveal type" id="hello" style="--d:0s;--x:178.65px;--y:11.58px"><img src="assets/type-hello.svg" width="306" height="121" alt="Hello,"></h2>
@@ -201,7 +204,7 @@
   </div>
 
   <script src="loader.js?v=68ee955a"></script>
-  <script src="script.js?v=d208127c"></script>
+  <script src="script.js?v=2f54cb3b"></script>
   <script src="about.js?v=37dfe53c"></script>
   <script src="chameleon.js?v=6754f284"></script>
 </body>

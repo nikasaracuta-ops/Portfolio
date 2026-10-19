@@ -74,8 +74,13 @@ body {
           mask-composite: exclude;
 }
 
-/* the cloud bank between About and Work; script.js moves it with the scroll */
-.clouds-px { pointer-events: none; will-change: transform; }
+/* About → Work transition (script.js moves these with the scroll): the white
+   cloud shape glides to the centre, the blue cloud bank parts left and right */
+.sky-puff, .clouds-px { pointer-events: none; will-change: transform, opacity; }
+.sky-puff { transform-origin: 50% 100%; }
+/* the two halves cross-fade over the middle third, so parting them leaves no seam */
+.clouds-l { -webkit-mask-image: linear-gradient(to right, #000 33%, transparent 67%); mask-image: linear-gradient(to right, #000 33%, transparent 67%); }
+.clouds-r { -webkit-mask-image: linear-gradient(to left, #000 33%, transparent 67%); mask-image: linear-gradient(to left, #000 33%, transparent 67%); }
 
 @media (prefers-reduced-motion: reduce) {
   body::after { animation: none; }
@@ -513,7 +518,7 @@ a:focus-visible { outline: 2px solid var(--white); outline-offset: 4px; }
 @media (max-width: 760px) {
   .stage { width: 100%; height: auto; background: #fff; display: flex; flex-direction: column; }
   .hero { order: 1; } #about { order: 2; } #work { order: 3; } .sunset { order: 4; } #contact { order: 5; }
-  .bird, .fish, .clouds-px, .stage .nav { display: none !important; }
+  .bird, .fish, .sky-puff, .clouds-px, .stage .nav { display: none !important; }
 
   .sec {
     position: relative; top: auto !important; width: 100%; padding: 0 20px;
