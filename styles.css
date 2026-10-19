@@ -85,7 +85,7 @@ body {
 
 /* moved by script.js while pinned: the white cloud shape settles in the centre,
    the blue cloud bank parts left and right, then the shape sinks out of sight */
-.sky-puff, .clouds-px { pointer-events: none; will-change: transform, opacity; }
+.sky-puff, .clouds-px { pointer-events: none; }
 .sky-puff { transform-origin: 50% 100%; }
 /* the two halves cross-fade over the middle third, so parting them leaves no seam */
 .clouds-l { -webkit-mask-image: linear-gradient(to right, #000 33%, transparent 67%); mask-image: linear-gradient(to right, #000 33%, transparent 67%); }
@@ -493,37 +493,42 @@ a:focus-visible { outline: 2px solid var(--white); outline-offset: 4px; }
 }
 
 /* ---------- Menu ----------
-   On desktop the menu at the top of the page stays where it is while scrolling,
-   looking the same; script.js turns it blue over the white parts of the page.
-   The pill-shaped menu below is only used on phones, where that menu is hidden. */
-@media (min-width: 761px) {
-  .stage .nav { position: fixed; z-index: 60; transition: color .35s; }
-  .stage .nav.on-light { color: var(--c-blue); }
-  nav.topbar { display: none; }
-}
-
-/* ---------- Phone menu ---------- */
+   One menu for the whole page, fixed at the spot of the menu in the Figma design
+   and scaled with the page (--z = screen width / 1440, set by script.js). It sits
+   outside the zoomed stage on purpose: a fixed element inside it made browsers
+   draw the page at a lower resolution. Frosted glass like the contact buttons;
+   script.js turns the type blue over the white parts of the page and marks the
+   section you are in. */
 .topbar {
-  position: fixed; z-index: 70; top: 14px; left: 50%; display: flex; gap: 4px; padding: 6px;
-  border-radius: 40px; background: rgba(255, 255, 255, .78); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
-  box-shadow: 0 10px 30px -16px rgba(14, 63, 115, .55);
-  transform: translate(-50%, -140%); opacity: 0; transition: transform .45s cubic-bezier(.2, 1, .3, 1), opacity .3s;
+  --z: 1;
+  position: fixed; z-index: 70; top: calc(20px * var(--z)); left: calc(1075.5px * var(--z)); transform: translateX(-50%);
+  display: flex; gap: calc(4px * var(--z)); padding: calc(5px * var(--z));
+  border-radius: 999px; border: 1px solid rgba(255, 255, 255, .6);
+  background: rgba(255, 255, 255, .14); -webkit-backdrop-filter: blur(12px) saturate(1.2); backdrop-filter: blur(12px) saturate(1.2);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .35), 0 12px 30px -18px rgba(14, 63, 115, .6);
+  transition: background .35s, border-color .35s;
 }
-.topbar.show { transform: translate(-50%, 0); opacity: 1; }
 .topbar a {
-  padding: 9px 16px; border-radius: 30px; font: 14px/1 var(--font-ui); color: var(--c-blue); text-decoration: none;
-  transition: background .25s, color .25s;
+  padding: calc(10px * var(--z)) calc(24px * var(--z)); border-radius: 999px;
+  font: calc(18px * var(--z))/1 var(--font-ui); color: #fff; text-decoration: none; white-space: nowrap;
+  transition: background .25s, color .35s;
 }
-.topbar a:hover, .topbar a:focus-visible { background: var(--c-blue); color: #fff; }
+.topbar a:hover, .topbar a:focus-visible { background: rgba(255, 255, 255, .22); outline: none; }
+.topbar a.current { background: rgba(255, 255, 255, .3); }
+/* over white: a lighter glass with blue type */
+.topbar.on-light { background: rgba(255, 255, 255, .55); border-color: rgba(26, 91, 164, .25); }
+.topbar.on-light a { color: var(--c-blue); }
+.topbar.on-light a:hover, .topbar.on-light a:focus-visible, .topbar.on-light a.current { background: rgba(26, 91, 164, .1); }
 
 /* ---------- Sunset ---------- */
 .sunset-art { position: relative; width: 1440px; height: 860px; }
 /* leaf doors (script.js): same size throughout, hinged on the end of the stem;
    the right one is mirrored */
-.leaf { width: 600px; height: 735px; pointer-events: none; will-change: transform; transform-origin: 0 529px; }
+.leaf { width: 600px; height: 735px; pointer-events: none; transform-origin: 0 529px; }
 .leaf-r { transform: scaleX(-1); }   /* its box starts at the stem end; mirrored, the blade points back in */
 /* laptop screen: shows the projects one by one; click opens the one on screen */
 .screen {
+  text-decoration: none;
   width: 314px; height: 208px; transform-origin: 0 0; transform: rotate(-10.5deg);
   display: grid; place-items: center; align-content: center; gap: 6px; padding: 18px;
   border: 0; border-radius: 14px; background: none; color: #fff; text-align: center; cursor: pointer;
@@ -536,7 +541,7 @@ a:focus-visible { outline: 2px solid var(--white); outline-offset: 4px; }
 @keyframes blink { 50% { opacity: 0; } }
 
 @media (prefers-reduced-motion: reduce) {
-  .topbar, .t-email, .social { transition: none; }
+  .topbar, .topbar a, .t-email, .social { transition: none; }
   .caret { animation: none; }
 }
 
@@ -610,7 +615,7 @@ a:focus-visible { outline: 2px solid var(--white); outline-offset: 4px; }
   .t-email { width: 100% !important; max-width: 340px; height: 54px !important; margin: 12px auto 0; font-size: 17px; }
   .socials { margin-top: 22px; }
 
-  .topbar { top: 10px; width: max-content; max-width: calc(100% - 20px); }
+  .topbar { top: 10px; left: 50%; width: max-content; max-width: calc(100% - 20px); }
   .topbar a { padding: 9px 12px; font-size: 13px; }
 }
 

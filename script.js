@@ -1,4 +1,9 @@
 // Scale the 1440px-wide design to the viewport width.
+
+// Behance profile: the laptop screen and the Behance button link here.
+// TODO: paste the profile URL, e.g. 'https://www.behance.net/yourname'.
+const BEHANCE_URL = '';
+document.querySelectorAll('[data-behance]').forEach(a => { if (BEHANCE_URL) a.href = BEHANCE_URL; else a.removeAttribute('target'); });
 const stage = document.querySelector('.stage');
 const DESIGN_WIDTH = 1440;
 
@@ -20,9 +25,9 @@ function fit() {
 // Sticky menu: slides in once the menu at the top has scrolled away (always on phones)
 const topbar = document.getElementById('topbar');
 function updateTopbar() {
-  if (topbar) topbar.classList.toggle('show', MOBILE.matches || window.scrollY > 260);
+  // the menu scales with the page on desktop (styles.css)
+  if (topbar) topbar.style.setProperty('--z', MOBILE.matches ? 1 : (document.documentElement.clientWidth / DESIGN_WIDTH).toFixed(4));
 }
-window.addEventListener('scroll', updateTopbar, { passive: true });
 
 fit();
 window.addEventListener('resize', fit);
@@ -158,19 +163,24 @@ if (sunsetArt && leafL && leafR) {
   moveLeaves();
 }
 
-// Menu colour (desktop): the fixed top menu is white over the sky and the sea and
-// turns blue over the white stretch from Work down to the top of the sunset.
-const nav = document.querySelector('.stage .nav');
+// Menu: white glass over the sky and the sea, lighter glass with blue type over
+// the white stretch from Work down to the sea; the section you are in is marked.
 const work = document.getElementById('work');
+const navLinks = topbar ? [...topbar.querySelectorAll('a')] : [];
+const navSections = [document.getElementById('home'), about, work, sunsetArt];   // Home, About me, Work, Contact
 let navQueued = false;
 function toneNav() {
   navQueued = false;
-  if (MOBILE.matches) { nav.classList.remove('on-light'); return; }
-  const z = parseFloat(stage.style.zoom) || 1, y = 45 * z;   // the menu's line on screen
-  const light = work.getBoundingClientRect().top - 100 * z <= y && sunsetArt.getBoundingClientRect().top + 560 * z > y;
-  nav.classList.toggle('on-light', light);
+  const r = topbar.getBoundingClientRect(), y = r.top + r.height / 2;   // the menu's line on screen
+  const art = sunsetArt.getBoundingClientRect();
+  const z = MOBILE.matches ? 1 : parseFloat(stage.style.zoom) || 1;
+  topbar.classList.toggle('on-light', work.getBoundingClientRect().top - 100 * z <= y && art.top + art.height * .64 > y);
+  // current section: the last one whose top has passed 40% of the screen
+  let cur = 0;
+  navSections.forEach((el, i) => { if (el && el.getBoundingClientRect().top <= innerHeight * .4) cur = i; });
+  navLinks.forEach((a, i) => a.classList.toggle('current', i === cur));
 }
-if (nav && work && sunsetArt) {
+if (topbar && work && sunsetArt) {
   const queueNav = () => { if (!navQueued) { navQueued = true; requestAnimationFrame(toneNav); } };
   addEventListener('scroll', queueNav, { passive: true });
   addEventListener('resize', queueNav);

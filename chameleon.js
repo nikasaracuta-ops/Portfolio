@@ -146,22 +146,6 @@
   }
   requestAnimationFrame(frame);
 
-  /* ───── Laptop screen: types each project name in turn; click opens it ───── */
-  const screen = $('#screen'), scr = $('#scrText');
-  let shown = 0, typeTimer = 0;
-  function setScreen(i) {
-    shown = i; const text = PROJECTS[i].name;
-    clearInterval(typeTimer);
-    if (reduce) { scr.textContent = text; return; }
-    let n = 0; scr.textContent = '';
-    typeTimer = setInterval(() => { scr.textContent = text.slice(0, ++n); if (n >= text.length) clearInterval(typeTimer); }, 70);
-  }
-  if (screen) {
-    setScreen(0);
-    setInterval(() => { if (!document.hidden) setScreen((shown + 1) % PROJECTS.length); }, 3200);
-    screen.addEventListener('click', () => openProject(shown, screen));
-  }
-
   /* ───── Project sheet ───── */
   const sheet = $('#sheet'), panel = $('#panel'), pane = $('#pane');
   let cur = 0, tab = 'brief', opener = null;
