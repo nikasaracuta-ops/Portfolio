@@ -86,3 +86,25 @@ if (sparkle && matchMedia('(hover: hover) and (pointer: fine)').matches) {
   addEventListener('pointerdown', () => sparkle.classList.add('press'));
   addEventListener('pointerup', () => sparkle.classList.remove('press'));
 }
+
+// Parallax: the bank of blue clouds between About and Work drifts slower than
+// the page (75% of the scroll speed), so the Work section slides up over the sky.
+const clouds = document.getElementById('cloudsPx');
+const CLOUDS_MID = 1190 + 350;   // the layer's centre on the 1440px stage
+const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)');
+let cloudsQueued = false;
+function moveClouds() {
+  cloudsQueued = false;
+  if (MOBILE.matches || reduceMotion.matches) { clouds.style.transform = ''; return; }
+  const z = parseFloat(stage.style.zoom) || 1;
+  // distance of the layer's centre from the middle of the screen, in screen px
+  const d = stage.getBoundingClientRect().top + CLOUDS_MID * z - innerHeight / 2;
+  const ty = Math.max(-140, Math.min(140, -.25 * d / z));
+  clouds.style.transform = `translate3d(0, ${ty.toFixed(1)}px, 0)`;
+}
+if (clouds) {
+  const queueClouds = () => { if (!cloudsQueued) { cloudsQueued = true; requestAnimationFrame(moveClouds); } };
+  addEventListener('scroll', queueClouds, { passive: true });
+  addEventListener('resize', queueClouds);
+  moveClouds();
+}

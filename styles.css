@@ -36,7 +36,7 @@ body {
   height: 6557px;
   overflow: clip;   /* not hidden: that would stop the sticky chameleon */
   /* All artwork, exported from the Figma frame with text and icons hidden */
-  background: #fff url("assets/background.webp?v=2") top left / 1440px 6557px no-repeat;
+  background: #fff url("assets/background.webp?v=3") top left / 1440px 6557px no-repeat;
   /* script.js sets `zoom` so the 1440px design fills the viewport width */
 }
 
@@ -73,6 +73,9 @@ body {
   -webkit-mask-composite: xor;
           mask-composite: exclude;
 }
+
+/* the cloud bank between About and Work; script.js moves it with the scroll */
+.clouds-px { pointer-events: none; will-change: transform; }
 
 @media (prefers-reduced-motion: reduce) {
   body::after { animation: none; }
@@ -187,7 +190,19 @@ a:focus-visible { outline: 2px solid var(--white); outline-offset: 4px; }
 .cham .halo { filter: blur(9px); }
 .cham .halo > i { background: color-mix(in srgb, #00ff59 60%, #fff); }
 .cham .body { filter: blur(1.2px); }
-.cham .body > i { background: var(--cham); transition: background .8s ease; }
+.cham .body > i { background: var(--lava, #3365A7); transition: background .8s ease; }
+/* lava lamp: blobs of the project's colour rise and sink through the "liquid"
+   (--lava); the goo filter makes touching blobs melt into one */
+.lava { position: absolute; inset: 0; filter: url(#goo); container-type: size; }
+.lava b {
+  position: absolute; left: var(--x); top: var(--y); width: var(--s); aspect-ratio: 1; border-radius: 50%;
+  background: var(--cham); transition: background .8s ease;
+  animation: lava var(--t) ease-in-out var(--dl) infinite alternate;
+}
+@keyframes lava {
+  from { transform: translate(0, 32cqh) scale(.85); }
+  to   { transform: translate(var(--dx), -40cqh) scale(1.15); }
+}
 .cham .grain > i { background: var(--noise); mix-blend-mode: soft-light; opacity: .9; }
 @keyframes cham-breathe { 0%, 100% { opacity: .4; } 50% { opacity: .75; } }
 #mouth { position: absolute; left: 12%; top: 33.5%; width: 2px; height: 2px; }
@@ -313,7 +328,7 @@ a:focus-visible { outline: 2px solid var(--white); outline-offset: 4px; }
 @media (max-width: 820px) { .tabpane { grid-template-columns: minmax(0, 1fr); } }
 @media (max-width: 560px) { .p-head { grid-template-columns: minmax(0, 1fr); } .p-mini { display: none; } }
 @media (prefers-reduced-motion: reduce) {
-  .cham .aura { animation: none; }
+  .cham .aura, .lava b { animation: none; }
   .sheet, .panel, .wcard, .cham .body > i, .swatch { transition: none; }
 }
 
@@ -498,11 +513,11 @@ a:focus-visible { outline: 2px solid var(--white); outline-offset: 4px; }
 @media (max-width: 760px) {
   .stage { width: 100%; height: auto; background: #fff; display: flex; flex-direction: column; }
   .hero { order: 1; } #about { order: 2; } #work { order: 3; } .sunset { order: 4; } #contact { order: 5; }
-  .bird, .fish, .stage .nav { display: none !important; }
+  .bird, .fish, .clouds-px, .stage .nav { display: none !important; }
 
   .sec {
     position: relative; top: auto !important; width: 100%; padding: 0 20px;
-    background: url("assets/background.webp?v=2") no-repeat;
+    background: url("assets/background.webp?v=3") no-repeat;
     background-size: calc(1440px * var(--s, 1)) auto;
     background-position: center calc(var(--y0, 0) * var(--s, 1) * -1px);
   }
@@ -516,7 +531,15 @@ a:focus-visible { outline: 2px solid var(--white); outline-offset: 4px; }
   .hero p.type:last-child { justify-self: end; }
 
   /* crop to the blue sky on the left so the white text stays readable */
-  #about { --y0: 750; --s: .8; min-height: 690px; padding-top: 40px; padding-bottom: 56px; background-position: calc(-60px * var(--s)) calc(var(--y0) * var(--s) * -1px); }
+  /* the cloud bank sits on its own layer on desktop; here it is drawn back in as a
+     second background, and the crop fades into the white of the Work section */
+  #about {
+    --y0: 750; --s: .8; min-height: 690px; padding-top: 40px; padding-bottom: 110px;
+    background-image: url("assets/clouds.webp"), url("assets/background.webp?v=3");
+    background-size: calc(1440px * var(--s)) auto;
+    background-position: calc(-60px * var(--s)) calc((1190 - var(--y0)) * var(--s) * 1px), calc(-60px * var(--s)) calc(var(--y0) * var(--s) * -1px);
+  }
+  #about::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 110px; pointer-events: none; background: linear-gradient(rgba(255, 255, 255, 0), #fff); }
   #hello { width: 52%; max-width: 230px; }
   .t-intro { margin-top: 26px; max-width: 34ch; font-size: 17px; line-height: 1.6; }
   .t-intro p + p { margin-top: 1em; }
@@ -524,7 +547,7 @@ a:focus-visible { outline: 2px solid var(--white); outline-offset: 4px; }
   #about .qbtn { position: absolute; right: 24px; top: 36px; width: 58px; }
   #about .qbtn img { width: 100%; height: auto; }
 
-  #work { --y0: 1700; --s: 1; padding-top: 56px; padding-bottom: 40px; text-align: center; background-color: #fff; }
+  #work { --y0: 1800; --s: 1; padding-top: 56px; padding-bottom: 40px; text-align: center; background-color: #fff; }
   #mywork { width: 66%; max-width: 300px; margin: 0 auto; }
   /* the chameleon pins under the menu, facing left; its tongue reaches down to the list */
   .work-layout { grid-template-columns: minmax(0, 1fr); gap: 24px; margin-top: 24px; }
@@ -534,6 +557,7 @@ a:focus-visible { outline: 2px solid var(--white); outline-offset: 4px; }
     grid-template-columns: minmax(0, 1fr) auto; justify-items: start; text-align: left; align-items: center; gap: 12px;
   }
   .cham { width: 150px; transform: none; }
+  .lava { filter: url(#goo-sm); }
   .now strong { font-size: 26px; }
   .work-list { gap: 22px; }
   .wcard { padding: 12px; opacity: .65; }
@@ -542,7 +566,7 @@ a:focus-visible { outline: 2px solid var(--white); outline-offset: 4px; }
   .wcard .thumb { font-size: 22px; }
 
   .sunset { padding: 0; overflow: hidden; background: none; }
-  .sunset-art { zoom: var(--mz, .45); margin-left: -300px; background: url("assets/background.webp?v=2") 0 -5100px / 1440px 6557px no-repeat; }
+  .sunset-art { zoom: var(--mz, .45); margin-left: -300px; background: url("assets/background.webp?v=3") 0 -5100px / 1440px 6557px no-repeat; }
   .sunset-art .l { position: absolute; left: var(--x); top: var(--y); width: auto; height: auto; }
 
   #contact { --y0: 5920; --s: .9; min-height: 600px; padding-top: 44px; padding-bottom: 110px; text-align: center; }

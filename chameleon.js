@@ -7,11 +7,12 @@
   const $ = s => document.querySelector(s);
 
   /* ───── Projects: edit here ───── */
-  // To add a project, copy one block. 'hex' is the chameleon's colour, 'tint'
+  // To add a project, copy one block. 'hex' is the colour of the chameleon's
+  // lava-lamp wax, 'lava' the liquid it floats in, 'tint'
   // (optional) the card's placeholder colour; without 'img' the card says "Coming soon".
   const PROJECTS = [
     {
-      id: 'dior', name: 'Dior', hex: '#FB72BE', kind: 'UI · UX · Web design', img: 'assets/projects/p-dior.webp',
+      id: 'dior', name: 'Dior', hex: '#FB72BE', lava: '#3365A7', kind: 'UI · UX · Web design', img: 'assets/projects/p-dior.webp',
       title: 'The Art of Dressmaking', tagline: 'by Christian Dior — an interactive longread for MoMu',
       tags: ['UI', 'UX', 'Web-design', 'Web-development'],
       brief: [
@@ -25,7 +26,7 @@
       link: 'https://nikasaracuta.github.io/Integration-3/'
     },
     {
-      id: 'type01', name: 'Type01', hex: '#1A5BA4', tint: '#6f9bd4', kind: 'UI · UX · Web design', img: 'assets/projects/p-type01.webp',
+      id: 'type01', name: 'Type01', hex: '#1A5BA4', lava: '#FB72BE', tint: '#6f9bd4', kind: 'UI · UX · Web design', img: 'assets/projects/p-type01.webp',
       title: 'TYPE01 Conference', tagline: 'Typography in print, motion design and branding',
       tags: ['UI', 'UX', 'Web-design'],
       brief: [
@@ -39,7 +40,7 @@
       link: 'https://www.figma.com/proto/PsD6Cg8ngFq6yRWCCm5I9q/Type01?page-id=0%3A1&node-id=468-7480&viewport=-2609%2C-2191%2C0.15&t=KQAR1eAcC8Ls4MeP-1&scaling=min-zoom&content-scaling=fixed&starting-point-node-id=580%3A48961'
     },
     {
-      id: 'antwerp', name: 'Antwerp', hex: '#3BBDCC', kind: 'Interactive longread', img: '',
+      id: 'antwerp', name: 'Antwerp', hex: '#3BBDCC', lava: '#D5FF59', kind: 'Interactive longread', img: '',
       title: 'Antwerp', tagline: 'A web project about the city — case study in progress',
       tags: ['UI', 'UX', 'Web-design'],
       brief: ['This chameleon is still changing colour. The full Antwerp case study — brief, styleboard and iterations — lands here soon.'],
@@ -50,7 +51,7 @@
       link: ''   // paste the live URL here when it's ready
     },
     {
-      id: 'miles', name: 'Miles & Meals', hex: '#D5FF59', kind: 'App · Demo', img: 'assets/projects/p-miles.webp',
+      id: 'miles', name: 'Miles & Meals', hex: '#D5FF59', lava: '#1A5BA4', kind: 'App · Demo', img: 'assets/projects/p-miles.webp',
       title: 'Miles & Meals', tagline: 'Discover the world in your kitchen',
       tags: ['UI', 'UX', 'App-design'],
       brief: ['An app that brings iconic local dishes and street food from cities around the world straight to your kitchen — so you can travel by recipe.'],
@@ -61,7 +62,7 @@
       link: 'https://www.figma.com/proto/JhFdOzlcgGCV38btM2Tumv/Miles---Meals?page-id=6817%3A1887&node-id=59585-34744&viewport=-13885%2C-407%2C0.32&t=BZlwAt149MrtAhmE-1&scaling=min-zoom&content-scaling=fixed&starting-point-node-id=59585%3A34763&show-proto-sidebar=1'
     },
     {
-      id: 'thrive', name: 'Thrive', hex: '#00FF59', tint: '#5cff8f', kind: 'Branding · Packaging · Web design', img: 'assets/projects/p-thrive.webp',
+      id: 'thrive', name: 'Thrive', hex: '#00FF59', lava: '#E770B2', tint: '#5cff8f', kind: 'Branding · Packaging · Web design', img: 'assets/projects/p-thrive.webp',
       title: 'Thrive', tagline: 'Taste the sound of harmony',
       tags: ['Branding', 'Packaging', 'Web-design'],
       brief: ['A drink brand built around balance and calm: low-calorie cans with added magnesium, and a visual world that feels like sound turned into colour.'],
@@ -100,6 +101,7 @@
     cards.forEach((c, j) => c.classList.toggle('active', j === i));
     if (target >= 0) cards[target].classList.remove('stuck');
     page.style.setProperty('--cham', PROJECTS[i].hex);
+    page.style.setProperty('--lava', PROJECTS[i].lava);
     nowName.innerHTML = `<span class="swatch"></span>${PROJECTS[i].name.replace('&', '&amp;')}`;
     pending = i; goal = 0;
   }
