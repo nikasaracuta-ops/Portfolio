@@ -1,4 +1,4 @@
-// One chameleon, five projects (ported from the work-page artifact).
+// One chameleon, four projects (ported from the work-page artifact).
 // The chameleon stays put while the project list scrolls past; it catches the
 // project in the middle of the screen with its tongue and takes on its colour.
 // Click a project to open its sheet.
@@ -10,11 +10,11 @@
   // To add a project, copy one block. 'hex' is the colour of the chameleon's
   // lava-lamp wax, 'lava' the liquid it floats in, 'tint'
   // (optional) the card's placeholder colour, 'tab' the colour of the browser
-  // tab around the preview (a colour variable from styles.css); without 'img'
+  // tab around the preview; without 'img'
   // the card says "Coming soon".
   const PROJECTS = [
     {
-      id: 'dior', name: 'Dior', hex: '#FB72BE', tab: 'var(--pink)', lava: '#3365A7', kind: 'UI · UX · Web design', img: 'assets/projects/p-dior.webp',
+      id: 'dior', name: 'Dior', hex: '#FB72BE', tab: '#E770B2', lava: '#3365A7', kind: 'UI · UX · Web design', img: 'assets/projects/p-dior.webp',
       title: 'The Art of Dressmaking', tagline: 'by Christian Dior — an interactive longread for MoMu',
       tags: ['UI', 'UX', 'Web-design', 'Web-development'],
       brief: [
@@ -28,7 +28,7 @@
       link: 'https://nikasaracuta.github.io/Integration-3/'
     },
     {
-      id: 'type01', name: 'Type01', hex: '#1A5BA4', tab: 'var(--btn-pink)', lava: '#FB72BE', tint: '#6f9bd4', kind: 'UI · UX · Web design', img: 'assets/projects/p-type01.webp',
+      id: 'type01', name: 'Type01', hex: '#1A5BA4', tab: '#E770B2', lava: '#FB72BE', tint: '#6f9bd4', kind: 'UI · UX · Web design', img: 'assets/projects/p-type01.webp',
       title: 'TYPE01 Conference', tagline: 'Typography in print, motion design and branding',
       tags: ['UI', 'UX', 'Web-design'],
       brief: [
@@ -42,7 +42,7 @@
       link: 'https://www.figma.com/proto/PsD6Cg8ngFq6yRWCCm5I9q/Type01?page-id=0%3A1&node-id=468-7480&viewport=-2609%2C-2191%2C0.15&t=KQAR1eAcC8Ls4MeP-1&scaling=min-zoom&content-scaling=fixed&starting-point-node-id=580%3A48961'
     },
     {
-      id: 'moea', name: 'Moea', hex: '#3BBDCC', tab: 'var(--c-teal)', lava: '#D5FF59', kind: 'UI · UX · Web design', img: 'assets/projects/p-moea.webp',
+      id: 'moea', name: 'Moea', hex: '#3BBDCC', tab: '#3EBDCD', lava: '#D5FF59', kind: 'UI · UX · Web design', img: 'assets/projects/p-moea.webp',
       title: 'MOEA', tagline: 'Moea stands for Mother Earth — case study in progress',
       tags: ['UI', 'UX', 'Web-design'],
       brief: ['This chameleon is still changing colour. The full Moea case study — brief, styleboard and iterations — lands here soon.'],
@@ -53,7 +53,7 @@
       link: ''   // paste the live URL here when it's ready
     },
     {
-      id: 'miles', name: 'Miles & Meals', hex: '#D5FF59', tab: 'var(--c-blue)', lava: '#1A5BA4', kind: 'App · Demo', img: 'assets/projects/p-miles.webp',
+      id: 'miles', name: 'Miles & Meals', hex: '#D5FF59', tab: '#1A5BA4', lava: '#1A5BA4', kind: 'App · Demo', img: 'assets/projects/p-miles.webp',
       title: 'Miles & Meals', tagline: 'Discover the world in your kitchen',
       tags: ['UI', 'UX', 'App-design'],
       brief: ['An app that brings iconic local dishes and street food from cities around the world straight to your kitchen — so you can travel by recipe.'],
@@ -62,17 +62,6 @@
       result: 'An app prototype that invites you to “Discover the world in your kitchen”.',
       art: ['Discover the world in your kitchen', 'App prototype'],
       link: 'https://www.figma.com/proto/JhFdOzlcgGCV38btM2Tumv/Miles---Meals?page-id=6817%3A1887&node-id=59585-34744&viewport=-13885%2C-407%2C0.32&t=BZlwAt149MrtAhmE-1&scaling=min-zoom&content-scaling=fixed&starting-point-node-id=59585%3A34763&show-proto-sidebar=1'
-    },
-    {
-      id: 'thrive', name: 'Thrive', hex: '#00FF59', tab: 'var(--c-teal)', lava: '#E770B2', tint: '#5cff8f', kind: 'Branding · Packaging · Web design', img: 'assets/projects/p-thrive.webp',
-      title: 'Thrive', tagline: 'Taste the sound of harmony',
-      tags: ['Branding', 'Packaging', 'Web-design'],
-      brief: ['A drink brand built around balance and calm: low-calorie cans with added magnesium, and a visual world that feels like sound turned into colour.'],
-      facts: [['Type', 'Drink branding'], ['Deliverables', 'Visual style, cans, landing page']],
-      process: [['Styleboard', 'Liquid 3D shapes, deep teal gradients, gold accents and a light-to-heavy type scale.']],
-      result: 'A can range “in Harmony” and a landing page that asks you to taste the sound of harmony.',
-      art: ['TASTE the sound OF HARMONY', 'Branding · cans · web'],
-      link: 'https://www.figma.com/proto/7OqEPVGJHATgZZsEbFb6fZ/Thrive?page-id=0%3A1&node-id=460-622&viewport=-5783%2C946%2C0.11&t=9A2yE4wjbfxCKI9d-1&scaling=min-zoom&content-scaling=fixed&starting-point-node-id=452%3A4229'
     }
   ];
 
@@ -81,16 +70,32 @@
   const mouth = $('#mouth'), tongue = $('#tongue'), tip = $('#tongueTip');
 
   // one card per project
+  // tab.svg from Figma, unchanged except that its pink (#E770B2) is currentColor
+  const tabSvg = i => `<svg class="win-svg" viewBox="0 0 742 497" fill="none" aria-hidden="true">
+<path d="M0 13.7C0 6.13367 6.13368 0 13.7 0H727.344C734.91 0 741.044 6.13368 741.044 13.7V48.5726H0V13.7Z" fill="currentColor"/>
+<mask id="tabM0-${i}" fill="white"><path d="M0 13.7C0 6.13367 6.13368 0 13.7 0H727.344C734.91 0 741.044 6.13368 741.044 13.7V48.5726H0V13.7Z"/></mask>
+<path d="M741.044 48.5726V13.7C741.044 6.13368 734.91 0 727.344 0H13.7C6.13368 0 0 6.13367 0 13.7V48.5726H741.044Z" stroke-width="2.4909" stroke="currentColor" mask="url(#tabM0-${i})"/>
+<rect x="31.6227" y="15.568" width="676.876" height="18.6818" fill="currentColor"/>
+<rect x="31.6227" y="15.568" width="676.876" height="18.6818" stroke="currentColor" stroke-width="1.24545"/>
+<circle cx="38.7144" cy="24.9089" r="6.46831" fill="#F28FFD"/>
+<circle cx="60.8902" cy="24.9089" r="6.46831" fill="#FFEE00"/>
+<circle cx="83.0699" cy="24.9089" r="6.46831" fill="#50F85E"/>
+<rect x="119.426" y="11.8317" width="534.299" height="26.1545" rx="13.0772" fill="white"/>
+<path d="M634.767 18.059C637.36 18.059 639.471 20.1708 639.476 22.7675L639.47 22.9906C639.419 24.0816 638.992 25.0695 638.32 25.8443L641.27 28.8534L641.275 28.8575V28.8582L641.24 28.8927L641.236 28.8967H641.235L641.27 28.9319L640.969 29.2287L640.93 29.268L640.891 29.2281L637.945 26.225C637.108 26.9968 635.992 27.4719 634.767 27.4719C632.17 27.4719 630.059 25.3643 630.059 22.7675C630.059 20.1707 632.175 18.059 634.767 18.059ZM634.767 18.5938C632.465 18.5939 630.593 20.4694 630.593 22.7675C630.593 25.0655 632.465 26.9371 634.767 26.9371C637.07 26.9371 638.941 25.0697 638.941 22.7675C638.941 20.4652 637.069 18.5938 634.767 18.5938Z" fill="#414141" stroke-width="0.692449" stroke="#D2D2D2"/>
+<circle cx="705.709" cy="17.1111" r="2.16606" fill="white"/>
+<circle cx="705.709" cy="24.909" r="2.16606" fill="white"/>
+<circle cx="705.709" cy="32.7067" r="2.16606" fill="white"/>
+<mask id="tabM1-${i}" fill="white"><path d="M0 48H741V477C741 488.046 732.046 497 721 497H20C8.95429 497 0 488.046 0 477V48Z"/></mask>
+<path d="M0 48H741V477C741 488.046 732.046 497 721 497H20C8.95429 497 0 488.046 0 477V48Z" stroke-width="20" stroke="currentColor" mask="url(#tabM1-${i})"/>
+</svg>`;
+
   const cards = PROJECTS.map((p, i) => {
     const li = document.createElement('li');
     const b = document.createElement('button');
-    b.className = 'wcard'; b.style.setProperty('--c', p.tint || p.hex); b.style.setProperty('--tab', p.tab || 'var(--btn-pink)');
+    b.className = 'wcard'; b.style.setProperty('--c', p.tint || p.hex); b.style.setProperty('--tab', p.tab || '#E770B2');
     b.setAttribute('aria-label', `Open project ${i + 1}: ${p.name}`);
-    // the preview sits in a browser-window tab (tab.svg from Figma, drawn in CSS so it takes the project's colour)
-    b.innerHTML = `<span class="tab"><span class="tab-bar" aria-hidden="true"><i></i><i></i><i></i><span class="tab-url"></span><span class="tab-more"></span></span>
-      <span class="thumb">${p.img ? `<img src="${p.img}" alt="" loading="lazy" decoding="async">` : 'Coming soon'}</span></span>
-      <span class="meta"><span class="num">${String(i + 1).padStart(2, '0')}</span><span class="open">Open project →</span></span>
-      <span class="nm">${p.name.replace('&', '&amp;')}</span><span class="tg">${p.kind}</span>`;
+    // the preview sits in the browser-window tab from Figma (tab.svg), its pink swapped for the project's colour
+    b.innerHTML = `<span class="win"><span class="thumb">${p.img ? `<img src="${p.img}" alt="" loading="lazy" decoding="async">` : 'Coming soon'}</span>${tabSvg(i)}</span>`;
     b.addEventListener('click', () => openProject(i, b));
     b.addEventListener('mouseenter', () => activate(i));
     b.addEventListener('focus', () => activate(i));
