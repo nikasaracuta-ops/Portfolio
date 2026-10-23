@@ -9,10 +9,12 @@
   /* ───── Projects: edit here ───── */
   // To add a project, copy one block. 'hex' is the colour of the chameleon's
   // lava-lamp wax, 'lava' the liquid it floats in, 'tint'
-  // (optional) the card's placeholder colour; without 'img' the card says "Coming soon".
+  // (optional) the card's placeholder colour, 'tab' the colour of the browser
+  // tab around the preview (a colour variable from styles.css); without 'img'
+  // the card says "Coming soon".
   const PROJECTS = [
     {
-      id: 'dior', name: 'Dior', hex: '#FB72BE', lava: '#3365A7', kind: 'UI · UX · Web design', img: 'assets/projects/p-dior.webp',
+      id: 'dior', name: 'Dior', hex: '#FB72BE', tab: 'var(--pink)', lava: '#3365A7', kind: 'UI · UX · Web design', img: 'assets/projects/p-dior.webp',
       title: 'The Art of Dressmaking', tagline: 'by Christian Dior — an interactive longread for MoMu',
       tags: ['UI', 'UX', 'Web-design', 'Web-development'],
       brief: [
@@ -26,7 +28,7 @@
       link: 'https://nikasaracuta.github.io/Integration-3/'
     },
     {
-      id: 'type01', name: 'Type01', hex: '#1A5BA4', lava: '#FB72BE', tint: '#6f9bd4', kind: 'UI · UX · Web design', img: 'assets/projects/p-type01.webp',
+      id: 'type01', name: 'Type01', hex: '#1A5BA4', tab: 'var(--btn-pink)', lava: '#FB72BE', tint: '#6f9bd4', kind: 'UI · UX · Web design', img: 'assets/projects/p-type01.webp',
       title: 'TYPE01 Conference', tagline: 'Typography in print, motion design and branding',
       tags: ['UI', 'UX', 'Web-design'],
       brief: [
@@ -40,18 +42,18 @@
       link: 'https://www.figma.com/proto/PsD6Cg8ngFq6yRWCCm5I9q/Type01?page-id=0%3A1&node-id=468-7480&viewport=-2609%2C-2191%2C0.15&t=KQAR1eAcC8Ls4MeP-1&scaling=min-zoom&content-scaling=fixed&starting-point-node-id=580%3A48961'
     },
     {
-      id: 'antwerp', name: 'Antwerp', hex: '#3BBDCC', lava: '#D5FF59', kind: 'Interactive longread', img: '',
-      title: 'Antwerp', tagline: 'A web project about the city — case study in progress',
+      id: 'moea', name: 'Moea', hex: '#3BBDCC', tab: 'var(--c-teal)', lava: '#D5FF59', kind: 'UI · UX · Web design', img: 'assets/projects/p-moea.webp',
+      title: 'MOEA', tagline: 'Moea stands for Mother Earth — case study in progress',
       tags: ['UI', 'UX', 'Web-design'],
-      brief: ['This chameleon is still changing colour. The full Antwerp case study — brief, styleboard and iterations — lands here soon.'],
+      brief: ['This chameleon is still changing colour. The full Moea case study — brief, styleboard and iterations — lands here soon.'],
       facts: [['Status', 'Case study in progress']],
       process: [['Styleboard', 'Coming soon.'], ['Iterations', 'Coming soon.']],
       result: 'Final designs will be published here once the case study is ready.',
-      art: ['Antwerp', 'Coming soon'],
+      art: ['MOEA stands for Mother Earth', 'Coming soon'],
       link: ''   // paste the live URL here when it's ready
     },
     {
-      id: 'miles', name: 'Miles & Meals', hex: '#D5FF59', lava: '#1A5BA4', kind: 'App · Demo', img: 'assets/projects/p-miles.webp',
+      id: 'miles', name: 'Miles & Meals', hex: '#D5FF59', tab: 'var(--c-blue)', lava: '#1A5BA4', kind: 'App · Demo', img: 'assets/projects/p-miles.webp',
       title: 'Miles & Meals', tagline: 'Discover the world in your kitchen',
       tags: ['UI', 'UX', 'App-design'],
       brief: ['An app that brings iconic local dishes and street food from cities around the world straight to your kitchen — so you can travel by recipe.'],
@@ -62,7 +64,7 @@
       link: 'https://www.figma.com/proto/JhFdOzlcgGCV38btM2Tumv/Miles---Meals?page-id=6817%3A1887&node-id=59585-34744&viewport=-13885%2C-407%2C0.32&t=BZlwAt149MrtAhmE-1&scaling=min-zoom&content-scaling=fixed&starting-point-node-id=59585%3A34763&show-proto-sidebar=1'
     },
     {
-      id: 'thrive', name: 'Thrive', hex: '#00FF59', lava: '#E770B2', tint: '#5cff8f', kind: 'Branding · Packaging · Web design', img: 'assets/projects/p-thrive.webp',
+      id: 'thrive', name: 'Thrive', hex: '#00FF59', tab: 'var(--c-teal)', lava: '#E770B2', tint: '#5cff8f', kind: 'Branding · Packaging · Web design', img: 'assets/projects/p-thrive.webp',
       title: 'Thrive', tagline: 'Taste the sound of harmony',
       tags: ['Branding', 'Packaging', 'Web-design'],
       brief: ['A drink brand built around balance and calm: low-calorie cans with added magnesium, and a visual world that feels like sound turned into colour.'],
@@ -82,9 +84,11 @@
   const cards = PROJECTS.map((p, i) => {
     const li = document.createElement('li');
     const b = document.createElement('button');
-    b.className = 'wcard'; b.style.setProperty('--c', p.tint || p.hex);
+    b.className = 'wcard'; b.style.setProperty('--c', p.tint || p.hex); b.style.setProperty('--tab', p.tab || 'var(--btn-pink)');
     b.setAttribute('aria-label', `Open project ${i + 1}: ${p.name}`);
-    b.innerHTML = `<span class="thumb"${p.img ? ` style="background-image:url('${p.img}')"` : ''}>${p.img ? '' : 'Coming soon'}</span>
+    // the preview sits in a browser-window tab (tab.svg from Figma, drawn in CSS so it takes the project's colour)
+    b.innerHTML = `<span class="tab"><span class="tab-bar" aria-hidden="true"><i></i><i></i><i></i><span class="tab-url"></span><span class="tab-more"></span></span>
+      <span class="thumb">${p.img ? `<img src="${p.img}" alt="" loading="lazy" decoding="async">` : 'Coming soon'}</span></span>
       <span class="meta"><span class="num">${String(i + 1).padStart(2, '0')}</span><span class="open">Open project →</span></span>
       <span class="nm">${p.name.replace('&', '&amp;')}</span><span class="tg">${p.kind}</span>`;
     b.addEventListener('click', () => openProject(i, b));
