@@ -241,8 +241,10 @@ a:focus-visible { outline: 2px solid var(--white); outline-offset: 4px; }
 .work-list { list-style: none; display: grid; gap: 36px; }
 .wcard {
   display: block; width: 100%; padding: 0; border: 0; background: none; cursor: pointer; font: inherit;
-  transition: transform .35s cubic-bezier(.3, 1.6, .5, 1);
+  opacity: .45; filter: blur(1.2px);
+  transition: transform .35s cubic-bezier(.3, 1.6, .5, 1), opacity .3s, filter .3s;
 }
+.wcard.active { opacity: 1; filter: none; }
 .wcard.stuck { transform: translateX(-12px); }
 .wcard:focus-visible { outline: 2px solid var(--c-pink); outline-offset: 6px; border-radius: 14px; }
 /* the preview in the browser-window tab from Figma (tab.svg, 742 × 497, drawn on
@@ -498,6 +500,14 @@ a:focus-visible { outline: 2px solid var(--white); outline-offset: 4px; }
   position: fixed; z-index: 70; top: calc(20px * var(--z)); left: 0; right: 0;
   height: calc(62px * var(--z)); pointer-events: none;
 }
+/* a soft full-width backdrop so the menu stays readable over whatever scrolls under it */
+.topbar::before {
+  content: ""; position: absolute; z-index: -1; left: 0; right: 0; top: calc(-20px * var(--z)); height: calc(112px * var(--z));
+  background: rgba(26, 91, 164, .08); -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px);
+  -webkit-mask-image: linear-gradient(#000 55%, transparent); mask-image: linear-gradient(#000 55%, transparent);
+  transition: background .35s;
+}
+.topbar.on-light::before { background: rgba(250, 250, 250, .78); }
 .topbar a { pointer-events: auto; text-decoration: none; }
 .topbar-logo { position: absolute; left: calc(51px * var(--z)); top: 0; width: calc(67px * var(--z)); height: calc(62px * var(--z)); }
 .topbar-logo img { position: absolute; inset: 0; width: 100%; height: 100%; transition: opacity .35s; }
@@ -606,6 +616,7 @@ a:focus-visible { outline: 2px solid var(--white); outline-offset: 4px; }
   .lava { filter: url(#goo-sm); }
   .now strong { font-size: 26px; }
   .work-list { gap: 22px; }
+  .wcard { opacity: .65; }
   .wcard.stuck { transform: translateY(-6px); }
   .wcard .thumb { font-size: 22px; }
 
@@ -620,6 +631,7 @@ a:focus-visible { outline: 2px solid var(--white); outline-offset: 4px; }
   .socials { margin-top: 22px; }
 
   .topbar { top: 12px; height: 40px; }
+  .topbar::before { top: -12px; height: 76px; }
   .topbar-logo { left: 16px; width: 43px; height: 40px; }
   .topbar-links { left: auto; right: 10px; width: auto; top: 6px; gap: 2px; }
   .topbar-links a { padding: 5px 10px; font-size: 13px; line-height: 18px; }

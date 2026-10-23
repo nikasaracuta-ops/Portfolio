@@ -164,7 +164,7 @@ if (sunsetArt && leafL && leafR) {
 }
 
 // Menu: white over the sky and the sea, blue with the colour logo over the white
-// stretch from Work down to the sea; the pink pill sits on the section you are in
+// stretch from where the sky fades out above Work down to the sea; the pink pill sits on the section you are in
 // (none over the opening hero).
 const work = document.getElementById('work');
 const navLinks = topbar ? [...topbar.querySelectorAll('.topbar-links a')] : [];
@@ -176,7 +176,7 @@ function toneNav() {
   const r = topbar.getBoundingClientRect(), y = r.top + r.height / 2;   // the menu's line on screen
   const art = sunsetArt.getBoundingClientRect();
   const z = MOBILE.matches ? 1 : parseFloat(stage.style.zoom) || 1;
-  topbar.classList.toggle('on-light', work.getBoundingClientRect().top - 100 * z <= y && art.top + art.height * .64 > y);
+  topbar.classList.toggle('on-light', work.getBoundingClientRect().top - 280 * z <= y && art.top + art.height * .64 > y);
   // current section: the last one whose top has passed 40% of the screen
   let cur = -1;
   navSections.forEach((el, i) => { if (el && el.getBoundingClientRect().top <= innerHeight * .4) cur = i; });
