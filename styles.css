@@ -210,7 +210,8 @@ a:focus-visible { outline: 2px solid var(--white); outline-offset: 4px; }
 /* the branch runs across the whole page under the chameleon (stage x 0, 115.5px below its top) */
 .cham .branch { left: -172px; top: 115.5px; width: 1440px; height: 138.5px; }
 .cham .branch path { stroke: var(--cham); transition: stroke .8s ease; }
-#mouth { position: absolute; left: 97%; top: 30%; width: 2px; height: 2px; }
+/* inside the head, where the tongue starts in Figma (272, 88); the head hides it up to the lips */
+#mouth { position: absolute; left: 75.3%; top: 28.6%; width: 2px; height: 2px; }
 .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
 
 /* the tongue, over the page in screen pixels */

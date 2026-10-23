@@ -67,6 +67,9 @@
   const page = $('.stage');
   const list = $('#workList'), workStage = $('.work-stage'), nowName = $('#nowName');
   const mouth = $('#mouth'), tongue = $('#tongue'), tip = $('#tongueTip');
+  // the tongue layer cuts out the chameleon's shape, so the tongue starts behind it
+  const chamBody = $('.cham-body'), chamCut = $('#tongueMaskCham');
+  chamCut.setAttribute('d', chamBody.querySelector('path').getAttribute('d'));
 
   // one card per project
   // tab.svg from Figma, unchanged except that its pink (#E770B2) is currentColor
@@ -146,6 +149,8 @@
       const dist = Math.hypot(x - m.x, y - m.y);
       const sag = ext >= 1 ? dist * .08 + Math.sin(now / 350) * 3 * z : 0;
       tongue.setAttribute('d', dist > 2 ? `M${m.x},${m.y} Q${(m.x + x) / 2},${(m.y + y) / 2 + sag} ${x},${y}` : '');
+      const cb = chamBody.getBoundingClientRect();
+      chamCut.setAttribute('transform', `translate(${cb.left} ${cb.top}) scale(${cb.width / 361} ${cb.height / 308})`);
       tongue.setAttribute('stroke-width', 5 * z);
       tip.setAttribute('cx', x); tip.setAttribute('cy', y); tip.setAttribute('r', dist > 2 ? 13 * z : 0);
       cards[target].classList.toggle('stuck', ext >= 1);

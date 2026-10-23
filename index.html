@@ -11,7 +11,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@125,400;125,700&family=Italiana&family=Unbounded:wght@300;400;500&display=swap">
-  <link rel="stylesheet" href="styles.css?v=15ee9c92">
+  <link rel="stylesheet" href="styles.css?v=c1d15f0d">
   <script>document.documentElement.classList.add('js', 'is-loading')</script>
 </head>
 <body>
@@ -116,7 +116,12 @@
 
   <!-- Chameleon tongue: drawn in screen coordinates over the page by chameleon.js -->
   <svg class="tongue-layer" id="tongueLayer" aria-hidden="true">
-    <path id="tongue" d=""/><circle id="tongueTip" r="0"/>
+    <!-- the chameleon's shape is cut out of the tongue (chameleon.js keeps it over
+         the chameleon), so the tongue comes from behind it, out of the mouth -->
+    <defs><mask id="tongueMask" maskUnits="userSpaceOnUse" x="-10000" y="-10000" width="30000" height="30000">
+      <rect x="-10000" y="-10000" width="30000" height="30000" fill="#fff"/><path id="tongueMaskCham" fill="#000"/>
+    </mask></defs>
+    <g mask="url(#tongueMask)"><path id="tongue" d=""/><circle id="tongueTip" r="0"/></g>
   </svg>
 
   <!-- Sparkle cursor (mouse/trackpad only), driven by script.js -->
@@ -210,6 +215,6 @@
   <script src="loader.js?v=68ee955a"></script>
   <script src="script.js?v=6706efdb"></script>
   <script src="about.js?v=37dfe53c"></script>
-  <script src="chameleon.js?v=ac53f711"></script>
+  <script src="chameleon.js?v=e9bd22f2"></script>
 </body>
 </html>
