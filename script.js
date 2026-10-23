@@ -163,12 +163,14 @@ if (sunsetArt && leafL && leafR) {
   moveLeaves();
 }
 
-// Menu: white glass over the sky and the sea, lighter glass with blue type over
-// the white stretch from Work down to the sea; the section you are in is marked.
+// Menu: white over the sky and the sea, blue with the colour logo over the white
+// stretch from Work down to the sea; the pink pill sits on the section you are in
+// (none over the opening hero).
 const work = document.getElementById('work');
-const navLinks = topbar ? [...topbar.querySelectorAll('a')] : [];
-const navSections = [document.getElementById('home'), about, work, sunsetArt];   // Home, About me, Work, Contact
-let navQueued = false;
+const navLinks = topbar ? [...topbar.querySelectorAll('.topbar-links a')] : [];
+const navPill = topbar && topbar.querySelector('.topbar-pill');
+const navSections = [about, work, sunsetArt];   // About me, Work, Contact
+let navQueued = false, navPlaced = false;
 function toneNav() {
   navQueued = false;
   const r = topbar.getBoundingClientRect(), y = r.top + r.height / 2;   // the menu's line on screen
@@ -176,9 +178,17 @@ function toneNav() {
   const z = MOBILE.matches ? 1 : parseFloat(stage.style.zoom) || 1;
   topbar.classList.toggle('on-light', work.getBoundingClientRect().top - 100 * z <= y && art.top + art.height * .64 > y);
   // current section: the last one whose top has passed 40% of the screen
-  let cur = 0;
+  let cur = -1;
   navSections.forEach((el, i) => { if (el && el.getBoundingClientRect().top <= innerHeight * .4) cur = i; });
   navLinks.forEach((a, i) => a.classList.toggle('current', i === cur));
+  if (!navPill) return;
+  navPill.classList.toggle('on', cur >= 0);
+  if (cur < 0) return;
+  // the first placement (and placements while hidden) jump; after that the pill slides
+  navPill.classList.toggle('instant', !navPlaced);
+  navPill.style.setProperty('--px', navLinks[cur].offsetLeft + 'px');
+  navPill.style.setProperty('--pw', navLinks[cur].offsetWidth + 'px');
+  if (!navPlaced) { navPlaced = true; requestAnimationFrame(() => navPill.classList.remove('instant')); }
 }
 if (topbar && work && sunsetArt) {
   const queueNav = () => { if (!navQueued) { navQueued = true; requestAnimationFrame(toneNav); } };

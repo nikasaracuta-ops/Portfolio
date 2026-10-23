@@ -493,32 +493,45 @@ a:focus-visible { outline: 2px solid var(--white); outline-offset: 4px; }
 }
 
 /* ---------- Menu ----------
-   One menu for the whole page, fixed at the spot of the menu in the Figma design
-   and scaled with the page (--z = screen width / 1440, set by script.js). It sits
-   outside the zoomed stage on purpose: a fixed element inside it made browsers
-   draw the page at a lower resolution. Frosted glass like the contact buttons;
-   script.js turns the type blue over the white parts of the page and marks the
-   section you are in. */
+   One menu for the whole page, fixed at the top and scaled with the page
+   (--z = screen width / 1440, set by script.js). It sits outside the zoomed stage
+   on purpose: a fixed element inside it made browsers draw the page at a lower
+   resolution. As in Figma (frame 697:47124): the logo on the left, the links on
+   the right. White over the blue parts of the page, blue with the colour logo over
+   the white parts (.on-light, script.js); the pink pill slides to the word of the
+   section you are in (--px / --pw, script.js). */
 .topbar {
   --z: 1;
-  position: fixed; z-index: 70; top: calc(20px * var(--z)); left: calc(1075.5px * var(--z)); transform: translateX(-50%);
-  display: flex; gap: calc(4px * var(--z)); padding: calc(5px * var(--z));
-  border-radius: 999px; border: 1px solid rgba(255, 255, 255, .6);
-  background: rgba(255, 255, 255, .14); -webkit-backdrop-filter: blur(12px) saturate(1.2); backdrop-filter: blur(12px) saturate(1.2);
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .35), 0 12px 30px -18px rgba(14, 63, 115, .6);
-  transition: background .35s, border-color .35s;
+  position: fixed; z-index: 70; top: calc(20px * var(--z)); left: 0; right: 0;
+  height: calc(62px * var(--z)); pointer-events: none;
 }
-.topbar a {
-  padding: calc(10px * var(--z)) calc(24px * var(--z)); border-radius: 999px;
-  font: calc(18px * var(--z))/1 var(--font-ui); color: #fff; text-decoration: none; white-space: nowrap;
-  transition: background .25s, color .35s;
+.topbar a { pointer-events: auto; text-decoration: none; }
+.topbar-logo { position: absolute; left: calc(51px * var(--z)); top: 0; width: calc(67px * var(--z)); height: calc(62px * var(--z)); }
+.topbar-logo img { position: absolute; inset: 0; width: 100%; height: 100%; transition: opacity .35s; }
+.topbar-logo .logo-blue { opacity: 0; }
+.topbar.on-light .logo-white { opacity: 0; }
+.topbar.on-light .logo-blue { opacity: 1; }
+/* the link texts sit 584px wide, ending at x 1379; each link carries the pill's 20px side padding */
+.topbar-links {
+  position: absolute; left: calc(775px * var(--z)); width: calc(624px * var(--z)); top: calc(9.5px * var(--z));
+  display: flex; justify-content: space-between;
 }
-.topbar a:hover, .topbar a:focus-visible { background: rgba(255, 255, 255, .22); outline: none; }
-.topbar a.current { background: rgba(255, 255, 255, .3); }
-/* over white: a lighter glass with blue type */
-.topbar.on-light { background: rgba(255, 255, 255, .55); border-color: rgba(26, 91, 164, .25); }
-.topbar.on-light a { color: var(--c-blue); }
-.topbar.on-light a:hover, .topbar.on-light a:focus-visible, .topbar.on-light a.current { background: rgba(26, 91, 164, .1); }
+.topbar-links a {
+  position: relative; z-index: 1; padding: calc(7px * var(--z)) calc(20px * var(--z));
+  font: calc(20px * var(--z))/calc(29px * var(--z)) var(--font-ui); color: #fff; white-space: nowrap;
+  transition: color .35s;
+}
+.topbar.on-light .topbar-links a { color: #497cb6; }
+.topbar-links a.current, .topbar.on-light .topbar-links a.current { color: #000; }
+.topbar-links a:hover, .topbar-links a:focus-visible { text-decoration: underline; text-underline-offset: 6px; text-decoration-thickness: 1px; outline: none; }
+.topbar-links a.current:hover { text-decoration: none; }
+.topbar-pill {
+  position: absolute; left: 0; top: 0; height: 100%; width: var(--pw, 0px);
+  transform: translateX(var(--px, 0px)); border-radius: calc(26px * var(--z)); background: #e770b2;
+  opacity: 0; transition: transform .5s cubic-bezier(.65, 0, .35, 1), width .5s cubic-bezier(.65, 0, .35, 1), opacity .3s;
+}
+.topbar-pill.on { opacity: 1; }
+.topbar-pill.instant { transition: opacity .3s; }
 
 /* ---------- Sunset ---------- */
 .sunset-art { position: relative; width: 1440px; height: 860px; }
@@ -541,7 +554,7 @@ a:focus-visible { outline: 2px solid var(--white); outline-offset: 4px; }
 @keyframes blink { 50% { opacity: 0; } }
 
 @media (prefers-reduced-motion: reduce) {
-  .topbar, .topbar a, .t-email, .social { transition: none; }
+  .topbar-links a, .topbar-logo img, .topbar-pill, .t-email, .social { transition: none; }
   .caret { animation: none; }
 }
 
@@ -615,8 +628,10 @@ a:focus-visible { outline: 2px solid var(--white); outline-offset: 4px; }
   .t-email { width: 100% !important; max-width: 340px; height: 54px !important; margin: 12px auto 0; font-size: 17px; }
   .socials { margin-top: 22px; }
 
-  .topbar { top: 10px; left: 50%; width: max-content; max-width: calc(100% - 20px); }
-  .topbar a { padding: 9px 12px; font-size: 13px; }
+  .topbar { top: 12px; height: 40px; }
+  .topbar-logo { left: 16px; width: 43px; height: 40px; }
+  .topbar-links { left: auto; right: 10px; width: auto; top: 6px; gap: 2px; }
+  .topbar-links a { padding: 5px 10px; font-size: 13px; line-height: 18px; }
 }
 
 /* ---------- Sparkle cursor ----------

@@ -11,7 +11,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@125,400;125,700&family=Italiana&family=Unbounded:wght@300;400;500&display=swap">
-  <link rel="stylesheet" href="styles.css?v=1a28f730">
+  <link rel="stylesheet" href="styles.css?v=d1797c30">
   <script>document.documentElement.classList.add('js', 'is-loading')</script>
 </head>
 <body>
@@ -131,10 +131,16 @@
 
   <!-- The menu: fixed at the top for the whole page (styles.css, script.js) -->
   <nav class="topbar" id="topbar" aria-label="Main">
-    <a href="#home">Home</a>
-    <a href="#about" data-about>About me</a>
-    <a href="#work">Work</a>
-    <a href="#contact">Contact</a>
+    <a class="topbar-logo" href="#home" aria-label="Home">
+      <img class="logo-white" src="assets/logo-nav-white.png" width="67" height="62" alt="">
+      <img class="logo-blue" src="assets/logo-nav-blue.png" width="67" height="62" alt="">
+    </a>
+    <div class="topbar-links">
+      <span class="topbar-pill" aria-hidden="true"></span>
+      <a href="#about" data-about>About me</a>
+      <a href="#work">Work</a>
+      <a href="#contact">Contact</a>
+    </div>
   </nav>
 
   <!-- Project sheet: opens when a project name is clicked -->
@@ -209,7 +215,7 @@
   </div>
 
   <script src="loader.js?v=68ee955a"></script>
-  <script src="script.js?v=f0a7e9d4"></script>
+  <script src="script.js?v=425837c5"></script>
   <script src="about.js?v=37dfe53c"></script>
   <script src="chameleon.js?v=4e4ce707"></script>
 </body>
