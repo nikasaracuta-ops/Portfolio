@@ -33,10 +33,10 @@ body {
 .stage {
   position: relative;
   width: 1440px;
-  height: 6797px;
+  height: 6197px;
   overflow: clip;   /* not hidden: that would stop the sticky chameleon */
   /* All artwork, exported from the Figma frame with text and icons hidden */
-  background: #fff url("assets/background.webp?v=7") top left / 1440px 6797px no-repeat;
+  background: #fff url("assets/background.webp?v=8") top left / 1440px 6197px no-repeat;
   /* script.js sets `zoom` so the 1440px design fills the viewport width */
 }
 
@@ -80,7 +80,7 @@ body {
 .pin-wrap { position: absolute; left: 0; top: 459px; width: 1440px; height: 2200px; }
 .pin {
   position: sticky; top: var(--pin-top, -361px); width: 1440px; height: 1500px; overflow: clip;
-  background: #fff url("assets/background.webp?v=7") 0 -459px / 1440px 6797px no-repeat;
+  background: #fff url("assets/background.webp?v=8") 0 -459px / 1440px 6197px no-repeat;
 }
 
 /* moved by script.js while pinned: the white cloud shape settles in the centre,
@@ -530,26 +530,24 @@ a:focus-visible { outline: 2px solid var(--white); outline-offset: 4px; }
 /* ---------- Sunset ---------- */
 .sunset-art { position: relative; width: 1440px; height: 860px; }
 /* the laptop and its screen float together (chameleon.js); the sea strip is drawn in front */
-.laptop-float { width: 553px; height: 496px; transform-origin: 276px 420px; }
+.laptop-float { width: 553px; height: 496px; transform-origin: 276px 420px; transform: scale(1.3); }
+/* the empty tab that stays in the laptop as its screen (chameleon.js), on the screen glass */
+.laptop-tab { position: absolute; left: 32.6px; top: 112.8px; width: 331.9px; transform: rotate(-10.5deg); transform-origin: 0 0; pointer-events: none; cursor: default; }
 .sea-front { pointer-events: none; overflow: visible; filter: blur(1.2px); }
 #screen { transition: opacity .5s; }
 #screen.off { opacity: 0; pointer-events: none; }
 /* the last project tab on its way into the laptop (chameleon.js) */
 .wcard.flying { transform-origin: 0 0; transition: none; filter: none; z-index: 30; }
 .wcard.flying .win::after { opacity: 0; }
-/* leaf doors (script.js): same size throughout, hinged on the end of the stem;
-   the right one is mirrored */
-.leaf { width: 600px; height: 735px; pointer-events: none; transform-origin: 0 529px; }
-.leaf-r { transform: scaleX(-1); }   /* its box starts at the stem end; mirrored, the blade points back in */
 /* laptop screen: shows the projects one by one; click opens the one on screen */
 .screen {
   text-decoration: none;
-  width: 314px; height: 208px; transform-origin: 0 0; transform: rotate(-10.5deg);
-  display: grid; place-items: center; align-content: center; gap: 6px; padding: 18px;
+  width: 314px; height: 200px; transform-origin: 0 0; transform: rotate(-10.5deg);
+  display: grid; place-items: center; align-content: center; gap: 8px; padding: 14px;
   border: 0; border-radius: 14px; background: none; color: #fff; text-align: center; cursor: pointer;
 }
-.screen .s-k { font: 400 11px var(--f-label); letter-spacing: .16em; text-transform: uppercase; opacity: .85; }
-.screen .s-t { font: 400 34px/1.05 var(--f-seasons); white-space: nowrap; }
+.screen .s-k { font: 400 13px/1.45 var(--f-label); letter-spacing: .14em; text-transform: uppercase; white-space: normal; max-width: 250px; }
+.screen .s-t { font: 400 46px/1.05 var(--f-seasons); white-space: nowrap; }
 .screen:hover .s-t, .screen:focus-visible .s-t { text-decoration: underline; text-underline-offset: 6px; text-decoration-thickness: 1px; }
 .screen:focus-visible { outline: 2px solid #fff; outline-offset: -6px; }
 .caret { display: inline-block; width: 2px; height: .9em; background: #fff; vertical-align: -.1em; margin-left: 3px; animation: blink 1s steps(1) infinite; }
@@ -572,7 +570,7 @@ a:focus-visible { outline: 2px solid var(--white); outline-offset: 4px; }
 
   .sec {
     position: relative; top: auto !important; width: 100%; padding: 0 20px;
-    background: url("assets/background.webp?v=7") no-repeat;
+    background: url("assets/background.webp?v=8") no-repeat;
     background-size: calc(1440px * var(--s, 1)) auto;
     background-position: center calc(var(--y0, 0) * var(--s, 1) * -1px);
   }
@@ -590,7 +588,7 @@ a:focus-visible { outline: 2px solid var(--white); outline-offset: 4px; }
      second background, and the crop fades into the white of the Work section */
   #about {
     --y0: 750; --s: .8; min-height: 690px; padding-top: 40px; padding-bottom: 110px;
-    background-image: url("assets/clouds.webp"), url("assets/background.webp?v=7");
+    background-image: url("assets/clouds.webp"), url("assets/background.webp?v=8");
     background-size: calc(1440px * var(--s)) auto;
     background-position: calc(-60px * var(--s)) calc((1190 - var(--y0)) * var(--s) * 1px), calc(-60px * var(--s)) calc(var(--y0) * var(--s) * -1px);
   }
@@ -623,10 +621,10 @@ a:focus-visible { outline: 2px solid var(--white); outline-offset: 4px; }
   .wcard .thumb { font-size: 22px; }
 
   .sunset { padding: 0; overflow: hidden; background: none; }
-  .sunset-art { zoom: var(--mz, .45); margin-left: -300px; background: url("assets/background.webp?v=7") 0 -5340px / 1440px 6797px no-repeat; }
+  .sunset-art { zoom: var(--mz, .45); margin-left: -300px; background: url("assets/background.webp?v=8") 0 -4740px / 1440px 6197px no-repeat; }
   .sunset-art .l { position: absolute; left: var(--x); top: var(--y); width: auto; height: auto; }
 
-  #contact { --y0: 6160; --s: .9; min-height: 600px; padding-top: 44px; padding-bottom: 110px; text-align: center; }
+  #contact { --y0: 5560; --s: .9; min-height: 600px; padding-top: 44px; padding-bottom: 110px; text-align: center; }
   #open { width: 92%; max-width: 420px; margin: 0 auto; }
   .t-body { margin-top: 28px; font-size: 16px; white-space: normal !important; }
   .t-email { width: 100% !important; max-width: 340px; height: 54px !important; margin: 12px auto 0; font-size: 17px; }

@@ -138,30 +138,7 @@ if (about && puff && cloudsL && cloudsR) {
   moveSky();
 }
 
-// Leaf doors: the Figma leaf and its mirror meet over the sun and laptop, then
-// swing outwards together on their stems as the sunset scrolls up.
 const sunsetArt = document.querySelector('.sunset-art');
-const leafL = document.getElementById('leafL'), leafR = document.getElementById('leafR');
-// one size throughout, hinged on the stem ends at the screen edges: closed, the blades
-// meet over the sun; open, they have swung up and out
-const DOOR = { scale: 1.8, closed: 20, open: -55 };
-let leavesQueued = false;
-function moveLeaves() {
-  leavesQueued = false;
-  const vh = innerHeight, r = sunsetArt.getBoundingClientRect();
-  // 0 (closed) until the sunset's top reaches 45% of the screen, 1 (open) once it reaches the top
-  let p = reduceMotion.matches ? 1 : Math.max(0, Math.min(1, (.45 * vh - r.top) / (.45 * vh)));
-  p = p * p * (3 - 2 * p);
-  const a = DOOR.closed + (DOOR.open - DOOR.closed) * p, s = DOOR.scale;
-  leafL.style.transform = `rotate(${a.toFixed(2)}deg) scale(${s})`;
-  leafR.style.transform = `rotate(${(-a).toFixed(2)}deg) scale(${-s}, ${s})`;
-}
-if (sunsetArt && leafL && leafR) {
-  const queueLeaves = () => { if (!leavesQueued) { leavesQueued = true; requestAnimationFrame(moveLeaves); } };
-  addEventListener('scroll', queueLeaves, { passive: true });
-  addEventListener('resize', queueLeaves);
-  moveLeaves();
-}
 
 // Menu: white over the sky and the sea, blue with the colour logo over the white
 // stretch from where the sky fades out above Work down to the sea; the pink pill sits on the section you are in

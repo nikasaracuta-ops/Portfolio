@@ -168,36 +168,54 @@
   const laptop = $('#laptop'), screenLink = $('#screen'), art = $('.sunset-art');
   const seaFront = $('#seaFront'), seaCrest = $('#seaCrest');
   if (laptop && screenLink && art && seaFront) {
+    const LAST = PROJECTS[PROJECTS.length - 1];
     const last = cards[cards.length - 1], slot = last.parentElement, lastImg = last.querySelector('.thumb img');
-    const GLASS = { x: 513.1 + 32.6, y: 293 + 112.8, w: 331.9, rot: -10.5 };   // the screen glass in sunset coords
+    const S = 1.3;                                   // the laptop is drawn 1.3× its Figma size
+    const O = { x: 513.1 + 276, y: 293 + 420 };      // its pivot (laptop.svg 276, 420) in sunset coords
+    const GLASS = { x: 32.6 - 276, y: 112.8 - 420, w: 331.9, rot: -10.5 };   // the screen glass, from the pivot
     const HOVER = -40, REST = 38;              // laptop offset before the drop, and floating in the sea
     const SEA = { top: 700, line: 48 };        // the sea strip's top (sunset coords) and its calm waterline in it
     const TEAL = [82, 197, 211], WHITE = [246, 250, 252];
     const hex = h => [1, 3, 5].map(i => parseInt(h.slice(i, i + 2), 16));
     const mix = (a, b, t) => `rgb(${a.map((v, i) => Math.round(v + (b[i] - v) * t)).join(',')})`;
     const smooth = t => t * t * (3 - 2 * t);
-    const lastTab = hex(PROJECTS[PROJECTS.length - 1].tab);
+    const lastTab = hex(LAST.tab);
     // the sea's surface: two slow swells
     const wave = (x, t) => 7 * Math.sin(x / 150 + t * 1.25) + 4 * Math.sin(x / 61 - t * .85);
 
-    let landed = false, y = HOVER, v = 0, lastT = performance.now();
+    // the empty tab that stays in the laptop as its screen, under the text
+    const screenTab = document.createElement('span');
+    screenTab.className = 'wcard active laptop-tab';
+    screenTab.setAttribute('aria-hidden', 'true');
+    screenTab.style.setProperty('--tab', `rgb(${TEAL})`); screenTab.style.setProperty('--c', `rgb(${TEAL})`);
+    screenTab.innerHTML = `<span class="win"><span class="thumb"></span>${tabSvg('lap')}</span>`;
+    laptop.insertBefore(screenTab, screenLink);
+
+    // where the screen glass is right now: its corner (sunset coords) and its angle
+    let y = HOVER, v = 0, tilt = 0, bob = 0, landed = false, lastT = performance.now();
+    function glass() {
+      const r = tilt * Math.PI / 180, gx = GLASS.x * S, gy = GLASS.y * S;
+      return { x: O.x + gx * Math.cos(r) - gy * Math.sin(r), y: O.y + gx * Math.sin(r) + gy * Math.cos(r) + y + bob,
+               rot: GLASS.rot + tilt, w: GLASS.w * S };
+    }
+
     function flight() {
       // 0 when the last tab sits in the middle of the screen, 1 when the laptop screen does
-      const z = slot.getBoundingClientRect(), a = art.getBoundingClientRect(), k = a.width / 1440;
+      const z = slot.getBoundingClientRect(), a = art.getBoundingClientRect(), k = a.width / 1440, g = glass();
       const from = z.top + z.height / 2 - innerHeight * .5;
-      const to = a.top + (GLASS.y + HOVER + 110) * k - innerHeight * .5;
+      const to = a.top + (O.y + HOVER + GLASS.y * S + 120 * S) * k - innerHeight * .5;
       const p = reduce ? 0 : clamp(from / (from - to || 1), 0, 1);
       last.classList.toggle('flying', p > 0);
       workStage.classList.toggle('let-go', p > 0);   // on phones the chameleon steps aside
       if (p <= 0) {
         last.style.transform = last.style.opacity = '';
-        last.style.removeProperty('--tab'); last.style.removeProperty('--c');
+        last.style.setProperty('--tab', LAST.tab); last.style.setProperty('--c', LAST.tint || LAST.hex);
         if (lastImg) lastImg.style.opacity = '';
       } else {
         const e = smooth(p), unit = z.width / slot.offsetWidth;     // screen px per card px
-        const dx = (a.left + GLASS.x * k - z.left) / unit, dy = (a.top + (GLASS.y + HOVER) * k - z.top) / unit;
-        const sc = 1 + ((GLASS.w * k) / z.width - 1) * e;
-        const rot = GLASS.rot * e + 5 * Math.sin(Math.PI * p);      // a little sway on the way down
+        const dx = (a.left + g.x * k - z.left) / unit, dy = (a.top + g.y * k - z.top) / unit;
+        const sc = 1 + ((g.w * k) / z.width - 1) * e;
+        const rot = g.rot * e + 5 * Math.sin(Math.PI * p);          // a little sway on the way down
         last.style.transform = `translate(${dx * e}px, ${dy * e}px) rotate(${rot}deg) scale(${sc})`;
         if (lastImg) lastImg.style.opacity = 1 - clamp(p / .12, 0, 1);
         const c = clamp((p - .2) / .6, 0, 1);
@@ -205,6 +223,8 @@
         last.style.setProperty('--c', mix(WHITE, TEAL, c));
         last.style.opacity = 1 - clamp((p - .96) / .04, 0, 1);
       }
+      // it hands over to the identical tab inside the laptop, which then rides along with it
+      screenTab.style.opacity = reduce ? 1 : clamp((p - .96) / .04, 0, 1);
       landed = p >= 1;
       screenLink.classList.toggle('off', !landed && !reduce);
     }
@@ -216,10 +236,9 @@
       const goal = landed || reduce ? REST : HOVER;
       v += ((goal - y) * 70 - v * 7) * dt; y += v * dt;
       const settle = clamp(1 - Math.abs(v) / 120, 0, 1);
-      const cx = 513.1 + 276;                                      // the laptop's middle, for the waves under it
-      const bob = landed || reduce ? wave(cx, t) * settle : 0;
-      const tilt = landed || reduce ? (wave(cx + 60, t) - wave(cx - 60, t)) / 120 * 57.3 * .8 * settle : 0;
-      laptop.style.transform = `translateY(${(y + bob).toFixed(2)}px) rotate(${tilt.toFixed(2)}deg)`;
+      bob = landed || reduce ? wave(O.x, t) * settle : 0;
+      tilt = landed || reduce ? (wave(O.x + 60, t) - wave(O.x - 60, t)) / 120 * 57.3 * .8 * settle : 0;
+      laptop.style.transform = `translateY(${(y + bob).toFixed(2)}px) rotate(${tilt.toFixed(2)}deg) scale(${S})`;
       // the water in front of it
       let d = '', c;
       for (let x = -20; x <= 1460; x += 40) {
@@ -232,8 +251,8 @@
 
     function tick(now) {
       const a = art.getBoundingClientRect();
-      if (a.bottom > -200 && a.top < innerHeight + 2000) { flight(); sea(now); }
-      else lastT = now;
+      if (a.bottom > -200 && a.top < innerHeight + 2000) sea(now); else lastT = now;
+      flight();
       requestAnimationFrame(tick);
     }
     requestAnimationFrame(tick);
