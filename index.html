@@ -11,7 +11,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@125,400;125,700&family=Italiana&family=Unbounded:wght@300;400;500&display=swap">
-  <link rel="stylesheet" href="styles.css?v=680080f5">
+  <link rel="stylesheet" href="styles.css?v=101ebe5e">
   <script>document.documentElement.classList.add('js', 'is-loading')</script>
 </head>
 <body>
@@ -65,11 +65,22 @@
     <div class="sec sunset" style="top:5340px">
       <div class="sunset-art">
         <img class="l" style="--x:390px;--y:16px" src="assets/sun.svg" width="661" height="661" alt="">
+        <!-- The laptop and its screen move together (chameleon.js): the last project
+             tab falls into the empty screen, then the laptop drops into the sea, bounces
+             and floats on the waves drawn in front of it. -->
+        <div class="l laptop-float" id="laptop" style="--x:513.1px;--y:293px">
+          <img class="l" style="--x:0px;--y:0px" src="assets/laptop.svg" width="553" height="496" alt="">
+          <a class="l screen" id="screen" style="--x:41.1px;--y:120px" href="#" data-behance target="_blank" rel="noopener">
+            <span class="s-k">Discover more projects</span><span class="s-t"><span id="scrText">on Behance</span><span class="caret" aria-hidden="true"></span></span>
+          </a>
+        </div>
+        <svg class="l sea-front" style="--x:0px;--y:700px" width="1440" height="160" viewBox="0 0 1440 160" aria-hidden="true">
+          <defs><linearGradient id="seaFill" gradientUnits="userSpaceOnUse" x1="0" y1="20" x2="0" y2="160">
+            <stop offset="0" stop-color="#AEE8EC" stop-opacity=".94"/><stop offset="1" stop-color="#53C5D1"/>
+          </linearGradient></defs>
+          <path id="seaFront" fill="url(#seaFill)"/><path id="seaCrest" fill="none" stroke="#fff" stroke-opacity=".55" stroke-width="3"/>
+        </svg>
         <img class="l" style="--x:0px;--y:551px" src="assets/waves.svg" width="1440" height="264" alt="">
-        <img class="l" style="--x:513.1px;--y:293px" src="assets/laptop.svg" width="553" height="496" alt="">
-        <a class="l screen" id="screen" style="--x:554.2px;--y:413px" href="#" data-behance target="_blank" rel="noopener">
-          <span class="s-k">Discover more projects</span><span class="s-t"><span id="scrText">on Behance</span><span class="caret" aria-hidden="true"></span></span>
-        </a>
         <!-- Two leaves (the Figma leaf and its mirror) close over the sun and laptop and
              swing outwards on their stems as the sunset scrolls up (script.js). Each stem
              end sits at the screen edge: (-40, 620) and (1480, 620). -->
@@ -217,6 +228,6 @@
   <script src="loader.js?v=68ee955a"></script>
   <script src="script.js?v=6706efdb"></script>
   <script src="about.js?v=37dfe53c"></script>
-  <script src="chameleon.js?v=e9bd22f2"></script>
+  <script src="chameleon.js?v=877913bb"></script>
 </body>
 </html>

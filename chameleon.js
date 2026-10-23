@@ -135,7 +135,7 @@
     if (target >= 0 && pending < 0) {
       const r = cards[target].getBoundingClientRect();
       // let go when the project leaves the screen (or before the chameleon has appeared)
-      goal = r.bottom > 0 && r.top < innerHeight && !hidden() ? 1 : 0;
+      goal = r.bottom > 0 && r.top < innerHeight && !hidden() && !cards[target].classList.contains('flying') ? 1 : 0;
     }
     if (reduce) ext = goal;
     else if (goal > ext) ext = Math.min(1, ext + dt / .2);
@@ -158,6 +158,86 @@
     requestAnimationFrame(frame);
   }
   requestAnimationFrame(frame);
+
+  /* ───── The last project falls into the laptop ─────
+     Scrolling past the last project, its tab lets go of the list: the picture
+     fades to an empty window, the tab turns the laptop screen's teal and follows
+     you down until it fits the laptop's (tilted) screen. Then the laptop drops
+     into the sea, bounces and floats on the waves drawn in front of it. All of it
+     plays backwards when you scroll back up. */
+  const laptop = $('#laptop'), screenLink = $('#screen'), art = $('.sunset-art');
+  const seaFront = $('#seaFront'), seaCrest = $('#seaCrest');
+  if (laptop && screenLink && art && seaFront) {
+    const last = cards[cards.length - 1], slot = last.parentElement, lastImg = last.querySelector('.thumb img');
+    const GLASS = { x: 513.1 + 32.6, y: 293 + 112.8, w: 331.9, rot: -10.5 };   // the screen glass in sunset coords
+    const HOVER = -40, REST = 38;              // laptop offset before the drop, and floating in the sea
+    const SEA = { top: 700, line: 48 };        // the sea strip's top (sunset coords) and its calm waterline in it
+    const TEAL = [82, 197, 211], WHITE = [246, 250, 252];
+    const hex = h => [1, 3, 5].map(i => parseInt(h.slice(i, i + 2), 16));
+    const mix = (a, b, t) => `rgb(${a.map((v, i) => Math.round(v + (b[i] - v) * t)).join(',')})`;
+    const smooth = t => t * t * (3 - 2 * t);
+    const lastTab = hex(PROJECTS[PROJECTS.length - 1].tab);
+    // the sea's surface: two slow swells
+    const wave = (x, t) => 7 * Math.sin(x / 150 + t * 1.25) + 4 * Math.sin(x / 61 - t * .85);
+
+    let landed = false, y = HOVER, v = 0, lastT = performance.now();
+    function flight() {
+      // 0 when the last tab sits in the middle of the screen, 1 when the laptop screen does
+      const z = slot.getBoundingClientRect(), a = art.getBoundingClientRect(), k = a.width / 1440;
+      const from = z.top + z.height / 2 - innerHeight * .5;
+      const to = a.top + (GLASS.y + HOVER + 110) * k - innerHeight * .5;
+      const p = reduce ? 0 : clamp(from / (from - to || 1), 0, 1);
+      last.classList.toggle('flying', p > 0);
+      workStage.classList.toggle('let-go', p > 0);   // on phones the chameleon steps aside
+      if (p <= 0) {
+        last.style.transform = last.style.opacity = '';
+        last.style.removeProperty('--tab'); last.style.removeProperty('--c');
+        if (lastImg) lastImg.style.opacity = '';
+      } else {
+        const e = smooth(p), unit = z.width / slot.offsetWidth;     // screen px per card px
+        const dx = (a.left + GLASS.x * k - z.left) / unit, dy = (a.top + (GLASS.y + HOVER) * k - z.top) / unit;
+        const sc = 1 + ((GLASS.w * k) / z.width - 1) * e;
+        const rot = GLASS.rot * e + 5 * Math.sin(Math.PI * p);      // a little sway on the way down
+        last.style.transform = `translate(${dx * e}px, ${dy * e}px) rotate(${rot}deg) scale(${sc})`;
+        if (lastImg) lastImg.style.opacity = 1 - clamp(p / .12, 0, 1);
+        const c = clamp((p - .2) / .6, 0, 1);
+        last.style.setProperty('--tab', mix(lastTab, TEAL, c));
+        last.style.setProperty('--c', mix(WHITE, TEAL, c));
+        last.style.opacity = 1 - clamp((p - .96) / .04, 0, 1);
+      }
+      landed = p >= 1;
+      screenLink.classList.toggle('off', !landed && !reduce);
+    }
+
+    function sea(now) {
+      const dt = Math.min(.05, (now - lastT) / 1000); lastT = now;
+      const t = now / 1000;
+      // the laptop: a spring towards hovering or floating (it overshoots, so it bounces)
+      const goal = landed || reduce ? REST : HOVER;
+      v += ((goal - y) * 70 - v * 7) * dt; y += v * dt;
+      const settle = clamp(1 - Math.abs(v) / 120, 0, 1);
+      const cx = 513.1 + 276;                                      // the laptop's middle, for the waves under it
+      const bob = landed || reduce ? wave(cx, t) * settle : 0;
+      const tilt = landed || reduce ? (wave(cx + 60, t) - wave(cx - 60, t)) / 120 * 57.3 * .8 * settle : 0;
+      laptop.style.transform = `translateY(${(y + bob).toFixed(2)}px) rotate(${tilt.toFixed(2)}deg)`;
+      // the water in front of it
+      let d = '', c;
+      for (let x = -20; x <= 1460; x += 40) {
+        const h = (SEA.line + wave(x, t)).toFixed(1);
+        d += `${d ? 'L' : 'M'}${x},${h}`;
+      }
+      c = d; d += 'L1460,160L-20,160Z';
+      seaFront.setAttribute('d', d); seaCrest.setAttribute('d', c);
+    }
+
+    function tick(now) {
+      const a = art.getBoundingClientRect();
+      if (a.bottom > -200 && a.top < innerHeight + 2000) { flight(); sea(now); }
+      else lastT = now;
+      requestAnimationFrame(tick);
+    }
+    requestAnimationFrame(tick);
+  }
 
   /* ───── Project sheet ───── */
   const sheet = $('#sheet'), panel = $('#panel'), pane = $('#pane');
