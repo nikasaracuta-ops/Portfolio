@@ -138,6 +138,37 @@ if (about && puff && cloudsL && cloudsR) {
   moveSky();
 }
 
+// Hero roles: every few seconds "Digital creator" decodes into the next role.
+// Letters flicker through random characters and settle from left to right.
+const rolesEl = document.getElementById('roles');
+if (rolesEl) {
+  const ROLES = ['Digital creator', 'Visual design (2D-3D)', 'UX/UI design', 'Motion design'];
+  const GLYPHS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789/-()';
+  const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  let i = 0;
+  const esc = c => c === '&' ? '&amp;' : c === '<' ? '&lt;' : c;
+  function decode(to) {
+    if (reduced) { rolesEl.textContent = to; return; }
+    const from = rolesEl.textContent, len = Math.max(from.length, to.length), start = performance.now();
+    // each letter settles at its own moment, left to right, after a little flicker
+    const settle = [...Array(len)].map((_, k) => 250 + k * 45 + Math.random() * 180);
+    function step(now) {
+      const t = now - start;
+      let html = '', done = true;
+      for (let k = 0; k < len; k++) {
+        if (t >= settle[k]) { html += esc(to[k] || ''); continue; }
+        done = false;
+        const c = (to[k] || from[k] || ' ');
+        html += c === ' ' ? ' ' : `<span class="sc">${esc(GLYPHS[Math.random() * GLYPHS.length | 0])}</span>`;
+      }
+      rolesEl.innerHTML = html;
+      if (!done) requestAnimationFrame(step);
+    }
+    requestAnimationFrame(step);
+  }
+  setInterval(() => { if (!document.hidden) { i = (i + 1) % ROLES.length; decode(ROLES[i]); } }, 3200);
+}
+
 const sunsetArt = document.querySelector('.sunset-art');
 
 // Menu: white over the sky and the sea, blue with the colour logo over the white

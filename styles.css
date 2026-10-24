@@ -33,10 +33,10 @@ body {
 .stage {
   position: relative;
   width: 1440px;
-  height: 6447px;
+  height: 6422px;
   overflow: clip;   /* not hidden: that would stop the sticky chameleon */
-  /* All artwork, exported from the Figma frame with text and icons hidden */
-  background: #fff url("assets/background.webp?v=9") top left / 1440px 6447px no-repeat;
+  /* the sky, exported from the Figma frame with text and icons hidden; the sea below is drawn in code */
+  background: #fff url("assets/background.webp?v=10") top left / 1440px 2000px no-repeat;
   /* script.js sets `zoom` so the 1440px design fills the viewport width */
 }
 
@@ -57,22 +57,8 @@ body {
 /* The bird is the original 7-frame GIF from Figma (decoded and re-encoded as
    an animated WebP, 330ms per frame), on the same canvas mapping as in Figma. */
 .bird { opacity: .3; filter: blur(3px); }
-/* The fish swims behind the pink coral (baked into the background): cut the
-   coral's shape out of the fish. Coral sits at (1053.8, 6383.8) on the stage. */
-.fish {
-  filter: blur(4.2px);
-  pointer-events: none;
-  -webkit-mask-image: linear-gradient(#000, #000), url("assets/coral.svg");
-          mask-image: linear-gradient(#000, #000), url("assets/coral.svg");
-  -webkit-mask-position: 0 0, 1224.8px 506.8px;
-          mask-position: 0 0, 1224.8px 506.8px;
-  -webkit-mask-size: 100% 100%, 339px 406px;
-          mask-size: 100% 100%, 339px 406px;
-  -webkit-mask-repeat: no-repeat;
-          mask-repeat: no-repeat;
-  -webkit-mask-composite: xor;
-          mask-composite: exclude;
-}
+/* the fish swims behind the coral, which is drawn in front of it (index.html) */
+.fish { filter: blur(4.2px); pointer-events: none; }
 
 /* About, pinned (script.js): the wrapper is the scene (1500px, stage y 459–1959)
    plus 700px of scrolling during which the scene stays on screen. --pin-top
@@ -80,7 +66,7 @@ body {
 .pin-wrap { position: absolute; left: 0; top: 459px; width: 1440px; height: 2200px; }
 .pin {
   position: sticky; top: var(--pin-top, -361px); width: 1440px; height: 1500px; overflow: clip;
-  background: #fff url("assets/background.webp?v=9") 0 -459px / 1440px 6447px no-repeat;
+  background: #fff url("assets/background.webp?v=10") 0 -459px / 1440px 2000px no-repeat;
 }
 
 /* moved by script.js while pinned: the white cloud shape settles in the centre,
@@ -121,6 +107,12 @@ body::before {
 .type img { display: block; }
 :where(.l):where(p, h1, h2, a, nav) { white-space: nowrap; color: var(--white); font-weight: 400; }
 
+/* hero roles: "Digital creator" decodes into what Nika does (script.js). Poiret One
+   stands in for the Figma font (Bugery Gantik), which isn't available on the web. */
+.roles { display: flex; justify-content: flex-end; white-space: nowrap; }
+.roles-text { font: 400 46px/1.2 "Poiret One", var(--font-ui); letter-spacing: -.02em; color: #fff; }
+.roles-text .sc { opacity: .7; }
+
 .nav {
   display: flex;
   gap: 87px;
@@ -138,6 +130,14 @@ body::before {
 .t-intro b { font-weight: 700; }
 
 
+/* the sea (Figma 717:48893): #3EBDCD under a very soft top edge (Figma blur 194),
+   from stage y 5350 down; your caustics float on it behind the laptop */
+.sea {
+  pointer-events: none;
+  background: linear-gradient(rgba(62, 189, 205, 0) 60px, rgba(62, 189, 205, .02) 156px, rgba(62, 189, 205, .16) 253px,
+    rgba(62, 189, 205, .5) 350px, rgba(62, 189, 205, .84) 447px, rgba(62, 189, 205, .98) 544px, #3EBDCD 640px);
+}
+.caustics, .deco { pointer-events: none; }
 /* contact (Figma 717:48856): the email is bold type with an arrow; Behance and
    LinkedIn sit in frosted glass circles; a small copyright line under them */
 .t-email {
@@ -527,11 +527,10 @@ a:focus-visible { outline: 2px solid var(--white); outline-offset: 4px; }
 
 /* ---------- Sunset ---------- */
 .sunset-art { position: relative; width: 1440px; height: 860px; }
-/* the laptop and its screen float together (chameleon.js); the sea strip is drawn in front */
+/* the laptop and its screen float together on the sea (chameleon.js) */
 .laptop-float { width: 754px; height: 644px; transform-origin: 376px 470px; }
 /* the empty tab that stays in the laptop as its screen (chameleon.js), on the screen glass */
 .laptop-tab { position: absolute; left: 29.55px; top: 115.05px; width: 449px; transform: rotate(-10.57deg); transform-origin: 0 0; pointer-events: none; cursor: default; }
-.sea-front { pointer-events: none; overflow: visible; filter: blur(1.2px); }
 #screen { transition: opacity .5s; }
 #screen.off { opacity: 0; pointer-events: none; }
 /* the last project tab on its way into the laptop (chameleon.js) */
@@ -568,7 +567,7 @@ a:focus-visible { outline: 2px solid var(--white); outline-offset: 4px; }
 
   .sec {
     position: relative; top: auto !important; width: 100%; padding: 0 20px;
-    background: url("assets/background.webp?v=9") no-repeat;
+    background: url("assets/background.webp?v=10") no-repeat;
     background-size: calc(1440px * var(--s, 1)) auto;
     background-position: center calc(var(--y0, 0) * var(--s, 1) * -1px);
   }
@@ -580,13 +579,15 @@ a:focus-visible { outline: 2px solid var(--white); outline-offset: 4px; }
   .hero h1 { grid-column: 1 / -1; }
   .hero p.type { width: 100%; max-width: 170px; }
   .hero p.type:last-child { justify-self: end; }
+  .hero .roles { grid-column: 1 / -1; justify-self: end; margin-top: -14px; }
+  .roles-text { font-size: 22px; }
 
   /* crop to the blue sky on the left so the white text stays readable */
   /* the cloud bank sits on its own layer on desktop; here it is drawn back in as a
      second background, and the crop fades into the white of the Work section */
   #about {
     --y0: 750; --s: .8; min-height: 690px; padding-top: 40px; padding-bottom: 110px;
-    background-image: url("assets/clouds.webp"), url("assets/background.webp?v=9");
+    background-image: url("assets/clouds.webp"), url("assets/background.webp?v=10");
     background-size: calc(1440px * var(--s)) auto;
     background-position: calc(-60px * var(--s)) calc((1190 - var(--y0)) * var(--s) * 1px), calc(-60px * var(--s)) calc(var(--y0) * var(--s) * -1px);
   }
@@ -619,10 +620,16 @@ a:focus-visible { outline: 2px solid var(--white); outline-offset: 4px; }
   .wcard .thumb { font-size: 22px; }
 
   .sunset { padding: 0; overflow: hidden; background: none; }
-  .sunset-art { zoom: var(--mz, .45); margin-left: -300px; background: url("assets/background.webp?v=9") 0 -4740px / 1440px 6447px no-repeat; }
+  .sunset-art { zoom: var(--mz, .45); margin-left: -300px;
+    background: linear-gradient(rgba(62, 189, 205, 0) 320px, rgba(62, 189, 205, .02) 416px, rgba(62, 189, 205, .16) 513px,
+      rgba(62, 189, 205, .5) 610px, rgba(62, 189, 205, .84) 707px, rgba(62, 189, 205, .98) 804px, #3EBDCD 900px); }
   .sunset-art .l { position: absolute; left: var(--x); top: var(--y); width: auto; height: auto; }
 
-  #contact { --y0: 5600; --s: .9; min-height: 600px; padding-top: 44px; padding-bottom: 110px; text-align: center; }
+  #contact { min-height: 600px; padding-top: 44px; padding-bottom: 150px; text-align: center; background: #3EBDCD; overflow: hidden; }
+  #contact .l.deco { position: absolute; }
+  #contact .coral { left: auto; right: -30px; top: auto; bottom: 30px; width: 150px; height: auto; }
+  #contact .coral-small { left: auto; right: 110px; top: auto; bottom: 30px; width: 70px; height: auto; }
+  #contact .seabed { left: -20px; top: auto; bottom: -10px; width: calc(100% + 40px); height: auto; }
   #open { width: 92%; max-width: 420px; margin: 0 auto; }
   .t-email { margin-top: 28px; font-size: 19px; line-height: 28px; white-space: normal !important; }
   .socials { margin-top: 22px; }

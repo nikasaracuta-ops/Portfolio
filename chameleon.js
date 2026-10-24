@@ -163,18 +163,16 @@
      Scrolling past the last project, its tab lets go of the list: the picture
      fades to an empty window, the tab turns the laptop screen's teal and follows
      you down until it fits the laptop's (tilted) screen. Then the laptop drops
-     into the sea, bounces and floats on the waves drawn in front of it. All of it
+     into the sea, bounces and floats on the swell. All of it
      plays backwards when you scroll back up. */
   const laptop = $('#laptop'), screenLink = $('#screen'), art = $('.sunset-art');
-  const seaFront = $('#seaFront'), seaCrest = $('#seaCrest');
-  if (laptop && screenLink && art && seaFront) {
+  if (laptop && screenLink && art) {
     const LAST = PROJECTS[PROJECTS.length - 1];
     const last = cards[cards.length - 1], slot = last.parentElement, lastImg = last.querySelector('.thumb img');
     const S = 1;                                     // the laptop at its Figma size (group 745:85)
     const O = { x: 381 + 376, y: 180 + 470 };        // its pivot (laptop.svg 376, 470) in sunset coords
     const GLASS = { x: 29.55 - 376, y: 115.05 - 470, w: 449, rot: -10.57 };   // the screen glass, from the pivot
     const HOVER = -70, REST = 0;               // laptop offset before the drop, and floating in the sea
-    const SEA = { top: 700, line: 48 };        // the sea strip's top (sunset coords) and its calm waterline in it
     const TEAL = [82, 197, 211], WHITE = [246, 250, 252];
     const hex = h => [1, 3, 5].map(i => parseInt(h.slice(i, i + 2), 16));
     const mix = (a, b, t) => `rgb(${a.map((v, i) => Math.round(v + (b[i] - v) * t)).join(',')})`;
@@ -239,14 +237,6 @@
       bob = landed || reduce ? wave(O.x, t) * settle : 0;
       tilt = landed || reduce ? (wave(O.x + 60, t) - wave(O.x - 60, t)) / 120 * 57.3 * .8 * settle : 0;
       laptop.style.transform = `translateY(${(y + bob).toFixed(2)}px) rotate(${tilt.toFixed(2)}deg) scale(${S})`;
-      // the water in front of it
-      let d = '', c;
-      for (let x = -20; x <= 1460; x += 40) {
-        const h = (SEA.line + wave(x, t)).toFixed(1);
-        d += `${d ? 'L' : 'M'}${x},${h}`;
-      }
-      c = d; d += 'L1460,420L-20,420Z';
-      seaFront.setAttribute('d', d); seaCrest.setAttribute('d', c);
     }
 
     function tick(now) {

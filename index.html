@@ -10,8 +10,8 @@
   <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@125,400;125,700&family=Italiana&family=Unbounded:wght@300;400;500&display=swap">
-  <link rel="stylesheet" href="styles.css?v=e1de164e">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@125,400;125,700&family=Italiana&family=Poiret+One&family=Unbounded:wght@300;400;500&display=swap">
+  <link rel="stylesheet" href="styles.css?v=449c3479">
   <script>document.documentElement.classList.add('js', 'is-loading')</script>
 </head>
 <body>
@@ -25,6 +25,9 @@
        (exact letterforms); body text, nav, button and icons are live HTML at
        their Figma positions. script.js scales the 1440px stage to the viewport. -->
   <main class="stage" id="home">
+
+    <!-- The sea (drawn in code, under everything below the sky) -->
+    <div class="l sea" style="--x:0px;--y:5000px;--w:1440px;--h:1422px" aria-hidden="true"></div>
 
     <!-- About, pinned (script.js): once it fills the screen it stays put while the
          page keeps scrolling; the text and "?" fade, the blue cloud bank parts to the
@@ -57,30 +60,27 @@
 
     <h1 class="l reveal type" style="--d:0s;--x:56.74px;--y:97.59px"><img src="assets/type-portfolio.svg" width="1330" height="277" alt="Portfolio"></h1>
     <p class="l reveal type" style="--d:.25s;--x:59px;--y:425.21px"><img src="assets/type-name.svg" width="250" height="36" alt="Nika Saracuta"></p>
-    <p class="l reveal type" style="--d:.3s;--x:1105px;--y:424.72px"><img src="assets/type-digital-creator.svg" width="280" height="43" alt="Digital creator"></p>
+    <!-- What Nika does, decoding from one role to the next (script.js) -->
+    <p class="l reveal roles" style="--d:.3s;--x:887px;--y:417px;--w:500px">
+      <span class="sr-only">Digital creator: visual design (2D-3D), UX/UI design, motion design</span>
+      <span class="roles-text" id="roles" aria-hidden="true">Digital creator</span>
+    </p>
     </header>
 
-    <!-- Sea: the laptop (Figma group 745:85), the drawn sea in front of it and the foam lines.
+    <!-- Sea: your caustics (Figma 717:48894) and the laptop (Figma group 745:85) floating on them.
          The laptop screen links to Behance (BEHANCE_URL in script.js). -->
     <div class="sec sunset" style="top:4740px">
       <div class="sunset-art">
         <!-- The laptop and its screen move together (chameleon.js): the last project
              tab falls into the empty screen, then the laptop drops into the sea, bounces
              and floats on the waves drawn in front of it. -->
+        <img class="l caustics" style="--x:0px;--y:504px" src="assets/caustics.svg" width="1440" height="251" alt="">
         <div class="l laptop-float" id="laptop" style="--x:381px;--y:180px">
           <img class="l" style="--x:0px;--y:0px" src="assets/laptop.svg" width="754" height="644" alt="">
           <a class="l screen" id="screen" style="--x:29.55px;--y:115.05px" href="#" data-behance target="_blank" rel="noopener">
             <span class="s-k">Discover more UX related projects</span><span class="s-t"><span id="scrText">on Behance</span><span class="caret" aria-hidden="true"></span></span>
           </a>
         </div>
-        <svg class="l sea-front" style="--x:0px;--y:700px" width="1440" height="420" viewBox="0 0 1440 420" aria-hidden="true">
-          <defs><linearGradient id="seaFill" gradientUnits="userSpaceOnUse" x1="0" y1="20" x2="0" y2="420">
-            <stop offset="0" stop-color="#AEE8EC" stop-opacity=".94"/><stop offset=".35" stop-color="#53C5D1"/>
-            <stop offset=".6" stop-color="#3DB9CA"/><stop offset="1" stop-color="#32B6C7"/>
-          </linearGradient></defs>
-          <path id="seaFront" fill="url(#seaFill)"/><path id="seaCrest" fill="none" stroke="#fff" stroke-opacity=".55" stroke-width="3"/>
-        </svg>
-        <img class="l" style="--x:0px;--y:551px" src="assets/waves.svg" width="1440" height="264" alt="">
       </div>
     </div>
     <img class="l fish" style="--x:-171px;--y:5527px;--w:3150px;--h:2100px" src="assets/fish.gif" alt="">
@@ -109,7 +109,7 @@
     </section>
 
     <!-- Contact -->
-    <section class="sec" id="contact" style="top:5800px" aria-labelledby="open">
+    <section class="sec" id="contact" style="top:5632px" aria-labelledby="open">
       <h2 class="l reveal type" id="open" style="--d:0s;--x:447.2px;--y:50px"><img src="assets/type-open.svg" width="545" height="207" alt="Open for new projects"></h2>
       <a class="l reveal t-email" style="--d:.12s;--x:320px;--y:300px;--w:800px" href="mailto:nikasaracuta@gmail.com">nikasaracuta@gmail.com <span aria-hidden="true">→</span></a>
       <!-- TODO: replace # with the real LinkedIn URL -->
@@ -118,6 +118,10 @@
         <a class="social" href="#" aria-label="LinkedIn"><img src="assets/icon-linkedin.svg" width="38" height="38" alt=""></a>
       </div>
       <p class="l reveal t-copy" style="--d:.28s;--x:520px;--y:478px;--w:400px">©2026 Nika Saracuta</p>
+      <!-- coral and seabed (Figma 717:48915, 717:48906, 745:129), in front of the fish -->
+      <img class="l deco coral" style="--x:1063.9px;--y:374.9px" src="assets/coral.svg" width="311" height="378" alt="">
+      <img class="l deco coral-small" style="--x:985px;--y:544px" src="assets/coral-small.svg" width="146" height="177" alt="">
+      <img class="l deco seabed" style="--x:0px;--y:703.5px" src="assets/seabed.svg" width="1440" height="87" alt="">
     </section>
 
   </main>
@@ -221,8 +225,8 @@
   </div>
 
   <script src="loader.js?v=68ee955a"></script>
-  <script src="script.js?v=daa94792"></script>
+  <script src="script.js?v=07b11290"></script>
   <script src="about.js?v=37dfe53c"></script>
-  <script src="chameleon.js?v=e21cb22c"></script>
+  <script src="chameleon.js?v=cac0b61a"></script>
 </body>
 </html>
