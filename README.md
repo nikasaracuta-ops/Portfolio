@@ -18,8 +18,9 @@ Static one-page portfolio built from the Figma frame **Main** (node `315:133`) i
 - **Projects** (the chameleon, the project cards, the laptop screen and the project sheet) live in `chameleon.js`:
   edit the `PROJECTS` list there (name, colour, card label, preview image, brief, process, result, live link).
   Preview images go in `assets/projects/`.
-- **Project pages**: `type01.html` (Figma frame `599:1734`), styled by `project.css` and scaled by
-  `project.js`; its images and outlined headings are in `assets/type01/`. A project with `page` set in
+- **Project pages**: `type01.html` (content from Figma frame `599:1734`), a responsive case study styled
+  by `project.css`, with its interactions in `project.js`; its images and outlined headings are in
+  `assets/type01/`. A project with `page` set in
   `chameleon.js` opens its page instead of the project sheet.
 - **About pop-up** ("About me" link/button or the "?"): content is in `index.html` (`#aboutPop`);
   set your photo in `about.js` (`ME_PHOTO = 'assets/me.jpg'`).

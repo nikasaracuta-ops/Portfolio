@@ -12,63 +12,124 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@125,400;125,700&display=swap">
   <link rel="stylesheet" href="styles.css?v=0a196050">
-  <link rel="stylesheet" href="project.css?v=b48b40ed">
+  <link rel="stylesheet" href="project.css?v=e705cbba">
   <script>document.documentElement.classList.add('js')</script>
 </head>
 <body class="project-page">
-  <!-- Project page built from Figma frame "Type01" (599:1734, 1440 × 3518). Headings are
-       outlined SVGs exported from Figma; everything sits at its Figma position on a
-       1440px stage that project.js scales to the window (phones get a stacked layout). -->
-  <main class="pstage" id="pstage">
+  <!-- Case-study page for TYPE01. Texts, images and headings come from Figma frame
+       "Type01" (599:1734); the layout is a responsive grid (project.css) and the
+       interactions live in project.js. -->
+  <div class="p-progress" id="progress" aria-hidden="true"></div>
 
-    <a class="l back" style="--x:60px;--y:53px" href="index.html#work" aria-label="Back to the portfolio">
-      <svg viewBox="0 0 71 71" aria-hidden="true"><circle cx="35.5" cy="35.5" r="35.5"/><path d="M49 35.5H22M33 24.5 22 35.5l11 11"/></svg>
+  <header class="p-top">
+    <a class="p-back" href="index.html#work">
+      <span class="p-back-dot" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M20 12H5M11 5l-7 7 7 7"/></svg></span>
+      <span>All projects</span>
     </a>
+    <span class="p-count">Project 02 / 04</span>
+  </header>
 
-    <h1 class="l reveal p-title" style="--x:511.8px;--y:150.5px"><img src="assets/type01/type-type01.svg" width="412" height="92" alt="TYPE01"></h1>
+  <main class="p-main">
 
-    <!-- The project in its browser tab (bar + screen, Figma 770:209 / 770:224) -->
-    <figure class="l reveal p-hero" style="--d:.1s;--x:338px;--y:223px;--w:764px">
-      <img class="p-bar" src="assets/type01/tab-bar.svg" width="764" height="51" alt="">
-      <img src="assets/type01/screen.webp" width="764" height="489" alt="The TYPE01 conference homepage">
-    </figure>
+    <!-- Intro: title, one-line summary, facts; then the site in its browser tab -->
+    <section class="p-intro">
+      <p class="p-eyebrow reveal">Case study</p>
+      <h1 class="p-title reveal" style="--d:.05s"><img src="assets/type01/type-type01.svg" width="412" height="92" alt="TYPE01"></h1>
+      <p class="p-lede reveal" style="--d:.1s">Conference website for desktop and mobile</p>
 
-    <p class="l reveal p-kind" style="--d:.2s;--x:1135px;--y:313px;--w:260px">conference website for desktop and mobile</p>
-    <dl class="l reveal p-meta" style="--d:.25s;--x:1104px;--y:397px;--w:330px">
-      <div><dt>year</dt><dd>2025</dd></div>
-      <div><dt>tools</dt><dd class="tools">
-        <img src="assets/type01/icon-ps.svg" width="56" height="53" alt="Photoshop">
-        <img src="assets/type01/icon-figma.svg" width="51" height="51" alt="Figma">
-      </dd></div>
-    </dl>
+      <dl class="p-facts reveal" style="--d:.15s">
+        <div><dt>Year</dt><dd>2025</dd></div>
+        <div><dt>Disciplines</dt><dd><ul class="p-tags"><li>UI</li><li>UX</li><li>Graphic design</li><li>Web design</li></ul></dd></div>
+        <div><dt>Tools</dt><dd class="p-tools">
+          <img src="assets/type01/icon-ps.svg" width="56" height="53" alt="Photoshop" title="Photoshop">
+          <img src="assets/type01/icon-figma.svg" width="51" height="51" alt="Figma" title="Figma">
+        </dd></div>
+      </dl>
 
-    <ul class="p-tags" aria-label="Disciplines">
-      <li class="l reveal" style="--d:.15s;--x:163px;--y:458px;--w:50px;--h:52px">ui</li>
-      <li class="l reveal" style="--d:.2s;--x:231px;--y:459px;--w:49px;--h:50px">ux</li>
-      <li class="l reveal" style="--d:.25s;--x:53px;--y:576px;--w:245px;--h:50px">graphic design</li>
-      <li class="l reveal" style="--d:.3s;--x:127px;--y:692px;--w:190px;--h:50px">web-design</li>
-    </ul>
+      <figure class="p-window p-hero reveal" style="--d:.2s" data-tilt>
+        <img class="p-bar" src="assets/type01/tab-bar.svg" width="764" height="51" alt="">
+        <img class="p-shot" src="assets/type01/screen.webp" width="764" height="489" alt="The TYPE01 conference homepage">
+      </figure>
+    </section>
 
-    <h2 class="l reveal p-h" style="--x:124.3px;--y:1000.3px"><img src="assets/type01/type-brief.svg" width="403" height="79" alt="The Brief"></h2>
-    <div class="l reveal p-text" style="--d:.1s;--x:138px;--y:1108px;--w:495px">
-      <p><b>TYPE01 Magazine</b>, a publication for graphic designers and typographers, was hosting its first-ever <b>conference</b>: <b>two days</b> in London on <b>typography in print</b>, <b>motion design</b> and <b>branding</b>.</p>
-      <p>My task was to design a responsive conference website for desktop and mobile that fits TYPE01’s identity but takes a bolder approach.</p>
-      <p>Text and photos of the speakers were already provided.</p>
-    </div>
+    <!-- The Brief -->
+    <section class="p-section p-brief" aria-labelledby="brief-h">
+      <div class="p-side">
+        <span class="p-num">01</span>
+        <h2 class="p-h reveal" id="brief-h"><img src="assets/type01/type-brief.svg" width="403" height="79" alt="The Brief"></h2>
+      </div>
+      <div class="p-body">
+        <p class="p-text reveal"><b>TYPE01 Magazine</b>, a publication for graphic designers and typographers, was hosting its first-ever <b>conference</b>: <b>two days</b> in London on <b>typography in print</b>, <b>motion design</b> and <b>branding</b>.</p>
+        <p class="p-text reveal" style="--d:.05s">My task was to design a responsive conference website for desktop and mobile that fits TYPE01’s identity but takes a bolder approach. Text and photos of the speakers were already provided.</p>
+        <ul class="p-cards reveal" style="--d:.1s">
+          <li><span>Client</span>TYPE01 Magazine</li>
+          <li><span>Event</span>Two-day conference, London</li>
+          <li><span>Topics</span>Typography in print, motion design, branding</li>
+          <li><span>Deliverable</span>Responsive website, desktop + mobile</li>
+        </ul>
+      </div>
+    </section>
 
-    <h2 class="l reveal p-h" style="--x:122.6px;--y:1430.3px"><img src="assets/type01/type-visual-process.svg" width="616" height="104" alt="Visual process"></h2>
-    <h3 class="l reveal p-h" style="--x:118.6px;--y:1574.6px"><img src="assets/type01/type-styleboard.svg" width="229" height="41" alt="1. Styleboard"></h3>
-    <img class="l reveal p-img" style="--d:.1s;--x:156px;--y:1630px" src="assets/type01/styleboard-light.webp" width="563" height="361" alt="Styleboard, light version" loading="lazy">
-    <img class="l reveal p-img" style="--d:.2s;--x:783px;--y:1642px" src="assets/type01/styleboard-dark.webp" width="527" height="338" alt="Styleboard, dark version" loading="lazy">
+    <!-- Visual process -->
+    <section class="p-section p-process" aria-labelledby="process-h">
+      <div class="p-side">
+        <span class="p-num">02</span>
+        <h2 class="p-h reveal" id="process-h"><img src="assets/type01/type-visual-process.svg" width="616" height="104" alt="Visual process"></h2>
+      </div>
+      <div class="p-body">
+        <div class="p-step reveal">
+          <div class="p-step-head">
+            <h3><img src="assets/type01/type-styleboard.svg" width="229" height="41" alt="1. Styleboard"></h3>
+            <!-- light / dark switch for the two styleboards -->
+            <div class="p-switch" role="tablist" aria-label="Styleboard version">
+              <button role="tab" aria-selected="true" data-board="light">Light</button>
+              <button role="tab" aria-selected="false" data-board="dark">Dark</button>
+              <span class="p-switch-pill" aria-hidden="true"></span>
+            </div>
+          </div>
+          <p class="p-note">Two directions for the same identity: an airy, light board and a dark, poster-like one.</p>
+          <button class="p-board" data-zoom aria-label="Enlarge the styleboard">
+            <img class="on" data-board="light" src="assets/type01/styleboard-light.webp" width="563" height="361" alt="Styleboard, light version" loading="lazy">
+            <img data-board="dark" src="assets/type01/styleboard-dark.webp" width="527" height="338" alt="Styleboard, dark version" loading="lazy">
+            <span class="p-zoom-hint" aria-hidden="true">Click to enlarge</span>
+          </button>
+        </div>
 
-    <h3 class="l reveal p-h" style="--x:117.4px;--y:2028.7px"><img src="assets/type01/type-iterations.svg" width="214" height="29" alt="2. Iterations"></h3>
-    <img class="l reveal p-img" style="--d:.1s;--x:116px;--y:2080px" src="assets/type01/iterations.webp" width="1194" height="318" alt="Iterations of the desktop and mobile pages" loading="lazy">
+        <div class="p-step reveal">
+          <div class="p-step-head">
+            <h3><img src="assets/type01/type-iterations.svg" width="214" height="29" alt="2. Iterations"></h3>
+          </div>
+          <p class="p-note">From the first wireframes to the light, dark and mobile versions of each page.</p>
+          <button class="p-board p-iter" data-zoom aria-label="Enlarge the iterations">
+            <img class="on" src="assets/type01/iterations.webp" width="1194" height="318" alt="Iterations of the desktop and mobile pages" loading="lazy">
+            <span class="p-zoom-hint" aria-hidden="true">Click to enlarge</span>
+          </button>
+        </div>
+      </div>
+    </section>
 
-    <h2 class="l reveal p-h p-result-h" style="--x:499.3px;--y:2587.3px"><img src="assets/type01/type-result.svg" width="443" height="79" alt="The Result"></h2>
-    <img class="l reveal p-img p-result" style="--d:.1s;--x:333px;--y:2729px" src="assets/type01/screen.webp" width="764" height="489" alt="The finished TYPE01 website" loading="lazy">
-    <a class="l reveal p-cta" style="--d:.2s;--x:592px;--y:2925px;--w:257px;--h:48px" href="https://www.figma.com/proto/PsD6Cg8ngFq6yRWCCm5I9q/Type01?page-id=0%3A1&amp;node-id=468-7480&amp;viewport=-2609%2C-2191%2C0.15&amp;t=KQAR1eAcC8Ls4MeP-1&amp;scaling=min-zoom&amp;content-scaling=fixed&amp;starting-point-node-id=580%3A48961" target="_blank" rel="noopener">See Prototype</a>
+    <!-- The Result -->
+    <section class="p-result" aria-labelledby="result-h">
+      <span class="p-num">03</span>
+      <h2 class="p-h reveal" id="result-h"><img src="assets/type01/type-result.svg" width="443" height="79" alt="The Result"></h2>
+      <figure class="p-window reveal" style="--d:.05s" data-tilt>
+        <img class="p-bar" src="assets/type01/tab-bar.svg" width="764" height="51" alt="">
+        <img class="p-shot" src="assets/type01/screen.webp" width="764" height="489" alt="The finished TYPE01 website" loading="lazy">
+      </figure>
+      <a class="p-cta reveal" style="--d:.1s" href="https://www.figma.com/proto/PsD6Cg8ngFq6yRWCCm5I9q/Type01?page-id=0%3A1&amp;node-id=468-7480&amp;viewport=-2609%2C-2191%2C0.15&amp;t=KQAR1eAcC8Ls4MeP-1&amp;scaling=min-zoom&amp;content-scaling=fixed&amp;starting-point-node-id=580%3A48961" target="_blank" rel="noopener">See Prototype <span aria-hidden="true">↗</span></a>
+    </section>
+
+    <nav class="p-next reveal" aria-label="More projects">
+      <a href="index.html#work"><span>Back to</span> all projects</a>
+    </nav>
   </main>
 
-  <script src="project.js?v=c09ec8e4"></script>
+  <!-- Lightbox for the styleboards and iterations -->
+  <dialog class="p-lightbox" id="lightbox" aria-label="Enlarged image">
+    <button class="p-lb-close" aria-label="Close">×</button>
+    <img alt="">
+  </dialog>
+
+  <script src="project.js?v=5fcb3d9f"></script>
 </body>
 </html>
