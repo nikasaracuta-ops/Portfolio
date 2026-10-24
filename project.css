@@ -1,0 +1,74 @@
+/* ---------- Project pages (type01.html) ----------
+   Built on the shared styles.css (fonts, grain, .l positioning, reveals). The
+   1440px stage is scaled to the window by project.js; phones stack the content. */
+.pstage {
+  position: relative; width: 1440px; height: 3518px; overflow: clip;
+  /* Figma: a linear gradient from #E770B2 to white; on the frame it starts at 58% */
+  background: linear-gradient(rgb(245, 193, 221) 0, #fff 252px);
+  color: #000;
+}
+.pstage :where(p, dt, dd, li) { white-space: normal; }
+
+.back svg { display: block; width: 71px; height: 71px; }
+.back circle { fill: #E770B2; transition: fill .25s; }
+.back path { fill: none; stroke: #ECF5FF; stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; }
+.back:hover circle, .back:focus-visible circle { fill: #d65a9f; }
+.back:focus-visible { outline: 2px solid #E770B2; outline-offset: 4px; border-radius: 50%; }
+
+.p-title, .p-hero { margin: 0; }
+.p-title img, .p-h img { display: block; }
+.p-hero img { display: block; }
+.p-hero .p-bar { position: relative; z-index: 1; margin-bottom: -1px; }
+
+.p-kind, .p-text { font: 16px/25px var(--font-body); color: #000 !important; }
+.p-text p + p { margin-top: 0; }
+.p-text b { font-weight: 700; }
+
+.p-meta { display: flex; gap: 0; font: 20px/1.2 var(--font-ui); }
+.p-meta > div:first-child { width: 205px; }
+.p-meta dt { color: #1A5BA4; margin-bottom: 16px; }
+.p-meta dd { color: #000; }
+.p-meta .tools { display: flex; align-items: center; gap: 11px; margin-top: -11px; margin-left: -7px; }
+.p-meta .tools img { display: block; }
+
+.p-tags { list-style: none; }
+.p-tags li {
+  display: grid; place-items: center; border: 1px solid #E770B2; border-radius: 25px;
+  font: 400 20px/30px var(--font-body); text-transform: uppercase; color: #363636; white-space: nowrap;
+  transition: background .25s, color .25s;
+}
+.p-tags li:hover { background: #E770B2; color: #fff; }
+
+.p-img { display: block; height: auto; }
+
+.p-cta {
+  display: grid; place-items: center; border-radius: 9px; background: #E770B2; color: #fff !important;
+  font: 20px/1 var(--font-ui); text-decoration: none; white-space: nowrap;
+  box-shadow: 0 12px 30px -14px rgba(214, 46, 136, .55);
+  transition: transform .3s cubic-bezier(.3, 1.6, .5, 1), filter .2s;
+}
+.p-cta:hover, .p-cta:focus-visible { transform: translateY(-2px) scale(1.03); filter: brightness(1.06); outline: none; }
+
+/* ---------- Phones: one column ---------- */
+@media (max-width: 760px) {
+  .pstage { width: 100%; height: auto; padding: 24px 20px 64px; display: flex; flex-direction: column; background: linear-gradient(rgb(245, 193, 221) 0, #fff 200px); }
+  .pstage .l { position: relative; left: auto; top: auto; width: auto; height: auto; }
+  .pstage .back { align-self: flex-start; }
+  .back svg { width: 52px; height: 52px; }
+  .pstage .p-title { align-self: center; margin-top: 8px; width: 62%; }
+  .p-title img, .p-h img, .p-hero img, .p-img { width: 100%; height: auto; }
+  .pstage .p-hero { margin-top: -10px; }
+  .pstage .p-kind { margin-top: 24px; width: 100% !important; }
+  .pstage .p-meta { margin-top: 18px; width: 100% !important; }
+  .p-meta > div:first-child { width: 50%; }
+  .pstage .p-tags { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 24px; }
+  .p-tags li { padding: 8px 18px; font-size: 15px; line-height: 20px; }
+  .pstage .p-h { margin-top: 56px; }
+  .pstage h2.p-h { width: 62%; }
+  h2.p-h + .p-text { margin-top: 0; }
+  .pstage h3.p-h { width: 42%; margin-top: 32px; }
+  .pstage .p-text { margin-top: 18px; width: 100% !important; }
+  .pstage .p-img { margin-top: 16px; }
+  .pstage .p-result-h { align-self: center; }
+  .pstage .p-cta { align-self: center; width: 220px !important; height: 48px !important; margin-top: 20px; }
+}

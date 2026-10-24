@@ -10,7 +10,7 @@
   /* ───── Projects: edit here ───── */
   // To add a project, copy one block. 'tab' is the colour of the browser tab
   // around the preview, and of the chameleon while that project is in focus;
-  // 'hex' colours the project sheet, 'tint' (optional) the placeholder when there
+  // 'page' (optional) a project page to open instead of the sheet; 'hex' colours the project sheet, 'tint' (optional) the placeholder when there
   // is no 'img' (the card then says "Coming soon").
   const PROJECTS = [
     {
@@ -28,7 +28,7 @@
       link: 'https://nikasaracuta.github.io/Integration-3/'
     },
     {
-      id: 'type01', name: 'Type01', hex: '#1A5BA4', tab: '#E770B2', tint: '#6f9bd4', kind: 'UI · UX · Web design', img: 'assets/projects/p-type01.webp',
+      id: 'type01', name: 'Type01', page: 'type01.html', hex: '#1A5BA4', tab: '#E770B2', tint: '#6f9bd4', kind: 'UI · UX · Web design', img: 'assets/projects/p-type01.webp',
       title: 'TYPE01 Conference', tagline: 'Typography in print, motion design and branding',
       tags: ['UI', 'UX', 'Web-design'],
       brief: [
@@ -99,7 +99,8 @@
     b.setAttribute('aria-label', `Open project ${i + 1}: ${p.name}`);
     // the preview sits in the browser-window tab from Figma (tab.svg), its pink swapped for the project's colour
     b.innerHTML = `<span class="win"><span class="thumb">${p.img ? `<img src="${p.img}" alt="" loading="lazy" decoding="async">` : 'Coming soon'}</span>${tabSvg(i)}</span>`;
-    b.addEventListener('click', () => openProject(i, b));
+    // projects with their own page open it; the others open the project sheet
+    b.addEventListener('click', () => { if (p.page) location.href = p.page; else openProject(i, b); });
     b.addEventListener('mouseenter', () => activate(i));
     b.addEventListener('focus', () => activate(i));
     li.appendChild(b); list.appendChild(li);
