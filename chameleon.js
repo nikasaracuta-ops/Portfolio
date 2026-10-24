@@ -170,10 +170,10 @@
   if (laptop && screenLink && art && seaFront) {
     const LAST = PROJECTS[PROJECTS.length - 1];
     const last = cards[cards.length - 1], slot = last.parentElement, lastImg = last.querySelector('.thumb img');
-    const S = 1.3;                                   // the laptop is drawn 1.3× its Figma size
-    const O = { x: 513.1 + 276, y: 293 + 420 };      // its pivot (laptop.svg 276, 420) in sunset coords
-    const GLASS = { x: 32.6 - 276, y: 112.8 - 420, w: 331.9, rot: -10.5 };   // the screen glass, from the pivot
-    const HOVER = -40, REST = 38;              // laptop offset before the drop, and floating in the sea
+    const S = 1;                                     // the laptop at its Figma size (group 745:85)
+    const O = { x: 381 + 376, y: 180 + 470 };        // its pivot (laptop.svg 376, 470) in sunset coords
+    const GLASS = { x: 29.55 - 376, y: 115.05 - 470, w: 449, rot: -10.57 };   // the screen glass, from the pivot
+    const HOVER = -70, REST = 0;               // laptop offset before the drop, and floating in the sea
     const SEA = { top: 700, line: 48 };        // the sea strip's top (sunset coords) and its calm waterline in it
     const TEAL = [82, 197, 211], WHITE = [246, 250, 252];
     const hex = h => [1, 3, 5].map(i => parseInt(h.slice(i, i + 2), 16));
@@ -221,11 +221,11 @@
         const c = clamp((p - .2) / .6, 0, 1);
         last.style.setProperty('--tab', mix(lastTab, TEAL, c));
         last.style.setProperty('--c', mix(WHITE, TEAL, c));
-        last.style.opacity = 1 - clamp((p - .96) / .04, 0, 1);
+        last.style.opacity = 1 - clamp((p - .94) / .04, 0, 1);
       }
       // it hands over to the identical tab inside the laptop, which then rides along with it
-      screenTab.style.opacity = reduce ? 1 : clamp((p - .96) / .04, 0, 1);
-      landed = p >= 1;
+      screenTab.style.opacity = reduce ? 1 : clamp((p - .94) / .04, 0, 1);
+      landed = p >= .98;
       screenLink.classList.toggle('off', !landed && !reduce);
     }
 
@@ -245,7 +245,7 @@
         const h = (SEA.line + wave(x, t)).toFixed(1);
         d += `${d ? 'L' : 'M'}${x},${h}`;
       }
-      c = d; d += 'L1460,160L-20,160Z';
+      c = d; d += 'L1460,420L-20,420Z';
       seaFront.setAttribute('d', d); seaCrest.setAttribute('d', c);
     }
 
