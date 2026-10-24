@@ -31,7 +31,7 @@ function placeFooter() {
   if (!contact) return;
   const z = parseFloat(stage.style.zoom) || 1;
   const shift = MOBILE.matches ? 0 : Math.max(0, Math.min(150, 866 - innerHeight / z));
-  contact.style.top = MOBILE.matches ? '' : `${5632 + shift}px`;
+  contact.style.top = MOBILE.matches ? '' : `${5864 + shift}px`;
 }
 
 // Sticky menu: slides in once the menu at the top has scrolled away (always on phones)
@@ -106,7 +106,7 @@ if (sparkle && matchMedia('(hover: hover) and (pointer: fine)').matches) {
 
 // About, pinned. The scene (stage y 459–1959) sticks once the screen's bottom edge
 // reaches stage y 1720 and stays for the next HOLD px of scrolling (styles.css).
-// Over that stretch: the About text and "?" fade, the blue cloud bank parts to
+// Over that stretch: the About text and "?" fade, the pink cloud bank parts to
 // the sides, the white cloud shape glides to the centre and sinks until only the
 // sky's straight bottom edge is left — which holds for a moment before the scene
 // lets go and Work scrolls up.
@@ -115,7 +115,7 @@ const puff = document.getElementById('skyPuff');
 const cloudsL = document.getElementById('cloudsL'), cloudsR = document.getElementById('cloudsR');
 const PIN_TOP = 459, PIN_BOTTOM = 1720, HOLD = 700;
 const LEAD = 150;   // the transition starts this much scrolling before the scene pins
-const PUFF_CX = 661 + 695 / 2;                        // the shape's centre line on the stage
+const PUFF_CX = 631.4 + 763 / 2;                        // the shape's centre line on the stage
 const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)');
 const ramp = (t, a, b) => { const x = Math.max(0, Math.min(1, (t - a) / (b - a))); return x * x * (3 - 2 * x); };
 let skyQueued = false;
@@ -139,7 +139,7 @@ function moveSky() {
   cloudsL.style.opacity = cloudsR.style.opacity = part ? (1 - part).toFixed(3) : '';
   // the shape glides to the centre (a little smaller and lower), then sinks below the
   // sky's edge into the white, leaving just a horizontal line
-  const g = move ? glide : 0, dy = 289 * g + (move ? 500 * sink : 0);
+  const g = move ? glide : 0, dy = 180 * g + (move ? 500 * sink : 0);
   puff.style.transform = g ? `translate(${((720 - PUFF_CX) * g).toFixed(1)}px, ${dy.toFixed(1)}px) scale(${(1 - .2 * g).toFixed(3)})` : '';
   puff.style.opacity = sink ? (1 - ramp(t, .62, .78)).toFixed(3) : '';
 }

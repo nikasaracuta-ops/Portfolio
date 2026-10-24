@@ -1,7 +1,7 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1440" height="2000" viewBox="0 0 1440 2000">
 <!-- Sky from Figma frame 717:48856: the blurred blue-to-pink gradient (717:48952) and the two hero cloud groups (279, 278). Built by hand from the Figma SVG exports. -->
 <rect width="1440" height="2000" fill="#fff"/>
-<g transform="translate(0 -150)"><g filter="url(#sfilter0_f_717_48952)">
+<g transform="translate(0 0)"><g filter="url(#sfilter0_f_717_48952)">
 <path d="M-70 1751H1478V0H-70V1751Z" fill="url(#spaint0_linear_717_48952)"/>
 </g>
 <defs>
