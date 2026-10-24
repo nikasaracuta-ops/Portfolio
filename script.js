@@ -31,7 +31,7 @@ function placeFooter() {
   if (!contact) return;
   const z = parseFloat(stage.style.zoom) || 1;
   const shift = MOBILE.matches ? 0 : Math.max(0, Math.min(150, 866 - innerHeight / z));
-  contact.style.top = MOBILE.matches ? '' : `${5132 + shift}px`;
+  contact.style.top = MOBILE.matches ? '' : `${5632 + shift}px`;
 }
 
 // Sticky menu: slides in once the menu at the top has scrolled away (always on phones)
@@ -113,7 +113,7 @@ if (sparkle && matchMedia('(hover: hover) and (pointer: fine)').matches) {
 const about = document.getElementById('about');
 const puff = document.getElementById('skyPuff');
 const cloudsL = document.getElementById('cloudsL'), cloudsR = document.getElementById('cloudsR');
-const PIN_TOP = 459, PIN_BOTTOM = 1720, HOLD = 200;
+const PIN_TOP = 459, PIN_BOTTOM = 1720, HOLD = 700;
 const LEAD = 150;   // the transition starts this much scrolling before the scene pins
 const PUFF_CX = 661 + 695 / 2;                        // the shape's centre line on the stage
 const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)');
@@ -129,7 +129,7 @@ function moveSky() {
   }
   // 0 just before the scene pins (LEAD px earlier), 1 when it lets go
   const t = Math.max(0, Math.min(1, (-stage.getBoundingClientRect().top / z - (PIN_BOTTOM - vh - LEAD)) / (HOLD + LEAD)));
-  const fade = ramp(t, 0, .25), part = ramp(t, .05, .4), glide = ramp(t, .1, .4), sink = ramp(t, .4, .66);
+  const fade = ramp(t, 0, .22), part = ramp(t, .04, .36), glide = ramp(t, .08, .34), sink = ramp(t, .34, .6);
   about.style.opacity = fade ? (1 - fade).toFixed(3) : '';
   about.style.visibility = fade >= 1 ? 'hidden' : '';
   const move = !reduceMotion.matches;
@@ -141,7 +141,7 @@ function moveSky() {
   // sky's edge into the white, leaving just a horizontal line
   const g = move ? glide : 0, dy = 289 * g + (move ? 500 * sink : 0);
   puff.style.transform = g ? `translate(${((720 - PUFF_CX) * g).toFixed(1)}px, ${dy.toFixed(1)}px) scale(${(1 - .2 * g).toFixed(3)})` : '';
-  puff.style.opacity = sink ? (1 - ramp(t, .54, .66)).toFixed(3) : '';
+  puff.style.opacity = sink ? (1 - ramp(t, .48, .6)).toFixed(3) : '';
 }
 if (about && puff && cloudsL && cloudsR) {
   const queueSky = () => { if (!skyQueued) { skyQueued = true; requestAnimationFrame(moveSky); } };

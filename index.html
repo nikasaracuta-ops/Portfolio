@@ -11,7 +11,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@125,400;125,700&family=Italiana&family=Unbounded:wght@300;400;500&display=swap">
-  <link rel="stylesheet" href="styles.css?v=3f060483">
+  <link rel="stylesheet" href="styles.css?v=89481efe">
   <script>document.documentElement.classList.add('js', 'is-loading')</script>
 </head>
 <body>
@@ -27,7 +27,7 @@
   <main class="stage" id="home">
 
     <!-- The sea (drawn in code, under everything below the sky) -->
-    <div class="l sea" style="--x:0px;--y:4500px;--w:1440px;--h:1422px" aria-hidden="true"></div>
+    <div class="l sea" style="--x:0px;--y:5000px;--w:1440px;--h:1422px" aria-hidden="true"></div>
 
     <!-- About, pinned (script.js): once it fills the screen it stays put while the
          page keeps scrolling; the text and "?" fade, the blue cloud bank parts to the
@@ -38,8 +38,8 @@
     <div class="pin-wrap" id="pinWrap">
       <div class="pin" id="pin">
         <img class="l sky-puff" id="skyPuff" style="--x:661px;--y:306px;--w:695px;--h:855px" src="assets/sky-puff.webp" alt="">
-        <img class="l clouds-px clouds-l" id="cloudsL" style="--x:0;--y:400px;--w:1440px;--h:900px" src="assets/clouds-bank.svg?v=2" alt="">
-        <img class="l clouds-px clouds-r" id="cloudsR" style="--x:0;--y:400px;--w:1440px;--h:900px" src="assets/clouds-bank.svg?v=2" alt="">
+        <img class="l clouds-px clouds-l" id="cloudsL" style="--x:0;--y:500px;--w:1440px;--h:900px" src="assets/clouds-bank.webp" alt="">
+        <img class="l clouds-px clouds-r" id="cloudsR" style="--x:0;--y:500px;--w:1440px;--h:900px" src="assets/clouds-bank.webp" alt="">
 
         <section class="sec" id="about" style="top:400px" aria-labelledby="hello">
           <h2 class="l reveal type" id="hello" style="--d:0s;--x:178.65px;--y:11.58px"><img src="assets/type-hello.svg" width="306" height="121" alt="Hello,"></h2>
@@ -65,7 +65,7 @@
 
     <!-- Sea: your caustics (Figma 717:48894) and the laptop (Figma group 745:85) floating on them.
          The laptop screen links to Behance (BEHANCE_URL in script.js). -->
-    <div class="sec sunset" style="top:4240px">
+    <div class="sec sunset" style="top:4740px">
       <div class="sunset-art">
         <!-- The laptop and its screen move together (chameleon.js): the last project
              tab falls into the empty screen, then the laptop drops into the sea, bounces
@@ -82,14 +82,14 @@
     <!-- Seabed and corals (Figma 745:129, 717:48906, 717:48915), layered as in Figma:
          sand, small coral, the fish swimming between the corals, then the pink coral
          standing on the sand -->
-    <img class="l deco seabed" style="--x:0px;--y:5835.5px" src="assets/seabed.svg" width="1440" height="87" alt="">
-    <img class="l deco coral-small" style="--x:985px;--y:5676px" src="assets/coral-small.svg" width="146" height="177" alt="">
-    <img class="l fish" style="--x:-171px;--y:5027px;--w:3150px;--h:2100px" src="assets/fish.gif" alt="">
-    <img class="l deco coral" style="--x:1063.9px;--y:5506.9px" src="assets/coral.svg" width="311" height="378" alt="">
+    <img class="l deco seabed" style="--x:0px;--y:6335.5px" src="assets/seabed.svg" width="1440" height="87" alt="">
+    <img class="l deco coral-small" style="--x:985px;--y:6176px" src="assets/coral-small.svg" width="146" height="177" alt="">
+    <img class="l fish" style="--x:-171px;--y:5527px;--w:3150px;--h:2100px" src="assets/fish.gif" alt="">
+    <img class="l deco coral" style="--x:1063.9px;--y:6006.9px" src="assets/coral.svg" width="311" height="378" alt="">
 
 
     <!-- Work -->
-    <section class="sec" id="work" style="top:1898px" aria-labelledby="mywork">
+    <section class="sec" id="work" style="top:2398px" aria-labelledby="mywork">
       <!-- Title, chameleon and branch pin together (sticky) once the title reaches the
            top of the screen; only the project list scrolls (Figma frame 717:48856:
            the chameleon sits 310px below the top of the title, the first tab 134px). -->
@@ -111,7 +111,7 @@
     </section>
 
     <!-- Contact -->
-    <section class="sec" id="contact" style="top:5132px" aria-labelledby="open">
+    <section class="sec" id="contact" style="top:5632px" aria-labelledby="open">
       <h2 class="l reveal type" id="open" style="--d:0s;--x:447.2px;--y:50px"><img src="assets/type-open.svg" width="545" height="207" alt="Open for new projects"></h2>
       <a class="l reveal t-email" style="--d:.12s;--x:320px;--y:300px;--w:800px" href="mailto:nikasaracuta@gmail.com">nikasaracuta@gmail.com <span aria-hidden="true">→</span></a>
       <!-- TODO: replace # with the real LinkedIn URL -->
@@ -223,7 +223,7 @@
   </div>
 
   <script src="loader.js?v=68ee955a"></script>
-  <script src="script.js?v=db4d2ba7"></script>
+  <script src="script.js?v=3d3da481"></script>
   <script src="about.js?v=37dfe53c"></script>
   <script src="chameleon.js?v=6d5acc35"></script>
 </body>
