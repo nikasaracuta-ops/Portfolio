@@ -107,12 +107,6 @@ body::before {
 .type img { display: block; }
 :where(.l):where(p, h1, h2, a, nav) { white-space: nowrap; color: var(--white); font-weight: 400; }
 
-/* hero roles: "Digital creator" decodes into what Nika does (script.js). Poiret One
-   stands in for the Figma font (Bugery Gantik), which isn't available on the web. */
-.roles { display: flex; justify-content: flex-end; white-space: nowrap; }
-.roles-text { font: 400 46px/1.2 "Poiret One", var(--font-ui); letter-spacing: -.02em; color: #fff; }
-.roles-text .sc { opacity: .7; }
-
 .nav {
   display: flex;
   gap: 87px;
@@ -160,6 +154,8 @@ body::before {
 .social img { display: block; width: auto; height: 27px; }
 .social[aria-label="LinkedIn"] img { height: 38px; }
 .t-copy { font: 16px/24px var(--font-body); color: #fff; text-align: center; }
+/* the white fish can swim behind the white text: a faint shadow keeps it readable */
+.t-email, .t-copy { text-shadow: 0 0 10px rgba(14, 63, 115, .35); }
 
 .btn {
   display: flex;
@@ -579,8 +575,6 @@ a:focus-visible { outline: 2px solid var(--white); outline-offset: 4px; }
   .hero h1 { grid-column: 1 / -1; }
   .hero p.type { width: 100%; max-width: 170px; }
   .hero p.type:last-child { justify-self: end; }
-  .hero .roles { grid-column: 1 / -1; justify-self: end; margin-top: -14px; }
-  .roles-text { font-size: 22px; }
 
   /* crop to the blue sky on the left so the white text stays readable */
   /* the cloud bank sits on its own layer on desktop; here it is drawn back in as a
@@ -625,11 +619,14 @@ a:focus-visible { outline: 2px solid var(--white); outline-offset: 4px; }
       rgba(62, 189, 205, .5) 610px, rgba(62, 189, 205, .84) 707px, rgba(62, 189, 205, .98) 804px, #3EBDCD 900px); }
   .sunset-art .l { position: absolute; left: var(--x); top: var(--y); width: auto; height: auto; }
 
-  #contact { min-height: 600px; padding-top: 44px; padding-bottom: 150px; text-align: center; background: #3EBDCD; overflow: hidden; }
-  #contact .l.deco { position: absolute; }
-  #contact .coral { left: auto; right: -30px; top: auto; bottom: 30px; width: 150px; height: auto; }
-  #contact .coral-small { left: auto; right: 110px; top: auto; bottom: 30px; width: 70px; height: auto; }
-  #contact .seabed { left: -20px; top: auto; bottom: -10px; width: calc(100% + 40px); height: auto; }
+  #contact { min-height: 600px; padding-top: 44px; padding-bottom: 150px; text-align: center; overflow: hidden; }
+  /* the stage-level corals and seabed are drawn as backgrounds of the contact section here */
+  .stage > .deco, .stage > .sea { display: none; }
+  #contact {
+    background: url("assets/coral.svg") right -30px bottom 40px / 150px auto no-repeat,
+                url("assets/coral-small.svg") right 110px bottom 40px / 70px auto no-repeat,
+                url("assets/seabed.svg") center bottom -6px / 110% auto no-repeat, #3EBDCD;
+  }
   #open { width: 92%; max-width: 420px; margin: 0 auto; }
   .t-email { margin-top: 28px; font-size: 19px; line-height: 28px; white-space: normal !important; }
   .socials { margin-top: 22px; }

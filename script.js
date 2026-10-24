@@ -20,6 +20,18 @@ function fit() {
     stage.style.zoom = w / DESIGN_WIDTH;
   }
   updateTopbar();
+  placeFooter();
+}
+
+// The footer (title down to the sand) is 866px tall with room for the menu, as in
+// Figma. On shorter screens the text block moves down towards the sand, so at the
+// bottom of the page the title still clears the menu.
+const contact = document.getElementById('contact');
+function placeFooter() {
+  if (!contact) return;
+  const z = parseFloat(stage.style.zoom) || 1;
+  const shift = MOBILE.matches ? 0 : Math.max(0, Math.min(150, 866 - innerHeight / z));
+  contact.style.top = MOBILE.matches ? '' : `${5632 + shift}px`;
 }
 
 // Sticky menu: slides in once the menu at the top has scrolled away (always on phones)
@@ -136,37 +148,6 @@ if (about && puff && cloudsL && cloudsR) {
   addEventListener('scroll', queueSky, { passive: true });
   addEventListener('resize', queueSky);
   moveSky();
-}
-
-// Hero roles: every few seconds "Digital creator" decodes into the next role.
-// Letters flicker through random characters and settle from left to right.
-const rolesEl = document.getElementById('roles');
-if (rolesEl) {
-  const ROLES = ['Digital creator', 'Visual design (2D-3D)', 'UX/UI design', 'Motion design'];
-  const GLYPHS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789/-()';
-  const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
-  let i = 0;
-  const esc = c => c === '&' ? '&amp;' : c === '<' ? '&lt;' : c;
-  function decode(to) {
-    if (reduced) { rolesEl.textContent = to; return; }
-    const from = rolesEl.textContent, len = Math.max(from.length, to.length), start = performance.now();
-    // each letter settles at its own moment, left to right, after a little flicker
-    const settle = [...Array(len)].map((_, k) => 250 + k * 45 + Math.random() * 180);
-    function step(now) {
-      const t = now - start;
-      let html = '', done = true;
-      for (let k = 0; k < len; k++) {
-        if (t >= settle[k]) { html += esc(to[k] || ''); continue; }
-        done = false;
-        const c = (to[k] || from[k] || ' ');
-        html += c === ' ' ? ' ' : `<span class="sc">${esc(GLYPHS[Math.random() * GLYPHS.length | 0])}</span>`;
-      }
-      rolesEl.innerHTML = html;
-      if (!done) requestAnimationFrame(step);
-    }
-    requestAnimationFrame(step);
-  }
-  setInterval(() => { if (!document.hidden) { i = (i + 1) % ROLES.length; decode(ROLES[i]); } }, 3200);
 }
 
 const sunsetArt = document.querySelector('.sunset-art');
