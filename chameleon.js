@@ -4,6 +4,7 @@
 // Click a project to open its sheet.
 (() => {
   const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const PHONE = matchMedia('(max-width: 760px)');
   const $ = s => document.querySelector(s);
 
   /* ───── Projects: edit here ───── */
@@ -134,8 +135,11 @@
     if (goal === 0 && ext <= 0 && pending >= 0) { target = pending; pending = -1; goal = 1; }
     if (target >= 0 && pending < 0) {
       const r = cards[target].getBoundingClientRect();
-      // let go when the project leaves the screen (or before the chameleon has appeared)
-      goal = r.bottom > 0 && r.top < innerHeight && !hidden() && !cards[target].classList.contains('flying') ? 1 : 0;
+      // let go when the project leaves the screen (or before the chameleon has appeared);
+      // on desktop the tongue only shoots straight across, so the tab must be level with the mouth
+      const my = centre(mouth).y, th = cards[target].querySelector('.thumb').getBoundingClientRect();
+      const level = PHONE.matches || (my > th.top + 20 && my < th.bottom - 20);
+      goal = r.bottom > 0 && r.top < innerHeight && level && !hidden() && !cards[target].classList.contains('flying') ? 1 : 0;
     }
     if (reduce) ext = goal;
     else if (goal > ext) ext = Math.min(1, ext + dt / .2);
@@ -144,11 +148,11 @@
     if (target >= 0) {
       const z = parseFloat(page.style.zoom) || 1;        // tongue thickness follows the page zoom
       const m = centre(mouth), r = cards[target].querySelector('.thumb').getBoundingClientRect();
-      const t = { x: clamp(m.x, r.left + 28 * z, r.right - 28 * z), y: clamp(m.y, r.top + 28 * z, r.bottom - 28 * z) };
+      // desktop: a straight horizontal line to the tab's edge; phones: down to the list
+      const t = { x: clamp(m.x, r.left + 28 * z, r.right - 28 * z), y: PHONE.matches ? clamp(m.y, r.top + 28 * z, r.bottom - 28 * z) : m.y };
       const k = easeOut(ext), x = m.x + (t.x - m.x) * k, y = m.y + (t.y - m.y) * k;
       const dist = Math.hypot(x - m.x, y - m.y);
-      const sag = ext >= 1 ? dist * .08 + Math.sin(now / 350) * 3 * z : 0;
-      tongue.setAttribute('d', dist > 2 ? `M${m.x},${m.y} Q${(m.x + x) / 2},${(m.y + y) / 2 + sag} ${x},${y}` : '');
+      tongue.setAttribute('d', dist > 2 ? `M${m.x},${m.y} L${x},${y}` : '');
       const cb = chamBody.getBoundingClientRect();
       chamCut.setAttribute('transform', `translate(${cb.left} ${cb.top}) scale(${cb.width / 361} ${cb.height / 308})`);
       tongue.setAttribute('stroke-width', 5 * z);
@@ -173,7 +177,7 @@
     const O = { x: 381 + 376, y: 180 + 470 };        // its pivot (laptop.svg 376, 470) in sunset coords
     const GLASS = { x: 29.55 - 376, y: 115.05 - 470, w: 449, rot: -10.57 };   // the screen glass, from the pivot
     const HOVER = -70, REST = 0;               // laptop offset before the drop, and floating in the sea
-    const TEAL = [82, 197, 211], WHITE = [246, 250, 252];
+    const TEAL = [62, 189, 205], WHITE = [246, 250, 252];   // TEAL: the laptop screen, Figma #3EBDCD
     const hex = h => [1, 3, 5].map(i => parseInt(h.slice(i, i + 2), 16));
     const mix = (a, b, t) => `rgb(${a.map((v, i) => Math.round(v + (b[i] - v) * t)).join(',')})`;
     const smooth = t => t * t * (3 - 2 * t);

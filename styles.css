@@ -33,10 +33,10 @@ body {
 .stage {
   position: relative;
   width: 1440px;
-  height: 6422px;
+  height: 5922px;
   overflow: clip;   /* not hidden: that would stop the sticky chameleon */
-  /* the sky, exported from the Figma frame with text and icons hidden; the sea below is drawn in code */
-  background: #fff url("assets/background.webp?v=10") top left / 1440px 2000px no-repeat;
+  /* the sky: Figma gradient and hero clouds as one vector image (sky.svg); the sea below is drawn in code */
+  background: #fff url("assets/sky.svg?v=2") top left / 1440px 2000px no-repeat;
   /* script.js sets `zoom` so the 1440px design fills the viewport width */
 }
 
@@ -61,12 +61,12 @@ body {
 .fish { filter: blur(4.2px); pointer-events: none; }
 
 /* About, pinned (script.js): the wrapper is the scene (1500px, stage y 459–1959)
-   plus 700px of scrolling during which the scene stays on screen. --pin-top
+   plus 200px of scrolling during which the scene stays on screen. --pin-top
    (script.js) sticks it so the screen's bottom edge sits at stage y 1720. */
-.pin-wrap { position: absolute; left: 0; top: 459px; width: 1440px; height: 2200px; }
+.pin-wrap { position: absolute; left: 0; top: 459px; width: 1440px; height: 1700px; }
 .pin {
   position: sticky; top: var(--pin-top, -361px); width: 1440px; height: 1500px; overflow: clip;
-  background: #fff url("assets/background.webp?v=10") 0 -459px / 1440px 2000px no-repeat;
+  background: #fff url("assets/sky.svg?v=2") 0 -459px / 1440px 2000px no-repeat;
 }
 
 /* moved by script.js while pinned: the white cloud shape settles in the centre,
@@ -155,7 +155,7 @@ body::before {
 .social[aria-label="LinkedIn"] img { height: 38px; }
 .t-copy { font: 16px/24px var(--font-body); color: #fff; text-align: center; }
 /* the white fish can swim behind the white text: a faint shadow keeps it readable */
-.t-email, .t-copy { text-shadow: 0 0 10px rgba(14, 63, 115, .35); }
+.t-copy { text-shadow: 0 0 10px rgba(14, 63, 115, .35); }
 
 .btn {
   display: flex;
@@ -526,6 +526,8 @@ a:focus-visible { outline: 2px solid var(--white); outline-offset: 4px; }
 /* the laptop and its screen float together on the sea (chameleon.js) */
 .laptop-float { width: 754px; height: 644px; transform-origin: 376px 470px; }
 /* the empty tab that stays in the laptop as its screen (chameleon.js), on the screen glass */
+/* on the laptop the window is solid aquamarine (only the top bar keeps its details) */
+.laptop-tab .thumb { background: #3EBDCD; }
 .laptop-tab { position: absolute; left: 29.55px; top: 115.05px; width: 449px; transform: rotate(-10.57deg); transform-origin: 0 0; pointer-events: none; cursor: default; }
 #screen { transition: opacity .5s; }
 #screen.off { opacity: 0; pointer-events: none; }
@@ -563,7 +565,7 @@ a:focus-visible { outline: 2px solid var(--white); outline-offset: 4px; }
 
   .sec {
     position: relative; top: auto !important; width: 100%; padding: 0 20px;
-    background: url("assets/background.webp?v=10") no-repeat;
+    background: url("assets/sky.svg?v=2") no-repeat;
     background-size: calc(1440px * var(--s, 1)) auto;
     background-position: center calc(var(--y0, 0) * var(--s, 1) * -1px);
   }
@@ -581,9 +583,9 @@ a:focus-visible { outline: 2px solid var(--white); outline-offset: 4px; }
      second background, and the crop fades into the white of the Work section */
   #about {
     --y0: 750; --s: .8; min-height: 690px; padding-top: 40px; padding-bottom: 110px;
-    background-image: url("assets/clouds.webp"), url("assets/background.webp?v=10");
+    background-image: url("assets/clouds-bank.svg?v=2"), url("assets/sky.svg?v=2");
     background-size: calc(1440px * var(--s)) auto;
-    background-position: calc(-60px * var(--s)) calc((1190 - var(--y0)) * var(--s) * 1px), calc(-60px * var(--s)) calc(var(--y0) * var(--s) * -1px);
+    background-position: calc(-60px * var(--s)) calc((859 - var(--y0)) * var(--s) * 1px), calc(-60px * var(--s)) calc(var(--y0) * var(--s) * -1px);
   }
   #about::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 110px; pointer-events: none; background: linear-gradient(rgba(255, 255, 255, 0), #fff); }
   #hello { width: 52%; max-width: 230px; }
