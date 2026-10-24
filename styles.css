@@ -35,8 +35,8 @@ body {
   width: 1440px;
   height: 6422px;
   overflow: clip;   /* not hidden: that would stop the sticky chameleon */
-  /* the sky: Figma gradient and hero clouds (sky.svg rendered to sky.webp); the sea below is drawn in code */
-  background: #fff url("assets/sky.webp") top left / 1440px 2000px no-repeat;
+  /* the sky: the new Figma clouds around "Portfolio" blending into the earlier sky around Hello; the sea below is drawn in code */
+  background: #fff url("assets/sky.webp?v=2") top left / 1440px 2000px no-repeat;
   /* script.js sets `zoom` so the 1440px design fills the viewport width */
 }
 
@@ -66,7 +66,7 @@ body {
 .pin-wrap { position: absolute; left: 0; top: 459px; width: 1440px; height: 2200px; }
 .pin {
   position: sticky; top: var(--pin-top, -361px); width: 1440px; height: 1500px; overflow: clip;
-  background: #fff url("assets/sky.webp") 0 -459px / 1440px 2000px no-repeat;
+  background: #fff url("assets/sky.webp?v=2") 0 -459px / 1440px 2000px no-repeat;
 }
 
 /* moved by script.js while pinned: the white cloud shape settles in the centre,
@@ -565,7 +565,7 @@ a:focus-visible { outline: 2px solid var(--white); outline-offset: 4px; }
 
   .sec {
     position: relative; top: auto !important; width: 100%; padding: 0 20px;
-    background: url("assets/sky.webp") no-repeat;
+    background: url("assets/sky.webp?v=2") no-repeat;
     background-size: calc(1440px * var(--s, 1)) auto;
     background-position: center calc(var(--y0, 0) * var(--s, 1) * -1px);
   }
@@ -583,9 +583,9 @@ a:focus-visible { outline: 2px solid var(--white); outline-offset: 4px; }
      second background, and the crop fades into the white of the Work section */
   #about {
     --y0: 750; --s: .8; min-height: 690px; padding-top: 40px; padding-bottom: 110px;
-    background-image: url("assets/clouds-bank.webp"), url("assets/sky.webp");
+    background-image: url("assets/clouds.webp"), url("assets/sky.webp?v=2");
     background-size: calc(1440px * var(--s)) auto;
-    background-position: calc(-60px * var(--s)) calc((959 - var(--y0)) * var(--s) * 1px), calc(-60px * var(--s)) calc(var(--y0) * var(--s) * -1px);
+    background-position: calc(-60px * var(--s)) calc((1190 - var(--y0)) * var(--s) * 1px), calc(-60px * var(--s)) calc(var(--y0) * var(--s) * -1px);
   }
   #about::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 110px; pointer-events: none; background: linear-gradient(rgba(255, 255, 255, 0), #fff); }
   #hello { width: 52%; max-width: 230px; }

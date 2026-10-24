@@ -3,8 +3,8 @@
 Static one-page portfolio built from the Figma frame **Main** (node `315:133`) in the
 `PORTFOLIO` file. Open `index.html` in a browser — no build step.
 
-- `assets/sky.webp` — the sky from the Figma frame (gradient and hero clouds), rendered from `sky.svg`;
-  `clouds-bank.webp` (from `clouds-bank.svg`) is the pink cloud bank that parts while About is pinned, `sky-puff.webp` the white
+- `assets/sky.webp` — the sky: the Figma hero clouds (from `sky.svg`) blending into the earlier sky
+  around Hello; `clouds.webp` is the cloud bank that parts while About is pinned, `sky-puff.webp` the white
   cloud shape behind the "?".
 - The sea is drawn in code (`.sea` in `styles.css`, Figma colour #3EBDCD); the caustics, coral and seabed
   are Figma vectors (`caustics.svg`, `coral.svg`, `coral-small.svg`, `seabed.svg`), the laptop is

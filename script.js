@@ -106,7 +106,7 @@ if (sparkle && matchMedia('(hover: hover) and (pointer: fine)').matches) {
 
 // About, pinned. The scene (stage y 459–1959) sticks once the screen's bottom edge
 // reaches stage y 1720 and stays for the next HOLD px of scrolling (styles.css).
-// Over that stretch: the About text and "?" fade, the pink cloud bank parts to
+// Over that stretch: the About text and "?" fade, the blue cloud bank parts to
 // the sides, the white cloud shape glides to the centre and sinks until only the
 // sky's straight bottom edge is left — which holds for a moment before the scene
 // lets go and Work scrolls up.
@@ -129,7 +129,7 @@ function moveSky() {
   }
   // 0 just before the scene pins (LEAD px earlier), 1 when it lets go
   const t = Math.max(0, Math.min(1, (-stage.getBoundingClientRect().top / z - (PIN_BOTTOM - vh - LEAD)) / (HOLD + LEAD)));
-  const fade = ramp(t, 0, .22), part = ramp(t, .04, .36), glide = ramp(t, .08, .34), sink = ramp(t, .34, .6);
+  const fade = ramp(t, 0, .25), part = ramp(t, .05, .45), glide = ramp(t, .1, .45), sink = ramp(t, .45, .78);
   about.style.opacity = fade ? (1 - fade).toFixed(3) : '';
   about.style.visibility = fade >= 1 ? 'hidden' : '';
   const move = !reduceMotion.matches;
@@ -141,7 +141,7 @@ function moveSky() {
   // sky's edge into the white, leaving just a horizontal line
   const g = move ? glide : 0, dy = 289 * g + (move ? 500 * sink : 0);
   puff.style.transform = g ? `translate(${((720 - PUFF_CX) * g).toFixed(1)}px, ${dy.toFixed(1)}px) scale(${(1 - .2 * g).toFixed(3)})` : '';
-  puff.style.opacity = sink ? (1 - ramp(t, .48, .6)).toFixed(3) : '';
+  puff.style.opacity = sink ? (1 - ramp(t, .62, .78)).toFixed(3) : '';
 }
 if (about && puff && cloudsL && cloudsR) {
   const queueSky = () => { if (!skyQueued) { skyQueued = true; requestAnimationFrame(moveSky); } };
