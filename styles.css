@@ -64,8 +64,23 @@ body {
 /* The bird is the original 7-frame GIF from Figma (decoded and re-encoded as
    an animated WebP, 330ms per frame), on the same canvas mapping as in Figma. */
 .bird { opacity: .3; filter: blur(3px); }
-/* the fish swims behind the coral, which is drawn in front of it (index.html) */
-.fish { filter: blur(4.2px); pointer-events: none; }
+/* The fish swims behind the pink coral (drawn in front of it, index.html), across the
+   sea from left to right: a slow linear crossing (on the GPU, so it stays smooth), a
+   gentle up-and-down drift with a matching tilt, and the tail beating from its root. */
+.ocean { pointer-events: none; overflow: visible; }
+.fish-swimmer { position: absolute; left: 0; top: 120px; animation: swim-across 26s linear infinite; will-change: transform; }
+.fish { width: 300px; filter: blur(3px); animation: fish-float 4.2s ease-in-out infinite; transform-origin: 60% 50%; }
+.fish-svg { display: block; width: 100%; height: auto; overflow: visible; }
+.fish-svg path { fill: #fff; }
+.fish-tail { transform-box: view-box; transform-origin: 54px 51px; animation: fish-tail .7s ease-in-out infinite alternate; }
+@keyframes swim-across { from { transform: translate3d(-340px, 0, 0); } to { transform: translate3d(1480px, 0, 0); } }
+@keyframes fish-float {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  25% { transform: translateY(-14px) rotate(-3deg); }
+  75% { transform: translateY(12px) rotate(3deg); }
+}
+@keyframes fish-tail { from { transform: rotate(-13deg); } to { transform: rotate(13deg); } }
+@media (prefers-reduced-motion: reduce) { .fish-swimmer, .fish, .fish-tail { animation: none; } .fish-swimmer { transform: translateX(560px); } }
 
 /* About, pinned (script.js): the wrapper is the scene (1500px, stage y 459–1959)
    plus 700px of scrolling during which the scene stays on screen. --pin-top
@@ -601,7 +616,7 @@ a:focus-visible { outline: 2px solid var(--white); outline-offset: 4px; }
 @media (max-width: 760px) {
   .stage { width: 100%; height: auto; background: #fff; display: flex; flex-direction: column; }
   .hero { order: 1; } #about { order: 2; } #work { order: 3; } .sunset { order: 4; } #contact { order: 5; }
-  .bird, .fish, .sky-puff, .clouds-px, .stage .nav { display: none !important; }
+  .bird, .ocean, .sky-puff, .clouds-px, .stage .nav { display: none !important; }
   .pin-wrap, .pin { display: contents; }   /* no pinned scene on phones: About is a normal section */
 
   .sec {
