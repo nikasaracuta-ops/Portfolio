@@ -65,22 +65,25 @@ body {
    an animated WebP, 330ms per frame), on the same canvas mapping as in Figma. */
 .bird { opacity: .3; filter: blur(3px); }
 /* The fish swims behind the pink coral (drawn in front of it, index.html), across the
-   sea from left to right: a slow linear crossing (on the GPU, so it stays smooth), a
-   gentle up-and-down drift with a matching tilt, and the tail beating from its root. */
+   sea from left to right (script.js moves it, darting away when the cursor comes close),
+   with a gentle up-and-down drift and tilt, the tail beating and the fins waving. */
 .ocean { pointer-events: none; overflow: visible; }
-.fish-swimmer { position: absolute; left: 0; top: 120px; animation: swim-across 26s linear infinite; will-change: transform; }
-.fish { width: 300px; filter: blur(3px); animation: fish-float 4.2s ease-in-out infinite; transform-origin: 60% 50%; }
+.fish-swimmer { position: absolute; left: 0; top: 110px; transform: translate3d(var(--fx, -380px), var(--fy, 0px), 0); will-change: transform; }
+.fish { width: 340px; filter: blur(3px); animation: fish-float 4.2s ease-in-out infinite; transform-origin: 60% 50%; }
 .fish-svg { display: block; width: 100%; height: auto; overflow: visible; }
 .fish-svg path { fill: #fff; }
-.fish-tail { transform-box: view-box; transform-origin: 54px 51px; animation: fish-tail .7s ease-in-out infinite alternate; }
-@keyframes swim-across { from { transform: translate3d(-340px, 0, 0); } to { transform: translate3d(1480px, 0, 0); } }
+.fish-tail { transform-box: view-box; transform-origin: 54px 51px; animation: fish-tail var(--beat, .7s) ease-in-out infinite alternate; }
+.fish-fin { transform-box: view-box; animation: fish-fin 1.1s ease-in-out infinite alternate; }
+.fish-fin.top { transform-origin: 124px 26px; }
+.fish-fin.bottom { transform-origin: 117px 78px; animation-delay: -.55s; }
+@keyframes fish-fin { from { transform: rotate(-7deg); } to { transform: rotate(6deg); } }
 @keyframes fish-float {
   0%, 100% { transform: translateY(0) rotate(0deg); }
   25% { transform: translateY(-14px) rotate(-3deg); }
   75% { transform: translateY(12px) rotate(3deg); }
 }
 @keyframes fish-tail { from { transform: rotate(-13deg); } to { transform: rotate(13deg); } }
-@media (prefers-reduced-motion: reduce) { .fish-swimmer, .fish, .fish-tail { animation: none; } .fish-swimmer { transform: translateX(560px); } }
+@media (prefers-reduced-motion: reduce) { .fish, .fish-tail, .fish-fin { animation: none; } }
 
 /* About, pinned (script.js): the wrapper is the scene (1500px, stage y 459–1959)
    plus 700px of scrolling during which the scene stays on screen. --pin-top

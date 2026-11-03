@@ -11,7 +11,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@125,400;125,700&family=Italiana&family=Unbounded:wght@300;400;500&display=swap">
-  <link rel="stylesheet" href="styles.css?v=6460e4a4">
+  <link rel="stylesheet" href="styles.css?v=5f1402c1">
   <script>document.documentElement.classList.add('js', 'is-loading')</script>
 </head>
 <body>
@@ -84,10 +84,10 @@
          standing on the sand -->
     <img class="l deco seabed" style="--x:0px;--y:6567.5px" src="assets/seabed.svg" width="1440" height="87" alt="">
     <img class="l deco coral-small" style="--x:985px;--y:6408px" src="assets/coral-small.svg" width="146" height="177" alt="">
-    <!-- The fish (assets/fish-silhouette.svg, split into body and tail): it swims across the sea
-         in a gentle wave, its tail beating, between the two corals (styles.css) -->
+    <!-- The fish (assets/fish-silhouette.svg, split into body, tail and fins): it swims across the
+         sea in a gentle wave, darts away from the cursor (script.js), between the two corals -->
     <div class="l ocean" style="--x:0px;--y:6236px;--w:1440px;--h:330px" aria-hidden="true">
-      <div class="fish-swimmer"><div class="fish"><svg class="fish-svg" viewBox="-4 -4 212 111" aria-hidden="true"><path class="fish-tail" d="M56 44 L46 43 L23 17 L12 11 L3 10 L0 11 L0 12 L7 19 L10 29 L12 31 L16 42 L23 51 L17 56 L13 63 L1 97 L10 94 L19 87 L29 76 L33 69 L40 62 L44 60 L56 59Z"/><path class="fish-body" d="M203 49 L191 41 L183 33 L177 29 L165 23 L162 23 L158 21 L148 19 L141 19 L140 18 L136 19 L124 7 L111 0 L105 0 L101 2 L97 8 L96 14 L99 19 L108 25 L114 26 L115 27 L114 28 L99 28 L86 31 L69 37 L60 42 L52 44 L52 59 L65 62 L84 72 L101 77 L106 77 L108 79 L96 85 L96 89 L99 90 L100 92 L90 100 L90 102 L99 101 L111 96 L129 81 L136 79 L149 78 L181 69 L197 59 L203 52Z"/></svg></div></div>
+      <div class="fish-swimmer" id="fishSwimmer"><div class="fish"><svg class="fish-svg" viewBox="-4 -4 212 111" aria-hidden="true"><path class="fish-tail" d="M56 44 L46 43 L23 17 L12 11 L3 10 L0 11 L0 12 L7 19 L10 29 L12 31 L16 42 L23 51 L17 56 L13 63 L1 97 L10 94 L19 87 L29 76 L33 69 L40 62 L44 60 L56 59Z"/><path class="fish-fin top" d="M136 19 L124 7 L111 0 L105 0 L101 2 L97 8 L96 14 L99 19 L108 25 L114 26 L115 27 L114 28 L126 27Z"/><path class="fish-fin bottom" d="M106 77 L108 79 L96 85 L96 89 L99 90 L100 92 L90 100 L90 102 L99 101 L111 96 L129 81 L118 75Z"/><path class="fish-body" d="M203 49 L191 41 L183 33 L177 29 L165 23 L162 23 L158 21 L148 19 L141 19 L140 18 L136 19 L114 28 L99 28 L86 31 L69 37 L60 42 L52 44 L52 59 L65 62 L84 72 L101 77 L106 77 L129 81 L136 79 L149 78 L181 69 L197 59 L203 52Z"/></svg></div></div>
     </div>
     <img class="l deco coral" style="--x:1063.9px;--y:6238.9px" src="assets/coral.svg" width="311" height="378" alt="">
 
@@ -229,7 +229,7 @@
   </div>
 
   <script src="loader.js?v=68ee955a"></script>
-  <script src="script.js?v=a99f1bc4"></script>
+  <script src="script.js?v=7b043eab"></script>
   <script src="about.js?v=89c2359a"></script>
   <script src="chameleon.js?v=906a5f92"></script>
 </body>

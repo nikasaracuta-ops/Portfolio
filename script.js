@@ -150,6 +150,40 @@ if (about && puff && cloudsL && cloudsR) {
   moveSky();
 }
 
+// The fish swims across the sea at a calm pace; when the cursor comes close it
+// darts away (faster, and up or down away from the pointer), then calms down.
+const fishSwimmer = document.getElementById('fishSwimmer');
+if (fishSwimmer && !MOBILE.matches) {
+  const calm = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const START = -380, END = 1500, SLOW = 70, FAST = 620;   // stage px, stage px per second
+  let x = 420, y = 0, vy = 0, speed = SLOW, last = performance.now(), px = -1e4, py = -1e4;
+  addEventListener('pointermove', (e) => { px = e.clientX; py = e.clientY; }, { passive: true });
+  addEventListener('pointerleave', () => { px = py = -1e4; });
+  function swim(now) {
+    const dt = Math.min(.05, (now - last) / 1000); last = now;
+    const r = fishSwimmer.getBoundingClientRect();
+    if (r.bottom > -100 && r.top < innerHeight + 100 && !calm) {
+      const z = parseFloat(stage.style.zoom) || 1;
+      const cx = r.left + r.width / 2, cy = r.top + r.height / 2;
+      const d = Math.hypot(px - cx, py - cy) / z;             // cursor distance in stage px
+      const scared = d < 260;
+      speed += ((scared ? FAST : SLOW) - speed) * Math.min(1, dt * (scared ? 6 : 1.2));
+      vy += ((scared ? (cy > py ? 90 : -90) : 0) - y) * dt * 2.5 - vy * dt * 3;
+      y += vy * dt;
+      x += speed * dt;
+      if (x > END) { x = START; y = vy = 0; }
+      fishSwimmer.style.setProperty('--fx', `${x.toFixed(1)}px`);
+      fishSwimmer.style.setProperty('--fy', `${y.toFixed(1)}px`);
+      // the tail beats faster when it hurries (two steps, so the beat doesn't jitter)
+      const beat = speed > 300 ? '.22s' : '.7s';
+      if (beat !== fishSwimmer.dataset.beat) { fishSwimmer.dataset.beat = beat; fishSwimmer.style.setProperty('--beat', beat); }
+    }
+    requestAnimationFrame(swim);
+  }
+  if (calm) fishSwimmer.style.setProperty('--fx', '560px');
+  requestAnimationFrame(swim);
+}
+
 const sunsetArt = document.querySelector('.sunset-art');
 
 // Menu: white over the sky and the sea, blue with the colour logo over the white
