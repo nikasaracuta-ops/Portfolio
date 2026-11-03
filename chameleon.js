@@ -292,6 +292,16 @@
     if (opener) opener.focus({ preventScroll: true });
   }
   const step = d => { cur = (cur + d + PROJECTS.length) % PROJECTS.length; tab = 'brief'; render(); panel.scrollTop = 0; };
+  // project pages link back with #project-<id>: open that project's sheet (or its page)
+  const fromHash = () => {
+    const m = location.hash.match(/^#project-([\w-]+)$/), i = m ? PROJECTS.findIndex(p => p.id === m[1]) : -1;
+    if (i < 0) return;
+    const card = cards[i];
+    card.scrollIntoView({ block: 'center' });
+    if (PROJECTS[i].page) location.href = PROJECTS[i].page; else openProject(i, card);
+  };
+  addEventListener('hashchange', fromHash);
+  fromHash();
   $('#pClose').onclick = closeProject;
   $('#pPrev').onclick = () => step(-1);
   $('#pNext').onclick = () => step(1);
