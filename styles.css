@@ -61,20 +61,9 @@ body {
 
 /* ---------- Creatures ----------
    Blur/opacity fitted to the Figma render (Figma blur values are 2× CSS blur). */
-/* The bird glides across the sky (script.js), flapping in bursts. */
-.sky-lane { pointer-events: none; overflow: visible; }
-.bird-flyer { position: absolute; left: 0; top: 80px; transform: translate3d(var(--bx, -300px), var(--by, 0px), 0) rotate(var(--br, 0deg)); will-change: transform; }
-.bird { width: 240px; opacity: .55; filter: blur(2.5px); animation: bird-glide 5s ease-in-out infinite; }
-.bird-svg { display: block; width: 100%; height: auto; overflow: visible; }
-.bird-svg path { fill: #fff; }
-/* the wings beat in short bursts, then the bird glides */
-.bird-wing { transform-box: view-box; animation: bird-flap var(--flap, 2.4s) ease-in-out infinite; }
-.bird-wing.top { transform-origin: 200px 98px; }
-.bird-wing.bottom { transform-origin: 165px 148px; animation-name: bird-flap-low; }
-@keyframes bird-flap { 0%, 40%, 100% { transform: none; } 10%, 30% { transform: scaleY(.35) skewX(-8deg); } 20% { transform: scaleY(1.05); } }
-@keyframes bird-flap-low { 0%, 40%, 100% { transform: none; } 10%, 30% { transform: scaleY(1.35); } 20% { transform: scaleY(.7); } }
-@keyframes bird-glide { 0%, 100% { transform: translateY(0) rotate(0deg); } 50% { transform: translateY(-16px) rotate(-3deg); } }
-@media (prefers-reduced-motion: reduce) { .bird, .bird-wing { animation: none; } }
+/* The bird flies across the sky in the GIF's poses, morphed smoothly (bird.js). */
+.bird { opacity: .3; filter: blur(3px); overflow: visible; pointer-events: none; }
+.bird path { fill: #fff; }
 /* The fish swims behind the pink coral (drawn in front of it, index.html), across the
    sea from left to right (script.js moves it, darting away when the cursor comes close),
    with a gentle up-and-down drift and tilt, the tail beating and the fins waving. */
@@ -630,7 +619,7 @@ a:focus-visible { outline: 2px solid var(--white); outline-offset: 4px; }
 @media (max-width: 760px) {
   .stage { width: 100%; height: auto; background: #fff; display: flex; flex-direction: column; }
   .hero { order: 1; } #about { order: 2; } #work { order: 3; } .sunset { order: 4; } #contact { order: 5; }
-  .sky-lane, .ocean, .sky-puff, .clouds-px, .stage .nav { display: none !important; }
+  .bird, .ocean, .sky-puff, .clouds-px, .stage .nav { display: none !important; }
   .pin-wrap, .pin { display: contents; }   /* no pinned scene on phones: About is a normal section */
 
   .sec {

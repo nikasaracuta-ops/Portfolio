@@ -5,7 +5,7 @@
 # Run it before committing whenever styles.css or a .js file changed.
 set -euo pipefail
 cd "$(dirname "$0")/.."
-for f in styles.css project.css loader.js script.js chameleon.js about.js project.js; do
+for f in styles.css project.css loader.js script.js chameleon.js about.js bird.js project.js; do
   v=$(sha256sum "$f" | cut -c1-8)
   sed -i -E "s#(href|src)=\"${f//./\\.}(\?v=[0-9a-f]+)?\"#\1=\"$f?v=$v\"#" index.html dior.html type01.html moea.html miles.html
 done
