@@ -184,6 +184,36 @@ if (fishSwimmer && !MOBILE.matches) {
   requestAnimationFrame(swim);
 }
 
+// The bird glides across the sky; when the cursor comes close it flaps hard and
+// flies off faster and higher, then glides calmly again.
+const birdFlyer = document.getElementById('birdFlyer');
+if (birdFlyer && !MOBILE.matches) {
+  const still = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const START = -300, END = 1520, SLOW = 55, FAST = 520;
+  let x = 120, y = 0, vy = 0, speed = SLOW, last = performance.now(), mx = -1e4, my = -1e4;
+  addEventListener('pointermove', (e) => { mx = e.clientX; my = e.clientY; }, { passive: true });
+  function fly(now) {
+    const dt = Math.min(.05, (now - last) / 1000); last = now;
+    const r = birdFlyer.getBoundingClientRect();
+    if (r.bottom > -100 && r.top < innerHeight + 100 && !still) {
+      const z = parseFloat(stage.style.zoom) || 1;
+      const scared = Math.hypot(mx - (r.left + r.width / 2), my - (r.top + r.height / 2)) / z < 240;
+      speed += ((scared ? FAST : SLOW) - speed) * Math.min(1, dt * (scared ? 5 : 1));
+      vy += ((scared ? -110 : 0) - y) * dt * 2 - vy * dt * 2.6;   // flee upwards, then settle
+      y += vy * dt; x += speed * dt;
+      if (x > END) { x = START; y = vy = 0; }
+      birdFlyer.style.setProperty('--bx', `${x.toFixed(1)}px`);
+      birdFlyer.style.setProperty('--by', `${y.toFixed(1)}px`);
+      birdFlyer.style.setProperty('--br', `${Math.max(-14, Math.min(8, vy * .12)).toFixed(2)}deg`);
+      const flap = scared ? '.5s' : '2.4s';
+      if (flap !== birdFlyer.dataset.flap) { birdFlyer.dataset.flap = flap; birdFlyer.style.setProperty('--flap', flap); }
+    }
+    requestAnimationFrame(fly);
+  }
+  if (still) birdFlyer.style.setProperty('--bx', '200px');
+  requestAnimationFrame(fly);
+}
+
 const sunsetArt = document.querySelector('.sunset-art');
 
 // Menu: white over the sky and the sea, blue with the colour logo over the white

@@ -11,7 +11,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@125,400;125,700&family=Italiana&family=Unbounded:wght@300;400;500&display=swap">
-  <link rel="stylesheet" href="styles.css?v=5f1402c1">
+  <link rel="stylesheet" href="styles.css?v=92d9ff02">
   <script>document.documentElement.classList.add('js', 'is-loading')</script>
 </head>
 <body>
@@ -54,8 +54,11 @@
     </div>
 
     <header class="sec hero" style="top:0">
-    <!-- Animated bird, layered over the background at its Figma position -->
-    <img class="l bird" style="--x:-6.61px;--y:239.23px;--w:1328.29px;--h:558.57px" src="assets/bird.webp" alt="">
+        <!-- The bird (assets/bird.svg, split into body and wings): it glides across the sky,
+         flapping now and then, and flies off faster when the cursor comes close (script.js) -->
+    <div class="l sky-lane" style="--x:0px;--y:300px;--w:1440px;--h:300px" aria-hidden="true">
+      <div class="bird-flyer" id="birdFlyer"><div class="bird"><svg class="bird-svg" viewBox="-6 -6 334 211" aria-hidden="true"><path class="bird-wing top" d="M262 92 L263 84 L258 72 L242 56 L202 33 L166 16 L136 5 L113 0 L104 0 L101 4 L121 22 L133 48 L148 67 L149 70 L175 96 L232 103Z"/><path class="bird-wing bottom" d="M142 153 L103 177 L76 188 L73 193 L74 198 L83 197 L121 184 L178 183 L182 150 L150 138Z"/><path class="bird-body" d="M0 79 L4 83 L30 90 L65 94 L88 101 L122 106 L133 110 L139 115 L142 122 L139 135 L143 148 L142 153 L178 183 L214 176 L231 170 L263 154 L301 144 L321 131 L321 129 L308 116 L300 111 L259 107 L257 104 L262 92 L149 70 L147 73 L117 74 L103 72 L16 72 L6 74Z"/></svg></div></div>
+    </div>
 
 
     <h1 class="l reveal type" style="--d:0s;--x:56.74px;--y:97.59px"><img src="assets/type-portfolio.svg" width="1330" height="277" alt="Portfolio"></h1>
@@ -229,7 +232,7 @@
   </div>
 
   <script src="loader.js?v=68ee955a"></script>
-  <script src="script.js?v=7b043eab"></script>
+  <script src="script.js?v=efa9de53"></script>
   <script src="about.js?v=89c2359a"></script>
   <script src="chameleon.js?v=906a5f92"></script>
 </body>
