@@ -444,12 +444,24 @@ a:focus-visible { outline: 2px solid var(--white); outline-offset: 4px; }
 .tool-groups { display: flex; flex-wrap: wrap; justify-content: center; gap: 48px clamp(32px, 5vw, 72px); }
 .tool-groups > div { display: grid; gap: 22px; justify-items: center; }
 .tool-groups .label { color: var(--c-blue); opacity: .8; }
-/* tools: the app icons with their names; they pop in one by one when the section scrolls into view */
-.tools { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; justify-content: center; align-items: start; gap: 22px 6px; }
-.tool { display: grid; justify-items: center; align-content: start; gap: 10px; width: 108px; }
-.tool img { display: block; width: 64px; height: 64px; border-radius: 15px; box-shadow: 0 12px 24px -14px rgba(14, 63, 115, .55); transition: transform .45s cubic-bezier(.3, 1.6, .5, 1); }
-.tool span { font: 400 .74rem/1.2 var(--f-label); letter-spacing: .02em; color: var(--c-body); text-align: center; white-space: nowrap; }
-.tool:hover img { transform: translateY(-6px) rotate(-6deg) scale(1.06); }
+/* tools: pink stars with the app's icon; on hover (or focus) the star flips over to
+   show the tool's name, sized to fit inside the star so it never overlaps the others */
+.tools { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; }
+.tool { position: relative; width: clamp(84px, 8vw, 108px); aspect-ratio: 1; perspective: 600px; cursor: default; outline: none; }
+.flip { position: absolute; inset: 0; transform-style: preserve-3d; transition: transform .7s cubic-bezier(.3, 1.3, .5, 1); }
+.tool:nth-child(3n+2) .flip { rotate: 8deg; }
+.tool:nth-child(3n) .flip { rotate: -6deg; }
+.tool:hover .flip, .tool:focus-visible .flip { transform: rotateY(180deg); }
+.face { position: absolute; inset: 0; display: grid; place-items: center; -webkit-backface-visibility: hidden; backface-visibility: hidden; }
+.face.back { transform: rotateY(180deg); }
+.tool .burst { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
+.tool .burst polygon { fill: var(--c-pink); stroke: var(--c-pink); stroke-width: 6; stroke-linejoin: round; }
+.face.back .burst polygon { fill: #D62E88; stroke: #D62E88; }
+.face img { position: relative; width: 46%; height: 46%; border-radius: 22%; box-shadow: 0 6px 14px -8px rgba(14, 63, 115, .6); }
+.word { position: relative; max-width: 72%; text-align: center; font: 500 clamp(.8rem, 1.1vw, .95rem)/1.1 var(--f-label); color: #fff; }
+.tool.mid .word { font-size: clamp(.6rem, .8vw, .72rem); }
+.tool.long .word { font-size: clamp(.6rem, .8vw, .7rem); }
+.tool:focus-visible .back .burst polygon { stroke: var(--c-blue); stroke-width: 4; }
 .toolbox .tool { opacity: 0; transform: translateY(18px) scale(.9); transition: opacity .5s, transform .6s cubic-bezier(.3, 1.4, .5, 1); transition-delay: calc(var(--i, 0) * 60ms); }
 .toolbox.in .tool { opacity: 1; transform: none; }
 
@@ -477,7 +489,7 @@ a:focus-visible { outline: 2px solid var(--white); outline-offset: 4px; }
 }
 @media (prefers-reduced-motion: reduce) {
   .qbtn img, .pulse { animation: none; }
-  .cloudpop .field-head, .cloudpop .plate, .cloudpop .toolbox, .portrait .frame, .notes li::before, .notes li::after, .toolbox .tool { transition: none; }
+  .cloudpop .field-head, .cloudpop .plate, .cloudpop .toolbox, .portrait .frame, .notes li::before, .notes li::after, .toolbox .tool, .flip { transition: none; }
   .cp-more svg { animation: none; }
 }
 
