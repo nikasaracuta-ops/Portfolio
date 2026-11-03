@@ -7,6 +7,10 @@
 @font-face { font-family: "Area Inktrap Extended"; src: local("Area Inktrap Extended Bold"), url("fonts/AreaInktrap-ExtendedBold.woff2") format("woff2"); font-weight: 700; font-display: swap; }
 
 :root {
+  /* the Figma sky (717:48952): #1A5BA4 to #E770B2, a rect from y 0 to 1751 (x -70 to 1478)
+     blurred by 230px; stops computed from that blur, so its edges fade to white exactly */
+  --sky-v: linear-gradient(rgb(140,173,210) 0px, rgb(112,151,197) 40px, rgb(87,132,187) 80px, rgb(69,116,178) 120px, rgb(57,106,172) 160px, rgb(51,99,169) 200px, rgb(50,96,167) 240px, rgb(51,95,166) 280px, rgb(53,94,166) 320px, rgb(56,94,166) 360px, rgb(59,94,166) 400px, rgb(62,95,166) 440px, rgb(66,95,167) 480px, rgb(69,95,167) 520px, rgb(72,96,167) 560px, rgb(75,96,167) 600px, rgb(79,96,168) 640px, rgb(82,97,168) 680px, rgb(85,97,168) 720px, rgb(89,97,168) 760px, rgb(92,98,168) 800px, rgb(95,98,169) 840px, rgb(98,98,169) 880px, rgb(102,99,169) 920px, rgb(105,99,169) 960px, rgb(108,99,170) 1000px, rgb(112,100,170) 1040px, rgb(115,100,170) 1080px, rgb(118,100,170) 1120px, rgb(121,101,171) 1160px, rgb(125,101,171) 1200px, rgb(128,101,171) 1240px, rgb(131,102,171) 1280px, rgb(135,102,171) 1320px, rgb(138,103,172) 1360px, rgb(141,103,172) 1400px, rgb(145,104,172) 1440px, rgb(149,105,173) 1480px, rgb(153,107,174) 1520px, rgb(159,112,177) 1560px, rgb(167,119,181) 1600px, rgb(177,130,187) 1640px, rgb(189,145,195) 1680px, rgb(202,164,206) 1720px, rgb(216,185,217) 1760px, rgb(228,205,228) 1800px, rgb(238,222,237) 1840px, rgb(245,236,244) 1880px, rgb(250,244,249) 1920px, rgb(253,250,252) 1960px, rgb(254,253,254) 2000px);
+  --sky-h: linear-gradient(to right, rgba(255,255,255,0.272) 0px, rgba(255,255,255,0.218) 20px, rgba(255,255,255,0.170) 40px, rgba(255,255,255,0.130) 60px, rgba(255,255,255,0.097) 80px, rgba(255,255,255,0.070) 100px, rgba(255,255,255,0.050) 120px, rgba(255,255,255,0.034) 140px, rgba(255,255,255,0.023) 160px, rgba(255,255,255,0.015) 180px, rgba(255,255,255,0.010) 200px, rgba(255,255,255,0.004) 240px, rgba(255,255,255,0.001) 280px, rgba(255,255,255,0) 50%, rgba(255,255,255,0.003) 1160px, rgba(255,255,255,0.008) 1200px, rgba(255,255,255,0.020) 1240px, rgba(255,255,255,0.029) 1260px, rgba(255,255,255,0.043) 1280px, rgba(255,255,255,0.061) 1300px, rgba(255,255,255,0.085) 1320px, rgba(255,255,255,0.116) 1340px, rgba(255,255,255,0.153) 1360px, rgba(255,255,255,0.198) 1380px, rgba(255,255,255,0.249) 1400px, rgba(255,255,255,0.307) 1420px, rgba(255,255,255,0.371) 1440px);
   --font-ui: "Roc Grotesk Wide", "Archivo", sans-serif;
   --font-body: "Area Inktrap Extended", "Archivo", sans-serif;
 
@@ -35,8 +39,10 @@ body {
   width: 1440px;
   height: 6654px;
   overflow: clip;   /* not hidden: that would stop the sticky chameleon */
-  /* the sky: Figma gradient (1751px tall) and clouds, rendered from sky.svg; the sea below is drawn in code */
-  background: #fff url("assets/sky.webp?v=3") top left / 1440px 2000px no-repeat;
+  /* the sky: the Figma gradient (1751px tall, blurred edges) drawn in CSS, with the
+     Figma hero clouds on top (clouds-hero.png); the sea below is drawn in code */
+  background: url("assets/clouds-hero.png") 0 0 / 1440px 2000px no-repeat,
+              var(--sky-h) 0 0 / 1440px 2000px no-repeat, var(--sky-v) 0 0 / 1440px 2000px no-repeat, #fff;
   /* script.js sets `zoom` so the 1440px design fills the viewport width */
 }
 
@@ -66,7 +72,8 @@ body {
 .pin-wrap { position: absolute; left: 0; top: 459px; width: 1440px; height: 2200px; }
 .pin {
   position: sticky; top: var(--pin-top, -361px); width: 1440px; height: 1500px; overflow: clip;
-  background: #fff url("assets/sky.webp?v=3") 0 -459px / 1440px 2000px no-repeat;
+  background: url("assets/clouds-hero.png") 0 -459px / 1440px 2000px no-repeat,
+              var(--sky-h) 0 -459px / 1440px 2000px no-repeat, var(--sky-v) 0 -459px / 1440px 2000px no-repeat, #fff;
 }
 
 /* moved by script.js while pinned: the white cloud shape settles in the centre,
@@ -77,30 +84,13 @@ body {
 .clouds-l { -webkit-mask-image: linear-gradient(to right, #000 33%, transparent 67%); mask-image: linear-gradient(to right, #000 33%, transparent 67%); }
 .clouds-r { -webkit-mask-image: linear-gradient(to left, #000 33%, transparent 67%); mask-image: linear-gradient(to left, #000 33%, transparent 67%); }
 
-@media (prefers-reduced-motion: reduce) {
-  body::after { animation: none; }
-}
-
-/* ---------- Film grain ----------
-   Two full-screen layers: an animated grey noise blended with overlay (it
-   jumps between four offsets, like film) and a faint static mottle. */
-body::before, body::after { content: ""; position: fixed; inset: -50%; pointer-events: none; z-index: 90; }
+/* ---------- Grain ----------
+   Figma's noise on the Main frame: monotone white specks at 32%, size 0.5 (half a
+   design pixel), density 1. noise.png is that pattern (half its pixels are specks);
+   --gz (script.js) scales it with the page like everything else. */
 body::after {
-  opacity: .6;
-  mix-blend-mode: overlay;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='1.15' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-  animation: grain 1.2s steps(4) infinite;
-}
-body::before {
-  opacity: .16;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='m'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.75' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .32 0 0 0 0 .32 0 0 0 0 .32 0 0 0 1.6 -.55'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23m)'/%3E%3C/svg%3E");
-}
-@keyframes grain {
-  0%   { transform: translate(0, 0); }
-  25%  { transform: translate(-3%, 2%); }
-  50%  { transform: translate(2%, -3%); }
-  75%  { transform: translate(-2%, -1%); }
-  100% { transform: translate(0, 0); }
+  content: ""; position: fixed; inset: 0; pointer-events: none; z-index: 90;
+  background: url("assets/noise.png") 0 0 / calc(256px * var(--gz, 1)) repeat;
 }
 
 /* ---------- Type ---------- */
@@ -565,9 +555,12 @@ a:focus-visible { outline: 2px solid var(--white); outline-offset: 4px; }
 
   .sec {
     position: relative; top: auto !important; width: 100%; padding: 0 20px;
-    background: url("assets/sky.webp?v=3") no-repeat;
-    background-size: calc(1440px * var(--s, 1)) auto;
-    background-position: center calc(var(--y0, 0) * var(--s, 1) * -1px);
+    /* the same sky as on desktop: clouds, then the CSS gradient (its side fade and its colours) */
+    --sky-pos: center calc(var(--y0, 0) * var(--s, 1) * -1px);
+    background: url("assets/clouds-hero.png"), var(--sky-h), var(--sky-v);
+    background-repeat: no-repeat;
+    background-size: calc(1440px * var(--s, 1)) calc(2000px * var(--s, 1));
+    background-position: var(--sky-pos);
   }
   .sec .l { position: relative; left: auto; top: auto; width: auto; height: auto; }
   .type img { width: 100%; height: auto; }
@@ -582,10 +575,13 @@ a:focus-visible { outline: 2px solid var(--white); outline-offset: 4px; }
   /* the cloud bank sits on its own layer on desktop; here it is drawn back in as a
      second background, and the crop fades into the white of the Work section */
   #about {
-    --y0: 910; --s: .8; min-height: 690px; padding-top: 40px; padding-bottom: 110px;
-    background-image: url("assets/clouds.webp?v=2"), url("assets/sky.webp?v=3");
-    background-size: calc(1440px * var(--s)) auto;
-    background-position: calc(-60px * var(--s)) calc((1100 - var(--y0)) * var(--s) * 1px), calc(-60px * var(--s)) calc(var(--y0) * var(--s) * -1px);
+    /* continues the hero's crop (600px / .8 = stage y 750), so the sky runs on without a seam */
+    --y0: 750; --s: .8; min-height: 690px; padding-top: 40px; padding-bottom: 110px;
+    --sky-xy: calc(-60px * var(--s)) calc(var(--y0) * var(--s) * -1px);
+    --sky-wh: calc(1440px * var(--s)) calc(2000px * var(--s));
+    background-image: url("assets/clouds-bank.png"), url("assets/clouds-hero.png"), var(--sky-h), var(--sky-v);
+    background-size: calc(1440px * var(--s)) auto, var(--sky-wh), var(--sky-wh), var(--sky-wh);
+    background-position: calc(-60px * var(--s)) calc((1100 - var(--y0)) * var(--s) * 1px), var(--sky-xy), var(--sky-xy), var(--sky-xy);
   }
   #about::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 110px; pointer-events: none; background: linear-gradient(rgba(255, 255, 255, 0), #fff); }
   #hello { width: 52%; max-width: 230px; }

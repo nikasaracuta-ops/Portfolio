@@ -19,6 +19,8 @@ function fit() {
   } else {
     stage.style.zoom = w / DESIGN_WIDTH;
   }
+  // the grain (styles.css) scales with the page, like Figma's noise on the frame
+  document.documentElement.style.setProperty('--gz', MOBILE.matches ? 1 : (w / DESIGN_WIDTH).toFixed(4));
   updateTopbar();
   placeFooter();
 }
