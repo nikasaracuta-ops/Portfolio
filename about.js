@@ -1,4 +1,4 @@
-// About pop-up (ported from the portfolio artifact): a soft glow blooms
+// About pop-up (ported from the portfolio artifact): a soft mist spreads
 // out of whatever was clicked ("About me" link/button or the "?") until it fills
 // the screen, then shrinks back into it on close.
 (() => {
@@ -13,24 +13,30 @@
 
   const pop = $('#aboutPop'), plate = $('#plate'), closeBtn = $('#cpClose');
   let opener = null, origin = null, anim = 0;
-  const ease = (t) => (t < .5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2);
 
-  // the pop-up is revealed through a soft glow of diameter w centred on the click
-  function setMask(w, cx, cy) {
-    pop.style.setProperty('--r', `${w / 2}px`);
+  // The pop-up is revealed through a soft, shapeless mist: several feathered blobs
+  // (styles.css) around the click that grow together and drift a little as they
+  // grow, so no clear outline ever shows. r is the mist's size in px.
+  function setMask(r, cx, cy, t) {
+    pop.style.setProperty('--r', `${r}px`);
     pop.style.setProperty('--cx', `${cx}px`);
     pop.style.setProperty('--cy', `${cy}px`);
+    pop.style.setProperty('--w', (Math.sin(t * Math.PI * 1.5) * .5).toFixed(3));   // the drift
   }
-  function animateMask(from, to, done) {
+  function animateMask(from, to, dur, curve, done) {
     cancelAnimationFrame(anim);
-    const t0 = performance.now(), dur = 1100;
+    const t0 = performance.now();
     (function step(now) {
-      const t = Math.min(1, (now - t0) / dur);
-      setMask(from + (to - from) * ease(t), origin.x, origin.y);
+      const t = Math.min(1, (now - t0) / dur), k = curve(t);
+      setMask(from + (to - from) * k, origin.x, origin.y, k);
       if (t < 1) anim = requestAnimationFrame(step); else if (done) done();
     })(t0);
   }
-  const bigSize = () => Math.hypot(innerWidth, innerHeight) * 4.5;    // the glow's solid centre covers the screen from any point
+  // just big enough for the mist's solid core to cover the farthest corner of the
+  // screen: growing or shrinking beyond that would show nothing (and feel like a pause)
+  const coverR = () => Math.max(...[[0, 0], [innerWidth, 0], [0, innerHeight], [innerWidth, innerHeight]]
+    .map(([x, y]) => Math.hypot(x - origin.x, y - origin.y))) / .42;
+  const easeOut = (t) => 1 - Math.pow(1 - t, 3), easeInOut = (t) => (t < .5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2);
 
   function openAbout(el) {
     if (!pop.hidden) return;
@@ -44,8 +50,8 @@
       closeBtn.focus({ preventScroll: true });
     };
     if (reduce) { finish(); return; }
-    pop.classList.remove('full'); setMask(origin.w, origin.x, origin.y);
-    requestAnimationFrame(() => animateMask(origin.w, bigSize(), finish));
+    pop.classList.remove('full'); setMask(origin.w * .5, origin.x, origin.y, 0);
+    requestAnimationFrame(() => animateMask(origin.w * .5, coverR(), 1000, easeOut, finish));
   }
   function closeAbout() {
     if (pop.hidden) return;
@@ -54,7 +60,9 @@
       if (opener) opener.focus({ preventScroll: true });
     };
     if (reduce) { end(); return; }
-    pop.classList.remove('full'); animateMask(bigSize(), origin.w, end);
+    // start exactly where the mist just covers the screen, so it shrinks from the first frame
+    setMask(coverR(), origin.x, origin.y, 1); pop.classList.remove('full');
+    animateMask(coverR(), 0, 800, easeInOut, end);
   }
 
   // the page continues below the plate: a cue leads to the tools, which pop in as they come into view

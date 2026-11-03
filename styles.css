@@ -355,8 +355,8 @@ a:focus-visible { outline: 2px solid var(--white); outline-offset: 4px; }
 }
 
 /* ---------- About pop-up ----------
-   Ported from the portfolio artifact: clicking "About me" or the "?" blooms a
-   soft glow from the click into a full-screen field-guide
+   Ported from the portfolio artifact: clicking "About me" or the "?" spreads a
+   soft mist from the click into a full-screen field-guide
    page about Nika. Fixed to the screen, outside the zoomed stage. */
 .qbtn { -webkit-appearance: none; appearance: none; border: 0; padding: 0; background: none; cursor: pointer; }
 .qbtn img { display: block; animation: bob 4s ease-in-out infinite; transition: filter .3s; }
@@ -369,10 +369,20 @@ a:focus-visible { outline: 2px solid var(--white); outline-offset: 4px; }
   position: fixed; inset: 0; z-index: 85; overflow-y: auto; overscroll-behavior: contain;
   font: 16px/1.6 var(--font-body); color: var(--c-body);
   background: radial-gradient(120% 70% at 50% 0%, color-mix(in srgb, var(--c-blue) 10%, #fff) 0%, #fff 60%);
-  /* opens like a soft glow blooming out of whatever was clicked (about.js): a
-     feathered radial mask whose edge melts into the page instead of a hard shape */
-  -webkit-mask-image: radial-gradient(circle at var(--cx, 50%) var(--cy, 50%), #000 calc(var(--r, 0px) * .45), rgba(0, 0, 0, .55) calc(var(--r, 0px) * .72), transparent var(--r, 0px));
-          mask-image: radial-gradient(circle at var(--cx, 50%) var(--cy, 50%), #000 calc(var(--r, 0px) * .45), rgba(0, 0, 0, .55) calc(var(--r, 0px) * .72), transparent var(--r, 0px));
+  /* opens like a soft mist spreading out of whatever was clicked (about.js): five
+     feathered blobs around the click, with no defined outline */
+  --r: 0px; --cx: 50%; --cy: 50%; --w: 0;
+  -webkit-mask-image: radial-gradient(calc(var(--r) * 1) calc(var(--r) * 0.86) at calc(var(--cx) + var(--r) * (0 + 0.04 * var(--w))) calc(var(--cy) + var(--r) * (0 + -0.03 * var(--w))), #000 30%, rgba(0, 0, 0, .5) 62%, transparent),
+    radial-gradient(calc(var(--r) * 0.62) calc(var(--r) * 0.5) at calc(var(--cx) + var(--r) * (-0.48 + -0.06 * var(--w))) calc(var(--cy) + var(--r) * (0.22 + 0.05 * var(--w))), #000 30%, rgba(0, 0, 0, .5) 62%, transparent),
+    radial-gradient(calc(var(--r) * 0.58) calc(var(--r) * 0.68) at calc(var(--cx) + var(--r) * (0.5 + 0.05 * var(--w))) calc(var(--cy) + var(--r) * (-0.2 + 0.06 * var(--w))), #000 30%, rgba(0, 0, 0, .5) 62%, transparent),
+    radial-gradient(calc(var(--r) * 0.5) calc(var(--r) * 0.44) at calc(var(--cx) + var(--r) * (0.18 + -0.04 * var(--w))) calc(var(--cy) + var(--r) * (0.52 + 0.05 * var(--w))), #000 30%, rgba(0, 0, 0, .5) 62%, transparent),
+    radial-gradient(calc(var(--r) * 0.46) calc(var(--r) * 0.5) at calc(var(--cx) + var(--r) * (-0.3 + 0.06 * var(--w))) calc(var(--cy) + var(--r) * (-0.46 + -0.04 * var(--w))), #000 30%, rgba(0, 0, 0, .5) 62%, transparent);
+          mask-image: radial-gradient(calc(var(--r) * 1) calc(var(--r) * 0.86) at calc(var(--cx) + var(--r) * (0 + 0.04 * var(--w))) calc(var(--cy) + var(--r) * (0 + -0.03 * var(--w))), #000 30%, rgba(0, 0, 0, .5) 62%, transparent),
+    radial-gradient(calc(var(--r) * 0.62) calc(var(--r) * 0.5) at calc(var(--cx) + var(--r) * (-0.48 + -0.06 * var(--w))) calc(var(--cy) + var(--r) * (0.22 + 0.05 * var(--w))), #000 30%, rgba(0, 0, 0, .5) 62%, transparent),
+    radial-gradient(calc(var(--r) * 0.58) calc(var(--r) * 0.68) at calc(var(--cx) + var(--r) * (0.5 + 0.05 * var(--w))) calc(var(--cy) + var(--r) * (-0.2 + 0.06 * var(--w))), #000 30%, rgba(0, 0, 0, .5) 62%, transparent),
+    radial-gradient(calc(var(--r) * 0.5) calc(var(--r) * 0.44) at calc(var(--cx) + var(--r) * (0.18 + -0.04 * var(--w))) calc(var(--cy) + var(--r) * (0.52 + 0.05 * var(--w))), #000 30%, rgba(0, 0, 0, .5) 62%, transparent),
+    radial-gradient(calc(var(--r) * 0.46) calc(var(--r) * 0.5) at calc(var(--cx) + var(--r) * (-0.3 + 0.06 * var(--w))) calc(var(--cy) + var(--r) * (-0.46 + -0.04 * var(--w))), #000 30%, rgba(0, 0, 0, .5) 62%, transparent);
+  -webkit-mask-repeat: no-repeat; mask-repeat: no-repeat;
 }
 .cloudpop[hidden] { display: none; }
 .cloudpop.full { -webkit-mask-image: none; mask-image: none; }
