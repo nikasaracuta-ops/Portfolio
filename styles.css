@@ -444,25 +444,44 @@ a:focus-visible { outline: 2px solid var(--white); outline-offset: 4px; }
 .tool-groups { display: flex; flex-wrap: wrap; justify-content: center; gap: 48px clamp(32px, 5vw, 72px); }
 .tool-groups > div { display: grid; gap: 22px; justify-items: center; }
 .tool-groups .label { color: var(--c-blue); opacity: .8; }
-/* tools: pink stars with the app's icon; on hover (or focus) the star flips over to
-   show the tool's name, sized to fit inside the star so it never overlaps the others */
-.tools { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; }
-.tool { position: relative; width: clamp(84px, 8vw, 108px); aspect-ratio: 1; perspective: 600px; cursor: default; outline: none; }
-.flip { position: absolute; inset: 0; transform-style: preserve-3d; transition: transform .7s cubic-bezier(.3, 1.3, .5, 1); }
-.tool:nth-child(3n+2) .flip { rotate: 8deg; }
-.tool:nth-child(3n) .flip { rotate: -6deg; }
-.tool:hover .flip, .tool:focus-visible .flip { transform: rotateY(180deg); }
-.face { position: absolute; inset: 0; display: grid; place-items: center; -webkit-backface-visibility: hidden; backface-visibility: hidden; }
-.face.back { transform: rotateY(180deg); }
-.tool .burst { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
+/* tools: a little field of flowers. Each tool is a pink star-flower (with the
+   app's icon) on a swaying stem; on hover the flower head spins away and the
+   tool's name blooms in its place, sized to fit there so nothing overlaps. */
+.tool-groups { align-items: end; }
+.tools {
+  list-style: none; margin: 0; padding: 0 24px; display: flex; flex-wrap: wrap; justify-content: center; align-items: flex-end; gap: 0 6px;
+  /* the ground: a soft green hill under each patch of flowers */
+  background: radial-gradient(60% 28px at 50% 100%, color-mix(in srgb, #50F85E 34%, #fff) 0 98%, transparent) bottom / 100% 28px no-repeat;
+  padding-bottom: 8px;
+}
+.tool { position: relative; width: clamp(84px, 7.6vw, 104px); outline: none; cursor: default; --stem: 70px; --t: 5s; --dl: 0s; }
+.tool:nth-child(3n+2) { --stem: 104px; --t: 6.2s; --dl: -1.3s; }
+.tool:nth-child(3n) { --stem: 86px; --t: 5.6s; --dl: -2.7s; }
+.tool:nth-child(4n) { --stem: 116px; --t: 6.8s; --dl: -.8s; }
+.flower { display: grid; justify-items: center; transform-origin: 50% 100%; animation: sway var(--t) ease-in-out var(--dl) infinite; }
+@keyframes sway { 0%, 100% { transform: rotate(-2.5deg); } 50% { transform: rotate(2.5deg); } }
+.head { position: relative; display: grid; place-items: center; width: 100%; aspect-ratio: 1; z-index: 1; margin-bottom: -10px; }
+.tool .burst { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; transition: transform .6s cubic-bezier(.3, 1.4, .4, 1), opacity .3s; }
 .tool .burst polygon { fill: var(--c-pink); stroke: var(--c-pink); stroke-width: 6; stroke-linejoin: round; }
-.face.back .burst polygon { fill: #D62E88; stroke: #D62E88; }
-.face img { position: relative; width: 46%; height: 46%; border-radius: 22%; box-shadow: 0 6px 14px -8px rgba(14, 63, 115, .6); }
-.word { position: relative; max-width: 72%; text-align: center; font: 500 clamp(.8rem, 1.1vw, .95rem)/1.1 var(--f-label); color: #fff; }
-.tool.mid .word { font-size: clamp(.6rem, .8vw, .72rem); }
-.tool.long .word { font-size: clamp(.6rem, .8vw, .7rem); }
-.tool:focus-visible .back .burst polygon { stroke: var(--c-blue); stroke-width: 4; }
-.toolbox .tool { opacity: 0; transform: translateY(18px) scale(.9); transition: opacity .5s, transform .6s cubic-bezier(.3, 1.4, .5, 1); transition-delay: calc(var(--i, 0) * 60ms); }
+.tool:nth-child(3n+2) .burst { transform: rotate(9deg); }
+.tool:nth-child(3n) .burst { transform: rotate(-6deg); }
+.head img { position: relative; width: 44%; height: 44%; border-radius: 22%; box-shadow: 0 6px 14px -8px rgba(14, 63, 115, .6); transition: opacity .25s, transform .45s; }
+.word {
+  position: absolute; inset: 0; display: grid; place-items: center; padding: 0 4%; text-align: center;
+  font: 400 clamp(1.3rem, 1.9vw, 1.65rem)/.95 var(--f-seasons); color: #D62E88; text-shadow: 0 0 10px #fff, 0 0 4px #fff;
+  opacity: 0; transform: scale(.6) rotate(-6deg); transition: opacity .3s, transform .5s cubic-bezier(.3, 1.5, .5, 1);
+}
+.tool.mid .word { font-size: clamp(1.05rem, 1.45vw, 1.3rem); }
+.tool.long .word { font-size: clamp(1.05rem, 1.45vw, 1.3rem); }
+.tool:hover .burst, .tool:focus-visible .burst { transform: rotate(140deg) scale(.2); opacity: 0; }
+.tool:hover .head img, .tool:focus-visible .head img { opacity: 0; transform: scale(.6); }
+.tool:hover .word, .tool:focus-visible .word { opacity: 1; transform: none; }
+.tool:hover .flower, .tool:focus-visible .flower { animation-play-state: paused; }
+.stem { display: block; width: 34px; height: var(--stem); overflow: visible; }
+.stem .st { fill: none; stroke: #3BBF62; stroke-width: 4; stroke-linecap: round; vector-effect: non-scaling-stroke; }
+.stem .lf { fill: #50D96E; }
+.stem .lf.r { fill: #3BBF62; }
+.toolbox .tool { opacity: 0; transform: translateY(30px); transition: opacity .5s, transform .8s cubic-bezier(.3, 1.4, .5, 1); transition-delay: calc(var(--i, 0) * 70ms); }
 .toolbox.in .tool { opacity: 1; transform: none; }
 
 /* "more below" cue at the bottom of the first screen */
@@ -489,7 +508,8 @@ a:focus-visible { outline: 2px solid var(--white); outline-offset: 4px; }
 }
 @media (prefers-reduced-motion: reduce) {
   .qbtn img, .pulse { animation: none; }
-  .cloudpop .field-head, .cloudpop .plate, .cloudpop .toolbox, .portrait .frame, .notes li::before, .notes li::after, .toolbox .tool, .flip { transition: none; }
+  .cloudpop .field-head, .cloudpop .plate, .cloudpop .toolbox, .portrait .frame, .notes li::before, .notes li::after, .toolbox .tool { transition: none; }
+  .flower { animation: none; }
   .cp-more svg { animation: none; }
 }
 
