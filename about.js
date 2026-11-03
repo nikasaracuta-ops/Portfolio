@@ -38,10 +38,10 @@
     opener = el || null;
     const r = (el && el.getBoundingClientRect()) || { left: innerWidth / 2, top: innerHeight / 2, width: 0, height: 0 };
     origin = { x: r.left + r.width / 2, y: r.top + r.height / 2, w: Math.max(80, r.width * 1.8) };
-    pop.hidden = false; pop.scrollTop = 0; document.body.style.overflow = 'hidden'; plate.classList.remove('in');
+    pop.hidden = false; pop.scrollTop = 0; more.classList.remove('gone'); toolbox.classList.remove('in'); document.body.style.overflow = 'hidden'; plate.classList.remove('in');
     const finish = () => {
       pop.classList.add('full');
-      setTimeout(() => plate.classList.add('in'), 250);
+      setTimeout(() => { plate.classList.add('in'); onPopScroll(); }, 250);
       closeBtn.focus({ preventScroll: true });
     };
     // the cloud mask can't load when the page is opened as a local file: open without it
@@ -58,6 +58,17 @@
     if (reduce || location.protocol === 'file:') { end(); return; }
     pop.classList.remove('full'); animateMask(bigSize(), origin.w, end);
   }
+
+  // the page continues below the plate: a cue leads to the tools, which pop in as they come into view
+  const more = $('#cpMore'), toolbox = $('#toolbox');
+  toolbox.querySelectorAll('.tool').forEach((t, i) => t.style.setProperty('--i', i));
+  more.addEventListener('click', () => toolbox.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'start' }));
+  const onPopScroll = () => {
+    more.classList.toggle('gone', pop.scrollTop > 40);
+    if (toolbox.getBoundingClientRect().top < innerHeight * .85) toolbox.classList.add('in');
+  };
+  pop.addEventListener('scroll', onPopScroll, { passive: true });
+  addEventListener('resize', onPopScroll);
 
   document.querySelectorAll('[data-about]').forEach((a) => a.addEventListener('click', (e) => { e.preventDefault(); openAbout(a); }));
   closeBtn.addEventListener('click', closeAbout);
