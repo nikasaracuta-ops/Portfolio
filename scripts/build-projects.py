@@ -24,6 +24,15 @@ PROJECTS = [
               ('assets/type01/type-iterations.svg', 214, 29, '2. Iterations', 'From photo research and the first desktop layouts to the scroll-driven chapters of the final story.', [('assets/dior/iterations.webp', 1001, 384, 'Iterations of the Dior longread')])],
        result=('assets/dior/result.webp', 895, 533, 'The finished Dior longread'),
        cta=('See website', 'https://nikasaracuta.github.io/Integration-3/')),
+  dict(file='moea.html', name='Moea', tab='#3EBDCD',
+       title=None, title_text='MOEA',
+       lede='Moea stands for Mother Earth — a website for sustainably made fashion',
+       facts=[('Status', 'Case study in progress')],
+       tags=['UI', 'UX', 'Web design'],
+       site=('assets/moea/site.webp', 2000, 1240, 'The Moea homepage'),
+       brief=['<b>Moea</b> stands for <b>Mother Earth</b>: a brand that attempts to rethink how fashion goods are produced, in respect of the planet.',
+              'The full case study, with the brief, the styleboard and the iterations, lands here soon.'],
+       steps=[], result=None, cta=None),
   dict(file='type01.html', name='Type01', tab='#E770B2',
        title=('assets/type01/type-type01.svg', 412, 92, 'TYPE01'),
        lede='Conference website for desktop and mobile',
@@ -37,15 +46,6 @@ PROJECTS = [
               ('assets/type01/type-iterations.svg', 214, 29, '2. Iterations', 'From the first wireframes to the light, dark and mobile versions of each page.', [('assets/type01/iterations.webp', 1194, 318, 'Iterations of the desktop and mobile pages')])],
        result=None,
        cta=('See Prototype', 'https://www.figma.com/proto/PsD6Cg8ngFq6yRWCCm5I9q/Type01?page-id=0%3A1&node-id=468-7480&viewport=-2609%2C-2191%2C0.15&t=KQAR1eAcC8Ls4MeP-1&scaling=min-zoom&content-scaling=fixed&starting-point-node-id=580%3A48961')),
-  dict(file='moea.html', name='Moea', tab='#3EBDCD',
-       title=None, title_text='MOEA',
-       lede='Moea stands for Mother Earth — a website for sustainably made fashion',
-       facts=[('Status', 'Case study in progress')],
-       tags=['UI', 'UX', 'Web design'],
-       site=('assets/moea/site.webp', 2000, 1240, 'The Moea homepage'),
-       brief=['<b>Moea</b> stands for <b>Mother Earth</b>: a brand that attempts to rethink how fashion goods are produced, in respect of the planet.',
-              'The full case study, with the brief, the styleboard and the iterations, lands here soon.'],
-       steps=[], result=None, cta=None),
   dict(file='miles.html', name='Miles & Meals', tab='#1A5BA4',
        title=None, title_text='Miles &amp; Meals',
        lede='Discover the world in your kitchen — app, brand and social media',
@@ -59,6 +59,10 @@ PROJECTS = [
        cta=('See Prototype', 'https://www.figma.com/proto/JhFdOzlcgGCV38btM2Tumv/Miles---Meals?page-id=6817%3A1887&node-id=59585-34744&viewport=-13885%2C-407%2C0.32&t=BZlwAt149MrtAhmE-1&scaling=min-zoom&content-scaling=fixed&starting-point-node-id=59585%3A34763&show-proto-sidebar=1')),
 ]
 
+def ink(src, w, h, alt):
+    """An outlined Figma heading painted in the page's accent colour (a CSS mask)."""
+    return f'<span class="p-ink" role="img" aria-label="{alt}" style="--src:url({src});aspect-ratio:{w}/{h}"></span>'
+
 def window(src, w, h, alt, tab, extra='', lazy=False):
     svg = TAB.replace('${i}', 'x').replace('class="win-svg"', 'class="p-tab"')
     return f'''<figure class="p-window reveal{extra}" style="--tab:{tab}" data-tilt>
@@ -68,7 +72,7 @@ def window(src, w, h, alt, tab, extra='', lazy=False):
 
 def step(s, i):
     src, w, h, alt, note, imgs = s
-    head = f'<h3><img src="{src}" width="{w}" height="{h}" alt="{alt}"></h3>'
+    head = f'<h3>{ink(src, w, h, alt)}</h3>'
     switch = ''
     if len(imgs) > 1:
         tabs = ''.join(f'<button role="tab" aria-selected="{"true" if k == 0 else "false"}" data-board="{im[4].lower()}">{im[4]}</button>' for k, im in enumerate(imgs))
@@ -92,7 +96,7 @@ def step(s, i):
 
 def page(i, p):
     n = len(PROJECTS); prev, nxt = PROJECTS[(i - 1) % n], PROJECTS[(i + 1) % n]
-    title = (f'<img src="{p["title"][0]}" width="{p["title"][1]}" height="{p["title"][2]}" alt="{p["title"][3]}">' if p['title']
+    title = (ink(*p["title"]) if p['title']
              else f'<span class="p-title-text">{p["title_text"]}</span>')
     facts = ''.join(f'<div><dt>{k}</dt><dd{" class=\"p-tools\"" if k == "Tools" else ""}>{v}</dd></div>' for k, v in p['facts'][:1])
     facts += '<div><dt>Disciplines</dt><dd><ul class="p-tags">' + ''.join(f'<li>{t}</li>' for t in p['tags']) + '</ul></dd></div>'
@@ -106,7 +110,7 @@ def page(i, p):
     <section class="p-section p-process" aria-labelledby="process-h">
       <div class="p-side">
         <span class="p-num">02</span>
-        <h2 class="p-h reveal" id="process-h"><img src="assets/type01/type-visual-process.svg" width="616" height="104" alt="Visual process"></h2>
+        <h2 class="p-h reveal" id="process-h">{ink("assets/type01/type-visual-process.svg", 616, 104, "Visual process")}</h2>
       </div>
       <div class="p-body">{''.join(step(s, k) for k, s in enumerate(p['steps']))}
       </div>
@@ -126,7 +130,7 @@ def page(i, p):
     <!-- The Result -->
     <section class="p-result" aria-labelledby="result-h">
       <span class="p-num">{num:02d}</span>
-      <h2 class="p-h reveal" id="result-h"><img src="assets/type01/type-result.svg" width="443" height="79" alt="The Result"></h2>
+      <h2 class="p-h reveal" id="result-h">{ink("assets/type01/type-result.svg", 443, 79, "The Result")}</h2>
       {shot}
       {cta}
     </section>
@@ -148,7 +152,7 @@ def page(i, p):
   <link rel="stylesheet" href="project.css">
   <script>document.documentElement.classList.add('js')</script>
 </head>
-<body class="project-page">
+<body class="project-page" style="--accent:{p["tab"]}">
   <!-- Generated by scripts/build-projects.py: edit the texts there, not here. -->
   <div class="p-progress" id="progress" aria-hidden="true"></div>
 
@@ -175,7 +179,7 @@ def page(i, p):
     <section class="p-section p-brief" aria-labelledby="brief-h">
       <div class="p-side">
         <span class="p-num">01</span>
-        <h2 class="p-h reveal" id="brief-h"><img src="assets/type01/type-brief.svg" width="403" height="79" alt="The Brief"></h2>
+        <h2 class="p-h reveal" id="brief-h">{ink("assets/type01/type-brief.svg", 403, 79, "The Brief")}</h2>
       </div>
       <div class="p-body">{brief}
       </div>

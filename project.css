@@ -1,11 +1,11 @@
 /* ---------- Project pages (type01.html) ----------
    Built on the shared styles.css (fonts, grain, reveals). A responsive grid in
-   the portfolio's colours: pink #E770B2, blue #1A5BA4, The Seasons headings
+   the portfolio's colours: the accent (--accent) is the project's tab colour, The Seasons headings
    (outlined SVGs), Area Inktrap for text, Roc Grotesk Wide for labels. */
 .project-page {
-  --pink: #E770B2; --pink-soft: #F6D3E6; --blue: #1A5BA4; --ink: #1d1d1f; --muted: #6b6b73;
+  --pink: var(--accent, #E770B2); --blue: #1A5BA4; --ink: #1d1d1f; --muted: #6b6b73;
   --wrap: min(1200px, 100% - 2 * clamp(20px, 5vw, 64px));
-  background: linear-gradient(rgb(245, 193, 221) 0, #fff 420px) no-repeat, #fff;
+  background: linear-gradient(color-mix(in srgb, var(--pink) 42%, #fff) 0, #fff 420px) no-repeat, #fff;
   color: var(--ink);
 }
 .project-page :where(p, li, dd, dt) { white-space: normal; }
@@ -38,10 +38,10 @@
 
 .p-facts {
   margin: clamp(28px, 4vw, 44px) auto 0; display: grid; grid-template-columns: auto 1fr auto; gap: 0;
-  border-top: 1px solid rgba(231, 112, 178, .45); border-bottom: 1px solid rgba(231, 112, 178, .45); text-align: left;
+  border-top: 1px solid color-mix(in srgb, var(--pink) 45%, transparent); border-bottom: 1px solid color-mix(in srgb, var(--pink) 45%, transparent); text-align: left;
 }
 .p-facts > div { padding: 18px clamp(16px, 2.5vw, 32px); display: grid; gap: 10px; align-content: start; }
-.p-facts > div + div { border-left: 1px solid rgba(231, 112, 178, .45); }
+.p-facts > div + div { border-left: 1px solid color-mix(in srgb, var(--pink) 45%, transparent); }
 .p-facts dt { font: 14px/1 var(--font-ui); color: var(--blue); }
 .p-facts dd { font: 20px/1.2 var(--font-ui); }
 .p-tags { list-style: none; display: flex; flex-wrap: wrap; gap: 8px; }
@@ -57,7 +57,7 @@
 /* the site in its browser tab; tilts a little towards the pointer (project.js) */
 .p-window {
   position: relative; margin: clamp(36px, 5vw, 64px) auto 0; width: min(100%, 980px); aspect-ratio: 742 / 497;
-  filter: drop-shadow(0 30px 40px rgba(214, 46, 136, .22));
+  filter: drop-shadow(0 30px 40px color-mix(in srgb, var(--pink) 28%, transparent));
   transform: perspective(1400px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg));
   transition: transform .4s ease-out;
 }
@@ -66,7 +66,7 @@
   position: absolute; left: 1.348%; top: 11.67%; width: 97.17%; height: 86.32%;
   object-fit: cover; object-position: top center; border-radius: 0 0 1.4% 1.4% / 0 0 2.3% 2.3%;
 }
-.p-window .p-tab { position: absolute; inset: 0; width: 100%; height: 100%; color: var(--tab, #E770B2); }
+.p-window .p-tab { position: absolute; inset: 0; width: 100%; height: 100%; color: var(--tab, var(--pink)); }
 
 /* ---------- Sections: number + heading on the left, content on the right ---------- */
 .p-section {
@@ -88,7 +88,7 @@
 .p-step-head h3 img { display: block; height: clamp(24px, 2.6vw, 34px); width: auto; }
 .p-note { margin-top: 12px; font: 15px/1.6 var(--font-body); color: var(--muted); }
 
-.p-switch { position: relative; display: inline-flex; padding: 4px; border-radius: 999px; background: #fdf1f7; border: 1px solid rgba(231, 112, 178, .35); }
+.p-switch { position: relative; display: inline-flex; padding: 4px; border-radius: 999px; background: color-mix(in srgb, var(--pink) 8%, #fff); border: 1px solid color-mix(in srgb, var(--pink) 35%, transparent); }
 .p-switch button {
   position: relative; z-index: 1; border: 0; background: none; cursor: pointer; padding: 8px 18px; border-radius: 999px;
   font: 14px/1 var(--font-ui); color: var(--ink); transition: color .3s;
@@ -118,13 +118,13 @@
 .p-cta {
   display: inline-flex; align-items: center; gap: 10px; margin-top: 36px; padding: 16px 34px; border-radius: 9px;
   background: var(--pink); color: #fff; text-decoration: none; font: 20px/1 var(--font-ui);
-  box-shadow: 0 14px 30px -14px rgba(214, 46, 136, .6);
+  box-shadow: 0 14px 30px -14px color-mix(in srgb, var(--pink) 60%, transparent);
   transition: transform .3s cubic-bezier(.3, 1.6, .5, 1), filter .2s;
 }
 .p-cta:hover, .p-cta:focus-visible { transform: translateY(-3px); filter: brightness(1.06); outline: none; }
 
 .p-next {
-  margin: clamp(80px, 10vw, 140px) 0 0; padding: 36px 0 56px; border-top: 1px solid rgba(231, 112, 178, .45);
+  margin: clamp(80px, 10vw, 140px) 0 0; padding: 36px 0 56px; border-top: 1px solid color-mix(in srgb, var(--pink) 45%, transparent);
   display: grid; grid-template-columns: 1fr 1fr; align-items: center; gap: 20px;
 }
 .p-next a { text-decoration: none; }
@@ -152,8 +152,8 @@
   .p-section { grid-template-columns: 1fr; gap: 20px; }
   .p-side { position: static; }
   .p-facts { grid-template-columns: 1fr 1fr; }
-  .p-facts > div:nth-child(2) { grid-column: 1 / -1; grid-row: 2; border-left: 0; border-top: 1px solid rgba(231, 112, 178, .45); }
-  .p-facts > div:nth-child(3) { border-left: 1px solid rgba(231, 112, 178, .45); }
+  .p-facts > div:nth-child(2) { grid-column: 1 / -1; grid-row: 2; border-left: 0; border-top: 1px solid color-mix(in srgb, var(--pink) 45%, transparent); }
+  .p-facts > div:nth-child(3) { border-left: 1px solid color-mix(in srgb, var(--pink) 45%, transparent); }
 }
 @media (max-width: 560px) {
   .p-count { display: none; }
@@ -172,3 +172,8 @@
 /* a phone screen as the result */
 .p-phone { margin: clamp(28px, 4vw, 44px) auto 0; width: min(78%, 340px); padding: 10px; border-radius: 44px; background: var(--tab, #1A5BA4); box-shadow: 0 40px 70px -36px rgba(26, 91, 164, .55); }
 .p-phone img { display: block; width: 100%; height: auto; border-radius: 34px; }
+
+/* outlined Figma headings, painted in the page's accent colour */
+.p-ink { display: block; width: 100%; background: var(--pink); -webkit-mask: var(--src) left center / contain no-repeat; mask: var(--src) left center / contain no-repeat; }
+.p-title .p-ink, .p-result .p-ink { -webkit-mask-position: center; mask-position: center; }
+.p-step-head h3 .p-ink { width: auto; height: clamp(24px, 2.6vw, 34px); }

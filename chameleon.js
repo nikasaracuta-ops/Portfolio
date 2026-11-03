@@ -28,6 +28,17 @@
       link: 'https://nikasaracuta.github.io/Integration-3/'
     },
     {
+      id: 'moea', page: 'moea.html', name: 'Moea', hex: '#3BBDCC', tab: '#3EBDCD', kind: 'UI · UX · Web design', img: 'assets/projects/p-moea.webp',
+      title: 'MOEA', tagline: 'Moea stands for Mother Earth — case study in progress',
+      tags: ['UI', 'UX', 'Web-design'],
+      brief: ['This chameleon is still changing colour. The full Moea case study — brief, styleboard and iterations — lands here soon.'],
+      facts: [['Status', 'Case study in progress']],
+      process: [['Styleboard', 'Coming soon.'], ['Iterations', 'Coming soon.']],
+      result: 'Final designs will be published here once the case study is ready.',
+      art: ['MOEA stands for Mother Earth', 'Coming soon'],
+      link: ''   // paste the live URL here when it's ready
+    },
+    {
       id: 'type01', name: 'Type01', page: 'type01.html', hex: '#1A5BA4', tab: '#E770B2', tint: '#6f9bd4', kind: 'UI · UX · Web design', img: 'assets/projects/p-type01.webp',
       title: 'TYPE01 Conference', tagline: 'Typography in print, motion design and branding',
       tags: ['UI', 'UX', 'Web-design'],
@@ -40,17 +51,6 @@
       result: 'A bold, type-led prototype for the TYPE01 conference — typography in print, motion design and branding, all on one stage.',
       art: ['TYPE01 MAGAZINE', 'Conference prototype'],
       link: 'https://www.figma.com/proto/PsD6Cg8ngFq6yRWCCm5I9q/Type01?page-id=0%3A1&node-id=468-7480&viewport=-2609%2C-2191%2C0.15&t=KQAR1eAcC8Ls4MeP-1&scaling=min-zoom&content-scaling=fixed&starting-point-node-id=580%3A48961'
-    },
-    {
-      id: 'moea', page: 'moea.html', name: 'Moea', hex: '#3BBDCC', tab: '#3EBDCD', kind: 'UI · UX · Web design', img: 'assets/projects/p-moea.webp',
-      title: 'MOEA', tagline: 'Moea stands for Mother Earth — case study in progress',
-      tags: ['UI', 'UX', 'Web-design'],
-      brief: ['This chameleon is still changing colour. The full Moea case study — brief, styleboard and iterations — lands here soon.'],
-      facts: [['Status', 'Case study in progress']],
-      process: [['Styleboard', 'Coming soon.'], ['Iterations', 'Coming soon.']],
-      result: 'Final designs will be published here once the case study is ready.',
-      art: ['MOEA stands for Mother Earth', 'Coming soon'],
-      link: ''   // paste the live URL here when it's ready
     },
     {
       id: 'miles', page: 'miles.html', name: 'Miles & Meals', hex: '#D5FF59', tab: '#1A5BA4', kind: 'App · Demo', img: 'assets/projects/p-miles.webp',
