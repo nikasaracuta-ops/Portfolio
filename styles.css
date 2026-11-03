@@ -61,8 +61,8 @@ body {
 
 /* ---------- Creatures ----------
    Blur/opacity fitted to the Figma render (Figma blur values are 2× CSS blur). */
-/* The bird flies across the sky in the GIF's poses, morphed smoothly (bird.js). */
-.bird { opacity: .3; filter: blur(3px); overflow: visible; pointer-events: none; }
+/* The bird flaps and glides across the sky (bird.js); --a fades it at the path ends. */
+.bird { opacity: calc(.3 * var(--a, 0)); filter: blur(3px); overflow: visible; pointer-events: none; }
 .bird path { fill: #fff; }
 /* The fish swims behind the pink coral (drawn in front of it, index.html), across the
    sea from left to right (script.js moves it, darting away when the cursor comes close),
