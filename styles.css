@@ -486,8 +486,7 @@ a:focus-visible { outline: 2px solid var(--white); outline-offset: 4px; }
    on purpose: a fixed element inside it made browsers draw the page at a lower
    resolution. As in Figma (frame 697:47124): the logo on the left, the links on
    the right. White over the blue parts of the page, blue with the colour logo over
-   the white parts (.on-light, script.js); the pink pill slides to the word of the
-   section you are in (--px / --pw, script.js). */
+   the white parts (.on-light, script.js); */
 .topbar {
   --z: 1;
   position: fixed; z-index: 70; top: calc(20px * var(--z)); left: 0; right: 0;
@@ -518,16 +517,7 @@ a:focus-visible { outline: 2px solid var(--white); outline-offset: 4px; }
   transition: color .35s;
 }
 .topbar.on-light .topbar-links a { color: #497cb6; }
-.topbar-links a.current, .topbar.on-light .topbar-links a.current { color: #000; }
 .topbar-links a:hover, .topbar-links a:focus-visible { text-decoration: underline; text-underline-offset: 6px; text-decoration-thickness: 1px; outline: none; }
-.topbar-links a.current:hover { text-decoration: none; }
-.topbar-pill {
-  position: absolute; left: 0; top: 0; height: 100%; width: var(--pw, 0px);
-  transform: translateX(var(--px, 0px)); border-radius: calc(26px * var(--z)); background: #e770b2;
-  opacity: 0; transition: transform .5s cubic-bezier(.65, 0, .35, 1), width .5s cubic-bezier(.65, 0, .35, 1), opacity .3s;
-}
-.topbar-pill.on { opacity: 1; }
-.topbar-pill.instant { transition: opacity .3s; }
 
 /* ---------- Sunset ---------- */
 .sunset-art { position: relative; width: 1440px; height: 860px; }
@@ -557,7 +547,7 @@ a:focus-visible { outline: 2px solid var(--white); outline-offset: 4px; }
 @keyframes blink { 50% { opacity: 0; } }
 
 @media (prefers-reduced-motion: reduce) {
-  .topbar-links a, .topbar-logo img, .topbar-pill, .t-email, .social { transition: none; }
+  .topbar-links a, .topbar-logo img, .t-email, .social { transition: none; }
   .caret { animation: none; }
 }
 
