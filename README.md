@@ -6,7 +6,7 @@ Static one-page portfolio built from the Figma frame **Main** (node `315:133`) i
 - The sky is a CSS gradient (`--sky-v`, `--sky-h` in `styles.css`) computed from the Figma sky and its
   blur; the Figma clouds are `clouds-hero.png` (from `clouds-hero.svg`) and `clouds-bank.png` (from
   `clouds-bank.svg`), the cloud bank that parts while About is pinned, `sky-puff.webp` the white
-  figure behind the "?" (Figma group 286). The grain is Figma's noise as a tile (`noise.png`).
+  figure behind the "?" (Figma group 286).
 - The sea is drawn in code (`.sea` in `styles.css`, Figma colour #3EBDCD); the caustics, coral and seabed
   are Figma vectors (`caustics.svg`, `coral.svg`, `coral-small.svg`, `seabed.svg`), the laptop is
   `laptop.svg`.
