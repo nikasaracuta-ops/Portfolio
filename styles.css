@@ -355,8 +355,8 @@ a:focus-visible { outline: 2px solid var(--white); outline-offset: 4px; }
 }
 
 /* ---------- About pop-up ----------
-   Ported from the portfolio artifact: clicking "About me" or the "?" grows a
-   circle from the click into a full-screen field-guide
+   Ported from the portfolio artifact: clicking "About me" or the "?" blooms a
+   soft glow from the click into a full-screen field-guide
    page about Nika. Fixed to the screen, outside the zoomed stage. */
 .qbtn { -webkit-appearance: none; appearance: none; border: 0; padding: 0; background: none; cursor: pointer; }
 .qbtn img { display: block; animation: bob 4s ease-in-out infinite; transition: filter .3s; }
@@ -369,11 +369,13 @@ a:focus-visible { outline: 2px solid var(--white); outline-offset: 4px; }
   position: fixed; inset: 0; z-index: 85; overflow-y: auto; overscroll-behavior: contain;
   font: 16px/1.6 var(--font-body); color: var(--c-body);
   background: radial-gradient(120% 70% at 50% 0%, color-mix(in srgb, var(--c-blue) 10%, #fff) 0%, #fff 60%);
-  /* opens as a circle growing out of whatever was clicked (about.js) */
-  clip-path: circle(var(--r, 0px) at var(--cx, 50%) var(--cy, 50%));
+  /* opens like a soft glow blooming out of whatever was clicked (about.js): a
+     feathered radial mask whose edge melts into the page instead of a hard shape */
+  -webkit-mask-image: radial-gradient(circle at var(--cx, 50%) var(--cy, 50%), #000 calc(var(--r, 0px) * .45), rgba(0, 0, 0, .55) calc(var(--r, 0px) * .72), transparent var(--r, 0px));
+          mask-image: radial-gradient(circle at var(--cx, 50%) var(--cy, 50%), #000 calc(var(--r, 0px) * .45), rgba(0, 0, 0, .55) calc(var(--r, 0px) * .72), transparent var(--r, 0px));
 }
 .cloudpop[hidden] { display: none; }
-.cloudpop.full { clip-path: none; }
+.cloudpop.full { -webkit-mask-image: none; mask-image: none; }
 .cloudpop .label { font: 400 .72rem var(--f-label); letter-spacing: .14em; text-transform: uppercase; }
 .cloudpop .field { position: relative; min-height: 100%; padding: clamp(70px, 9vw, 110px) var(--gutter) clamp(40px, 6vw, 80px); }
 .cp-close { position: fixed; z-index: 2; top: calc(env(safe-area-inset-top, 0px) + 18px); right: calc(var(--gutter) + 4px); }

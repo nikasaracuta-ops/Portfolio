@@ -1,4 +1,4 @@
-// About pop-up (ported from the portfolio artifact): a circle grows
+// About pop-up (ported from the portfolio artifact): a soft glow blooms
 // out of whatever was clicked ("About me" link/button or the "?") until it fills
 // the screen, then shrinks back into it on close.
 (() => {
@@ -15,7 +15,7 @@
   let opener = null, origin = null, anim = 0;
   const ease = (t) => (t < .5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2);
 
-  // the pop-up is revealed through a circle of diameter w centred on the click
+  // the pop-up is revealed through a soft glow of diameter w centred on the click
   function setMask(w, cx, cy) {
     pop.style.setProperty('--r', `${w / 2}px`);
     pop.style.setProperty('--cx', `${cx}px`);
@@ -23,14 +23,14 @@
   }
   function animateMask(from, to, done) {
     cancelAnimationFrame(anim);
-    const t0 = performance.now(), dur = 900;
+    const t0 = performance.now(), dur = 1100;
     (function step(now) {
       const t = Math.min(1, (now - t0) / dur);
       setMask(from + (to - from) * ease(t), origin.x, origin.y);
       if (t < 1) anim = requestAnimationFrame(step); else if (done) done();
     })(t0);
   }
-  const bigSize = () => Math.hypot(innerWidth, innerHeight) * 2.05;   // a circle that covers the screen from any point
+  const bigSize = () => Math.hypot(innerWidth, innerHeight) * 4.5;    // the glow's solid centre covers the screen from any point
 
   function openAbout(el) {
     if (!pop.hidden) return;
