@@ -19,10 +19,10 @@ Static one-page portfolio built from the Figma frame **Main** (node `315:133`) i
 - **Projects** (the chameleon, the project cards, the laptop screen and the project sheet) live in `chameleon.js`:
   edit the `PROJECTS` list there (name, colour, card label, preview image, brief, process, result, live link).
   Preview images go in `assets/projects/`.
-- **Project pages**: `type01.html` (content from Figma frame `599:1734`), a responsive case study styled
-  by `project.css`, with its interactions in `project.js`; its images and outlined headings are in
-  `assets/type01/`. A project with `page` set in
-  `chameleon.js` opens its page instead of the project sheet.
+- **Project pages**: `dior.html`, `type01.html`, `moea.html`, `miles.html`, generated from one template by
+  `scripts/build-projects.py` (edit texts and images there, then run it and `scripts/bump-versions.sh`).
+  Styled by `project.css`, interactions in `project.js`; images in `assets/<project>/`. Each project's
+  `page` in `chameleon.js` makes its tab on the home page open that page.
 - **About pop-up** ("About me" link/button or the "?"): content is in `index.html` (`#aboutPop`);
   set your photo in `about.js` (`ME_PHOTO = 'assets/me.jpg'`).
 - CSS masks (chameleon, coral) need the page served over http(s) — e.g. GitHub Pages or

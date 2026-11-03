@@ -14,7 +14,7 @@
   // is no 'img' (the card then says "Coming soon").
   const PROJECTS = [
     {
-      id: 'dior', name: 'Dior', hex: '#FB72BE', tab: '#E770B2', kind: 'UI · UX · Web design', img: 'assets/projects/p-dior.webp',
+      id: 'dior', page: 'dior.html', name: 'Dior', hex: '#FB72BE', tab: '#E770B2', kind: 'UI · UX · Web design', img: 'assets/projects/p-dior.webp',
       title: 'The Art of Dressmaking', tagline: 'by Christian Dior — an interactive longread for MoMu',
       tags: ['UI', 'UX', 'Web-design', 'Web-development'],
       brief: [
@@ -42,7 +42,7 @@
       link: 'https://www.figma.com/proto/PsD6Cg8ngFq6yRWCCm5I9q/Type01?page-id=0%3A1&node-id=468-7480&viewport=-2609%2C-2191%2C0.15&t=KQAR1eAcC8Ls4MeP-1&scaling=min-zoom&content-scaling=fixed&starting-point-node-id=580%3A48961'
     },
     {
-      id: 'moea', name: 'Moea', hex: '#3BBDCC', tab: '#3EBDCD', kind: 'UI · UX · Web design', img: 'assets/projects/p-moea.webp',
+      id: 'moea', page: 'moea.html', name: 'Moea', hex: '#3BBDCC', tab: '#3EBDCD', kind: 'UI · UX · Web design', img: 'assets/projects/p-moea.webp',
       title: 'MOEA', tagline: 'Moea stands for Mother Earth — case study in progress',
       tags: ['UI', 'UX', 'Web-design'],
       brief: ['This chameleon is still changing colour. The full Moea case study — brief, styleboard and iterations — lands here soon.'],
@@ -53,7 +53,7 @@
       link: ''   // paste the live URL here when it's ready
     },
     {
-      id: 'miles', name: 'Miles & Meals', hex: '#D5FF59', tab: '#1A5BA4', kind: 'App · Demo', img: 'assets/projects/p-miles.webp',
+      id: 'miles', page: 'miles.html', name: 'Miles & Meals', hex: '#D5FF59', tab: '#1A5BA4', kind: 'App · Demo', img: 'assets/projects/p-miles.webp',
       title: 'Miles & Meals', tagline: 'Discover the world in your kitchen',
       tags: ['UI', 'UX', 'App-design'],
       brief: ['An app that brings iconic local dishes and street food from cities around the world straight to your kitchen — so you can travel by recipe.'],
@@ -99,7 +99,7 @@
     b.setAttribute('aria-label', `Open project ${i + 1}: ${p.name}`);
     // the preview sits in the browser-window tab from Figma (tab.svg), its pink swapped for the project's colour
     b.innerHTML = `<span class="win"><span class="thumb">${p.img ? `<img src="${p.img}" alt="" loading="lazy" decoding="async">` : 'Coming soon'}</span>${tabSvg(i)}</span>`;
-    // projects with their own page open it; the others open the project sheet
+    // every project opens its own page (the project sheet is only a fallback)
     b.addEventListener('click', () => { if (p.page) location.href = p.page; else openProject(i, b); });
     b.addEventListener('mouseenter', () => activate(i));
     b.addEventListener('focus', () => activate(i));

@@ -1,0 +1,209 @@
+#!/usr/bin/env python3
+"""Builds the project pages (dior.html, type01.html, moea.html, miles.html) from the
+PROJECTS list below and one shared template, so they all share the same structure.
+Edit the texts here, then run:  python3 scripts/build-projects.py && scripts/bump-versions.sh"""
+import html, pathlib, re
+
+ROOT = pathlib.Path(__file__).resolve().parent.parent
+
+# The tab around the screenshots: the portfolio's browser tab (same as on the home page),
+# drawn in the project's colour (currentColor).
+TAB = re.search(r"const tabSvg = i => `(<svg[\s\S]*?</svg>)`", (ROOT / 'chameleon.js').read_text()).group(1)
+
+PROJECTS = [
+  dict(file='dior.html', name='Dior', tab='#E770B2',
+       title=None, title_text='Dior',
+       lede='MoMu – Dress to Impress: an interactive longread for MoMu – Fashion Museum Antwerp',
+       facts=[('Client', 'MoMu – Fashion Museum Antwerp'), ('Built with', 'Vite · GSAP · ScrollTrigger')],
+       tags=['UI', 'UX', 'Web design', 'Web development'],
+       site=('assets/dior/site.webp', 2000, 1263, 'The Art of Dressmaking by Christian Dior, the finished longread'),
+       brief=['The Fashion Museum of Antwerp, <b>MoMu</b>, wanted to launch its new digital marketing plan with a series of <b>six interactive online stories</b>, one published every two months, each about a fashion designer. My task was to design and build the first one: a one-page <b>interactive longread</b> about Walter Van Beirendonk, Christian Dior or Dirk Bikkembergs, told from my own angle.',
+              '<b>Goal:</b> turn a static designer story into an immersive, interactive experience that teaches visitors about fashion and makes them want to visit the museum, reaching people who hadn’t yet considered MoMu, mainly adults (with or without children). The design had to respect MoMu’s logo and tone of voice while giving the story its own visual identity.',
+              '<b>Scope:</b> research, visual design and front-end development. The site is responsive and mobile-first, built with Vite, GSAP and ScrollTrigger, and deployed online.'],
+       steps=[('assets/type01/type-styleboard.svg', 229, 41, '1. Styleboard', 'Archive photography of Dior’s couture, sketches and a soft, powdery palette of cream, rose and dusty blue set the tone of the story.', [('assets/dior/styleboard.webp', 533, 377, 'Styleboard for the Dior longread')]),
+              ('assets/type01/type-iterations.svg', 214, 29, '2. Iterations', 'From photo research and the first desktop layouts to the scroll-driven chapters of the final story.', [('assets/dior/iterations.webp', 1001, 384, 'Iterations of the Dior longread')])],
+       result=('assets/dior/result.webp', 895, 533, 'The finished Dior longread'),
+       cta=('See website', 'https://nikasaracuta.github.io/Integration-3/')),
+  dict(file='type01.html', name='Type01', tab='#E770B2',
+       title=('assets/type01/type-type01.svg', 412, 92, 'TYPE01'),
+       lede='Conference website for desktop and mobile',
+       facts=[('Year', '2025'), ('Tools', '<img src="assets/type01/icon-ps.svg" width="56" height="53" alt="Photoshop" title="Photoshop"> <img src="assets/type01/icon-figma.svg" width="51" height="51" alt="Figma" title="Figma">')],
+       tags=['UI', 'UX', 'Graphic design', 'Web design'],
+       site=('assets/type01/site.webp', 2000, 1280, 'The TYPE01 conference homepage'),
+       brief=['<b>TYPE01 Magazine</b>, a publication for graphic designers and typographers, was hosting its first-ever <b>conference</b>: <b>two days</b> in London on <b>typography in print</b>, <b>motion design</b> and <b>branding</b>.',
+              'My task was to design a responsive conference website for desktop and mobile that fits TYPE01’s identity but takes a bolder approach. Text and photos of the speakers were already provided.'],
+       steps=[('assets/type01/type-styleboard.svg', 229, 41, '1. Styleboard', 'I explored two identities, one for a light mode and one for a dark mode. Both mix bold grotesk display type with pixel and halftone patterns, collaged photography and a pink-and-green palette taken from TYPE01’s identity. The final website uses the light mode, and a switch to the dark mode could be added later as a feature.',
+               [('assets/type01/styleboard-light.webp', 563, 361, 'Styleboard, light version', 'Light'), ('assets/type01/styleboard-dark.webp', 527, 338, 'Styleboard, dark version', 'Dark')]),
+              ('assets/type01/type-iterations.svg', 214, 29, '2. Iterations', 'From the first wireframes to the light, dark and mobile versions of each page.', [('assets/type01/iterations.webp', 1194, 318, 'Iterations of the desktop and mobile pages')])],
+       result=None,
+       cta=('See Prototype', 'https://www.figma.com/proto/PsD6Cg8ngFq6yRWCCm5I9q/Type01?page-id=0%3A1&node-id=468-7480&viewport=-2609%2C-2191%2C0.15&t=KQAR1eAcC8Ls4MeP-1&scaling=min-zoom&content-scaling=fixed&starting-point-node-id=580%3A48961')),
+  dict(file='moea.html', name='Moea', tab='#3EBDCD',
+       title=None, title_text='MOEA',
+       lede='Moea stands for Mother Earth — a website for sustainably made fashion',
+       facts=[('Status', 'Case study in progress')],
+       tags=['UI', 'UX', 'Web design'],
+       site=('assets/moea/site.webp', 2000, 1240, 'The Moea homepage'),
+       brief=['<b>Moea</b> stands for <b>Mother Earth</b>: a brand that attempts to rethink how fashion goods are produced, in respect of the planet.',
+              'The full case study, with the brief, the styleboard and the iterations, lands here soon.'],
+       steps=[], result=None, cta=None),
+  dict(file='miles.html', name='Miles & Meals', tab='#1A5BA4',
+       title=None, title_text='Miles &amp; Meals',
+       lede='Discover the world in your kitchen — app, brand and social media',
+       facts=[('Type', 'Mobile app'), ('Deliverables', 'Brandboard · social media · app screens')],
+       tags=['UI', 'UX', 'App design'],
+       site=('assets/miles/site.webp', 2000, 1288, 'Miles & Meals: brand photography and social media'),
+       brief=['<b>Miles &amp; Meals</b> is an app that brings iconic <b>local dishes</b> and <b>street food</b> from cities around the world straight to your kitchen, so you can travel by recipe.',
+              'Next to the app I designed the brand around it: a brandboard, brand photography and the look of its social media.'],
+       steps=[('assets/miles/type-brandboard.svg', 250, 33, '1. Brandboard', 'Bright, appetising food shots, a deep navy and coral palette with yellow accents, and a social-media look built around them.', [('assets/miles/brandboard.webp', 994, 594, 'Miles & Meals brandboard: brand photography and social media')])],
+       result=('assets/miles/app.webp', 365, 656, 'The Miles & Meals app: Discover the world in your kitchen'),
+       cta=('See Prototype', 'https://www.figma.com/proto/JhFdOzlcgGCV38btM2Tumv/Miles---Meals?page-id=6817%3A1887&node-id=59585-34744&viewport=-13885%2C-407%2C0.32&t=BZlwAt149MrtAhmE-1&scaling=min-zoom&content-scaling=fixed&starting-point-node-id=59585%3A34763&show-proto-sidebar=1')),
+]
+
+def window(src, w, h, alt, tab, extra='', lazy=False):
+    svg = TAB.replace('${i}', 'x').replace('class="win-svg"', 'class="p-tab"')
+    return f'''<figure class="p-window reveal{extra}" style="--tab:{tab}" data-tilt>
+        <img class="p-shot" src="{src}" width="{w}" height="{h}" alt="{html.escape(alt)}"{' loading="lazy"' if lazy else ''}>
+        {svg}
+      </figure>'''
+
+def step(s, i):
+    src, w, h, alt, note, imgs = s
+    head = f'<h3><img src="{src}" width="{w}" height="{h}" alt="{alt}"></h3>'
+    switch = ''
+    if len(imgs) > 1:
+        tabs = ''.join(f'<button role="tab" aria-selected="{"true" if k == 0 else "false"}" data-board="{im[4].lower()}">{im[4]}</button>' for k, im in enumerate(imgs))
+        switch = f'''
+            <div class="p-switch" role="tablist" aria-label="Version">
+              {tabs}
+              <span class="p-switch-pill" aria-hidden="true"></span>
+            </div>'''
+    pics = ''.join(f'''
+            <img{' class="on"' if k == 0 else ''}{f' data-board="{im[4].lower()}"' if len(im) > 4 else ''} src="{im[0]}" width="{im[1]}" height="{im[2]}" alt="{html.escape(im[3])}" loading="lazy">''' for k, im in enumerate(imgs))
+    return f'''
+        <div class="p-step reveal">
+          <div class="p-step-head">
+            {head}{switch}
+          </div>
+          <p class="p-note">{note}</p>
+          <button class="p-board" data-zoom aria-label="Enlarge the image">{pics}
+            <span class="p-zoom-hint" aria-hidden="true">Click to enlarge</span>
+          </button>
+        </div>'''
+
+def page(i, p):
+    n = len(PROJECTS); prev, nxt = PROJECTS[(i - 1) % n], PROJECTS[(i + 1) % n]
+    title = (f'<img src="{p["title"][0]}" width="{p["title"][1]}" height="{p["title"][2]}" alt="{p["title"][3]}">' if p['title']
+             else f'<span class="p-title-text">{p["title_text"]}</span>')
+    facts = ''.join(f'<div><dt>{k}</dt><dd{" class=\"p-tools\"" if k == "Tools" else ""}>{v}</dd></div>' for k, v in p['facts'][:1])
+    facts += '<div><dt>Disciplines</dt><dd><ul class="p-tags">' + ''.join(f'<li>{t}</li>' for t in p['tags']) + '</ul></dd></div>'
+    facts += ''.join(f'<div><dt>{k}</dt><dd{" class=\"p-tools\"" if k == "Tools" else ""}>{v}</dd></div>' for k, v in p['facts'][1:])
+    brief = ''.join(f'\n        <p class="p-text reveal">{t}</p>' for t in p['brief'])
+    num = 2
+    process = ''
+    if p['steps']:
+        process = f'''
+    <!-- Process -->
+    <section class="p-section p-process" aria-labelledby="process-h">
+      <div class="p-side">
+        <span class="p-num">02</span>
+        <h2 class="p-h reveal" id="process-h"><img src="assets/type01/type-visual-process.svg" width="616" height="104" alt="Visual process"></h2>
+      </div>
+      <div class="p-body">{''.join(step(s, k) for k, s in enumerate(p['steps']))}
+      </div>
+    </section>
+'''
+        num = 3
+    result = ''
+    if p['cta'] or p['result']:
+        if p['result'] and p['result'][2] > p['result'][1]:      # a phone screen
+            shot = f'<figure class="p-phone reveal" style="--tab:{p["tab"]}"><img src="{p["result"][0]}" width="{p["result"][1]}" height="{p["result"][2]}" alt="{html.escape(p["result"][3])}" loading="lazy"></figure>'
+        elif p['result']:
+            shot = window(*p['result'], p['tab'], lazy=True)
+        else:
+            shot = window(*p['site'], p['tab'], lazy=True)
+        cta = f'<a class="p-cta reveal" href="{html.escape(p["cta"][1])}" target="_blank" rel="noopener">{p["cta"][0]} <span aria-hidden="true">↗</span></a>' if p['cta'] else ''
+        result = f'''
+    <!-- The Result -->
+    <section class="p-result" aria-labelledby="result-h">
+      <span class="p-num">{num:02d}</span>
+      <h2 class="p-h reveal" id="result-h"><img src="assets/type01/type-result.svg" width="443" height="79" alt="The Result"></h2>
+      {shot}
+      {cta}
+    </section>
+'''
+    return f'''<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{p["name"]} — Nika Saracuta</title>
+  <meta name="description" content="{html.escape(re.sub('<[^>]+>', '', p["lede"]))} — a project by Nika Saracuta.">
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="assets/favicon-192.png">
+  <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@125,400;125,700&amp;family=Gloock&amp;display=swap">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="project.css">
+  <script>document.documentElement.classList.add('js')</script>
+</head>
+<body class="project-page">
+  <!-- Generated by scripts/build-projects.py: edit the texts there, not here. -->
+  <div class="p-progress" id="progress" aria-hidden="true"></div>
+
+  <header class="p-top">
+    <a class="p-back" href="index.html#work">
+      <span class="p-back-dot" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M20 12H5M11 5l-7 7 7 7"/></svg></span>
+      <span>All projects</span>
+    </a>
+    <span class="p-count">Project {i + 1:02d} / {n:02d}</span>
+  </header>
+
+  <main class="p-main">
+
+    <!-- Intro -->
+    <section class="p-intro">
+      <p class="p-eyebrow reveal">Case study</p>
+      <h1 class="p-title reveal" style="--d:.05s">{title}</h1>
+      <p class="p-lede reveal" style="--d:.1s">{p["lede"]}</p>
+      <dl class="p-facts reveal" style="--d:.15s">{facts}</dl>
+      {window(*p["site"], p["tab"], extra=" p-hero")}
+    </section>
+
+    <!-- The Brief -->
+    <section class="p-section p-brief" aria-labelledby="brief-h">
+      <div class="p-side">
+        <span class="p-num">01</span>
+        <h2 class="p-h reveal" id="brief-h"><img src="assets/type01/type-brief.svg" width="403" height="79" alt="The Brief"></h2>
+      </div>
+      <div class="p-body">{brief}
+      </div>
+    </section>
+{process}{result}
+    <!-- Previous / next project -->
+    <nav class="p-next reveal" aria-label="More projects">
+      <a class="p-prev-link" href="{prev["file"]}">
+        <span class="p-dir">← Previous project</span>
+        <span class="p-name">{prev["name"].replace("&", "&amp;")}</span>
+      </a>
+      <a class="p-next-link" href="{nxt["file"]}">
+        <span class="p-dir">Next project →</span>
+        <span class="p-name">{nxt["name"].replace("&", "&amp;")}</span>
+      </a>
+    </nav>
+  </main>
+
+  <dialog class="p-lightbox" id="lightbox" aria-label="Enlarged image">
+    <button class="p-lb-close" aria-label="Close">×</button>
+    <img alt="">
+  </dialog>
+
+  <script src="project.js"></script>
+</body>
+</html>
+'''
+
+for i, p in enumerate(PROJECTS):
+    (ROOT / p['file']).write_text(page(i, p))
+    print('wrote', p['file'])
