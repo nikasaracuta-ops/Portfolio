@@ -20,8 +20,11 @@
 
   // shapes, in bird space: x forward (beak to the right), y down, z = span (towards us)
   const SCALE = 1.35;
-  const BODY = [[41, 0], [36, -4], [31, -7], [25, -7], [20, -5], [10, -6], [-4, -5], [-18, -3], [-30, -2],
-    [-41, -4], [-52, -8], [-47, -1], [-53, 5], [-41, 4], [-30, 3], [-16, 6], [0, 9], [14, 8], [24, 5], [31, 3], [36, 1]];
+  // plump body with a round head and a short beak; a narrow waist, then a long
+  // fanned tail that ends in a notched, slightly forked edge of feathers
+  const BODY = [[45, 1], [40, -2], [36, -7], [30, -10], [23, -10], [12, -11], [0, -10], [-12, -8], [-21, -5],
+    [-27, -3], [-36, -6], [-46, -10], [-53, -12], [-57, -8], [-53, -5], [-58, -2], [-54, 1], [-59, 5], [-50, 6],
+    [-38, 5], [-27, 3], [-19, 7], [-7, 12], [7, 14], [19, 12], [29, 8], [36, 4], [41, 2]];
   const L = 60; // wing length
   // wing outline: [chord x, span s]: leading edge out to the swept tip, feathered trailing edge back
   const WING = [[14, 0], [15, .15], [11, .35], [4, .6], [-6, .82], [-16, .97], [-23, 1], [-19, .92], [-20, .84],
