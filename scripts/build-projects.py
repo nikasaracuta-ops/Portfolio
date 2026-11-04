@@ -22,23 +22,19 @@ PROJECTS = [
        desktop=('assets/dior/site-desktop.webp', 2314, 1427, 'The Art of Dressmaking by Christian Dior, the homepage on desktop'),
        mobile=('assets/dior/site-mobile-screen.webp', 696, 1209, 'The homepage on mobile'),
        lead='<b>MoMu</b>, the Fashion Museum of Antwerp, launched its new digital marketing plan with a series of <b>six interactive online stories</b>, each about a fashion designer.',
-       brief=['My task was to research, design and build the first one: a one-page <b>interactive longread</b> about Walter Van Beirendonk, Christian Dior or Dirk Bikkembergs, told from my own angle. I chose <b>Christian Dior</b> and the art of his dressmaking.'],
-       cards=[('Goal', 'Turn a static designer story into an immersive, interactive experience that teaches visitors about fashion and makes them want to visit the museum.'),
-              ('Audience', 'People who hadn’t yet considered MoMu, mainly adults, with or without children. The story keeps MoMu’s logo and tone of voice, with a visual identity of its own.'),
-              ('Scope', 'Research, visual design and front-end development: a responsive site for desktop and mobile, built with Vite, GSAP and ScrollTrigger, and deployed online.')],
+       brief=['My task was to research, design and build the first one: a one-page <b>interactive longread</b> about Walter Van Beirendonk, Christian Dior or Dirk Bikkembergs, told from my own angle. I chose <b>Christian Dior</b> and the art of his dressmaking, and turned his story into an immersive experience that teaches visitors about fashion and makes them want to visit the museum.'],
        # palettes: the styleboard's (also the fan in the intro) and the one the final website ended up with
        palettes=[('Styleboard', ['#FFF4DC', '#FFBCD1', '#B96E85', '#86A4AE', '#6D6D6D', '#3B3B3B']),
                  ('Final website', ['#F0F1ED', '#E5ECEC', '#8EB5C5', '#AE7284', '#303030'])],
        styleboard=('assets/dior/styleboard.webp', 2400, 1697, 'Styleboard for the Dior longread',
-                   'Archive photography of Dior’s couture, fashion sketches and a soft, powdery palette set the tone of the story. While designing, the colours shifted a little: the final website is cooler and calmer, with off-white, misty blue and rose.'),
+                   'Archive photography of Dior’s couture, fashion sketches and a soft, powdery palette set the tone of the story. While designing, the colours shifted a little towards a cooler, calmer final website.'),
        iterations=('assets/dior/iterations.webp', 2700, 1091, 'Iterations of the Dior longread, from photo research to the final pages',
                    'A sneak peek of the process: from the first photo research and desktop layouts to the scroll-driven chapters of the final story.'),
-       # the result collage: (image, w, h, alt, left %, top %, width %, scroll depth)
-       screens=[('assets/dior/screen-sketch.webp', 2200, 1192, 'Help Dior sketch one of his masterpieces', 0, 34, 46.4, -.03),
-                ('assets/dior/screen-bobbin.webp', 2200, 1064, 'A sewing bobbin and its thread, from the story', 15.7, 68.6, 41.8, .03),
-                ('assets/dior/screen-dress.webp', 2200, 1265, 'Choose a fabric and drag accessories on the dress to design Dior’s look', 55.5, 29.2, 37.3, .05),
-                ('assets/dior/screen-venus.webp', 2200, 1061, 'Venus and Junon: two of Dior’s gowns side by side, with a slider', 12.5, 0, 59.2, 0)],
-       result_note='A few moments from the story: sketching one of Dior’s masterpieces, his Venus and Junon gowns side by side, and dressing a mannequin with fabrics and accessories.',
+       # the result: screens of the story, shown one at a time in the tab: (image, w, h, alt, label)
+       screens=[('assets/dior/screen-venus.webp', 2200, 1061, 'Venus and Junon: two of Dior’s gowns side by side, with a slider', 'Venus &amp; Junon'),
+                ('assets/dior/screen-sketch.webp', 2200, 1192, 'Help Dior sketch one of his masterpieces', 'Sketch with Dior'),
+                ('assets/dior/screen-dress.webp', 2200, 1265, 'Choose a fabric and drag accessories on the dress to design Dior’s look', 'Design Dior’s look'),
+                ('assets/dior/screen-bobbin.webp', 2200, 1064, 'A sewing bobbin and its thread, from the story', 'Bobbin &amp; thread')],
        # unused by the Dior layout, kept so the shared template can still be built
        facts=[], steps=[], result=None, site=('assets/dior/site-desktop.webp', 2314, 1427, ''),
        cta=('See website', 'https://nikasaracuta.github.io/Integration-3/')),
@@ -115,9 +111,9 @@ def step(s, i):
 
 def dior_main(p):
     """Dior: an editorial layout. The title next to a fan of the styleboard's colours, the
-    facts, the site on desktop and mobile, the brief as a lead with three cards, the
-    styleboard with both palettes, the iterations as a strip that pans while scrolling,
-    and the result as a collage of the story's screens."""
+    facts, the site on desktop and mobile, the brief as a lead, the styleboard with a
+    palette that switches to the final website's, the iterations as a strip that pans
+    while scrolling, and the result as the story's screens shown one at a time in the tab."""
     tools = ''.join(f'<li><img src="{src}" width="48" height="48" alt="{name}" title="{name}"></li>' for src, name in p['tools'])
     tags = ''.join(f'<li>{t}</li>' for t in p['tags'])
     facts = (f'<div><dt>Year</dt><dd>{p["year"]}</dd></div>'
@@ -125,16 +121,16 @@ def dior_main(p):
              f'<div><dt>Creative fields</dt><dd><ul class="p-tags">{tags}</ul></dd></div>'
              f'<div><dt>Built with</dt><dd><ul class="d-tools">{tools}</ul></dd></div>')
     fan = ''.join(f'<li style="--c:{c};--i:{k}"></li>' for k, c in enumerate(p['palettes'][0][1]))
-    cards = ''.join(f'''
-          <article class="d-card reveal" style="--d:{k * .08:.2f}s"><h3>{h}</h3><p>{t}</p></article>''' for k, (h, t) in enumerate(p['cards']))
     brief = ''.join(f'\n        <p class="d-text reveal">{t}</p>' for t in p['brief'])
-    pals = ''.join(f'''
-            <div class="d-pal"><span class="d-pal-name">{name}</span><ul>{''.join(f'<li style="--c:{c}" title="{c}"></li>' for c in cols)}</ul></div>''' for name, cols in p['palettes'])
+    (pa_name, pa), (pb_name, pb) = p['palettes']
+    pal = ''.join(f'<li style="--c:{pa[k]}" data-a="{pa[k]}" data-b="{pb[k] if k < len(pb) else ""}"></li>' for k in range(len(pa)))
     d, m, sb, it = p['desktop'], p['mobile'], p['styleboard'], p['iterations']
     shot = window(*d, p['tab']).replace('</figure>', f'  <span class="d-url" aria-hidden="true">{p["url"]}</span>\n      </figure>', 1)
-    screens = ''.join(f'''
-        <button class="d-screen" data-zoom data-depth="{dep}" style="--l:{l}%;--t:{t}%;--w:{w}%" aria-label="Enlarge: {html.escape(alt)}"><img class="on" src="{src}" width="{iw}" height="{ih}" alt="{html.escape(alt)}" loading="lazy"></button>'''
-        for src, iw, ih, alt, l, t, w, dep in p['screens'])
+    tab = TAB.replace('${i}', 'res').replace('class="win-svg"', 'class="p-tab"')
+    shots = ''.join(f'''
+          <img{' class="on"' if k == 0 else ''} src="{src}" width="{iw}" height="{ih}" alt="{html.escape(alt)}" loading="lazy">''' for k, (src, iw, ih, alt, lab) in enumerate(p['screens']))
+    thumbs = ''.join(f'''
+        <li><button role="tab" aria-selected="{'true' if k == 0 else 'false'}" data-i="{k}"><img src="{src}" width="{iw}" height="{ih}" alt="" loading="lazy"><span>{lab}</span></button></li>''' for k, (src, iw, ih, alt, lab) in enumerate(p['screens']))
     link = (ROOT / 'assets/dior/icon-link.svg').read_text().replace('fill="white"', 'fill="currentColor"').replace('<svg ', '<svg class="d-cta-icon" aria-hidden="true" ', 1)
     return f'''
     <!-- Intro -->
@@ -161,8 +157,6 @@ def dior_main(p):
         <h2 class="p-h reveal" id="brief-h">{ink("assets/type01/type-brief.svg", 403, 79, "The Brief")}</h2>
       </div>
       <p class="d-lead reveal">{p["lead"]}</p>{brief}
-      <div class="d-cards">{cards}
-      </div>
     </section>
 
     <!-- The process -->
@@ -172,12 +166,16 @@ def dior_main(p):
         <h2 class="p-h reveal" id="process-h">{ink("assets/type01/type-visual-process.svg", 616, 104, "Visual process")}</h2>
       </div>
 
-      <div class="d-step reveal">
-        <div class="d-step-text">
+      <div class="d-step d-style reveal">
+        <div class="d-style-text">
           <h3>{ink("assets/type01/type-styleboard.svg", 229, 41, "1. Styleboard")}</h3>
-          <div><p class="p-note">{sb[4]}</p>
-            <div class="d-pals">{pals}
+          <p class="p-note">{sb[4]}</p>
+          <div class="d-palette">
+            <div class="p-switch" role="tablist" aria-label="Palette">
+              <button role="tab" aria-selected="true" data-board="a">{pa_name}</button><button role="tab" aria-selected="false" data-board="b">{pb_name}</button>
+              <span class="p-switch-pill" aria-hidden="true"></span>
             </div>
+            <ul class="d-swatches" aria-label="Colour palette">{pal}</ul>
           </div>
         </div>
         <button class="p-board" data-zoom aria-label="Enlarge the styleboard">
@@ -202,8 +200,14 @@ def dior_main(p):
     <section class="p-result d-result" aria-labelledby="result-h">
       <span class="p-num">03</span>
       <h2 class="p-h reveal" id="result-h">{ink("assets/type01/type-result.svg", 443, 79, "The Result")}</h2>
-      <p class="d-result-note reveal">{p["result_note"]}</p>
-      <div class="d-collage reveal">{screens}
+      <div class="d-show reveal">
+        <button class="p-window d-show-win" data-zoom style="--tab:{p["tab"]}" aria-label="Enlarge this screen">
+          <span class="d-shots">{shots}
+          </span>
+          {tab}
+        </button>
+        <ul class="d-thumbs" role="tablist" aria-label="Screens of the story">{thumbs}
+        </ul>
       </div>
       <a class="p-cta d-cta reveal" href="{html.escape(p["cta"][1])}" target="_blank" rel="noopener">{link}<span>{p["cta"][0]}</span></a>
     </section>

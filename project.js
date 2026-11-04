@@ -11,14 +11,6 @@ function panStrip() {
   img.style.setProperty('--pan', `${(reduced ? -over / 2 : -over * t).toFixed(1)}px`);
 }
 
-// Dior's result screens drift at slightly different speeds as the collage scrolls by
-const screens = [...document.querySelectorAll('.d-screen')];
-function driftScreens() {
-  const box = screens[0].parentElement.getBoundingClientRect();
-  const off = box.top + box.height / 2 - innerHeight / 2;
-  screens.forEach((el) => el.style.setProperty('--drift', `${(off * el.dataset.depth).toFixed(1)}px`));
-}
-
 // reveals: fade in once an element's top passes 88% of the screen
 const pending = new Set(document.querySelectorAll('.reveal'));
 const progress = document.getElementById('progress'), topBar = document.querySelector('.p-top');
@@ -30,7 +22,6 @@ function onScroll() {
     if (atBottom || el.getBoundingClientRect().top < innerHeight * .88) { el.classList.add('in'); pending.delete(el); }
   }
   if (pan) panStrip();
-  if (screens.length && !reduced && innerWidth > 640) driftScreens();
   progress.style.setProperty('--p', max > 0 ? (scrollY / max).toFixed(4) : 0);
   topBar.style.setProperty('--solid', scrollY > 20 ? 1 : 0);
 }
@@ -49,6 +40,7 @@ if (sw) {
     tabs.forEach(t => t.setAttribute('aria-selected', t === btn));
     boards.forEach(img => img.classList.toggle('on', img.dataset.board === btn.dataset.board));
     place(btn);
+    sw.dispatchEvent(new CustomEvent('pick', { detail: btn.dataset.board }));
   };
   tabs.forEach(t => t.addEventListener('click', () => pick(t)));
   sw.addEventListener('keydown', e => {
@@ -82,4 +74,38 @@ if (!reduced && matchMedia('(hover: hover)').matches) {
     });
     el.addEventListener('pointerleave', () => { el.style.setProperty('--ry', '0deg'); el.style.setProperty('--rx', '0deg'); });
   });
+}
+
+// Dior: the palette switches between the styleboard's colours and the final website's
+const swatches = document.querySelectorAll('.d-swatches li');
+if (sw && swatches.length) {
+  swatches.forEach((li, k) => li.style.setProperty('--k', k));
+  sw.addEventListener('pick', (e) => swatches.forEach((li) => {
+    const c = li.dataset[e.detail];
+    li.classList.toggle('off', !c);
+    if (c) li.style.setProperty('--c', c);
+  }));
+}
+
+// Dior: the result shows one screen at a time; it moves on by itself until you pick one
+const show = document.querySelector('.d-show');
+if (show) {
+  const shots = [...show.querySelectorAll('.d-shots img')], tabs = [...show.querySelectorAll('.d-thumbs button')];
+  let cur = 0, timer = null;
+  const go = (i) => {
+    cur = (i + shots.length) % shots.length;
+    shots.forEach((im, k) => im.classList.toggle('on', k === cur));
+    tabs.forEach((t, k) => t.setAttribute('aria-selected', k === cur));
+  };
+  const stop = () => { clearInterval(timer); timer = null; };
+  tabs.forEach((t, k) => t.addEventListener('click', () => { stop(); go(k); }));
+  show.querySelector('.d-thumbs').addEventListener('keydown', (e) => {
+    if (e.key !== 'ArrowLeft' && e.key !== 'ArrowRight') return;
+    stop(); go(cur + (e.key === 'ArrowRight' ? 1 : -1)); tabs[cur].focus();
+  });
+  if (!reduced) {
+    timer = setInterval(() => go(cur + 1), 4000);
+    show.addEventListener('pointerenter', () => { if (timer) { clearInterval(timer); timer = 'paused'; } });
+    show.addEventListener('pointerleave', () => { if (timer === 'paused') timer = setInterval(() => go(cur + 1), 4000); });
+  }
 }

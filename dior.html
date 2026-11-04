@@ -12,7 +12,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@125,400;125,700&amp;family=Gloock&amp;display=swap">
   <link rel="stylesheet" href="styles.css?v=4debdcda">
-  <link rel="stylesheet" href="project.css?v=52cfda14">
+  <link rel="stylesheet" href="project.css?v=658ccfd1">
   <script>document.documentElement.classList.add('js')</script>
 </head>
 <body class="project-page" style="--accent:#E770B2">
@@ -72,12 +72,7 @@
         <h2 class="p-h reveal" id="brief-h"><span class="p-ink" role="img" aria-label="The Brief" style="--src:url(assets/type01/type-brief.svg);aspect-ratio:403/79"></span></h2>
       </div>
       <p class="d-lead reveal"><b>MoMu</b>, the Fashion Museum of Antwerp, launched its new digital marketing plan with a series of <b>six interactive online stories</b>, each about a fashion designer.</p>
-        <p class="d-text reveal">My task was to research, design and build the first one: a one-page <b>interactive longread</b> about Walter Van Beirendonk, Christian Dior or Dirk Bikkembergs, told from my own angle. I chose <b>Christian Dior</b> and the art of his dressmaking.</p>
-      <div class="d-cards">
-          <article class="d-card reveal" style="--d:0.00s"><h3>Goal</h3><p>Turn a static designer story into an immersive, interactive experience that teaches visitors about fashion and makes them want to visit the museum.</p></article>
-          <article class="d-card reveal" style="--d:0.08s"><h3>Audience</h3><p>People who hadn’t yet considered MoMu, mainly adults, with or without children. The story keeps MoMu’s logo and tone of voice, with a visual identity of its own.</p></article>
-          <article class="d-card reveal" style="--d:0.16s"><h3>Scope</h3><p>Research, visual design and front-end development: a responsive site for desktop and mobile, built with Vite, GSAP and ScrollTrigger, and deployed online.</p></article>
-      </div>
+        <p class="d-text reveal">My task was to research, design and build the first one: a one-page <b>interactive longread</b> about Walter Van Beirendonk, Christian Dior or Dirk Bikkembergs, told from my own angle. I chose <b>Christian Dior</b> and the art of his dressmaking, and turned his story into an immersive experience that teaches visitors about fashion and makes them want to visit the museum.</p>
     </section>
 
     <!-- The process -->
@@ -87,14 +82,16 @@
         <h2 class="p-h reveal" id="process-h"><span class="p-ink" role="img" aria-label="Visual process" style="--src:url(assets/type01/type-visual-process.svg);aspect-ratio:616/104"></span></h2>
       </div>
 
-      <div class="d-step reveal">
-        <div class="d-step-text">
+      <div class="d-step d-style reveal">
+        <div class="d-style-text">
           <h3><span class="p-ink" role="img" aria-label="1. Styleboard" style="--src:url(assets/type01/type-styleboard.svg);aspect-ratio:229/41"></span></h3>
-          <div><p class="p-note">Archive photography of Dior’s couture, fashion sketches and a soft, powdery palette set the tone of the story. While designing, the colours shifted a little: the final website is cooler and calmer, with off-white, misty blue and rose.</p>
-            <div class="d-pals">
-            <div class="d-pal"><span class="d-pal-name">Styleboard</span><ul><li style="--c:#FFF4DC" title="#FFF4DC"></li><li style="--c:#FFBCD1" title="#FFBCD1"></li><li style="--c:#B96E85" title="#B96E85"></li><li style="--c:#86A4AE" title="#86A4AE"></li><li style="--c:#6D6D6D" title="#6D6D6D"></li><li style="--c:#3B3B3B" title="#3B3B3B"></li></ul></div>
-            <div class="d-pal"><span class="d-pal-name">Final website</span><ul><li style="--c:#F0F1ED" title="#F0F1ED"></li><li style="--c:#E5ECEC" title="#E5ECEC"></li><li style="--c:#8EB5C5" title="#8EB5C5"></li><li style="--c:#AE7284" title="#AE7284"></li><li style="--c:#303030" title="#303030"></li></ul></div>
+          <p class="p-note">Archive photography of Dior’s couture, fashion sketches and a soft, powdery palette set the tone of the story. While designing, the colours shifted a little towards a cooler, calmer final website.</p>
+          <div class="d-palette">
+            <div class="p-switch" role="tablist" aria-label="Palette">
+              <button role="tab" aria-selected="true" data-board="a">Styleboard</button><button role="tab" aria-selected="false" data-board="b">Final website</button>
+              <span class="p-switch-pill" aria-hidden="true"></span>
             </div>
+            <ul class="d-swatches" aria-label="Colour palette"><li style="--c:#FFF4DC" data-a="#FFF4DC" data-b="#F0F1ED"></li><li style="--c:#FFBCD1" data-a="#FFBCD1" data-b="#E5ECEC"></li><li style="--c:#B96E85" data-a="#B96E85" data-b="#8EB5C5"></li><li style="--c:#86A4AE" data-a="#86A4AE" data-b="#AE7284"></li><li style="--c:#6D6D6D" data-a="#6D6D6D" data-b="#303030"></li><li style="--c:#3B3B3B" data-a="#3B3B3B" data-b=""></li></ul>
           </div>
         </div>
         <button class="p-board" data-zoom aria-label="Enlarge the styleboard">
@@ -119,12 +116,38 @@
     <section class="p-result d-result" aria-labelledby="result-h">
       <span class="p-num">03</span>
       <h2 class="p-h reveal" id="result-h"><span class="p-ink" role="img" aria-label="The Result" style="--src:url(assets/type01/type-result.svg);aspect-ratio:443/79"></span></h2>
-      <p class="d-result-note reveal">A few moments from the story: sketching one of Dior’s masterpieces, his Venus and Junon gowns side by side, and dressing a mannequin with fabrics and accessories.</p>
-      <div class="d-collage reveal">
-        <button class="d-screen" data-zoom data-depth="-0.03" style="--l:0%;--t:34%;--w:46.4%" aria-label="Enlarge: Help Dior sketch one of his masterpieces"><img class="on" src="assets/dior/screen-sketch.webp" width="2200" height="1192" alt="Help Dior sketch one of his masterpieces" loading="lazy"></button>
-        <button class="d-screen" data-zoom data-depth="0.03" style="--l:15.7%;--t:68.6%;--w:41.8%" aria-label="Enlarge: A sewing bobbin and its thread, from the story"><img class="on" src="assets/dior/screen-bobbin.webp" width="2200" height="1064" alt="A sewing bobbin and its thread, from the story" loading="lazy"></button>
-        <button class="d-screen" data-zoom data-depth="0.05" style="--l:55.5%;--t:29.2%;--w:37.3%" aria-label="Enlarge: Choose a fabric and drag accessories on the dress to design Dior’s look"><img class="on" src="assets/dior/screen-dress.webp" width="2200" height="1265" alt="Choose a fabric and drag accessories on the dress to design Dior’s look" loading="lazy"></button>
-        <button class="d-screen" data-zoom data-depth="0" style="--l:12.5%;--t:0%;--w:59.2%" aria-label="Enlarge: Venus and Junon: two of Dior’s gowns side by side, with a slider"><img class="on" src="assets/dior/screen-venus.webp" width="2200" height="1061" alt="Venus and Junon: two of Dior’s gowns side by side, with a slider" loading="lazy"></button>
+      <div class="d-show reveal">
+        <button class="p-window d-show-win" data-zoom style="--tab:#E770B2" aria-label="Enlarge this screen">
+          <span class="d-shots">
+          <img class="on" src="assets/dior/screen-venus.webp" width="2200" height="1061" alt="Venus and Junon: two of Dior’s gowns side by side, with a slider" loading="lazy">
+          <img src="assets/dior/screen-sketch.webp" width="2200" height="1192" alt="Help Dior sketch one of his masterpieces" loading="lazy">
+          <img src="assets/dior/screen-dress.webp" width="2200" height="1265" alt="Choose a fabric and drag accessories on the dress to design Dior’s look" loading="lazy">
+          <img src="assets/dior/screen-bobbin.webp" width="2200" height="1064" alt="A sewing bobbin and its thread, from the story" loading="lazy">
+          </span>
+          <svg class="p-tab" viewBox="0 0 742 497" fill="none" aria-hidden="true">
+<path d="M0 13.7C0 6.13367 6.13368 0 13.7 0H727.344C734.91 0 741.044 6.13368 741.044 13.7V48.5726H0V13.7Z" fill="currentColor"/>
+<mask id="tabM0-res" fill="white"><path d="M0 13.7C0 6.13367 6.13368 0 13.7 0H727.344C734.91 0 741.044 6.13368 741.044 13.7V48.5726H0V13.7Z"/></mask>
+<path d="M741.044 48.5726V13.7C741.044 6.13368 734.91 0 727.344 0H13.7C6.13368 0 0 6.13367 0 13.7V48.5726H741.044Z" stroke-width="2.4909" stroke="currentColor" mask="url(#tabM0-res)"/>
+<rect x="31.6227" y="15.568" width="676.876" height="18.6818" fill="currentColor"/>
+<rect x="31.6227" y="15.568" width="676.876" height="18.6818" stroke="currentColor" stroke-width="1.24545"/>
+<circle cx="38.7144" cy="24.9089" r="6.46831" fill="#F28FFD"/>
+<circle cx="60.8902" cy="24.9089" r="6.46831" fill="#FFEE00"/>
+<circle cx="83.0699" cy="24.9089" r="6.46831" fill="#50F85E"/>
+<rect x="119.426" y="11.8317" width="534.299" height="26.1545" rx="13.0772" fill="white"/>
+<path d="M634.767 18.059C637.36 18.059 639.471 20.1708 639.476 22.7675L639.47 22.9906C639.419 24.0816 638.992 25.0695 638.32 25.8443L641.27 28.8534L641.275 28.8575V28.8582L641.24 28.8927L641.236 28.8967H641.235L641.27 28.9319L640.969 29.2287L640.93 29.268L640.891 29.2281L637.945 26.225C637.108 26.9968 635.992 27.4719 634.767 27.4719C632.17 27.4719 630.059 25.3643 630.059 22.7675C630.059 20.1707 632.175 18.059 634.767 18.059ZM634.767 18.5938C632.465 18.5939 630.593 20.4694 630.593 22.7675C630.593 25.0655 632.465 26.9371 634.767 26.9371C637.07 26.9371 638.941 25.0697 638.941 22.7675C638.941 20.4652 637.069 18.5938 634.767 18.5938Z" fill="#414141" stroke-width="0.692449" stroke="#D2D2D2"/>
+<circle cx="705.709" cy="17.1111" r="2.16606" fill="white"/>
+<circle cx="705.709" cy="24.909" r="2.16606" fill="white"/>
+<circle cx="705.709" cy="32.7067" r="2.16606" fill="white"/>
+<mask id="tabM1-res" fill="white"><path d="M0 48H741V477C741 488.046 732.046 497 721 497H20C8.95429 497 0 488.046 0 477V48Z"/></mask>
+<path d="M0 48H741V477C741 488.046 732.046 497 721 497H20C8.95429 497 0 488.046 0 477V48Z" stroke-width="20" stroke="currentColor" mask="url(#tabM1-res)"/>
+</svg>
+        </button>
+        <ul class="d-thumbs" role="tablist" aria-label="Screens of the story">
+        <li><button role="tab" aria-selected="true" data-i="0"><img src="assets/dior/screen-venus.webp" width="2200" height="1061" alt="" loading="lazy"><span>Venus &amp; Junon</span></button></li>
+        <li><button role="tab" aria-selected="false" data-i="1"><img src="assets/dior/screen-sketch.webp" width="2200" height="1192" alt="" loading="lazy"><span>Sketch with Dior</span></button></li>
+        <li><button role="tab" aria-selected="false" data-i="2"><img src="assets/dior/screen-dress.webp" width="2200" height="1265" alt="" loading="lazy"><span>Design Dior’s look</span></button></li>
+        <li><button role="tab" aria-selected="false" data-i="3"><img src="assets/dior/screen-bobbin.webp" width="2200" height="1064" alt="" loading="lazy"><span>Bobbin &amp; thread</span></button></li>
+        </ul>
       </div>
       <a class="p-cta d-cta reveal" href="https://nikasaracuta.github.io/Integration-3/" target="_blank" rel="noopener"><svg class="d-cta-icon" aria-hidden="true" width="21" height="21" viewBox="0 0 21 21" fill="none" xmlns="http://www.w3.org/2000/svg">
 <g clip-path="url(#clip0_831_775)">
@@ -159,6 +182,6 @@
     <img alt="">
   </dialog>
 
-  <script src="project.js?v=c6264902"></script>
+  <script src="project.js?v=f5223930"></script>
 </body>
 </html>
