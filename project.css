@@ -190,28 +190,17 @@
 
 /* facts: year, client, creative fields, tools */
 .d-facts { grid-column: 1 / -1; width: 100%; margin-top: clamp(40px, 5vw, 64px); grid-template-columns: auto auto 1.4fr auto; }
+.d-facts .p-tags li { white-space: nowrap; }
 .d-tools { list-style: none; display: flex; flex-wrap: wrap; gap: 6px; }
 .d-tools img { display: block; width: 44px; height: 44px; object-fit: contain; border-radius: 10px; transition: transform .35s cubic-bezier(.3, 1.6, .5, 1); }
 .d-tools img:hover { transform: translateY(-4px) rotate(-6deg); }
 
-/* the styleboard's palette, fanned out like a swatch book; it opens a little more on hover */
-.d-fan { position: relative; list-style: none; height: clamp(230px, 26vw, 330px); }
-.d-fan li {
-  position: absolute; left: 50%; bottom: 0; width: clamp(84px, 9.5vw, 128px); aspect-ratio: 128 / 230; translate: -50% 0;
-  border-radius: 14px; background: var(--c); border: 1px solid rgba(29, 29, 31, .07);
-  box-shadow: 0 18px 30px -18px rgba(59, 59, 59, .45);
-  transform-origin: 50% 120%; rotate: calc((var(--i) - 2.5) * 11deg);
-  transition: rotate .9s cubic-bezier(.2, .8, .2, 1) calc(var(--i) * 45ms);
-}
-.js .d-fan:not(.in) li { rotate: 0deg; }
-.d-fan:hover li { rotate: calc((var(--i) - 2.5) * 16deg); transition-delay: 0s; }
-
 /* the site on desktop, with the phone leaning on its corner */
-.d-devices { grid-column: 1 / -1; position: relative; width: min(100%, 1040px); margin: clamp(48px, 6vw, 80px) auto 0; padding: 0 0 7% 0; }
+.d-devices { position: relative; width: 100%; padding: 0 0 12% 0; align-self: end; }
 .d-devices .p-window { margin: 0 0 0 auto; width: 88%; container-type: inline-size; }
 .d-url {
   position: absolute; left: 16.1%; width: 72%; top: 2.38%; height: 5.26%; display: grid; place-items: center;
-  font: 1.55cqw/1 var(--font-body); color: #1d1d1f; pointer-events: none;
+  font: max(8px, 1.55cqw)/1 var(--font-body); color: #1d1d1f; pointer-events: none; white-space: nowrap; overflow: hidden;
 }
 /* a phone drawn in the tab's colour: rounded body, a speaker slot, two side buttons */
 .d-phone {
@@ -257,10 +246,10 @@
 .d-swatches li { flex: 1 1 0; background: var(--c); transition: background-color .6s ease calc(var(--k, 0) * 60ms), flex-grow .6s cubic-bezier(.65, 0, .35, 1); }
 .d-swatches li.off { flex-grow: 0; }
 
-/* the result: a small carousel of the story's screens in the tab, changing by itself;
-   the address bar is the link to the site (project.js) */
+/* the result: a carousel of the story's screens in the tab, changing by itself, with a
+   round badge on its corner that links to the site (project.js) */
 .d-result .p-h { width: min(70%, 360px); }
-.d-show { margin: clamp(32px, 4vw, 48px) auto 0; width: min(100%, 720px); }
+.d-show { position: relative; margin: clamp(36px, 5vw, 56px) auto 0; width: min(100%, 1000px); }
 .d-show-win { margin: 0; width: 100%; container-type: inline-size; }
 .d-show-win .p-tab { pointer-events: none; }
 .d-shots {
@@ -270,12 +259,20 @@
 .d-shots img { grid-area: 1 / 1; width: 100%; height: 100%; object-fit: cover; opacity: 0; scale: 1.04; transition: opacity .8s ease, scale 4.5s linear; }
 .d-shots img.on { opacity: 1; scale: 1; }
 .d-shots:focus-visible { outline: 2px solid var(--blue); outline-offset: 3px; }
-.d-url-link {
-  z-index: 2; pointer-events: auto; gap: .8cqw; display: flex; justify-content: center; align-items: center;
-  font: max(11px, 2.2cqw)/1 var(--font-ui); color: var(--pink); text-decoration: none; border-radius: 999px; transition: background .25s, color .25s;
+
+.d-badge {
+  position: absolute; z-index: 3; right: -3%; bottom: 4%; width: clamp(104px, 12vw, 148px); aspect-ratio: 1; border-radius: 50%;
+  display: grid; place-items: center; background: var(--pink); color: #fff; text-decoration: none;
+  box-shadow: 0 22px 40px -18px color-mix(in srgb, var(--pink) 85%, #000); transition: transform .4s cubic-bezier(.3, 1.6, .5, 1);
 }
-.d-url-link .d-cta-icon { width: max(11px, 2.2cqw); height: max(11px, 2.2cqw); }
-.d-url-link:hover, .d-url-link:focus-visible { background: var(--pink); color: #fff; outline: none; }
+.d-badge-ring { position: absolute; inset: 0; width: 100%; height: 100%; animation: d-spin 14s linear infinite; }
+.d-badge-ring text { font: 600 11.5px var(--font-ui); letter-spacing: .08em; fill: #fff; }
+.d-badge .d-cta-icon { width: 26%; height: 26%; transition: transform .4s cubic-bezier(.3, 1.6, .5, 1); }
+.d-badge:hover, .d-badge:focus-visible { transform: scale(1.08) rotate(-8deg); outline: none; }
+.d-badge:hover .d-cta-icon, .d-badge:focus-visible .d-cta-icon { transform: translate(3px, -3px); }
+.d-badge:focus-visible { box-shadow: 0 0 0 3px #fff, 0 0 0 5px var(--blue); }
+@keyframes d-spin { to { rotate: 360deg; } }
+
 .d-dots { margin-top: 18px; display: flex; justify-content: center; gap: 10px; }
 .d-dots button { width: 9px; height: 9px; padding: 0; border: 0; border-radius: 999px; cursor: pointer; background: color-mix(in srgb, var(--pink) 30%, #fff); transition: width .4s cubic-bezier(.65, 0, .35, 1), background .3s; }
 .d-dots [aria-selected="true"] { width: 28px; background: var(--pink); }
@@ -284,22 +281,24 @@
 
 @media (max-width: 860px) {
   .d-intro { grid-template-columns: 1fr; }
-  .d-fan { order: 2; margin-top: 36px; height: 220px; }
+  .d-devices { margin-top: 36px; }
   .d-facts { order: 3; grid-template-columns: 1fr 1fr; }
   .d-facts > div:nth-child(2) { grid-column: auto; grid-row: auto; border-top: 0; border-left: 1px solid color-mix(in srgb, var(--pink) 45%, transparent); }
   .d-facts > div:nth-child(3) { border-left: 0; }
   .d-facts > div:nth-child(n + 3) { border-top: 1px solid color-mix(in srgb, var(--pink) 45%, transparent); }
-  .d-devices { order: 4; }
   .d-step-text { grid-template-columns: 1fr; }
   .d-style { grid-template-columns: 1fr; }
 }
 @media (max-width: 640px) {
-  .d-devices .p-window { width: 100%; }
-  .d-devices { padding-bottom: 46%; }
-  .d-phone { left: 6%; width: 34%; }
+  .d-facts { grid-template-columns: minmax(0, 1fr); }
+  .d-facts > div, .d-facts > div:nth-child(n) { grid-column: auto; border-left: 0; }
+  .d-facts > div + div { border-top: 1px solid color-mix(in srgb, var(--pink) 45%, transparent); }
+  .d-devices { padding-bottom: 18%; }
+  .d-badge { right: 0; bottom: -8%; }
 }
 @media (prefers-reduced-motion: reduce) {
-  .d-fan li, .d-swatches li, .d-shots img, .d-phone, .d-dots button { transition: none; }
+  .d-badge-ring { animation: none; }
+  .d-swatches li, .d-shots img, .d-phone, .d-dots button { transition: none; }
 }
 
 /* previous / next: the pink arrow circles */

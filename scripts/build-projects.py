@@ -113,7 +113,7 @@ def dior_main(p):
     """Dior: an editorial layout. The title next to a fan of the styleboard's colours, the
     facts, the site on desktop and mobile, the brief as a lead, the styleboard with a
     palette that switches to the final website's, the iterations as a strip that pans
-    while scrolling, and the result as a small carousel of the story's screens in the tab, whose address bar
+    while scrolling, and the result as a carousel of the story's screens in the tab, with a round badge that
     links to the site."""
     tools = ''.join(f'<li><img src="{src}" width="48" height="48" alt="{name}" title="{name}"></li>' for src, name in p['tools'])
     tags = ''.join(f'<li>{t}</li>' for t in p['tags'])
@@ -121,7 +121,6 @@ def dior_main(p):
              f'<div><dt>Client</dt><dd>{p["client"]}</dd></div>'
              f'<div><dt>Creative fields</dt><dd><ul class="p-tags">{tags}</ul></dd></div>'
              f'<div><dt>Built with</dt><dd><ul class="d-tools">{tools}</ul></dd></div>')
-    fan = ''.join(f'<li style="--c:{c};--i:{k}"></li>' for k, c in enumerate(p['palettes'][0][1]))
     brief = ''.join(f'\n        <p class="d-text reveal">{t}</p>' for t in p['brief'])
     (pa_name, pa), (pb_name, pb) = p['palettes']
     pal = ''.join(f'<li style="--c:{pa[k]}" data-a="{pa[k]}" data-b="{pb[k] if k < len(pb) else ""}"></li>' for k in range(len(pa)))
@@ -140,14 +139,12 @@ def dior_main(p):
         <h1 class="d-title reveal" style="--d:.05s"><span class="p-title-text">{p["title_text"]}</span></h1>
         <p class="d-sub reveal" style="--d:.1s"><b>{p["subtitle"][0]}</b>{p["subtitle"][1]}</p>
       </div>
-      <ul class="d-fan reveal" style="--d:.2s" aria-hidden="true">{fan}</ul>
-      <dl class="p-facts d-facts reveal" style="--d:.15s">{facts}</dl>
-
       <!-- the site on desktop, with the phone version leaning on it -->
-      <div class="d-devices">
+      <div class="d-devices reveal" style="--d:.2s">
         {shot}
-        <figure class="d-phone reveal" style="--d:.3s"><img src="{m[0]}" width="{m[1]}" height="{m[2]}" alt="{html.escape(m[3])}"></figure>
+        <figure class="d-phone"><img src="{m[0]}" width="{m[1]}" height="{m[2]}" alt="{html.escape(m[3])}"></figure>
       </div>
+      <dl class="p-facts d-facts reveal" style="--d:.15s">{facts}</dl>
     </section>
 
     <!-- The Brief -->
@@ -205,8 +202,13 @@ def dior_main(p):
           <button class="d-shots" data-zoom aria-label="Enlarge this screen">{shots}
           </button>
           {tab}
-          <a class="d-url d-url-link" href="{html.escape(p["cta"][1])}" target="_blank" rel="noopener">{link}<span>{p["cta"][0]}</span></a>
+          <span class="d-url" aria-hidden="true">{p["url"]}</span>
         </figure>
+        <!-- the link: a round badge with its name circling an arrow -->
+        <a class="d-badge" href="{html.escape(p["cta"][1])}" target="_blank" rel="noopener" aria-label="{p["cta"][0]} (opens the website)">
+          <svg class="d-badge-ring" viewBox="0 0 120 120" aria-hidden="true"><defs><path id="badgeRing" d="M60 60m-44 0a44 44 0 1 1 88 0a44 44 0 1 1-88 0"/></defs><text><textPath href="#badgeRing" textLength="272">{p["cta"][0].upper()} • {p["cta"][0].upper()} •</textPath></text></svg>
+          {link}
+        </a>
         <div class="d-dots" role="tablist" aria-label="Screens of the story">{dots}</div>
       </div>
     </section>
