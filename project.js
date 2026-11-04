@@ -2,6 +2,15 @@
 // switch, a lightbox for the boards, and a slight tilt of the browser windows.
 const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
 
+// Dior's iterations strip pans sideways while it scrolls through the screen
+const pan = document.querySelector('.d-pan');
+function panStrip() {
+  const img = pan.querySelector('img'), r = pan.getBoundingClientRect();
+  const t = Math.min(1, Math.max(0, (innerHeight - r.top) / (innerHeight + r.height)));
+  const over = Math.max(0, img.offsetWidth - pan.clientWidth);
+  img.style.setProperty('--pan', `${(reduced ? -over / 2 : -over * t).toFixed(1)}px`);
+}
+
 // reveals: fade in once an element's top passes 88% of the screen
 const pending = new Set(document.querySelectorAll('.reveal'));
 const progress = document.getElementById('progress'), topBar = document.querySelector('.p-top');
@@ -12,6 +21,7 @@ function onScroll() {
   for (const el of pending) {
     if (atBottom || el.getBoundingClientRect().top < innerHeight * .88) { el.classList.add('in'); pending.delete(el); }
   }
+  if (pan) panStrip();
   progress.style.setProperty('--p', max > 0 ? (scrollY / max).toFixed(4) : 0);
   topBar.style.setProperty('--solid', scrollY > 20 ? 1 : 0);
 }

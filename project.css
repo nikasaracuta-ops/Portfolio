@@ -177,3 +177,74 @@
 .p-ink { display: block; width: 100%; background: var(--pink); -webkit-mask: var(--src) left center / contain no-repeat; mask: var(--src) left center / contain no-repeat; }
 .p-title .p-ink, .p-result .p-ink { -webkit-mask-position: center; mask-position: center; }
 .p-step-head h3 .p-ink { width: auto; height: clamp(24px, 2.6vw, 34px); }
+
+/* ---------- Dior: editorial layout (build-projects.py dior_main) ---------- */
+.d-intro {
+  display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr); align-items: end; column-gap: clamp(24px, 5vw, 72px);
+  padding: clamp(40px, 7vw, 96px) 0 0;
+}
+.d-title { margin-top: 14px; }
+.d-title .p-title-text { font-size: clamp(88px, 14vw, 200px); line-height: .9; }
+.d-sub { margin-top: 22px; display: grid; gap: 6px; font: clamp(17px, 1.6vw, 21px)/1.45 var(--font-body); color: var(--muted); }
+.d-sub b { font: 700 clamp(20px, 2vw, 26px)/1.25 var(--font-body); color: var(--ink); }
+.d-facts { grid-column: 1 / -1; width: 100%; margin-top: clamp(40px, 5vw, 64px); }
+
+/* the styleboard's palette, fanned out like a swatch book; it opens a little more on hover */
+.d-fan { position: relative; list-style: none; height: clamp(230px, 26vw, 330px); }
+.d-fan li {
+  position: absolute; left: 50%; bottom: 0; width: clamp(84px, 9.5vw, 128px); aspect-ratio: 128 / 230; translate: -50% 0;
+  border-radius: 14px; background: var(--c); border: 1px solid rgba(29, 29, 31, .07);
+  box-shadow: 0 18px 30px -18px rgba(59, 59, 59, .45);
+  transform-origin: 50% 120%; rotate: calc((var(--i) - 2.5) * 11deg);
+  transition: rotate .9s cubic-bezier(.2, .8, .2, 1) calc(var(--i) * 45ms);
+}
+.js .d-fan:not(.in) li { rotate: 0deg; }
+.d-fan:hover li { rotate: calc((var(--i) - 2.5) * 16deg); transition-delay: 0s; }
+
+/* section heads: number above the outlined heading */
+.d-head { margin-bottom: clamp(28px, 4vw, 48px); }
+.d-head .p-h { width: min(100%, var(--hw, 360px)); }
+.d-brief, .d-process { padding-top: clamp(80px, 11vw, 150px); }
+.d-brief .d-head { --hw: 330px; }
+.d-process .d-head { --hw: 470px; }
+
+.d-lead { max-width: 30ch; font: clamp(24px, 3vw, 40px)/1.3 var(--font-body); }
+.d-lead b, .d-text b { color: var(--pink); font-weight: 700; }
+.d-text { max-width: 62ch; margin-top: 24px; font: 18px/1.7 var(--font-body); }
+.d-cards { margin-top: clamp(36px, 5vw, 56px); display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(14px, 2vw, 24px); }
+.d-card {
+  padding: clamp(22px, 2.4vw, 32px); border-radius: 20px;
+  background: color-mix(in srgb, var(--pink) 7%, #fff); border: 1px solid color-mix(in srgb, var(--pink) 22%, transparent);
+  transition: transform .4s cubic-bezier(.3, 1.6, .5, 1), box-shadow .4s;
+}
+.js .d-card.reveal { transition: opacity .9s ease var(--d, 0s), translate 1.1s cubic-bezier(.2, .8, .2, 1) var(--d, 0s), filter .9s ease var(--d, 0s), transform .4s cubic-bezier(.3, 1.6, .5, 1), box-shadow .4s; }
+.d-card:hover { transform: translateY(-4px); box-shadow: 0 22px 36px -24px color-mix(in srgb, var(--pink) 70%, transparent); }
+.d-card h3 { font: 14px/1 var(--font-ui); letter-spacing: .14em; text-transform: uppercase; color: var(--pink); }
+.d-card p { margin-top: 14px; font: 16px/1.65 var(--font-body); }
+
+/* process steps: heading and note side by side, the image full width below */
+.d-step + .d-step { margin-top: clamp(64px, 8vw, 110px); }
+.d-step-text { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr); align-items: end; gap: 12px clamp(20px, 4vw, 56px); }
+.d-step-text h3 .p-ink { width: auto; height: clamp(26px, 2.8vw, 38px); }
+.d-step-text .p-note { margin: 0; max-width: 52ch; }
+.d-step .p-board { margin-top: clamp(18px, 2.4vw, 28px); background: #fff; box-shadow: 0 30px 60px -40px rgba(29, 29, 31, .35); }
+
+/* iterations: a wide strip that pans sideways as it scrolls past (project.js) */
+.d-pan { display: block; height: clamp(280px, 44vw, 600px); background: #b1b1b1; }
+.d-pan img { width: auto; max-width: none; height: 100%; transform: translateX(var(--pan, 0px)); transition: none; }
+.d-pan:hover img.on { transform: translateX(var(--pan, 0px)); }
+
+/* the result: the site in its tab, the button centred below it */
+.d-result .p-h { width: min(70%, 360px); }
+.d-result-shot { display: grid; justify-items: center; }
+.d-cta { margin-top: clamp(28px, 3.5vw, 40px); }
+
+@media (max-width: 860px) {
+  .d-intro { grid-template-columns: 1fr; }
+  .d-fan { order: 2; margin-top: 36px; height: 220px; }
+  .d-cards { grid-template-columns: 1fr; }
+  .d-step-text { grid-template-columns: 1fr; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .d-fan li, .d-card { transition: none; }
+}
