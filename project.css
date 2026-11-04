@@ -257,23 +257,29 @@
 .d-swatches li { flex: 1 1 0; background: var(--c); transition: background-color .6s ease calc(var(--k, 0) * 60ms), flex-grow .6s cubic-bezier(.65, 0, .35, 1); }
 .d-swatches li.off { flex-grow: 0; }
 
-/* the result: one screen at a time in the tab, with labelled thumbnails to switch
-   (it moves on by itself until you pick one; project.js) */
+/* the result: a small carousel of the story's screens in the tab, changing by itself;
+   the address bar is the link to the site (project.js) */
 .d-result .p-h { width: min(70%, 360px); }
-.d-show { margin: clamp(36px, 5vw, 56px) auto clamp(36px, 5vw, 56px); width: min(100%, 980px); }
-.d-show-win { display: block; width: 100%; margin: 0; padding: 0; border: 0; background: none; cursor: zoom-in; }
-.d-shots { position: absolute; left: 1.348%; top: 11.67%; width: 97.17%; height: 86.32%; display: grid; background: #F0F1ED; border-radius: 0 0 1.4% 1.4% / 0 0 2.3% 2.3%; overflow: hidden; }
-.d-shots img { grid-area: 1 / 1; width: 100%; height: 100%; object-fit: contain; opacity: 0; scale: 1.02; transition: opacity .6s ease, scale .8s ease; }
+.d-show { margin: clamp(32px, 4vw, 48px) auto 0; width: min(100%, 720px); }
+.d-show-win { margin: 0; width: 100%; container-type: inline-size; }
+.d-show-win .p-tab { pointer-events: none; }
+.d-shots {
+  position: absolute; left: 1.348%; top: 11.67%; width: 97.17%; height: 86.32%; display: grid; padding: 0; border: 0; cursor: zoom-in;
+  background: #F0F1ED; border-radius: 0 0 1.4% 1.4% / 0 0 2.3% 2.3%; overflow: hidden;
+}
+.d-shots img { grid-area: 1 / 1; width: 100%; height: 100%; object-fit: cover; opacity: 0; scale: 1.04; transition: opacity .8s ease, scale 4.5s linear; }
 .d-shots img.on { opacity: 1; scale: 1; }
-.d-thumbs { list-style: none; margin-top: 22px; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: clamp(10px, 1.6vw, 18px); text-align: left; }
-.d-thumbs button { display: grid; gap: 10px; width: 100%; padding: 0; border: 0; background: none; cursor: pointer; color: var(--muted); font: 14px/1.3 var(--font-ui); text-align: left; }
-.d-thumbs img { display: block; width: 100%; height: auto; aspect-ratio: 16 / 9; object-fit: cover; border-radius: 10px; outline: 2px solid transparent; outline-offset: 3px; opacity: .55; transition: opacity .3s, outline-color .3s; }
-.d-thumbs button:hover img { opacity: .85; }
-.d-thumbs [aria-selected="true"] { color: var(--ink); }
-.d-thumbs [aria-selected="true"] img { opacity: 1; outline-color: var(--pink); }
-.d-thumbs button:focus-visible { outline: none; }
-.d-thumbs button:focus-visible img { outline-color: var(--blue); }
-.d-cta { gap: 12px; }
+.d-shots:focus-visible { outline: 2px solid var(--blue); outline-offset: 3px; }
+.d-url-link {
+  z-index: 2; pointer-events: auto; gap: .8cqw; display: flex; justify-content: center; align-items: center;
+  font: max(11px, 2.2cqw)/1 var(--font-ui); color: var(--pink); text-decoration: none; border-radius: 999px; transition: background .25s, color .25s;
+}
+.d-url-link .d-cta-icon { width: max(11px, 2.2cqw); height: max(11px, 2.2cqw); }
+.d-url-link:hover, .d-url-link:focus-visible { background: var(--pink); color: #fff; outline: none; }
+.d-dots { margin-top: 18px; display: flex; justify-content: center; gap: 10px; }
+.d-dots button { width: 9px; height: 9px; padding: 0; border: 0; border-radius: 999px; cursor: pointer; background: color-mix(in srgb, var(--pink) 30%, #fff); transition: width .4s cubic-bezier(.65, 0, .35, 1), background .3s; }
+.d-dots [aria-selected="true"] { width: 28px; background: var(--pink); }
+.d-dots button:focus-visible { outline: 2px solid var(--blue); outline-offset: 3px; }
 .d-cta-icon { width: 20px; height: 20px; }
 
 @media (max-width: 860px) {
@@ -286,7 +292,6 @@
   .d-devices { order: 4; }
   .d-step-text { grid-template-columns: 1fr; }
   .d-style { grid-template-columns: 1fr; }
-  .d-thumbs { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 @media (max-width: 640px) {
   .d-devices .p-window { width: 100%; }
@@ -294,7 +299,7 @@
   .d-phone { left: 6%; width: 34%; }
 }
 @media (prefers-reduced-motion: reduce) {
-  .d-fan li, .d-swatches li, .d-shots img, .d-phone { transition: none; }
+  .d-fan li, .d-swatches li, .d-shots img, .d-phone, .d-dots button { transition: none; }
 }
 
 /* previous / next: the pink arrow circles */

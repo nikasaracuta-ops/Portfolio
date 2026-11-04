@@ -37,7 +37,7 @@ PROJECTS = [
                 ('assets/dior/screen-bobbin.webp', 2200, 1064, 'A sewing bobbin and its thread, from the story', 'Bobbin &amp; thread')],
        # unused by the Dior layout, kept so the shared template can still be built
        facts=[], steps=[], result=None, site=('assets/dior/site-desktop.webp', 2314, 1427, ''),
-       cta=('See website', 'https://nikasaracuta.github.io/Integration-3/')),
+       cta=('See Prototype', 'https://nikasaracuta.github.io/Integration-3/')),
   dict(file='moea.html', name='Moea', tab='#3EBDCD',
        title=None, title_text='MOEA',
        lede='An animated 3D website hero for Moea, a sustainable fashion brand',
@@ -113,7 +113,8 @@ def dior_main(p):
     """Dior: an editorial layout. The title next to a fan of the styleboard's colours, the
     facts, the site on desktop and mobile, the brief as a lead, the styleboard with a
     palette that switches to the final website's, the iterations as a strip that pans
-    while scrolling, and the result as the story's screens shown one at a time in the tab."""
+    while scrolling, and the result as a small carousel of the story's screens in the tab, whose address bar
+    links to the site."""
     tools = ''.join(f'<li><img src="{src}" width="48" height="48" alt="{name}" title="{name}"></li>' for src, name in p['tools'])
     tags = ''.join(f'<li>{t}</li>' for t in p['tags'])
     facts = (f'<div><dt>Year</dt><dd>{p["year"]}</dd></div>'
@@ -129,8 +130,7 @@ def dior_main(p):
     tab = TAB.replace('${i}', 'res').replace('class="win-svg"', 'class="p-tab"')
     shots = ''.join(f'''
           <img{' class="on"' if k == 0 else ''} src="{src}" width="{iw}" height="{ih}" alt="{html.escape(alt)}" loading="lazy">''' for k, (src, iw, ih, alt, lab) in enumerate(p['screens']))
-    thumbs = ''.join(f'''
-        <li><button role="tab" aria-selected="{'true' if k == 0 else 'false'}" data-i="{k}"><img src="{src}" width="{iw}" height="{ih}" alt="" loading="lazy"><span>{lab}</span></button></li>''' for k, (src, iw, ih, alt, lab) in enumerate(p['screens']))
+    dots = ''.join(f'''<button role="tab" aria-selected="{'true' if k == 0 else 'false'}" aria-label="{lab}"></button>''' for k, (src, iw, ih, alt, lab) in enumerate(p['screens']))
     link = (ROOT / 'assets/dior/icon-link.svg').read_text().replace('fill="white"', 'fill="currentColor"').replace('<svg ', '<svg class="d-cta-icon" aria-hidden="true" ', 1)
     return f'''
     <!-- Intro -->
@@ -201,15 +201,14 @@ def dior_main(p):
       <span class="p-num">03</span>
       <h2 class="p-h reveal" id="result-h">{ink("assets/type01/type-result.svg", 443, 79, "The Result")}</h2>
       <div class="d-show reveal">
-        <button class="p-window d-show-win" data-zoom style="--tab:{p["tab"]}" aria-label="Enlarge this screen">
-          <span class="d-shots">{shots}
-          </span>
+        <figure class="p-window d-show-win" style="--tab:{p["tab"]}">
+          <button class="d-shots" data-zoom aria-label="Enlarge this screen">{shots}
+          </button>
           {tab}
-        </button>
-        <ul class="d-thumbs" role="tablist" aria-label="Screens of the story">{thumbs}
-        </ul>
+          <a class="d-url d-url-link" href="{html.escape(p["cta"][1])}" target="_blank" rel="noopener">{link}<span>{p["cta"][0]}</span></a>
+        </figure>
+        <div class="d-dots" role="tablist" aria-label="Screens of the story">{dots}</div>
       </div>
-      <a class="p-cta d-cta reveal" href="{html.escape(p["cta"][1])}" target="_blank" rel="noopener">{link}<span>{p["cta"][0]}</span></a>
     </section>
 '''
 

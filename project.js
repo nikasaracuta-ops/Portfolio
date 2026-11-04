@@ -87,25 +87,23 @@ if (sw && swatches.length) {
   }));
 }
 
-// Dior: the result shows one screen at a time; it moves on by itself until you pick one
+// Dior: the result is a small carousel; it changes by itself and pauses under the pointer
 const show = document.querySelector('.d-show');
 if (show) {
-  const shots = [...show.querySelectorAll('.d-shots img')], tabs = [...show.querySelectorAll('.d-thumbs button')];
-  let cur = 0, timer = null;
+  const shots = [...show.querySelectorAll('.d-shots img')], dots = [...show.querySelectorAll('.d-dots button')];
+  let cur = 0, timer = null, hover = false;
   const go = (i) => {
     cur = (i + shots.length) % shots.length;
     shots.forEach((im, k) => im.classList.toggle('on', k === cur));
-    tabs.forEach((t, k) => t.setAttribute('aria-selected', k === cur));
+    dots.forEach((d, k) => d.setAttribute('aria-selected', k === cur));
   };
-  const stop = () => { clearInterval(timer); timer = null; };
-  tabs.forEach((t, k) => t.addEventListener('click', () => { stop(); go(k); }));
-  show.querySelector('.d-thumbs').addEventListener('keydown', (e) => {
+  const start = () => { clearInterval(timer); if (!reduced && !hover) timer = setInterval(() => go(cur + 1), 4500); };
+  dots.forEach((d, k) => d.addEventListener('click', () => { go(k); start(); }));
+  show.querySelector('.d-dots').addEventListener('keydown', (e) => {
     if (e.key !== 'ArrowLeft' && e.key !== 'ArrowRight') return;
-    stop(); go(cur + (e.key === 'ArrowRight' ? 1 : -1)); tabs[cur].focus();
+    go(cur + (e.key === 'ArrowRight' ? 1 : -1)); dots[cur].focus(); start();
   });
-  if (!reduced) {
-    timer = setInterval(() => go(cur + 1), 4000);
-    show.addEventListener('pointerenter', () => { if (timer) { clearInterval(timer); timer = 'paused'; } });
-    show.addEventListener('pointerleave', () => { if (timer === 'paused') timer = setInterval(() => go(cur + 1), 4000); });
-  }
+  show.addEventListener('pointerenter', () => { hover = true; clearInterval(timer); });
+  show.addEventListener('pointerleave', () => { hover = false; start(); });
+  start();
 }
