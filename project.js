@@ -11,6 +11,14 @@ function panStrip() {
   img.style.setProperty('--pan', `${(reduced ? -over / 2 : -over * t).toFixed(1)}px`);
 }
 
+// Dior's result screens drift at slightly different speeds as the collage scrolls by
+const screens = [...document.querySelectorAll('.d-screen')];
+function driftScreens() {
+  const box = screens[0].parentElement.getBoundingClientRect();
+  const off = box.top + box.height / 2 - innerHeight / 2;
+  screens.forEach((el) => el.style.setProperty('--drift', `${(off * el.dataset.depth).toFixed(1)}px`));
+}
+
 // reveals: fade in once an element's top passes 88% of the screen
 const pending = new Set(document.querySelectorAll('.reveal'));
 const progress = document.getElementById('progress'), topBar = document.querySelector('.p-top');
@@ -22,6 +30,7 @@ function onScroll() {
     if (atBottom || el.getBoundingClientRect().top < innerHeight * .88) { el.classList.add('in'); pending.delete(el); }
   }
   if (pan) panStrip();
+  if (screens.length && !reduced && innerWidth > 640) driftScreens();
   progress.style.setProperty('--p', max > 0 ? (scrollY / max).toFixed(4) : 0);
   topBar.style.setProperty('--solid', scrollY > 20 ? 1 : 0);
 }
