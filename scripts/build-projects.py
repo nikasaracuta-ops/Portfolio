@@ -20,7 +20,7 @@ PROJECTS = [
        tools=[('assets/dior/icon-ps.svg', 'Photoshop'), ('assets/dior/icon-figma.svg', 'Figma'), ('assets/dior/icon-procreate.webp', 'Procreate'),
               ('assets/dior/icon-vscode.webp', 'Visual Studio Code'), ('assets/dior/icon-gsap.svg', 'GSAP')],
        desktop=('assets/dior/site-desktop.webp', 2314, 1427, 'The Art of Dressmaking by Christian Dior, the homepage on desktop'),
-       mobile=('assets/dior/site-mobile-screen.webp', 696, 1209, 'The homepage on mobile'),
+       mobile=('assets/dior/site-mobile.webp', 729, 1253, 'The homepage on mobile'),
        lead='<b>MoMu</b>, the Fashion Museum of Antwerp, launched its new digital marketing plan with a series of <b>six interactive online stories</b>, each about a fashion designer.',
        brief=['My task was to research, design and build the first one: a one-page <b>interactive longread</b> about Walter Van Beirendonk, Christian Dior or Dirk Bikkembergs, told from my own angle. I chose <b>Christian Dior</b> and the art of his dressmaking, and turned his story into an immersive experience that teaches visitors about fashion and makes them want to visit the museum.'],
        # palettes: the styleboard's (also the fan in the intro) and the one the final website ended up with
@@ -135,7 +135,6 @@ def dior_main(p):
     <!-- Intro -->
     <section class="d-intro">
       <div class="d-intro-text">
-        <p class="p-eyebrow reveal">Case study</p>
         <h1 class="d-title reveal" style="--d:.05s"><span class="p-title-text">{p["title_text"]}</span></h1>
         <p class="d-sub reveal" style="--d:.1s"><b>{p["subtitle"][0]}</b>{p["subtitle"][1]}</p>
       </div>

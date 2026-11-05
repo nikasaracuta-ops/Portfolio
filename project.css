@@ -189,8 +189,9 @@
 .d-sub b { font: 700 clamp(20px, 2vw, 26px)/1.25 var(--font-body); color: var(--ink); }
 
 /* facts: year, client, creative fields, tools */
-.d-facts { grid-column: 1 / -1; width: 100%; margin-top: clamp(40px, 5vw, 64px); grid-template-columns: auto auto 1.4fr auto; }
-.d-facts .p-tags li { white-space: nowrap; }
+.d-facts { grid-column: 1 / -1; width: 100%; margin-top: clamp(40px, 5vw, 64px); grid-template-columns: auto minmax(0, .9fr) minmax(0, 1.7fr) auto; }
+.d-facts .p-tags { gap: 6px; }
+.d-facts .p-tags li { white-space: nowrap; padding: 5px 12px; font-size: 14px; }
 .d-tools { list-style: none; display: flex; flex-wrap: wrap; gap: 6px; }
 .d-tools img { display: block; width: 44px; height: 44px; object-fit: contain; border-radius: 10px; transition: transform .35s cubic-bezier(.3, 1.6, .5, 1); }
 .d-tools img:hover { transform: translateY(-4px) rotate(-6deg); }
@@ -203,14 +204,13 @@
   font: max(8px, 1.55cqw)/1 var(--font-body); color: #1d1d1f; pointer-events: none; white-space: nowrap; overflow: hidden;
 }
 /* a phone drawn in the tab's colour: rounded body, a speaker slot, two side buttons */
+/* the phone: the mobile mockup as exported from Figma */
 .d-phone {
-  position: absolute; left: 0; bottom: 0; width: 22%; padding: 2.4% 1.5% 2.4%; border-radius: 15% / 8%;
-  background: var(--pink); box-shadow: 0 34px 50px -30px color-mix(in srgb, var(--pink) 80%, #000);
+  position: absolute; left: 0; bottom: 0; width: 24%; margin: 0;
+  filter: drop-shadow(0 26px 30px color-mix(in srgb, var(--pink) 45%, transparent));
   rotate: -5deg; transition: rotate .6s cubic-bezier(.3, 1.4, .5, 1), translate .6s cubic-bezier(.3, 1.4, .5, 1);
 }
-.d-phone::before { content: ""; position: absolute; left: 50%; top: 1.1%; width: 26%; height: .9%; translate: -50% 0; border-radius: 9px; background: rgba(255, 255, 255, .55); }
-.d-phone::after { content: ""; position: absolute; right: -2.2%; top: 18%; width: 2.2%; height: 14%; border-radius: 0 4px 4px 0; background: color-mix(in srgb, var(--pink) 80%, #000); box-shadow: 0 160% 0 color-mix(in srgb, var(--pink) 80%, #000); }
-.d-phone img { display: block; width: 100%; height: auto; border-radius: 11% / 6.4%; }
+.d-phone img { display: block; width: 100%; height: auto; }
 .d-devices:hover .d-phone { rotate: 0deg; translate: 0 -10px; }
 
 /* section heads: number above the outlined heading */
@@ -262,7 +262,7 @@
 
 .d-badge {
   position: absolute; z-index: 3; right: -3%; bottom: 4%; width: clamp(104px, 12vw, 148px); aspect-ratio: 1; border-radius: 50%;
-  display: grid; place-items: center; background: var(--pink); color: #fff; text-decoration: none;
+  display: grid; place-items: center; overflow: hidden; background: var(--pink); color: #fff; text-decoration: none;
   box-shadow: 0 22px 40px -18px color-mix(in srgb, var(--pink) 85%, #000); transition: transform .4s cubic-bezier(.3, 1.6, .5, 1);
 }
 .d-badge-ring { position: absolute; inset: 0; width: 100%; height: 100%; animation: d-spin 14s linear infinite; }
