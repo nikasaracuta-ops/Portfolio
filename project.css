@@ -167,7 +167,7 @@
 .js .p-window.reveal { transition: opacity .9s ease var(--d, 0s), translate 1.1s cubic-bezier(.2, .8, .2, 1) var(--d, 0s), filter .9s ease var(--d, 0s), transform .4s ease-out; }
 
 /* titles without an outlined Figma export: live text in a close serif */
-.p-title-text { display: block; font: 400 clamp(64px, 9vw, 128px)/1 "Gloock", var(--f-seasons); color: var(--pink); letter-spacing: -.01em; white-space: nowrap; }
+.p-title-text { display: block; font: 700 clamp(64px, 9vw, 128px)/1 "the-seasons", "Gloock", serif; color: var(--pink); letter-spacing: -.01em; white-space: nowrap; }
 .p-title:has(.p-title-text) { width: auto; }
 /* a phone screen as the result */
 .p-phone { margin: clamp(28px, 4vw, 44px) auto 0; width: min(78%, 340px); padding: 10px; border-radius: 44px; background: var(--tab, #1A5BA4); box-shadow: 0 40px 70px -36px rgba(26, 91, 164, .55); }
