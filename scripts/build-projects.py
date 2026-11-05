@@ -115,11 +115,13 @@ def dior_main(p):
     palette that switches to the final website's, the iterations as a strip that pans
     while scrolling, and the result as a carousel of the story's screens in the tab, with a round badge that
     links to the site."""
-    tools = ''.join(f'<li><img src="{src}" width="48" height="48" alt="{name}" title="{name}"></li>' for src, name in p['tools'])
-    tags = ''.join(f'<li>{t}</li>' for t in p['tags'])
+    # the homepage's pink star, holding each tool's icon (it spins away on hover to show the name)
+    star = '<svg class="d-star" viewBox="0 0 100 100" aria-hidden="true"><polygon points="50.0,2.0 58.7,12.0 70.8,6.8 74.3,19.5 87.5,20.1 85.1,33.1 96.8,39.3 89.0,50.0 96.8,60.7 85.1,66.9 87.5,79.9 74.3,80.5 70.8,93.2 58.7,88.0 50.0,98.0 41.3,88.0 29.2,93.2 25.7,80.5 12.5,79.9 14.9,66.9 3.2,60.7 11.0,50.0 3.2,39.3 14.9,33.1 12.5,20.1 25.7,19.5 29.2,6.8 41.3,12.0"/></svg>'
+    tools = ''.join(f'<li tabindex="0" aria-label="{name}">{star}<img src="{src}" width="48" height="48" alt=""><span class="d-tool-name" aria-hidden="true">{name}</span></li>' for src, name in p['tools'])
+    tags = '<span class="d-dot" aria-hidden="true">✦</span>'.join(f'<span>{t}</span>' for t in p['tags'])
     facts = (f'<div><dt>Year</dt><dd>{p["year"]}</dd></div>'
              f'<div><dt>Client</dt><dd>{p["client"]}</dd></div>'
-             f'<div><dt>Creative fields</dt><dd><ul class="p-tags">{tags}</ul></dd></div>'
+             f'<div><dt>Creative fields</dt><dd class="d-fields">{tags}</dd></div>'
              f'<div><dt>Built with</dt><dd><ul class="d-tools">{tools}</ul></dd></div>')
     brief = ''.join(f'\n        <p class="d-text reveal">{t}</p>' for t in p['brief'])
     (pa_name, pa), (pb_name, pb) = p['palettes']
@@ -143,7 +145,7 @@ def dior_main(p):
         {shot}
         <figure class="d-phone"><img src="{m[0]}" width="{m[1]}" height="{m[2]}" alt="{html.escape(m[3])}"></figure>
       </div>
-      <dl class="p-facts d-facts reveal" style="--d:.15s">{facts}</dl>
+      <dl class="d-facts reveal" style="--d:.15s">{facts}</dl>
     </section>
 
     <!-- The Brief -->
