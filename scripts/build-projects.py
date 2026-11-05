@@ -22,7 +22,7 @@ PROJECTS = [
        desktop=('assets/dior/site-desktop.webp', 2314, 1427, 'The Art of Dressmaking by Christian Dior, the homepage on desktop'),
        mobile=('assets/dior/site-mobile.webp', 729, 1253, 'The homepage on mobile'),
        lead='<b>MoMu</b>, the Fashion Museum of Antwerp, launched its new digital marketing plan with a series of <b>six interactive online stories</b>, each about a fashion designer.',
-       brief=['My task was to research, design and build the first one: a one-page <b>interactive longread</b> about Walter Van Beirendonk, Christian Dior or Dirk Bikkembergs, told from my own angle. I chose <b>Christian Dior</b> and the art of his dressmaking, and turned his story into an immersive experience that teaches visitors about fashion and makes them want to visit the museum.'],
+       brief=['My task was to research, design and build the first one: a one-page <b>interactive longread</b> about Walter Van Beirendonk, Christian Dior or Dirk Bikkembergs, told from my own angle. I chose <b>Christian Dior</b> and the art of his dressmaking, and turned his story into an immersive experience about his life and how he made his couture, from the first sketch to the finished gown.'],
        # palettes: the styleboard's (also the fan in the intro) and the one the final website ended up with
        palettes=[('Styleboard', ['#FFF4DC', '#FFBCD1', '#B96E85', '#86A4AE', '#6D6D6D', '#3B3B3B']),
                  ('Final website', ['#F0F1ED', '#E5ECEC', '#8EB5C5', '#AE7284', '#303030'])],
