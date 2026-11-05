@@ -134,6 +134,10 @@ body::before {
 .ttl-work { font-size: 96px; line-height: 101px; color: var(--cham); }
 .ttl-open { font-size: 96px; line-height: 105px; color: #fff; text-align: center; }
 .ttl-open span { color: #D8FF66; }
+/* "Portfolio" and the "?" in Wasted Vindey (cdnfonts link in index.html), as in Figma */
+.ttl-vindey, .q-glyph { font-family: "Wasted Vindey", var(--f-seasons); font-weight: 400; font-style: normal; letter-spacing: 0; white-space: nowrap; }
+.ttl-portfolio { margin: 0; font-size: 391.46px; line-height: 1.027; color: #fff; }
+.q-glyph { display: block; font-size: 202.84px; line-height: 1.025; color: #FB72BE; }
 :where(.l):where(p, h1, h2, a, nav) { white-space: nowrap; color: var(--white); font-weight: 400; }
 
 .nav {
@@ -392,8 +396,8 @@ a:focus-visible { outline: 2px solid var(--white); outline-offset: 4px; }
    soft mist from the click into a full-screen field-guide
    page about Nika. Fixed to the screen, outside the zoomed stage. */
 .qbtn { -webkit-appearance: none; appearance: none; border: 0; padding: 0; background: none; cursor: pointer; }
-.qbtn img { display: block; animation: bob 4s ease-in-out infinite; transition: filter .3s; }
-.qbtn:hover img { filter: hue-rotate(-95deg) saturate(1.4); }
+.qbtn .q-glyph { margin: -12px 0 0 -6px; animation: bob 4s ease-in-out infinite; transition: filter .3s; }
+.qbtn:hover .q-glyph { filter: hue-rotate(-95deg) saturate(1.4); }
 .qbtn:focus-visible { outline: 2px solid #fff; outline-offset: 6px; border-radius: 12px; }
 @keyframes bob { 0%, 100% { transform: translateY(0) rotate(-3deg); } 50% { transform: translateY(-14px) rotate(4deg); } }
 
@@ -476,7 +480,7 @@ a:focus-visible { outline: 2px solid var(--white); outline-offset: 4px; }
 .portrait .frame:hover { transform: scale(1.02) rotate(1deg); }
 .portrait img#me { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 50% 30%; }
 .placeholder { position: absolute; inset: 0; display: grid; place-items: center; align-content: center; gap: 4px; color: #fff; text-align: center; padding-top: 12%; }
-.placeholder .q-sm { width: clamp(44px, 5vw, 64px); height: auto; }
+.placeholder .q-sm { font-size: clamp(82px, 9.3vw, 119px); line-height: 1; }
 .portrait figcaption { color: var(--c-body); text-align: center; font-size: .6rem; }
 
 /* tools */
@@ -550,7 +554,7 @@ a:focus-visible { outline: 2px solid var(--white); outline-offset: 4px; }
   .code { justify-content: flex-start; }
 }
 @media (prefers-reduced-motion: reduce) {
-  .qbtn img, .pulse { animation: none; }
+  .qbtn .q-glyph, .pulse { animation: none; }
   .cloudpop .field-head, .cloudpop .plate, .cloudpop .toolbox, .portrait .frame, .notes li::before, .notes li::after, .toolbox .tool { transition: none; }
   .flower { animation: none; }
   .cp-more svg { animation: none; }
@@ -651,7 +655,7 @@ a:focus-visible { outline: 2px solid var(--white); outline-offset: 4px; }
 
   /* hero + about share one continuous crop of the sky (same scale and x offset) */
   .hero { --y0: 0; --s: .8; height: 600px; padding-top: 92px; background-position: calc(-60px * var(--s)) 0; display: grid; grid-template-columns: 1fr 1fr; align-content: start; row-gap: 26px; }
-  .hero h1 { grid-column: 1 / -1; }
+  .hero h1 { grid-column: 1 / -1; font-size: 27vw; line-height: 1; }
   .hero p.type { width: 100%; max-width: 170px; }
   .hero p.type:last-child { justify-self: end; }
 
@@ -673,8 +677,8 @@ a:focus-visible { outline: 2px solid var(--white); outline-offset: 4px; }
   .t-intro p + p { margin-top: 1em; }
   #about .btn-hello { margin-top: 30px; font-size: 16px; }
   .btn-hello-arrow { width: 40px; height: 40px; }
-  #about .qbtn { position: absolute; right: 24px; top: 36px; width: 58px; }
-  #about .qbtn img { width: 100%; height: auto; }
+  #about .qbtn { position: absolute; right: 24px; top: 36px; }
+  #about .qbtn .q-glyph { font-size: 106px; }
 
   #work { --y0: 1800; --s: 1; padding-top: 56px; padding-bottom: 40px; text-align: center; background-color: #fff; }
   #mywork { margin: 0 auto; font-size: clamp(52px, 15vw, 72px); line-height: 1.05; text-align: center; }
