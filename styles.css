@@ -128,6 +128,12 @@ body::before {
 
 /* ---------- Type ---------- */
 .type img { display: block; }
+/* display titles set live in The Seasons (Adobe Fonts), sized as in the Figma file */
+.ttl { margin: 0; font-family: var(--f-seasons); font-weight: 700; font-style: normal; letter-spacing: 0; white-space: nowrap; }
+.ttl-hello { font-weight: 400; font-size: 128px; line-height: 1.25; color: #fff; }
+.ttl-work { font-size: 96px; line-height: 101px; color: var(--cham); }
+.ttl-open { font-size: 96px; line-height: 105px; color: #fff; text-align: center; }
+.ttl-open span { color: #D8FF66; }
 :where(.l):where(p, h1, h2, a, nav) { white-space: nowrap; color: var(--white); font-weight: 400; }
 
 .nav {
@@ -232,8 +238,7 @@ a:focus-visible { outline: 2px solid var(--white); outline-offset: 4px; }
 /* title, chameleon and branch are one block that pins below the menu, so only
    the projects move; as in Figma the chameleon sits 310px below the top of the title */
 .work-stage { position: sticky; top: 100px; z-index: 1; }
-#mywork { margin-left: -4.4px; }
-#mywork img { display: block; }
+#mywork { margin: -7px 0 7px -4.4px; }
 .cham-wrap { margin-top: 130px; }
 .work-list { position: relative; z-index: 2; margin-top: 134px; }
 .cham { position: relative; width: 361px; aspect-ratio: 361 / 308; }
@@ -663,7 +668,7 @@ a:focus-visible { outline: 2px solid var(--white); outline-offset: 4px; }
     background-position: calc(-60px * var(--s)) calc((1100 - var(--y0)) * var(--s) * 1px), var(--sky-xy), var(--sky-xy), var(--sky-xy);
   }
   #about::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 110px; pointer-events: none; background: linear-gradient(rgba(255, 255, 255, 0), #fff); }
-  #hello { width: 52%; max-width: 230px; }
+  #hello { font-size: clamp(64px, 19vw, 96px); line-height: 1.15; }
   .t-intro { margin-top: 26px; max-width: 34ch; font-size: 17px; line-height: 1.6; }
   .t-intro p + p { margin-top: 1em; }
   #about .btn-hello { margin-top: 30px; font-size: 16px; }
@@ -672,8 +677,7 @@ a:focus-visible { outline: 2px solid var(--white); outline-offset: 4px; }
   #about .qbtn img { width: 100%; height: auto; }
 
   #work { --y0: 1800; --s: 1; padding-top: 56px; padding-bottom: 40px; text-align: center; background-color: #fff; }
-  #mywork { width: 66%; max-width: 300px; margin: 0 auto; }
-  #mywork img { width: 100%; height: auto; }
+  #mywork { margin: 0 auto; font-size: clamp(52px, 15vw, 72px); line-height: 1.05; text-align: center; }
   /* the chameleon pins under the menu; its tongue reaches down to the list */
   .work-layout { grid-template-columns: minmax(0, 1fr); gap: 24px; margin-top: 0; }
   .work-stage { display: contents; }
@@ -705,7 +709,7 @@ a:focus-visible { outline: 2px solid var(--white); outline-offset: 4px; }
                 url("assets/coral-small.svg") right 110px bottom 40px / 70px auto no-repeat,
                 url("assets/seabed.svg") center bottom -6px / 110% auto no-repeat, #3EBDCD;
   }
-  #open { width: 92%; max-width: 420px; margin: 0 auto; }
+  #open { width: auto; font-size: clamp(44px, 12vw, 64px); line-height: 1.1; white-space: normal; }
   .t-email { margin-top: 28px; font-size: 19px; line-height: 28px; white-space: normal !important; }
   .socials { margin-top: 22px; }
   .social { width: 56px; height: 56px; }

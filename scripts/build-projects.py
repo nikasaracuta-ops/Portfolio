@@ -75,8 +75,9 @@ PROJECTS = [
 ]
 
 def ink(src, w, h, alt):
-    """An outlined Figma heading painted in the page's accent colour (a CSS mask)."""
-    return f'<span class="p-ink" role="img" aria-label="{alt}" style="--src:url({src});aspect-ratio:{w}/{h}"></span>'
+    """A heading set live in The Seasons (Adobe Fonts), in the page's accent colour.
+    (src, w, h are the old outlined Figma exports, kept in the data for reference.)"""
+    return f'<span class="p-ink">{html.escape(alt)}</span>'
 
 def window(src, w, h, alt, tab, extra='', lazy=False):
     svg = TAB.replace('${i}', 'x').replace('class="win-svg"', 'class="p-tab"')
@@ -217,8 +218,7 @@ def dior_main(p):
 
 def page(i, p):
     n = len(PROJECTS); prev, nxt = PROJECTS[(i - 1) % n], PROJECTS[(i + 1) % n]
-    title = (ink(*p["title"]) if p['title']
-             else f'<span class="p-title-text">{p["title_text"]}</span>')
+    title = f'<span class="p-title-text">{p["title"][3] if p["title"] else p["title_text"]}</span>'
     facts = ''.join(f'<div><dt>{k}</dt><dd{" class=\"p-tools\"" if k == "Tools" else ""}>{v}</dd></div>' for k, v in p['facts'][:1])
     facts += '<div><dt>Disciplines</dt><dd><ul class="p-tags">' + ''.join(f'<li>{t}</li>' for t in p['tags']) + '</ul></dd></div>'
     facts += ''.join(f'<div><dt>{k}</dt><dd{" class=\"p-tools\"" if k == "Tools" else ""}>{v}</dd></div>' for k, v in p['facts'][1:])
