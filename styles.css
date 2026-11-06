@@ -61,7 +61,7 @@ body {
 /* ---------- Creatures ----------
    Blur/opacity fitted to the Figma render (Figma blur values are 2× CSS blur). */
 /* The bird flaps and glides across the sky (bird.js); --a fades it at the path ends. */
-.bird { opacity: calc(.3 * var(--a, 0)); filter: blur(3px); overflow: visible; pointer-events: none; }
+.bird { opacity: var(--a, 0); filter: blur(3px); overflow: visible; pointer-events: none; }
 .bird path { fill: #fff; }
 /* The fish swims behind the pink coral (drawn in front of it, index.html), across the
    sea from left to right (script.js moves it, darting away when the cursor comes close),
@@ -581,11 +581,12 @@ a:focus-visible { outline: 2px solid var(--white); outline-offset: 4px; }
 /* a soft full-width backdrop so the menu stays readable over whatever scrolls under it */
 .topbar::before {
   content: ""; position: absolute; z-index: -1; left: 0; right: 0; top: calc(-20px * var(--z)); height: calc(112px * var(--z));
-  background: rgba(26, 91, 164, .08); -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px);
+  /* no backdrop: the menu sits straight on the page */
+  display: none; background: none;
   -webkit-mask-image: linear-gradient(#000 55%, transparent); mask-image: linear-gradient(#000 55%, transparent);
   transition: background .35s;
 }
-.topbar.on-light::before { background: rgba(250, 250, 250, .78); }
+.topbar.on-light::before { background: none; -webkit-backdrop-filter: none; backdrop-filter: none; }
 .topbar a { pointer-events: auto; text-decoration: none; }
 .topbar-logo { position: absolute; left: calc(51px * var(--z)); top: 0; width: calc(67px * var(--z)); height: calc(62px * var(--z)); }
 .topbar-logo img { position: absolute; inset: 0; width: 100%; height: 100%; transition: opacity .35s; }
@@ -613,6 +614,8 @@ a:focus-visible { outline: 2px solid var(--white); outline-offset: 4px; }
 /* the empty tab that stays in the laptop as its screen (chameleon.js), on the screen glass */
 /* on the laptop the window is solid aquamarine (only the top bar keeps its details) */
 .laptop-tab .thumb { background: linear-gradient(#3EBDCD, #1A5BA4); }
+/* while it falls, the tab's frame fades into the laptop's gradient copy (chameleon.js --deep) */
+.wcard .lap-frame { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; opacity: var(--deep, 0); pointer-events: none; }
 /* while it falls, the tab's window deepens towards the same gradient (chameleon.js --deep) */
 .wcard.flying .thumb { background-image: linear-gradient(rgba(26, 91, 164, 0), rgba(26, 91, 164, var(--deep, 0))); }
 .laptop-tab { position: absolute; left: 29.55px; top: 115.05px; width: 449px; transform: rotate(-10.57deg); transform-origin: 0 0; pointer-events: none; cursor: default; }

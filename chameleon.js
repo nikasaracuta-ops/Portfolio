@@ -214,6 +214,8 @@
     const lapSvg = tabSvg('lap').replace(/currentColor/g, 'url(#lapGrad)')
       .replace('<path', '<defs><linearGradient id="lapGrad" x1="0" y1="0" x2="0" y2="497" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#3EBDCD"/><stop offset="1" stop-color="#1A5BA4"/></linearGradient></defs><path');
     screenTab.innerHTML = `<span class="win"><span class="thumb"></span>${lapSvg}</span>`;
+    // the falling tab carries the same gradient frame, faded in as it reaches the laptop
+    last.querySelector('.win').insertAdjacentHTML('beforeend', lapSvg.replace(/lapGrad/g, 'lapGrad2').replace('class="win-svg"', 'class="lap-frame"').replace(/tabM(\d)-lap/g, 'tabM$1-lap2'));
     laptop.insertBefore(screenTab, screenLink);
 
     // where the screen glass is right now: its corner (sunset coords) and its angle
@@ -233,7 +235,7 @@
       last.classList.toggle('flying', p > 0);
       workStage.classList.toggle('let-go', p > 0);   // on phones the chameleon steps aside
       if (p <= 0) {
-        last.style.transform = last.style.opacity = '';
+        last.style.transform = last.style.opacity = ''; last.style.setProperty('--deep', 0);
         last.style.setProperty('--tab', LAST.tab); last.style.setProperty('--c', LAST.tint || LAST.hex);
         if (lastImg) lastImg.style.opacity = '';
       } else {

@@ -10,7 +10,8 @@
   const [farEl, bodyEl, nearEl] = ['birdFar', 'birdBody', 'birdNear'].map((id) => document.getElementById(id));
 
   // flight path on the 692 x 291 canvas (the GIF's own route), left low to right high
-  const P = [[20, 262], [71, 241], [151, 245], [222, 216], [303, 159], [404, 153], [517, 82], [634, 102], [700, 70]];
+  // it starts and ends well outside the screen, so it never fades in or out where you can see it
+  const P = [[-150, 300], [-40, 268], [71, 241], [151, 245], [222, 216], [303, 159], [404, 153], [517, 82], [634, 102], [740, 62], [860, 20]];
   const cr = (a, b, c, d, t) => .5 * (2 * b + (c - a) * t + (2 * a - 5 * b + 4 * c - d) * t * t + (3 * b - a - 3 * c + d) * t * t * t);
   function route(u) { // u in 0..1 over the whole path
     const s = u * (P.length - 1), i = Math.min(P.length - 2, Math.floor(s)), t = s - i;
@@ -76,7 +77,7 @@
 
   if (matchMedia('(prefers-reduced-motion: reduce)').matches) { draw(.45, .6, 1, 1); return; }
 
-  const FLIGHT = 11;   // seconds to cross at calm speed
+  const FLIGHT = 14;   // seconds to cross at calm speed
   const REST = 1.2;    // pause off-screen before the next pass
   const FLAPS = 4, GLIDE = 1.1; // beats per burst, seconds of glide between bursts
   let u = 0, phase = -Math.PI / 2, glide = 0, glideLeft = 0, flaps = 0, rest = 0;
@@ -108,7 +109,7 @@
         if (++flaps >= FLAPS && !near) glideLeft = GLIDE;
       }
     }
-    const alpha = Math.min(1, u / .05, (1 - u) / .06);
+    const alpha = 1;   // the path's ends are off screen
     pos = draw(u, phase, glide, Math.max(0, alpha));
     requestAnimationFrame(tick);
   }
