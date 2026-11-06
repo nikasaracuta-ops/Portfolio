@@ -187,7 +187,7 @@ def dior_main(p):
           <span class="d-lights" aria-hidden="true"><i></i><i></i><i></i></span>
           <div class="d-browser-addr"><span class="d-addr">{url}</span></div>
         </div>
-        <div class="d-panes d-live" data-src="{html.escape(cta[1])}?autoplay"></div>
+        <div class="d-panes d-live" data-src="{html.escape(cta[1])}"></div>
         {badge}
       </div>
     </section>

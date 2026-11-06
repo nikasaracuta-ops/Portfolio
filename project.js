@@ -77,8 +77,8 @@ if (sw && swatches.length) {
   }));
 }
 
-// Dior: the live prototype loads in the browser window once the section comes near.
-// "?autoplay" asks the prototype to scroll itself (it needs the small listener on its side).
+// Dior: the live prototype loads in the browser window once the section comes near;
+// visitors scroll it themselves.
 const live = document.querySelector('.d-live');
 if (live) {
   const load = () => {
