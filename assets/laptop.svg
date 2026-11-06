@@ -3,7 +3,7 @@
 <rect y="90.4604" width="493.166" height="363.346" rx="18.9338" transform="rotate(-10.5695 0 90.4604)" fill="white"/>
 </g>
 <g filter="url(#filter1_f_745_85)">
-<rect x="29.5547" y="115.047" width="449.014" height="305.232" rx="18.9338" transform="rotate(-10.5695 29.5547 115.047)" fill="#3EBDCD"/>
+<rect x="29.5547" y="115.047" width="449.014" height="305.232" rx="18.9338" transform="rotate(-10.5695 29.5547 115.047)" fill="url(#lapScreen)"/>
 </g>
 <g filter="url(#filter2_f_745_85)">
 <path d="M80.1945 462.21C71.0477 451.083 77.1825 434.223 91.3412 431.576L539.747 347.741C545.204 346.72 550.835 348.147 555.148 351.642L717.942 483.579C730.483 493.743 725.368 513.933 709.5 516.9L213.995 609.54C207.21 610.809 200.272 608.284 195.889 602.952L80.1945 462.21Z" fill="url(#paint0_linear_745_85)"/>
@@ -129,6 +129,7 @@
 <path d="M345.695 463.478C343.596 461.338 344.698 457.723 347.634 457.118L368.38 452.839C369.67 452.573 371.006 452.997 371.907 453.958L376.607 458.972C378.631 461.131 377.507 464.673 374.609 465.27L354.045 469.512C352.784 469.772 351.478 469.374 350.577 468.455L345.695 463.478Z" fill="#3EBDCD"/>
 </g>
 <defs>
+<linearGradient id="lapScreen" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#3EBDCD"/><stop offset="1" stop-color="#1A5BA4"/></linearGradient>
 <filter id="filter0_f_745_85" x="0.443488" y="0.443488" width="550.558" height="446.754" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
 <feFlood flood-opacity="0" result="BackgroundImageFix"/>
 <feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape"/>

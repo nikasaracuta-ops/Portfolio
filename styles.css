@@ -37,7 +37,7 @@ body {
 .stage {
   position: relative;
   width: 1440px;
-  height: 6334px;
+  height: 6034px;
   overflow: clip;   /* not hidden: that would stop the sticky chameleon */
   /* the sky: the Figma gradient (1751px tall, blurred edges) drawn in CSS, with the
      Figma hero clouds on top (clouds-hero.png); the sea below is drawn in code */
@@ -98,7 +98,7 @@ body {
    the blue cloud bank parts left and right, then the shape sinks out of sight */
 .sky-puff, .clouds-px { pointer-events: none; }
 .pin-fog { position: absolute; left: 0; top: 0; width: 1440px; height: 1500px; pointer-events: none; transform: translateY(1500px);
-  background: linear-gradient(rgba(255, 255, 255, 0), rgba(255, 255, 255, .35) 180px, rgba(255, 255, 255, .8) 360px, #fff 520px); }
+  background: linear-gradient(rgba(255, 255, 255, 0), rgba(255, 255, 255, .08) 120px, rgba(255, 255, 255, .25) 260px, rgba(255, 255, 255, .5) 400px, rgba(255, 255, 255, .78) 540px, rgba(255, 255, 255, .94) 660px, #fff 760px); }
 .sky-puff { transform-origin: 50% 100%; }
 /* the two halves cross-fade over the middle third, so parting them leaves no seam */
 .clouds-l { -webkit-mask-image: linear-gradient(to right, #000 33%, transparent 67%); mask-image: linear-gradient(to right, #000 33%, transparent 67%); }
@@ -613,6 +613,8 @@ a:focus-visible { outline: 2px solid var(--white); outline-offset: 4px; }
 /* the empty tab that stays in the laptop as its screen (chameleon.js), on the screen glass */
 /* on the laptop the window is solid aquamarine (only the top bar keeps its details) */
 .laptop-tab .thumb { background: linear-gradient(#3EBDCD, #1A5BA4); }
+/* while it falls, the tab's window deepens towards the same gradient (chameleon.js --deep) */
+.wcard.flying .thumb { background-image: linear-gradient(rgba(26, 91, 164, 0), rgba(26, 91, 164, var(--deep, 0))); }
 .laptop-tab { position: absolute; left: 29.55px; top: 115.05px; width: 449px; transform: rotate(-10.57deg); transform-origin: 0 0; pointer-events: none; cursor: default; }
 #screen { transition: opacity .5s; }
 #screen.off { opacity: 0; pointer-events: none; }

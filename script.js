@@ -31,7 +31,7 @@ function placeFooter() {
   if (!contact) return;
   const z = parseFloat(stage.style.zoom) || 1;
   const shift = MOBILE.matches ? 0 : Math.max(0, Math.min(150, 866 - innerHeight / z));
-  contact.style.top = MOBILE.matches ? '' : `${5544 + shift}px`;
+  contact.style.top = MOBILE.matches ? '' : `${5244 + shift}px`;
 }
 
 // Sticky menu: slides in once the menu at the top has scrolled away (always on phones)
@@ -112,7 +112,7 @@ if (sparkle && matchMedia('(hover: hover) and (pointer: fine)').matches) {
 // lets go and Work scrolls up.
 const about = document.getElementById('about');
 const puff = document.getElementById('skyPuff');
-const cloudsL = document.getElementById('cloudsL'), cloudsR = document.getElementById('cloudsR'), fog = document.getElementById('pinFog');
+const cloudsL = document.getElementById('cloudsL'), cloudsR = document.getElementById('cloudsR'), fog = document.getElementById('pinFog'), qmark = document.querySelector('#about .qbtn');
 const PIN_TOP = 459, PIN_BOTTOM = 1720, HOLD = 380;
 const LEAD = 150;   // the transition starts this much scrolling before the scene pins
 const PUFF_CX = 631.4 + 763 / 2;                        // the shape's centre line on the stage
@@ -135,6 +135,7 @@ function moveSky() {
   about.style.opacity = fade ? (1 - fade).toFixed(3) : '';
   about.style.transform = !reduceMotion.matches && t ? `translateY(${(-260 * ramp(t, 0, .58)).toFixed(1)}px)` : '';
   about.style.visibility = fade >= 1 ? 'hidden' : '';
+  if (qmark) qmark.style.opacity = t > .3 ? (1 - ramp(t, .3, .42)).toFixed(3) : '';
   const move = !reduceMotion.matches;
   const cx = 420 * part, cy = -200 * part;
   cloudsL.style.transform = move && part ? `translate(${-cx}px, ${cy}px)` : '';
@@ -148,7 +149,7 @@ function moveSky() {
   // white mist rises from below while the shape sinks: by the time the scene lets go the
   // lower part of the screen is already white, so Work follows without a long purple stretch
   if (fog) {
-    const end = (PIN_BOTTOM - PIN_TOP) - vh * .75, k = ramp(t, .42, 1);
+    const end = (PIN_BOTTOM - PIN_TOP) - vh * 1.05, k = ramp(t, .42, 1);
     fog.style.transform = `translateY(${(1500 - (1500 - end) * k).toFixed(1)}px)`;
   }
 }
@@ -207,7 +208,7 @@ function toneNav() {
   const r = topbar.getBoundingClientRect(), y = r.top + r.height / 2;   // the menu's line on screen
   const art = sunsetArt.getBoundingClientRect();
   const z = MOBILE.matches ? 1 : parseFloat(stage.style.zoom) || 1;
-  topbar.classList.toggle('on-light', work.getBoundingClientRect().top - 280 * z <= y && art.top + art.height * .64 > y);
+  topbar.classList.toggle('on-light', work.getBoundingClientRect().top - 620 * z <= y && art.top + art.height * .64 > y);
   // current section: the last one whose top has passed 40% of the screen
   let cur = -1;
   navSections.forEach((el, i) => { if (el && el.getBoundingClientRect().top <= innerHeight * .4) cur = i; });

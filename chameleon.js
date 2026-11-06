@@ -109,19 +109,28 @@
 
   // switching project: pull the tongue back first, then shoot it at the new one
   let target = -1, pending = -1, ext = 0, goal = 0;
+  let speed = 0, lastY = scrollY, fast = false, pinkNow = false;
   function activate(i) {
     if (i === pending || (i === target && pending < 0)) return;
     cards.forEach((c, j) => c.classList.toggle('active', j === i));
     if (target >= 0) cards[target].classList.remove('stuck');
     // the chameleon, its branch and tongue take the colour of the project's tab
-    document.documentElement.style.setProperty('--cham', PROJECTS[i].tab);
+    if (!fast) document.documentElement.style.setProperty('--cham', PROJECTS[i].tab);
     nowName.textContent = `Now viewing: ${PROJECTS[i].name}`;
     pending = i; goal = 0;
   }
   activate(0);
 
+  // scrolling fast: the chameleon stays its default pink and keeps its tongue in; once the
+  // page slows down it catches whichever project is in the middle of the screen
+  const FAST = 1800;   // px per second
+  const middleCard = () => {
+    let best = -1, d = 1e9;
+    cards.forEach((c, j) => { const r = c.getBoundingClientRect(), dd = Math.abs(r.top + r.height / 2 - innerHeight / 2); if (dd < d) { d = dd; best = j; } });
+    return best;
+  };
   const io = new IntersectionObserver(entries => {
-    entries.forEach(e => { if (e.isIntersecting) activate(cards.indexOf(e.target)); });
+    entries.forEach(e => { if (e.isIntersecting && !fast) activate(cards.indexOf(e.target)); });
   }, { rootMargin: '-45% 0px -45% 0px' });
   cards.forEach(c => io.observe(c));
 
@@ -133,14 +142,24 @@
   let last = performance.now();
   function frame(now) {
     const dt = Math.min(.05, (now - last) / 1000); last = now;
-    if (goal === 0 && ext <= 0 && pending >= 0) { target = pending; pending = -1; goal = 1; }
+    // the scroll speed reacts at once and calms down over about half a second
+    speed = Math.max(Math.abs(scrollY - lastY) / Math.max(dt, .001), speed * Math.exp(-dt * 5)); lastY = scrollY;
+    const wasFast = fast;
+    fast = !reduce && speed > FAST;
+    if (fast && ext <= 0 && !pinkNow) { document.documentElement.style.setProperty('--cham', '#E770B2'); pinkNow = true; }
+    if (wasFast && !fast) {
+      pinkNow = false;
+      const m = middleCard();
+      if (m >= 0) { if (m === target && pending < 0) document.documentElement.style.setProperty('--cham', PROJECTS[m].tab); else activate(m); }
+    }
+    if (goal === 0 && ext <= 0 && pending >= 0 && !fast) { target = pending; pending = -1; goal = 1; }
     if (target >= 0 && pending < 0) {
       const r = cards[target].getBoundingClientRect();
       // let go when the project leaves the screen (or before the chameleon has appeared);
       // on desktop the tongue only shoots straight across, so the tab must be level with the mouth
       const my = centre(mouth).y, th = cards[target].querySelector('.thumb').getBoundingClientRect();
       const level = PHONE.matches || (my > th.top + 20 && my < th.bottom - 20);
-      goal = r.bottom > 0 && r.top < innerHeight && level && !hidden() && !cards[target].classList.contains('flying') ? 1 : 0;
+      goal = !fast && r.bottom > 0 && r.top < innerHeight && level && !hidden() && !cards[target].classList.contains('flying') ? 1 : 0;
     }
     if (reduce) ext = goal;
     else if (goal > ext) ext = Math.min(1, ext + dt / .2);
@@ -191,7 +210,10 @@
     screenTab.className = 'wcard active laptop-tab';
     screenTab.setAttribute('aria-hidden', 'true');
     screenTab.style.setProperty('--tab', `rgb(${TEAL})`); screenTab.style.setProperty('--c', `rgb(${TEAL})`);
-    screenTab.innerHTML = `<span class="win"><span class="thumb"></span>${tabSvg('lap')}</span>`;
+    // the laptop's tab: frame and screen in one gradient, aquamarine to blue, like the laptop screen
+    const lapSvg = tabSvg('lap').replace(/currentColor/g, 'url(#lapGrad)')
+      .replace('<path', '<defs><linearGradient id="lapGrad" x1="0" y1="0" x2="0" y2="497" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#3EBDCD"/><stop offset="1" stop-color="#1A5BA4"/></linearGradient></defs><path');
+    screenTab.innerHTML = `<span class="win"><span class="thumb"></span>${lapSvg}</span>`;
     laptop.insertBefore(screenTab, screenLink);
 
     // where the screen glass is right now: its corner (sunset coords) and its angle
@@ -224,6 +246,7 @@
         const c = clamp((p - .2) / .6, 0, 1);
         last.style.setProperty('--tab', mix(lastTab, TEAL, c));
         last.style.setProperty('--c', mix(WHITE, TEAL, c));
+        last.style.setProperty('--deep', c.toFixed(3));
         last.style.opacity = 1 - clamp((p - .94) / .04, 0, 1);
       }
       // it hands over to the identical tab inside the laptop, which then rides along with it
