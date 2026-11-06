@@ -75,8 +75,10 @@ PROJECTS = [
 ]
 
 def pills(tags):
-    """Tags as filled pills in the page's colour, with a small star between them."""
-    return '<span class="d-dot" aria-hidden="true"></span>'.join(f'<span class="pill">{t}</span>' for t in tags)
+    """Tags as filled pills in the page's colour, two per row with a small star between them."""
+    star = '<span class="d-dot" aria-hidden="true"></span>'
+    pill = lambda t: f'<span class="pill">{t}</span>'
+    return ''.join(f'<span class="pill-row">{star.join(pill(t) for t in tags[i:i + 2])}</span>' for i in range(0, len(tags), 2))
 
 def ink(src, w, h, alt):
     """A heading set live in The Seasons (Adobe Fonts), in the page's accent colour.
@@ -116,8 +118,8 @@ def step(s, i):
 
 def dior_main(p):
     """Dior, after the Figma frame 846:133: the title with the site on desktop and mobile,
-    the facts, the brief, the visual style (styleboard + palette switch) and the result as
-    a browser window with a tab per part of the story, plus a tab with the live site."""
+    the facts, the brief, the visual style (styleboard + palette switch) and the result:
+    the live prototype in a browser window."""
     star = '<svg class="d-star" viewBox="0 0 100 100" aria-hidden="true"><polygon points="50.0,2.0 58.7,12.0 70.8,6.8 74.3,19.5 87.5,20.1 85.1,33.1 96.8,39.3 89.0,50.0 96.8,60.7 85.1,66.9 87.5,79.9 74.3,80.5 70.8,93.2 58.7,88.0 50.0,98.0 41.3,88.0 29.2,93.2 25.7,80.5 12.5,79.9 14.9,66.9 3.2,60.7 11.0,50.0 3.2,39.3 14.9,33.1 12.5,20.1 25.7,19.5 29.2,6.8 41.3,12.0"/></svg>'
     tools = ''.join(f'<li title="{name}">{star}<img src="{src}" width="48" height="48" alt="{name}"></li>' for src, name in p['tools'])
     facts = (f'<div><dt>Year</dt><dd class="d-year">{p["year"]}</dd></div>'
@@ -129,19 +131,7 @@ def dior_main(p):
     pal = ''.join(f'<li style="--c:{pa[k]}" data-a="{pa[k]}" data-b="{pb[k] if k < len(pb) else ""}"></li>' for k in range(len(pa)))
     d, m, sb = p['desktop'], p['mobile'], p['styleboard']
     shot = window(*d, p['tab']).replace('</figure>', f'  <span class="d-url" aria-hidden="true">{p["url"]}</span>\n      </figure>', 1)
-    screens, url, cta = p['screens'], p['url'], p['cta']
-    n = len(screens)
-    tabs = ''.join(
-        f'\n            <button class="d-btab" role="tab" id="dtab{k}" aria-controls="dpane{k}" aria-selected="{"true" if k == 0 else "false"}" tabindex="{0 if k == 0 else -1}"><span>{lab}</span></button>'
-        for k, (src, iw, ih, alt, lab) in enumerate(screens))
-    tabs += (f'\n            <button class="d-btab d-btab-live" role="tab" id="dtab{n}" aria-controls="dpane{n}" aria-selected="false" tabindex="-1">'
-             '<span class="d-live-dot" aria-hidden="true"></span><span>Live prototype</span></button>')
-    panes = ''.join(
-        f'\n          <div class="d-pane{" on" if k == 0 else ""}" role="tabpanel" id="dpane{k}" aria-labelledby="dtab{k}">'
-        f'<button class="d-pane-shot" data-zoom aria-label="Enlarge: {html.escape(alt)}"><img class="on" src="{src}" width="{iw}" height="{ih}" alt="{html.escape(alt)}" loading="lazy"></button></div>'
-        for k, (src, iw, ih, alt, lab) in enumerate(screens))
-    panes += (f'\n          <div class="d-pane d-pane-live" role="tabpanel" id="dpane{n}" aria-labelledby="dtab{n}" data-src="{html.escape(cta[1])}">'
-              f'<p class="d-live-note">Scroll inside the window to try the story, or <a href="{html.escape(cta[1])}" target="_blank" rel="noopener">open it in a new tab ↗</a></p></div>')
+    url, cta = p['url'], p['cta']
     link = (ROOT / 'assets/dior/icon-link.svg').read_text().replace('fill="white"', 'fill="currentColor"').replace('<svg ', '<svg class="d-cta-icon" aria-hidden="true" ', 1)
     badge = (f'<a class="d-badge" href="{html.escape(cta[1])}" target="_blank" rel="noopener" aria-label="{cta[0]} (opens the website)">'
              f'<svg class="d-badge-ring" viewBox="0 0 120 120" aria-hidden="true"><defs><path id="badgeRing" d="M60 60m-44 0a44 44 0 1 1 88 0a44 44 0 1 1-88 0"/></defs>'
@@ -191,15 +181,13 @@ def dior_main(p):
     <!-- The Result: a browser window with a tab per part of the story, and one with the live site -->
     <section class="p-result d-result" aria-labelledby="result-h">
       <h2 class="p-h reveal" id="result-h">{ink("", 0, 0, "The Result")}</h2>
+      <!-- the live prototype in a browser window; it loads when the section comes near -->
       <div class="d-browser reveal" style="--tab:{p["tab"]}">
         <div class="d-browser-bar">
           <span class="d-lights" aria-hidden="true"><i></i><i></i><i></i></span>
-          <div class="d-btabs" role="tablist" aria-label="Parts of the story">{tabs}
-          </div>
+          <div class="d-browser-addr"><span class="d-addr">{url}</span></div>
         </div>
-        <div class="d-browser-addr"><span class="d-addr">{url}</span></div>
-        <div class="d-panes">{panes}
-        </div>
+        <div class="d-panes d-live" data-src="{html.escape(cta[1])}?autoplay"></div>
         {badge}
       </div>
     </section>

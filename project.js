@@ -77,29 +77,18 @@ if (sw && swatches.length) {
   }));
 }
 
-// Dior: the result window, a tab for each part of the story and one with the live site
-// (loaded only when that tab is first opened)
-const browser = document.querySelector('.d-browser');
-if (browser) {
-  const tabs = [...browser.querySelectorAll('.d-btab')], panes = [...browser.querySelectorAll('.d-pane')];
-  const open = (i, focus) => {
-    tabs.forEach((t, k) => { t.setAttribute('aria-selected', k === i); t.tabIndex = k === i ? 0 : -1; });
-    panes.forEach((p, k) => p.classList.toggle('on', k === i));
-    const live = panes[i];
-    if (live.dataset.src && !live.querySelector('iframe')) {
-      const f = document.createElement('iframe');
-      f.src = live.dataset.src; f.title = 'The live Dior story'; f.loading = 'lazy';
-      live.prepend(f);
-      f.addEventListener('pointerenter', () => live.classList.add('used'), { once: true });
-    }
-    if (focus) tabs[i].focus();
-    tabs[i].scrollIntoView({ block: 'nearest', inline: 'nearest' });
+// Dior: the live prototype loads in the browser window once the section comes near.
+// "?autoplay" asks the prototype to scroll itself (it needs the small listener on its side).
+const live = document.querySelector('.d-live');
+if (live) {
+  const load = () => {
+    if (live.querySelector('iframe')) return;
+    const f = document.createElement('iframe');
+    f.src = live.dataset.src; f.title = 'The live Dior story'; f.loading = 'lazy';
+    live.append(f);
   };
-  tabs.forEach((t, k) => t.addEventListener('click', () => open(k)));
-  browser.querySelector('.d-btabs').addEventListener('keydown', (e) => {
-    const i = tabs.findIndex((t) => t.getAttribute('aria-selected') === 'true');
-    const to = { ArrowRight: i + 1, ArrowLeft: i - 1, Home: 0, End: tabs.length - 1 }[e.key];
-    if (to === undefined) return;
-    e.preventDefault(); open((to + tabs.length) % tabs.length, true);
-  });
+  if ('IntersectionObserver' in window) {
+    const io = new IntersectionObserver((es) => { if (es.some((e) => e.isIntersecting)) { load(); io.disconnect(); } }, { rootMargin: '600px 0px' });
+    io.observe(live);
+  } else load();
 }
