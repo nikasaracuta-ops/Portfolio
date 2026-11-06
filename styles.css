@@ -1,7 +1,7 @@
 /* ---------- Fonts ----------
-   The Seasons, Roc Grotesk and Area Inktrap come from Adobe Fonts (web project gfn8yzd,
-   loaded in each page's <head>), so every visitor gets them. Archivo and the other
-   Google fonts stay in each stack as fallbacks. Display headings are outlined SVGs. */
+   Only four typefaces: The Seasons and Roc Grotesk from Adobe Fonts (web project gfn8yzd),
+   Avenir Next (Adobe's Avenir Next LT Pro once it is in that project; Macs have it built
+   in) and Wasted Vindey from cdnfonts. All linked in each page's <head>. */
 
 :root {
   /* the Figma sky (717:48952): #1A5BA4 to #E770B2, a rect from y 0 to 1751 (x -70 to 1478)
@@ -9,8 +9,10 @@
      last of the blur is eased out by y 1940, before the pinned About scene ends (y 1959). */
   --sky-v: linear-gradient(rgb(140,173,210) 0px, rgb(112,151,197) 40px, rgb(87,132,187) 80px, rgb(69,116,178) 120px, rgb(57,106,172) 160px, rgb(51,99,169) 200px, rgb(50,96,167) 240px, rgb(51,95,166) 280px, rgb(53,94,166) 320px, rgb(56,94,166) 360px, rgb(59,94,166) 400px, rgb(62,95,166) 440px, rgb(66,95,167) 480px, rgb(69,95,167) 520px, rgb(72,96,167) 560px, rgb(75,96,167) 600px, rgb(79,96,168) 640px, rgb(82,97,168) 680px, rgb(85,97,168) 720px, rgb(89,97,168) 760px, rgb(92,98,168) 800px, rgb(95,98,169) 840px, rgb(98,98,169) 880px, rgb(102,99,169) 920px, rgb(105,99,169) 960px, rgb(108,99,170) 1000px, rgb(112,100,170) 1040px, rgb(115,100,170) 1080px, rgb(118,100,170) 1120px, rgb(121,101,171) 1160px, rgb(125,101,171) 1200px, rgb(128,101,171) 1240px, rgb(131,102,171) 1280px, rgb(135,102,171) 1320px, rgb(138,103,172) 1360px, rgb(141,103,172) 1400px, rgb(145,104,172) 1440px, rgb(149,105,173) 1480px, rgb(153,107,174) 1520px, rgb(159,112,177) 1560px, rgb(167,119,181) 1600px, rgb(177,130,187) 1640px, rgb(189,145,195) 1680px, rgb(203,166,207) 1720px, rgb(222,196,223) 1760px, rgb(238,224,238) 1800px, rgb(249,243,248) 1840px, rgb(253,252,253) 1880px, rgb(255,255,255) 1920px, rgb(255,255,255) 1940px);
   --sky-h: linear-gradient(to right, rgba(255,255,255,0.272) 0px, rgba(255,255,255,0.218) 20px, rgba(255,255,255,0.170) 40px, rgba(255,255,255,0.130) 60px, rgba(255,255,255,0.097) 80px, rgba(255,255,255,0.070) 100px, rgba(255,255,255,0.050) 120px, rgba(255,255,255,0.034) 140px, rgba(255,255,255,0.023) 160px, rgba(255,255,255,0.015) 180px, rgba(255,255,255,0.010) 200px, rgba(255,255,255,0.004) 240px, rgba(255,255,255,0.001) 280px, rgba(255,255,255,0) 50%, rgba(255,255,255,0.003) 1160px, rgba(255,255,255,0.008) 1200px, rgba(255,255,255,0.020) 1240px, rgba(255,255,255,0.029) 1260px, rgba(255,255,255,0.043) 1280px, rgba(255,255,255,0.061) 1300px, rgba(255,255,255,0.085) 1320px, rgba(255,255,255,0.116) 1340px, rgba(255,255,255,0.153) 1360px, rgba(255,255,255,0.198) 1380px, rgba(255,255,255,0.249) 1400px, rgba(255,255,255,0.307) 1420px, rgba(255,255,255,0.371) 1440px);
-  --font-ui: "roc-grotesk-wide", "Archivo", sans-serif;
-  --font-body: "area-inktrap-extended", "Archivo", sans-serif;
+  /* the only four typefaces on the site: Roc Grotesk (labels, UI), Avenir Next (body copy),
+     The Seasons (headings) and Wasted Vindey (big titles) */
+  --font-ui: "roc-grotesk-wide", sans-serif;
+  --font-body: "avenir-next-lt-pro", "Avenir Next", sans-serif;
 
   --white: #fff;
   --ice: #ecf5ff;
@@ -131,11 +133,11 @@ body::before {
 /* display titles set live in The Seasons (Adobe Fonts), sized as in the Figma file */
 .ttl { margin: 0; font-family: var(--f-seasons); font-weight: 700; font-style: normal; letter-spacing: 0; white-space: nowrap; }
 .ttl-hello { font-weight: 400; font-size: 128px; line-height: 1.25; color: #fff; }
-.ttl-work { font-size: 96px; line-height: 101px; color: var(--cham); }
+.ttl-work { font-size: 96px; line-height: 101px; color: #E770B2; }
 .ttl-open { font-size: 96px; line-height: 105px; color: #fff; text-align: center; }
 .ttl-open span { color: #D8FF66; }
 /* "Portfolio" and the "?" in Wasted Vindey (cdnfonts link in index.html), as in Figma */
-.ttl-vindey, .q-glyph { font-family: "Wasted Vindey", var(--f-seasons); font-weight: 400; font-style: normal; letter-spacing: 0; white-space: nowrap; }
+.ttl-vindey, .q-glyph { font-family: "Wasted Vindey", serif; font-weight: 400; font-style: normal; letter-spacing: 0; white-space: nowrap; }
 .ttl-portfolio { margin: 0; font-size: 391.46px; line-height: 1.027; color: #fff; }
 .q-glyph { display: block; font-size: 202.84px; line-height: 1.025; color: #FB72BE; }
 :where(.l):where(p, h1, h2, a, nav) { white-space: nowrap; color: var(--white); font-weight: 400; }
@@ -151,12 +153,15 @@ body::before {
 
 /* Hello: a light, clean sans with the key words in a serif italic that echoes "Hello," */
 .t-intro {
-  font: 400 20px/1.6 "Instrument Sans", system-ui, sans-serif;
+  font: 400 20px/1.6 var(--font-body);
   color: color-mix(in srgb, var(--ice) 88%, transparent);
   letter-spacing: .005em;
 }
 .t-intro p + p { margin-top: 22px; }
-.t-intro b { font: italic 400 1.22em/1 "Instrument Serif", var(--f-seasons); color: #fff; letter-spacing: 0; }
+b, strong { font-weight: 600; }
+body { font-family: var(--font-body); }
+button, input, select, textarea { font-family: inherit; }
+.t-intro b { font-weight: 600; color: #fff; }
 
 
 /* the sea (Figma 717:48893): #3EBDCD under a very soft top edge (Figma blur 194),
@@ -171,7 +176,7 @@ body::before {
    LinkedIn sit in frosted glass circles; a small copyright line under them */
 .t-email {
   display: block; text-align: center; color: var(--ice) !important;
-  font: 700 32px/40px var(--font-body); text-decoration: none;
+  font: 600 32px/40px var(--font-body); text-decoration: none;
   transition: transform .3s cubic-bezier(.3, 1.6, .5, 1);
 }
 .t-email span { display: inline-block; transition: transform .3s cubic-bezier(.3, 1.6, .5, 1); }
@@ -207,7 +212,7 @@ body::before {
 /* the Hello button: a soft glass pill with the pink arrow circle used across the site */
 .btn-hello {
   display: inline-flex; align-items: center; gap: 18px; width: auto; height: auto; padding: 7px 7px 7px 26px; border-radius: 999px;
-  font: 500 18px/1 "Instrument Sans", system-ui, sans-serif; letter-spacing: .01em; color: #fff; text-decoration: none;
+  font: 400 17px/1 var(--font-ui); letter-spacing: .01em; color: #fff; text-decoration: none;
   background: rgba(255, 255, 255, .16); border: 1px solid rgba(255, 255, 255, .45);
   -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px);
   box-shadow: 0 18px 36px -22px rgba(60, 40, 120, .6); transition: background .3s, border-color .3s;
@@ -229,8 +234,8 @@ a:focus-visible { outline: 2px solid var(--white); outline-offset: 4px; }
   --c-teal: #3BBDCC;
   --c-pink: #FB72BE;
   --c-body: #515151;
-  --f-seasons: "the-seasons", "Italiana", "Cormorant Garamond", "Didot", serif;
-  --f-label: "Unbounded", "Manrope", system-ui, sans-serif;
+  --f-seasons: "the-seasons", serif;
+  --f-label: var(--font-ui);
   --cham: #E770B2;
   --noise: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 .9 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
 }
@@ -459,7 +464,7 @@ a:focus-visible { outline: 2px solid var(--white); outline-offset: 4px; }
 .notes li:nth-child(2)::before { transition-delay: .15s; }
 .notes li:nth-child(3)::before { transition-delay: .3s; }
 .code { display: flex; flex-wrap: wrap; gap: 6px; justify-content: inherit; }
-.code code { font: .8rem ui-monospace, "SF Mono", Menlo, monospace; text-transform: none; padding: 4px 9px; border-radius: 8px; background: color-mix(in srgb, var(--c-teal) 18%, #fff); color: var(--c-blue); }
+.code code { font: .8rem var(--font-body); text-transform: none; padding: 4px 9px; border-radius: 8px; background: color-mix(in srgb, var(--c-teal) 18%, #fff); color: var(--c-blue); }
 .interests { display: flex !important; flex-wrap: wrap; gap: 8px; }
 .interests > span { display: inline-flex; align-items: center; gap: 6px; padding: 5px 12px 5px 8px; border-radius: 20px; background: color-mix(in srgb, #00FF59 14%, #fff); font-size: .74rem; }
 .interests > span:nth-child(2) { background: color-mix(in srgb, var(--c-teal) 18%, #fff); }

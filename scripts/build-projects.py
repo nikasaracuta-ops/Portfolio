@@ -18,7 +18,7 @@ PROJECTS = [
        year='2026', client='MoMu – Fashion Museum Antwerp', url='https://nikasaracuta.github.io/Integration-3/',
        tags=['UI/UX', 'Visual design', 'Web design', 'Web development'],
        tools=[('assets/dior/icon-ps.svg', 'Photoshop'), ('assets/dior/icon-figma.svg', 'Figma'), ('assets/dior/icon-procreate.webp', 'Procreate'),
-              ('assets/dior/icon-vscode.webp', 'Visual Studio Code'), ('assets/dior/icon-gsap.svg', 'GSAP')],
+              ('assets/dior/icon-vscode.webp', 'VS Code'), ('assets/dior/icon-gsap.svg', 'GSAP')],
        desktop=('assets/dior/site-desktop.webp', 2314, 1427, 'The Art of Dressmaking by Christian Dior, the homepage on desktop'),
        mobile=('assets/dior/site-mobile.webp', 729, 1253, 'The homepage on mobile'),
        lead='<b>MoMu</b>, the Fashion Museum of Antwerp, launched its new digital marketing plan with a series of <b>six interactive online stories</b>, each about a fashion designer.',
@@ -74,6 +74,10 @@ PROJECTS = [
        cta=('See Prototype', 'https://www.figma.com/proto/JhFdOzlcgGCV38btM2Tumv/Miles---Meals?page-id=6817%3A1887&node-id=59585-34744&viewport=-13885%2C-407%2C0.32&t=BZlwAt149MrtAhmE-1&scaling=min-zoom&content-scaling=fixed&starting-point-node-id=59585%3A34763&show-proto-sidebar=1')),
 ]
 
+def pills(tags):
+    """Tags as filled pills in the page's colour, with a small star between them."""
+    return '<span class="d-dot" aria-hidden="true">✦</span>'.join(f'<span class="pill">{t}</span>' for t in tags)
+
 def ink(src, w, h, alt):
     """A heading set live in The Seasons (Adobe Fonts), in the page's accent colour.
     (src, w, h are the old outlined Figma exports, kept in the data for reference.)"""
@@ -118,8 +122,8 @@ def dior_main(p):
     links to the site."""
     # the homepage's pink star, holding each tool's icon (it spins away on hover to show the name)
     star = '<svg class="d-star" viewBox="0 0 100 100" aria-hidden="true"><polygon points="50.0,2.0 58.7,12.0 70.8,6.8 74.3,19.5 87.5,20.1 85.1,33.1 96.8,39.3 89.0,50.0 96.8,60.7 85.1,66.9 87.5,79.9 74.3,80.5 70.8,93.2 58.7,88.0 50.0,98.0 41.3,88.0 29.2,93.2 25.7,80.5 12.5,79.9 14.9,66.9 3.2,60.7 11.0,50.0 3.2,39.3 14.9,33.1 12.5,20.1 25.7,19.5 29.2,6.8 41.3,12.0"/></svg>'
-    tools = ''.join(f'<li tabindex="0" aria-label="{name}">{star}<img src="{src}" width="48" height="48" alt=""><span class="d-tool-name" aria-hidden="true">{name}</span></li>' for src, name in p['tools'])
-    tags = '<span class="d-dot" aria-hidden="true">✦</span>'.join(f'<span>{t}</span>' for t in p['tags'])
+    tools = ''.join(f'<li>{star}<img src="{src}" width="48" height="48" alt=""><span class="d-tool-name">{name}</span></li>' for src, name in p['tools'])
+    tags = pills(p['tags'])
     facts = (f'<div><dt>Year</dt><dd>{p["year"]}</dd></div>'
              f'<div><dt>Client</dt><dd>{p["client"]}</dd></div>'
              f'<div><dt>Creative fields</dt><dd class="d-fields">{tags}</dd></div>'
@@ -220,7 +224,7 @@ def page(i, p):
     n = len(PROJECTS); prev, nxt = PROJECTS[(i - 1) % n], PROJECTS[(i + 1) % n]
     title = f'<span class="p-title-text">{p["title"][3] if p["title"] else p["title_text"]}</span>'
     facts = ''.join(f'<div><dt>{k}</dt><dd{" class=\"p-tools\"" if k == "Tools" else ""}>{v}</dd></div>' for k, v in p['facts'][:1])
-    facts += '<div><dt>Disciplines</dt><dd><ul class="p-tags">' + ''.join(f'<li>{t}</li>' for t in p['tags']) + '</ul></dd></div>'
+    facts += f'<div><dt>Disciplines</dt><dd class="d-fields">{pills(p["tags"])}</dd></div>'
     facts += ''.join(f'<div><dt>{k}</dt><dd{" class=\"p-tools\"" if k == "Tools" else ""}>{v}</dd></div>' for k, v in p['facts'][1:])
     brief = ''.join(f'\n        <p class="p-text reveal">{t}</p>' for t in p['brief'])
     num = 2
@@ -290,9 +294,7 @@ def page(i, p):
   <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
   <link rel="preconnect" href="https://use.typekit.net" crossorigin>
   <link rel="stylesheet" href="https://use.typekit.net/gfn8yzd.css">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@125,400;125,700&amp;family=Gloock&amp;display=swap">
+  <link rel="stylesheet" href="https://fonts.cdnfonts.com/css/wasted-vindey">
   <link rel="stylesheet" href="styles.css">
   <link rel="stylesheet" href="project.css">
   <script>document.documentElement.classList.add('js')</script>

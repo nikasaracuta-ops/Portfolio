@@ -43,15 +43,8 @@
 .p-facts > div + div { border-left: 1px solid color-mix(in srgb, var(--pink) 45%, transparent); }
 .p-facts dt { font: 14px/1 var(--font-ui); color: var(--blue); }
 .p-facts dd { font: 20px/1.2 var(--font-ui); }
-.p-tags { list-style: none; display: flex; flex-wrap: wrap; gap: 8px; }
-.p-tags li {
-  padding: 6px 16px; border: 1px solid var(--pink); border-radius: 999px;
-  font: 15px/20px var(--font-body); text-transform: uppercase; color: #363636; transition: background .25s, color .25s;
-}
-.p-tags li:hover { background: var(--pink); color: #fff; }
 .p-tools { display: flex; gap: 10px; }
-.p-tools img { display: block; width: 44px; height: 44px; transition: transform .35s cubic-bezier(.3, 1.6, .5, 1); }
-.p-tools img:hover { transform: translateY(-3px) rotate(-6deg); }
+.p-tools img { display: block; width: 44px; height: 44px; }
 
 /* the site in its browser tab; tilts a little towards the pointer (project.js) */
 .p-window {
@@ -76,7 +69,7 @@
 .p-num { display: block; font: 14px/1 var(--font-ui); letter-spacing: .12em; color: var(--blue); margin-bottom: 14px; }
 .p-text { font: 17px/1.7 var(--font-body); }
 .p-text + .p-text { margin-top: 18px; }
-.p-text b { font-weight: 700; }
+.p-text b { font-weight: 600; }
 
 /* process steps */
 .p-step + .p-step { margin-top: clamp(56px, 7vw, 88px); }
@@ -163,7 +156,7 @@
 .js .p-window.reveal { transition: opacity .9s ease var(--d, 0s), translate 1.1s cubic-bezier(.2, .8, .2, 1) var(--d, 0s), filter .9s ease var(--d, 0s), transform .4s ease-out; }
 
 /* titles without an outlined Figma export: live text in a close serif */
-.p-title-text { display: block; font: 700 clamp(64px, 9vw, 128px)/1 "the-seasons", "Gloock", serif; color: var(--pink); letter-spacing: -.01em; white-space: nowrap; }
+.p-title-text { display: block; font: 400 clamp(72px, 10vw, 150px)/1.1 "Wasted Vindey", serif; color: var(--pink); letter-spacing: 0; white-space: nowrap; }
 .p-title:has(.p-title-text) { width: auto; }
 /* a phone screen as the result */
 .p-phone { margin: clamp(28px, 4vw, 44px) auto 0; width: min(78%, 340px); padding: 10px; border-radius: 44px; background: var(--tab, #1A5BA4); box-shadow: 0 40px 70px -36px rgba(26, 91, 164, .55); }
@@ -181,7 +174,7 @@ h3 .p-ink { font-size: clamp(26px, 2.6vw, 37px); line-height: 1.1; }
 .d-title { margin-top: 14px; }
 .d-title .p-title-text { font-size: clamp(88px, 14vw, 200px); line-height: .9; }
 .d-sub { margin-top: 22px; display: grid; gap: 6px; font: clamp(17px, 1.6vw, 21px)/1.45 var(--font-body); color: var(--muted); }
-.d-sub b { font: 700 clamp(20px, 2vw, 26px)/1.25 var(--font-body); color: var(--ink); }
+.d-sub b { font: 600 clamp(20px, 2vw, 26px)/1.25 var(--font-body); color: var(--ink); }
 
 /* facts: year, client, creative fields and tools on a soft glass card, in the homepage's
    language: blue labels, pink stars, the tools sitting in the star flowers' heads */
@@ -194,24 +187,19 @@ h3 .p-ink { font-size: clamp(26px, 2.6vw, 37px); line-height: 1.1; }
 }
 .d-facts dt { font: 14px/1 var(--font-ui); color: var(--blue); }
 .d-facts dd { margin-top: 12px; font: clamp(17px, 1.5vw, 20px)/1.35 var(--font-ui); }
-.d-fields { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 10px; }
-.d-fields span:not(.d-dot) { white-space: nowrap; }
+.d-fields { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 10px; }
+.d-fields .pill { white-space: nowrap; padding: 6px 18px 7px; border-radius: 999px; background: var(--pink); color: #fff; font: 400 clamp(15px, 1.3vw, 18px)/1.2 var(--font-body); }
 .d-dot { color: var(--pink); font-size: .7em; }
 
-.d-tools { list-style: none; display: flex; flex-wrap: wrap; gap: 4px; margin-top: -6px; }
-.d-tools li { position: relative; display: grid; place-items: center; width: 62px; aspect-ratio: 1; outline: none; }
-.d-star { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; transition: transform .6s cubic-bezier(.3, 1.4, .4, 1), opacity .3s; }
+.d-tools { list-style: none; display: flex; flex-wrap: wrap; gap: 10px 6px; margin-top: -4px; }
+/* static: each tool's icon in a pink star, its name underneath */
+.d-tools li { display: grid; grid-template-rows: 62px auto; justify-items: center; align-items: center; gap: 6px; min-width: 62px; }
+.d-star { grid-area: 1 / 1; width: 62px; height: 62px; overflow: visible; }
 .d-star polygon { fill: var(--pink); stroke: var(--pink); stroke-width: 6; stroke-linejoin: round; }
 .d-tools li:nth-child(even) .d-star { transform: rotate(9deg); }
 .d-tools li:nth-child(3n) .d-star { transform: rotate(-6deg); }
-.d-tools img { position: relative; width: 46%; height: 46%; object-fit: contain; border-radius: 22%; box-shadow: 0 6px 12px -8px rgba(14, 63, 115, .6); transition: opacity .25s, transform .45s; }
-.d-tool-name {
-  position: absolute; left: 50%; top: 50%; translate: -50% -50%; white-space: nowrap; pointer-events: none;
-  font: 13px/1 var(--font-ui); color: var(--pink); opacity: 0; transform: scale(.7); transition: opacity .3s .1s, transform .45s cubic-bezier(.3, 1.4, .4, 1) .1s;
-}
-.d-tools li:hover .d-star, .d-tools li:focus-visible .d-star { transform: rotate(140deg) scale(.2); opacity: 0; }
-.d-tools li:hover img, .d-tools li:focus-visible img { opacity: 0; transform: scale(.6); }
-.d-tools li:hover .d-tool-name, .d-tools li:focus-visible .d-tool-name { opacity: 1; transform: none; }
+.d-tools img { position: relative; z-index: 1; grid-area: 1 / 1; align-self: center; width: 28px; height: 28px; object-fit: contain; border-radius: 22%; box-shadow: 0 6px 12px -8px rgba(14, 63, 115, .6); }
+.d-tool-name { grid-area: 2 / 1; font: 400 11px/1.2 var(--font-ui); color: var(--ink); text-align: center; white-space: nowrap; }
 
 /* the site on desktop, with the phone leaning on its corner */
 .d-devices { position: relative; width: 100%; padding: 0 0 12% 0; align-self: end; }
@@ -235,7 +223,7 @@ h3 .p-ink { font-size: clamp(26px, 2.6vw, 37px); line-height: 1.1; }
 .d-brief, .d-process { padding-top: clamp(80px, 11vw, 150px); }
 
 .d-lead { max-width: 30ch; font: clamp(24px, 3vw, 40px)/1.3 var(--font-body); }
-.d-lead b, .d-text b { color: var(--pink); font-weight: 700; }
+.d-lead b, .d-text b { color: var(--pink); font-weight: 600; }
 .d-text { max-width: 62ch; margin-top: 24px; font: 18px/1.7 var(--font-body); }
 /* process steps: heading and note side by side, the image full width below */
 .d-step + .d-step { margin-top: clamp(64px, 8vw, 110px); }
@@ -299,7 +287,7 @@ h3 .p-ink { font-size: clamp(26px, 2.6vw, 37px); line-height: 1.1; }
   .d-style { grid-template-columns: 1fr; }
 }
 @media (max-width: 640px) {
-  .d-tools li { width: 54px; }
+  .d-tools li { width: 58px; }
   .d-devices { padding-bottom: 18%; }
   .d-badge { right: 0; bottom: -8%; }
 }
