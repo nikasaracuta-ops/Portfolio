@@ -3,6 +3,7 @@
 PROJECTS list below and one shared template, so they all share the same structure.
 Edit the texts here, then run:  python3 scripts/build-projects.py && scripts/bump-versions.sh"""
 import html, pathlib, re
+from urllib.parse import quote
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 
@@ -11,7 +12,7 @@ ROOT = pathlib.Path(__file__).resolve().parent.parent
 TAB = re.search(r"const tabSvg = i => `(<svg[\s\S]*?</svg>)`", (ROOT / 'chameleon.js').read_text()).group(1)
 
 PROJECTS = [
-  dict(file='dior.html', name='Dior', tab='#E770B2', layout='dior',
+  dict(file='dior.html', name='Dior', tab='#E770B2', layout='dior', live='site',
        title=None, title_text='Dior',
        lede='MoMu – Dress to Impress: an interactive longread for MoMu – Fashion Museum Antwerp',
        subtitle=('MoMu – Dress to Impress', 'An interactive longread for MoMu – Fashion Museum Antwerp'),
@@ -39,36 +40,66 @@ PROJECTS = [
        facts=[], steps=[], result=None, site=('assets/dior/site-desktop.webp', 2314, 1427, ''),
        cta=('See Prototype', 'https://nikasaracuta.github.io/Integration-3/')),
   dict(file='moea.html', name='Moea', tab='#3EBDCD',
-       title=None, title_text='MOEA',
+       layout='dior',
+       subtitle=('Moea – Mother Earth', 'An animated 3D website hero for a sustainable fashion brand'),
+       year='2025', client='Moea', url='',   # TO CONFIRM: year
+       tools=[('assets/moea/icon-blender.svg', 'Blender')],
+       desktop=('assets/moea/site.webp', 2000, 1240, 'The Moea homepage with its 3D hero'),
+       mobile=('assets/dior/site-mobile.webp', 729, 1253, 'Placeholder phone (Dior) until the Moea mobile screen is added'),   # PLACEHOLDER
+       lead='A client has heard that <b>3D is the next big thing on the web</b> and wants it on their website as a <b>promotional header</b>.',
+       brief=['Imagining I worked at a design agency, I could pick the brand myself, so I chose a responsible one: <b>Moea</b>, short for <b>Mother Earth</b>, a label that rethinks how fashion is made, with respect for the planet.<br>The hero had to tell a <b>visual concept</b>, a little world built around the product, and <b>couldn’t be static</b>: animation brings it to life. I designed and animated it in <b>Blender</b>.'],
+       palettes=[('Styleboard', ['#FFF4DC', '#FFBCD1', '#B96E85', '#86A4AE', '#6D6D6D', '#3B3B3B']),   # PLACEHOLDER (Dior)
+                 ('Final website', ['#FFFFFF', '#B69EF9', '#29829D', '#005568', '#1B1B3A'])],
+       styleboard=('assets/dior/styleboard.webp', 2400, 1697, 'Placeholder styleboard (Dior) until the Moea styleboard is added', 'Before modelling in Blender, a mood and styleboard showed the client where the little world around the product was heading.'),   # PLACEHOLDER image
+       live=None,
+              title=None, title_text='MOEA',
        lede='An animated 3D website hero for Moea, a sustainable fashion brand',
        facts=[('Made with', 'Blender'), ('Status', 'Case study in progress')],
        tags=['3D design', 'Animation', 'Web design'],
        site=('assets/moea/site.webp', 2000, 1240, 'The Moea homepage with its 3D hero'),
-       brief=['Imagine working at a design agency for brands big and small: a client has heard that <b>3D is the next big thing on the web</b> and wants it on their website as a <b>promotional header</b>. I could pick the brand myself, so I chose a responsible one: <b>Moea</b>, short for <b>Mother Earth</b>, a label that rethinks how fashion is made, with respect for the planet.',
-              'The hero had to tell a <b>visual concept</b>, a little world built around the product, didn’t need to be photorealistic, and <b>couldn’t be static</b>: animation brings it to life. I designed and animated it in <b>Blender</b>, starting from a mood and styleboard so the client could see where it was heading.'],
        steps=[], result=None, cta=None),
   dict(file='type01.html', name='Type01', tab='#E770B2',
-       title=('assets/type01/type-type01.svg', 412, 92, 'TYPE01'),
+       layout='dior', title_text='TYPE01',
+       subtitle=('TYPE01 Conference', 'A conference website for desktop and mobile'),
+       year='2025', client='TYPE01 Magazine', url='TYPE01 prototype',
+       tools=[('assets/type01/icon-ps.svg', 'Photoshop'), ('assets/type01/icon-figma.svg', 'Figma')],
+       desktop=('assets/type01/site.webp', 2000, 1280, 'The TYPE01 conference homepage'),
+       mobile=('assets/dior/site-mobile.webp', 729, 1253, 'Placeholder phone (Dior) until the TYPE01 mobile screen is added'),   # PLACEHOLDER
+       lead='<b>TYPE01 Magazine</b>, a publication for graphic designers and typographers, was hosting its first-ever <b>conference</b>: two days in London on typography in print, motion design and branding.',
+       brief=['My task was to design a responsive <b>conference website</b> for desktop and mobile that fits TYPE01’s identity but takes a <b>bolder approach</b>. Text and photos of the speakers were already provided.'],
+       palettes=[('Light', ['#FFFFFF', '#D3D8D3', '#BA9BB2', '#7B9D88', '#2F643D']),
+                 ('Dark', ['#FFFFFF', '#FFADE7', '#C6E3D2', '#006A30', '#000000'])],
+       styleboard=('assets/type01/styleboard-light.webp', 563, 361, 'Styleboard, light version', 'Two identities, one for a light and one for a dark mode, both mixing bold grotesk type with pixel and halftone patterns, collaged photography and TYPE01’s pink and green. The final website uses the light mode.'),
+       styleboard_b=('assets/type01/styleboard-dark.webp', 527, 338, 'Styleboard, dark version'),
+       live='figma',
+              title=('assets/type01/type-type01.svg', 412, 92, 'TYPE01'),
        lede='Conference website for desktop and mobile',
        facts=[('Year', '2025'), ('Tools', '<img src="assets/type01/icon-ps.svg" width="56" height="53" alt="Photoshop" title="Photoshop"> <img src="assets/type01/icon-figma.svg" width="51" height="51" alt="Figma" title="Figma">')],
        tags=['UI', 'UX', 'Graphic design', 'Web design'],
        site=('assets/type01/site.webp', 2000, 1280, 'The TYPE01 conference homepage'),
-       brief=['<b>TYPE01 Magazine</b>, a publication for graphic designers and typographers, was hosting its first-ever <b>conference</b>: <b>two days</b> in London on <b>typography in print</b>, <b>motion design</b> and <b>branding</b>.',
-              'My task was to design a responsive conference website for desktop and mobile that fits TYPE01’s identity but takes a bolder approach. Text and photos of the speakers were already provided.'],
        steps=[('assets/type01/type-styleboard.svg', 229, 41, '1. Styleboard', 'I explored two identities, one for a light mode and one for a dark mode. Both mix bold grotesk display type with pixel and halftone patterns, collaged photography and a pink-and-green palette taken from TYPE01’s identity. The final website uses the light mode, and a switch to the dark mode could be added later as a feature.',
                [('assets/type01/styleboard-light.webp', 563, 361, 'Styleboard, light version', 'Light'), ('assets/type01/styleboard-dark.webp', 527, 338, 'Styleboard, dark version', 'Dark')]),
               ('assets/type01/type-iterations.svg', 214, 29, '2. Iterations', 'From the first wireframes to the light, dark and mobile versions of each page.', [('assets/type01/iterations.webp', 1194, 318, 'Iterations of the desktop and mobile pages')])],
        result=None,
        cta=('See Prototype', 'https://www.figma.com/proto/PsD6Cg8ngFq6yRWCCm5I9q/Type01?page-id=0%3A1&node-id=468-7480&viewport=-2609%2C-2191%2C0.15&t=KQAR1eAcC8Ls4MeP-1&scaling=min-zoom&content-scaling=fixed&starting-point-node-id=580%3A48961')),
   dict(file='miles.html', name='Miles & Meals', tab='#1A5BA4',
-       title=None, title_text='Miles &amp; Meals',
+       layout='dior',
+       subtitle=('Miles &amp; Meals', 'A world of flavours in every box: brand identity and app'),
+       year='2026', client='Miles &amp; Meals', url='Miles &amp; Meals prototype',   # TO CONFIRM: year
+       tools=[('assets/type01/icon-figma.svg', 'Figma'), ('assets/type01/icon-ps.svg', 'Photoshop')],   # TO CONFIRM
+       desktop=('assets/miles/site.webp', 2000, 1288, 'Miles & Meals: brand photography and social media'),
+       mobile=('assets/miles/app.webp', 365, 656, 'The Miles & Meals app: Discover the world in your kitchen'), mobile_screen=True,
+       lead='<b>Miles &amp; Meals</b> is a food-box subscription that brings <b>iconic local dishes</b> from cities around the world to your kitchen.',
+       brief=['Every box explores a different city through authentic recipes, inspired by how locals really eat. As lead designer, I first created the <b>visual identity</b>, presented in a brandboard, then designed the <b>app</b> where users manage their box and cook the recipes, finished in a <b>clickable prototype</b>.'],
+       palettes=[('Brandboard', ['#FFFFFF', '#F8E1B5', '#9D3B56', '#CE302F', '#112568']),
+                 ('App', ['#FFFFFF', '#F9CA4D', '#777C9B', '#C73F2D', '#0F2366'])],
+       styleboard=('assets/miles/brandboard.webp', 994, 594, 'Miles & Meals brandboard', 'Bright, appetising food shots, a deep navy and coral palette with yellow accents, and a social-media look built around them.'),
+       live='figma',
+              title=None, title_text='Miles &amp; Meals',
        lede='A world of flavours in every box — brand identity and app',
        facts=[('Type', 'Brand identity + mobile app'), ('Deliverables', 'Brandboard · app prototype')],
        tags=['UI', 'UX', 'Branding', 'App design'],
        site=('assets/miles/site.webp', 2000, 1288, 'Miles & Meals: brand photography and social media'),
-       brief=['<b>Miles &amp; Meals</b> is a food-box subscription that brings <b>iconic local dishes</b> from cities around the world to your kitchen. Every box explores a different city through authentic recipes, inspired by how locals really eat. The founders want to launch in <b>Antwerp in summer 2026</b>, and grow to many more cities after that.',
-              'As lead designer, I worked in two parts. First the <b>visual identity</b>: a brand that speaks to its audience and values, presented in a <b>brandboard</b> with its personality, tone of voice, logo, colours, typography, photography, icons, packaging and social media.',
-              'Then the <b>app</b>, where users manage their box and cook the recipes. I started from the existing wireframes but approached them critically, looking for smarter solutions, clear hierarchy, helpful feedback and small interactions that make you smile, all finished in a <b>clickable prototype</b>.'],
        steps=[('assets/miles/type-brandboard.svg', 250, 33, '1. Brandboard', 'Bright, appetising food shots, a deep navy and coral palette with yellow accents, and a social-media look built around them.', [('assets/miles/brandboard.webp', 994, 594, 'Miles & Meals brandboard: brand photography and social media')])],
        result=('assets/miles/app.webp', 365, 656, 'The Miles & Meals app: Discover the world in your kitchen'),
        cta=('See Prototype', 'https://www.figma.com/proto/JhFdOzlcgGCV38btM2Tumv/Miles---Meals?page-id=6817%3A1887&node-id=59585-34744&viewport=-13885%2C-407%2C0.32&t=BZlwAt149MrtAhmE-1&scaling=min-zoom&content-scaling=fixed&starting-point-node-id=59585%3A34763&show-proto-sidebar=1')),
@@ -130,23 +161,38 @@ def dior_main(p):
     (pa_name, pa), (pb_name, pb) = p['palettes']
     pal = ''.join(f'<li style="--c:{pa[k]}" data-a="{pa[k]}" data-b="{pb[k] if k < len(pb) else ""}"></li>' for k in range(len(pa)))
     d, m, sb = p['desktop'], p['mobile'], p['styleboard']
-    shot = window(*d, p['tab']).replace('</figure>', f'  <span class="d-url" aria-hidden="true">{p["url"]}</span>\n      </figure>', 1)
     url, cta = p['url'], p['cta']
+    # the styleboard, and a second board when the palette switch has one (TYPE01: light / dark)
+    if p.get('styleboard_b'):
+        b2 = p['styleboard_b']
+        boards = (f'<img class="on" data-board="a" src="{sb[0]}" width="{sb[1]}" height="{sb[2]}" alt="{html.escape(sb[3])}" loading="lazy">'
+                  f'<img data-board="b" src="{b2[0]}" width="{b2[1]}" height="{b2[2]}" alt="{html.escape(b2[3])}" loading="lazy">')
+    else:
+        boards = f'<img class="on" src="{sb[0]}" width="{sb[1]}" height="{sb[2]}" alt="{html.escape(sb[3])}" loading="lazy">'
+    # the result: the live site, the Figma prototype (embedded), or the site's screenshot
+    if p.get('live') == 'site':
+        result = f'<div class="d-panes d-live" data-src="{html.escape(cta[1])}"></div>'
+    elif p.get('live') == 'figma':
+        emb = 'https://www.figma.com/embed?embed_host=share&url=' + quote(cta[1], safe='')
+        result = f'<div class="d-panes d-live" data-src="{html.escape(emb)}"></div>'
+    else:
+        result = f'<div class="d-panes"><img class="d-still" src="{d[0]}" width="{d[1]}" height="{d[2]}" alt="{html.escape(d[3])}" loading="lazy"></div>'
+    shot = window(*d, p['tab']).replace('</figure>', f'  <span class="d-url" aria-hidden="true">{p["url"]}</span>\n      </figure>', 1)
     link = (ROOT / 'assets/dior/icon-link.svg').read_text().replace('fill="white"', 'fill="currentColor"').replace('<svg ', '<svg class="d-cta-icon" aria-hidden="true" ', 1)
-    badge = (f'<a class="d-badge" href="{html.escape(cta[1])}" target="_blank" rel="noopener" aria-label="{cta[0]} (opens the website)">'
+    badge = '' if not cta else (f'<a class="d-badge" href="{html.escape(cta[1])}" target="_blank" rel="noopener" aria-label="{cta[0]} (opens the website)">'
              f'<svg class="d-badge-ring" viewBox="0 0 120 120" aria-hidden="true"><defs><path id="badgeRing" d="M60 60m-44 0a44 44 0 1 1 88 0a44 44 0 1 1-88 0"/></defs>'
              f'<text><textPath href="#badgeRing" textLength="272">{cta[0].upper()} • {cta[0].upper()} •</textPath></text></svg>{link}</a>')
     return f"""
     <!-- Intro -->
     <section class="d-intro">
       <div class="d-intro-text">
-        <h1 class="d-title reveal" style="--d:.05s"><span class="p-title-text">{p["title_text"]}</span></h1>
+        <h1 class="d-title{" d-title-long" if len(html.unescape(p["title_text"])) > 6 else ""} reveal" style="--d:.05s"><span class="p-title-text">{p["title_text"]}</span></h1>
         <p class="d-sub reveal" style="--d:.1s"><b>{p["subtitle"][0]}</b>{p["subtitle"][1]}</p>
       </div>
       <!-- the site on desktop, with the phone version leaning on it -->
       <div class="d-devices reveal" style="--d:.2s">
         {shot}
-        <figure class="d-phone"><img src="{m[0]}" width="{m[1]}" height="{m[2]}" alt="{html.escape(m[3])}"></figure>
+        <figure class="d-phone{' d-phone-screen' if p.get('mobile_screen') else ''}"><img src="{m[0]}" width="{m[1]}" height="{m[2]}" alt="{html.escape(m[3])}"></figure>
       </div>
       <dl class="d-facts reveal" style="--d:.15s">{facts}</dl>
     </section>
@@ -172,7 +218,7 @@ def dior_main(p):
           </div>
         </div>
         <button class="p-board" data-zoom aria-label="Enlarge the styleboard">
-          <img class="on" src="{sb[0]}" width="{sb[1]}" height="{sb[2]}" alt="{html.escape(sb[3])}" loading="lazy">
+          {boards}
           <span class="p-zoom-hint" aria-hidden="true">Click to enlarge</span>
         </button>
       </div>
@@ -187,7 +233,7 @@ def dior_main(p):
           <span class="d-lights" aria-hidden="true"><i></i><i></i><i></i></span>
           <div class="d-browser-addr"><span class="d-addr">{url}</span></div>
         </div>
-        <div class="d-panes d-live" data-src="{html.escape(cta[1])}"></div>
+        {result}
         {badge}
       </div>
     </section>

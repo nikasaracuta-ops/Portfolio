@@ -176,7 +176,7 @@ h3 .p-ink { font-size: clamp(26px, 2.6vw, 37px); line-height: 1.1; }
 .d-title { margin-top: 0; }
 .d-title .p-title-text { font-size: clamp(88px, 14vw, 200px); line-height: .9; }
 .d-sub { margin-top: 22px; display: grid; gap: 6px; font: clamp(17px, 1.6vw, 21px)/1.45 var(--font-body); color: var(--muted); }
-.d-sub b { font: 700 clamp(20px, 2vw, 26px)/1.25 var(--f-seasons); color: #F29BCC; }
+.d-sub b { font: 700 clamp(20px, 2vw, 26px)/1.25 var(--f-seasons); color: color-mix(in srgb, var(--pink) 68%, #fff); }
 
 /* facts: year, client, creative fields and tools on a soft glass card, in the homepage's
    language: blue labels, pink stars, the tools sitting in the star flowers' heads */
@@ -195,7 +195,7 @@ h3 .p-ink { font-size: clamp(26px, 2.6vw, 37px); line-height: 1.1; }
 .d-fields .pill-row { display: flex; align-items: center; gap: 10px; }
 .d-fields .pill { white-space: nowrap; padding: 6px 16px 7px; border-radius: 999px; background: var(--pink); color: #fff; font: 400 clamp(16px, 1.4vw, 20px)/1.15 var(--font-body); }
 /* the six-pointed star between pills */
-.d-dot { width: 14px; height: 14px; flex: none; background: #F29BCC; -webkit-mask: var(--star6) center / contain no-repeat; mask: var(--star6) center / contain no-repeat; }
+.d-dot { width: 14px; height: 14px; flex: none; background: color-mix(in srgb, var(--pink) 68%, #fff); -webkit-mask: var(--star6) center / contain no-repeat; mask: var(--star6) center / contain no-repeat; }
 :root { --star6: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 0l2.6 7.5L22.4 6l-5.2 6 5.2 6-7.8-1.5L12 24l-2.6-7.5L1.6 18l5.2-6-5.2-6 7.8 1.5z'/%3E%3C/svg%3E"); }
 
 .d-tools { list-style: none; display: flex; flex-wrap: wrap; gap: 10px 6px; margin-top: -4px; }
@@ -338,3 +338,12 @@ h3 .p-ink { font-size: clamp(26px, 2.6vw, 37px); line-height: 1.1; }
 .p-next-link:hover .p-arrow, .p-next-link:focus-visible .p-arrow { transform: translateX(6px); }
 .p-next .p-name { font: 600 18px/30px var(--font-body); color: var(--pink); text-transform: uppercase; letter-spacing: .02em; align-self: start; }
 .p-prev-link:hover .p-name, .p-next-link:hover .p-name, .p-prev-link:focus-visible .p-name, .p-next-link:focus-visible .p-name { transform: none; }
+
+/* case pages sharing the Dior layout: a bare app screen gets a phone frame in the tab colour,
+   and a project without a live prototype shows its site in the result window */
+.d-phone-screen { width: 20%; padding: 1.6%; border-radius: 13% / 7%; background: var(--tab, var(--pink)); }
+.d-phone-screen img { border-radius: 10% / 5.5%; }
+.d-still { display: block; width: 100%; height: 100%; object-fit: cover; object-position: top center; }
+/* longer project names (Miles & Meals) a size down, wrapping on small screens */
+.d-title-long .p-title-text { font-size: clamp(56px, 7.6vw, 118px); line-height: 1.05; }
+@media (max-width: 640px) { .d-title .p-title-text { white-space: normal; } .d-title-long .p-title-text { font-size: clamp(48px, 15vw, 72px); } }
