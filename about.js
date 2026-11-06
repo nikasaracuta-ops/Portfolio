@@ -5,7 +5,7 @@
   const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
   const $ = (s) => document.querySelector(s);
 
-  // The polaroid: wherever the cursor (or a finger) passes, soft patches of the photo
+  // The photo: wherever the cursor (or a finger) passes, soft patches of the photo
   // turn into one of two heat-map versions and fade back after a moment.
   (() => {
     const box = $('#polaroid'), cv = $('#heat'), hint = $('#heatHint');
@@ -13,8 +13,6 @@
     if (matchMedia('(pointer: coarse)').matches) hint.textContent = 'Drag over the photo';
     const ctx = cv.getContext('2d'), mask = document.createElement('canvas'), mctx = mask.getContext('2d');
     const heats = ['assets/about/heat-a.webp', 'assets/about/heat-b.webp'].map((src) => { const i = new Image(); i.src = src; return i; });
-    // the photo inside the polaroid image (982 x 1440), corner by corner
-    const Q = [[100, 43], [910, 61], [886, 1271], [72, 1255]], IW = 982, IH = 1440;
     let blobs = [], raf = 0, W = 0, H = 0, last = null, piece = 0, count = 0;
     const LIFE = 1700;
     const size = () => {
@@ -23,15 +21,8 @@
       cv.width = mask.width = Math.round(W * d); cv.height = mask.height = Math.round(H * d);
       ctx.setTransform(d, 0, 0, d, 0, 0); mctx.setTransform(d, 0, 0, d, 0, 0);
     };
-    const clip = (c) => {
-      c.beginPath(); Q.forEach(([x, y], i) => c[i ? 'lineTo' : 'moveTo'](x / IW * W, y / IH * H)); c.closePath();
-    };
-    // where the heat map sits over the photo, so its blurred face lines up with the real one
-    const place = () => {
-      const pl = Q[3][0] / IW * W, pt = Q[0][1] / IH * H, pw = (Q[1][0] - Q[0][0]) / IW * W;
-      const w = pw * 1.2, h = w * 2000 / 1125;
-      return [pl - pw * .02, pt + pw * .19, w, h];
-    };
+    // the heat maps are cut exactly like the photo, so they cover it one to one
+    const place = () => [0, 0, W, H];
     const draw = (now) => {
       blobs = blobs.filter((b) => now - b.t < LIFE);
       ctx.clearRect(0, 0, W, H);
@@ -46,7 +37,7 @@
           mctx.fillStyle = g; mctx.fillRect(b.x - b.r, b.y - b.r, b.r * 2, b.r * 2);
         }
         mctx.globalCompositeOperation = 'source-in'; mctx.drawImage(heats[k], hx, hy, hw, hh);
-        ctx.save(); clip(ctx); ctx.clip(); ctx.drawImage(mask, 0, 0, W, H); ctx.restore();
+        ctx.drawImage(mask, 0, 0, W, H);
       }
       raf = blobs.length ? requestAnimationFrame(draw) : 0;
     };
