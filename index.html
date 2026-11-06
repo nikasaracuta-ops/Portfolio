@@ -11,7 +11,7 @@
   <link rel="preconnect" href="https://use.typekit.net" crossorigin>
   <link rel="stylesheet" href="https://use.typekit.net/gfn8yzd.css">
   <link rel="stylesheet" href="https://fonts.cdnfonts.com/css/wasted-vindey">
-  <link rel="stylesheet" href="styles.css?v=197dd8bd">
+  <link rel="stylesheet" href="styles.css?v=4f458492">
   <script>document.documentElement.classList.add('js', 'is-loading')</script>
 </head>
 <body>
@@ -27,7 +27,7 @@
   <main class="stage" id="home">
 
     <!-- The sea (drawn in code, under everything below the sky) -->
-    <div class="l sea" style="--x:0px;--y:5232px;--w:1440px;--h:1422px" aria-hidden="true"></div>
+    <div class="l sea" style="--x:0px;--y:4912px;--w:1440px;--h:1422px" aria-hidden="true"></div>
 
     <!-- About, pinned (script.js): once it fills the screen it stays put while the
          page keeps scrolling; the text and "?" fade, the blue cloud bank parts to the
@@ -38,8 +38,8 @@
     <div class="pin-wrap" id="pinWrap">
       <div class="pin" id="pin">
         <img class="l sky-puff" id="skyPuff" style="--x:631.4px;--y:413.4px;--w:763px;--h:869px" src="assets/sky-puff.webp?v=2" alt="">
-        <img class="l clouds-px clouds-l" id="cloudsL" style="--x:0;--y:641px;--w:1440px;--h:910px" src="assets/clouds-bank.png?v=2" alt="">
-        <img class="l clouds-px clouds-r" id="cloudsR" style="--x:0;--y:641px;--w:1440px;--h:910px" src="assets/clouds-bank.png?v=2" alt="">
+        <img class="l clouds-px clouds-l" id="cloudsL" style="--x:0;--y:641px;--w:1440px;--h:910px" src="assets/clouds-bank.png?v=3" alt="">
+        <img class="l clouds-px clouds-r" id="cloudsR" style="--x:0;--y:641px;--w:1440px;--h:910px" src="assets/clouds-bank.png?v=3" alt="">
 
         <section class="sec" id="about" style="top:560px" aria-labelledby="hello">
           <h2 class="l reveal ttl ttl-hello" id="hello" style="--d:0s;--x:173px;--y:-10px">Hello,</h2>
@@ -47,7 +47,7 @@
             <p>I’m Nika, a third-year student in <b>Digital Design &amp; Development</b>, currently specialising in <b>Visual Design</b> and <b>Experience Design</b>.</p>
             <p>Inspired by all kind of creative fields,<br> I love creating <b>truly useful</b> and <b>inspiring projects</b>.</p>
           </div>
-          <a class="l reveal btn-hello" style="--d:.3s;--x:176px;--y:378px" href="#about" data-about><span>About me</span><span class="btn-hello-arrow" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a>
+          <a class="l reveal btn btn-hello" style="--d:.3s;--x:176px;--y:378px;--w:209px;--h:50px" href="#about" data-about>About me</a>
           <button class="l reveal qbtn" style="--d:.2s;--x:974.3px;--y:126px" data-about aria-label="Who is behind the question mark? Meet Nika"><span class="q-glyph" aria-hidden="true">?</span></button>
         </section>
       </div>
@@ -59,13 +59,13 @@
 
 
     <h1 class="l reveal ttl-vindey ttl-portfolio" style="--d:0s;--x:45px;--y:73px">Portfolio</h1>
-    <p class="l reveal type" style="--d:.25s;--x:59px;--y:425.21px"><img src="assets/type-name.svg" width="250" height="36" alt="Nika Saracuta"></p>
-    <p class="l reveal type" style="--d:.3s;--x:1105px;--y:424.72px"><img src="assets/type-digital-creator.svg" width="280" height="43" alt="Digital creator"></p>
+    <p class="l reveal hero-sub" style="--d:.25s;--x:56px;--y:425px"><i>N</i>ika Saracuta</p>
+    <p class="l reveal hero-sub" style="--d:.3s;--x:1063px;--y:426px"><i>D</i>igital creator</p>
     </header>
 
     <!-- Sea: your caustics (Figma 717:48894) and the laptop (Figma group 745:85) floating on them.
          The laptop screen links to Behance (BEHANCE_URL in script.js). -->
-    <div class="sec sunset" style="top:4972px">
+    <div class="sec sunset" style="top:4652px">
       <div class="sunset-art">
         <!-- The laptop and its screen move together (chameleon.js): the last project
              tab falls into the empty screen, then the laptop drops into the sea, bounces
@@ -74,7 +74,7 @@
         <div class="l laptop-float" id="laptop" style="--x:381px;--y:180px">
           <img class="l" style="--x:0px;--y:0px" src="assets/laptop.svg" width="754" height="644" alt="">
           <a class="l screen" id="screen" style="--x:29.55px;--y:115.05px" href="#" data-behance target="_blank" rel="noopener">
-            <span class="s-k">Discover more UX related projects</span><span class="s-t"><span id="scrText">on Behance</span><span class="caret" aria-hidden="true"></span></span>
+            <span class="s-k">Discover more UX related projects</span><span class="s-t"><span class="s-on">on</span> Behance<span class="caret" aria-hidden="true"></span></span>
           </a>
         </div>
       </div>
@@ -82,18 +82,18 @@
     <!-- Seabed and corals (Figma 745:129, 717:48906, 717:48915), layered as in Figma:
          sand, small coral, the fish swimming between the corals, then the pink coral
          standing on the sand -->
-    <img class="l deco seabed" style="--x:0px;--y:6567.5px" src="assets/seabed.svg" width="1440" height="87" alt="">
-    <img class="l deco coral-small" style="--x:985px;--y:6408px" src="assets/coral-small.svg" width="146" height="177" alt="">
+    <img class="l deco seabed" style="--x:0px;--y:6247.5px" src="assets/seabed.svg" width="1440" height="87" alt="">
+    <img class="l deco coral-small" style="--x:985px;--y:6088px" src="assets/coral-small.svg" width="146" height="177" alt="">
     <!-- The fish (assets/fish-silhouette.svg, split into body, tail and fins): it swims across the
          sea in a gentle wave, darts away from the cursor (script.js), between the two corals -->
-    <div class="l ocean" style="--x:0px;--y:6236px;--w:1440px;--h:330px" aria-hidden="true">
+    <div class="l ocean" style="--x:0px;--y:5916px;--w:1440px;--h:330px" aria-hidden="true">
       <div class="fish-swimmer" id="fishSwimmer"><div class="fish"><svg class="fish-svg" viewBox="-4 -4 212 111" aria-hidden="true"><path class="fish-tail" d="M56 44 L46 43 L23 17 L12 11 L3 10 L0 11 L0 12 L7 19 L10 29 L12 31 L16 42 L23 51 L17 56 L13 63 L1 97 L10 94 L19 87 L29 76 L33 69 L40 62 L44 60 L56 59Z"/><path class="fish-fin top" d="M136 19 L124 7 L111 0 L105 0 L101 2 L97 8 L96 14 L99 19 L108 25 L114 26 L115 27 L114 28 L126 27Z"/><path class="fish-fin bottom" d="M106 77 L108 79 L96 85 L96 89 L99 90 L100 92 L90 100 L90 102 L99 101 L111 96 L129 81 L118 75Z"/><path class="fish-body" d="M203 49 L191 41 L183 33 L177 29 L165 23 L162 23 L158 21 L148 19 L141 19 L140 18 L136 19 L114 28 L99 28 L86 31 L69 37 L60 42 L52 44 L52 59 L65 62 L84 72 L101 77 L106 77 L129 81 L136 79 L149 78 L181 69 L197 59 L203 52Z"/></svg></div></div>
     </div>
-    <img class="l deco coral" style="--x:1063.9px;--y:6238.9px" src="assets/coral.svg" width="311" height="378" alt="">
+    <img class="l deco coral" style="--x:1067.5px;--y:5926px" src="assets/coral.svg?v=2" width="303" height="371" alt="">
 
 
     <!-- Work -->
-    <section class="sec" id="work" style="top:2630px" aria-labelledby="mywork">
+    <section class="sec" id="work" style="top:2310px" aria-labelledby="mywork">
       <!-- Title, chameleon and branch pin together (sticky) once the title reaches the
            top of the screen; only the project list scrolls (Figma frame 717:48856:
            the chameleon sits 310px below the top of the title, the first tab 134px). -->
@@ -115,8 +115,8 @@
     </section>
 
     <!-- Contact -->
-    <section class="sec" id="contact" style="top:5864px" aria-labelledby="open">
-      <h2 class="l reveal ttl ttl-open" id="open" style="--d:0s;--x:332px;--y:38px;--w:776px">Open for<br><span>new projects</span></h2>
+    <section class="sec" id="contact" style="top:5544px" aria-labelledby="open">
+      <h2 class="l reveal ttl ttl-open" id="open" style="--d:0s;--x:332px;--y:38px;--w:776px">Open for<br><span>New projects</span></h2>
       <a class="l reveal t-email" style="--d:.12s;--x:320px;--y:300px;--w:800px" href="mailto:nikasaracuta@gmail.com">nikasaracuta@gmail.com <span aria-hidden="true">→</span></a>
       <!-- TODO: replace # with the real LinkedIn URL -->
       <div class="l reveal socials" style="--d:.2s;--x:641px;--y:387px;--w:158px">
@@ -151,6 +151,7 @@
       <a href="#about" data-about>About me</a>
       <a href="#work">Work</a>
       <a href="#contact">Contact</a>
+      <a class="topbar-be" href="https://www.behance.net/nikasaracuta" target="_blank" rel="noopener" aria-label="Behance"><img src="assets/icon-behance.svg" width="41" height="27" alt=""></a>
     </div>
   </nav>
 
@@ -228,9 +229,9 @@
   </div>
 
   <script src="loader.js?v=68ee955a"></script>
-  <script src="script.js?v=7b043eab"></script>
+  <script src="script.js?v=7545d0a5"></script>
   <script src="about.js?v=0855be33"></script>
   <script src="bird.js?v=8eddadd7"></script>
-  <script src="chameleon.js?v=906a5f92"></script>
+  <script src="chameleon.js?v=a68b335f"></script>
 </body>
 </html>

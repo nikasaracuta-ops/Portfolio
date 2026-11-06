@@ -2,7 +2,7 @@
 
 // Behance profile: the laptop screen and the Behance button link here.
 // TODO: paste the profile URL, e.g. 'https://www.behance.net/yourname'.
-const BEHANCE_URL = '';
+const BEHANCE_URL = 'https://www.behance.net/nikasaracuta';
 document.querySelectorAll('[data-behance]').forEach(a => { if (BEHANCE_URL) a.href = BEHANCE_URL; else a.removeAttribute('target'); });
 const stage = document.querySelector('.stage');
 const DESIGN_WIDTH = 1440;
@@ -31,7 +31,7 @@ function placeFooter() {
   if (!contact) return;
   const z = parseFloat(stage.style.zoom) || 1;
   const shift = MOBILE.matches ? 0 : Math.max(0, Math.min(150, 866 - innerHeight / z));
-  contact.style.top = MOBILE.matches ? '' : `${5864 + shift}px`;
+  contact.style.top = MOBILE.matches ? '' : `${5544 + shift}px`;
 }
 
 // Sticky menu: slides in once the menu at the top has scrolled away (always on phones)
@@ -113,7 +113,7 @@ if (sparkle && matchMedia('(hover: hover) and (pointer: fine)').matches) {
 const about = document.getElementById('about');
 const puff = document.getElementById('skyPuff');
 const cloudsL = document.getElementById('cloudsL'), cloudsR = document.getElementById('cloudsR');
-const PIN_TOP = 459, PIN_BOTTOM = 1720, HOLD = 700;
+const PIN_TOP = 459, PIN_BOTTOM = 1720, HOLD = 380;
 const LEAD = 150;   // the transition starts this much scrolling before the scene pins
 const PUFF_CX = 631.4 + 763 / 2;                        // the shape's centre line on the stage
 const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)');
