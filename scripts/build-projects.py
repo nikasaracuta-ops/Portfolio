@@ -12,7 +12,7 @@ ROOT = pathlib.Path(__file__).resolve().parent.parent
 TAB = re.search(r"const tabSvg = i => `(<svg[\s\S]*?</svg>)`", (ROOT / 'chameleon.js').read_text()).group(1)
 
 PROJECTS = [
-  dict(file='dior.html', name='Dior', tab='#E770B2', layout='dior', live='site',
+  dict(file='dior.html', name='Dior', tab='#E770B2', layout='dior', live='site', fields_rows=True,
        title=None, title_text='Dior',
        lede='MoMu – Dress to Impress: an interactive longread for MoMu – Fashion Museum Antwerp',
        subtitle=('MoMu – Dress to Impress', 'An interactive longread for MoMu – Fashion Museum Antwerp'),
@@ -45,7 +45,7 @@ PROJECTS = [
        year='2026', client='Moea', url='',
        tools=[('assets/moea/icon-ae.svg', 'After Effects'), ('assets/type01/icon-figma.svg', 'Figma'), ('assets/moea/icon-blender.svg', 'Blender')],
        desktop=('assets/moea/site.webp', 2000, 1240, 'The Moea homepage with its 3D hero'),
-       mobile=('assets/moea/site-mobile.webp', 1001, 1812, 'The Moea homepage on mobile, with the 3D hero'), mobile_screen=True, phone_right=True,
+       mobile=('assets/moea/site-mobile.webp', 1001, 1812, 'The Moea homepage on mobile, with the 3D hero'), mobile_screen=True, result_phone=True,
        lead='A client has heard that <b>3D is the next big thing on the web</b> and wants it on their website as a <b>promotional header</b>.',
        brief=['For this assignment, I could pick the brand myself, so I chose <b>Moea</b>, short for <b>Mother Earth</b>, a label that rethinks how fashion is made, with respect for the planet.<br>The hero had to tell a <b>visual concept</b>, a little world built around the product, and needed to be <b>animated</b> (the animation is coming soon!).'],
        palettes=None,
@@ -65,13 +65,15 @@ PROJECTS = [
        year='2025', client='TYPE01 Magazine', url='TYPE01 prototype',
        tools=[('assets/type01/icon-ps.svg', 'Photoshop'), ('assets/type01/icon-figma.svg', 'Figma')],
        desktop=('assets/type01/site.webp', 2000, 1280, 'The TYPE01 conference homepage'),
-       mobile=('assets/dior/site-mobile.webp', 729, 1253, 'Placeholder phone (Dior) until the TYPE01 mobile screen is added'),   # PLACEHOLDER
+       mobile=('assets/type01/site-mobile.webp', 1118, 2000, 'The TYPE01 homepage on mobile'), mobile_screen=True, result_phone=True,
        lead='<b>TYPE01 Magazine</b>, a publication for graphic designers and typographers, was hosting its first-ever <b>conference</b>: two days in London on typography in print, motion design and branding.',
        brief=['My task was to design a responsive <b>conference website</b> for desktop and mobile that fits TYPE01’s identity but takes a <b>bolder approach</b>. Text and photos of the speakers were already provided.'],
-       palettes=[('Light', ['#FFFFFF', '#D3D8D3', '#BA9BB2', '#7B9D88', '#2F643D']),
-                 ('Dark', ['#FFFFFF', '#FFADE7', '#C6E3D2', '#006A30', '#000000'])],
-       styleboard=('assets/type01/styleboard-light.webp', 563, 361, 'Styleboard, light version', 'Two identities, one for a light and one for a dark mode, both mixing bold grotesk type with pixel and halftone patterns, collaged photography and TYPE01’s pink and green. The final website uses the light mode.'),
-       styleboard_b=('assets/type01/styleboard-dark.webp', 527, 338, 'Styleboard, dark version'),
+       palettes=None,
+       # the conference colours, the same in both modes: ink, pink, green, white
+       palette_squares=['#262221', '#E6A2D9', '#2AA764', '#FFFFFF'],
+       board_switch=('Light', 'Dark'),
+       styleboard=('assets/type01/styleboard-light.webp', 2000, 1258, 'Styleboard, light version', 'I created two styleboards, one for a light and one for a dark mode, both mixing bold type with pixel and halftone patterns, collaged photography, pink and green. The final website uses the light mode.'),
+       styleboard_b=('assets/type01/styleboard-dark.webp', 2000, 1246, 'Styleboard, dark version'),
        live='figma',
               title=('assets/type01/type-type01.svg', 412, 92, 'TYPE01'),
        lede='Conference website for desktop and mobile',
@@ -106,10 +108,13 @@ PROJECTS = [
        cta=('See Prototype', 'https://www.figma.com/proto/JhFdOzlcgGCV38btM2Tumv/Miles---Meals?page-id=6817%3A1887&node-id=59585-34744&viewport=-13885%2C-407%2C0.32&t=BZlwAt149MrtAhmE-1&scaling=min-zoom&content-scaling=fixed&starting-point-node-id=59585%3A34763&show-proto-sidebar=1')),
 ]
 
-def pills(tags):
-    """Tags as filled pills in the page's colour, two per row with a small star between them."""
+def pills(tags, rows=False):
+    """Tags as filled pills in the page's colour with a small star between them: on one
+    line, or two per row (Dior, whose four pills don't fit on one line)."""
     star = '<span class="d-dot" aria-hidden="true"></span>'
     pill = lambda t: f'<span class="pill">{t}</span>'
+    if not rows:
+        return f'<span class="pill-row">{star.join(pill(t) for t in tags)}</span>'
     return ''.join(f'<span class="pill-row">{star.join(pill(t) for t in tags[i:i + 2])}</span>' for i in range(0, len(tags), 2))
 
 def ink(src, w, h, alt):
@@ -156,10 +161,16 @@ def dior_main(p):
     tools = ''.join(f'<li title="{name}">{star}<img src="{src}" width="48" height="48" alt="{name}"></li>' for src, name in p['tools'])
     facts = (f'<div><dt>Year</dt><dd class="d-year">{p["year"]}</dd></div>'
              f'<div><dt>Client</dt><dd>{p["client"]}</dd></div>'
-             f'<div><dt>Creative fields</dt><dd class="d-fields">{pills(p["tags"])}</dd></div>'
+             f'<div><dt>Creative fields</dt><dd class="d-fields">{pills(p["tags"], p.get("fields_rows"))}</dd></div>'
              f'<div><dt>Built with</dt><dd><ul class="d-tools">{tools}</ul></dd></div>')
     brief = ''.join(f'\n        <p class="d-text reveal">{t}</p>' for t in p['brief'])
-    if p.get('palette_dots'):
+    if p.get('palette_squares'):
+        sa, sb_ = p['board_switch']
+        palette = (f'<div class="p-switch" role="tablist" aria-label="Styleboard">'
+                   f'<button role="tab" aria-selected="true" data-board="a">{sa}</button><button role="tab" aria-selected="false" data-board="b">{sb_}</button>'
+                   f'<span class="p-switch-pill" aria-hidden="true"></span></div>'
+                   '<ul class="d-squares" aria-label="Colour palette">' + ''.join(f'<li style="--c:{c}" title="{c}"></li>' for c in p['palette_squares']) + '</ul>')
+    elif p.get('palette_dots'):
         palette = '<ul class="d-dots-pal" aria-label="Colour palette">' + ''.join(f'<li style="--c:{c}"></li>' for c in p['palette_dots']) + '</ul>'
     else:
         (pa_name, pa), (pb_name, pb) = p['palettes']
@@ -177,14 +188,16 @@ def dior_main(p):
     else:
         boards = f'<img class="on" src="{sb[0]}" width="{sb[1]}" height="{sb[2]}" alt="{html.escape(sb[3])}" loading="lazy">'
     # the result: the live site, the Figma prototype (embedded), or the site's screenshot
+    rphone = (f'<button class="d-result-phone" data-zoom aria-label="Enlarge the mobile version"><img class="on" src="{m[0]}" width="{m[1]}" height="{m[2]}" alt="{html.escape(m[3])}" loading="lazy"></button>'
+              if p.get('result_phone') else '')
     if p.get('live') == 'site':
         result = f'<div class="d-panes d-live" data-src="{html.escape(cta[1])}"></div>'
     elif p.get('live') == 'figma':
         emb = 'https://www.figma.com/embed?embed_host=share&url=' + quote(cta[1], safe='')
-        result = f'<div class="d-panes d-live" data-src="{html.escape(emb)}"></div>'
+        result = f'<div class="d-panes d-live" data-src="{html.escape(emb)}"></div>' + rphone
     else:
         result = (f'<button class="d-panes d-zoomable" data-zoom aria-label="Enlarge the website"><img class="d-still on" src="{d[0]}" width="{d[1]}" height="{d[2]}" alt="{html.escape(d[3])}" loading="lazy"></button>'
-                  f'<button class="d-result-phone" data-zoom aria-label="Enlarge the mobile version"><img class="on" src="{m[0]}" width="{m[1]}" height="{m[2]}" alt="{html.escape(m[3])}" loading="lazy"></button>')
+                  + rphone)
     shot = window(*d, p['tab']).replace('</figure>', f'  <span class="d-url" aria-hidden="true">{p["url"]}</span>\n      </figure>', 1)
     link = (ROOT / 'assets/dior/icon-link.svg').read_text().replace('fill="white"', 'fill="currentColor"').replace('<svg ', '<svg class="d-cta-icon" aria-hidden="true" ', 1)
     zoom_icon = '<svg class="d-cta-icon" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="10.5" cy="10.5" r="6.5"/><path d="M15.5 15.5 21 21M10.5 7.5v6M7.5 10.5h6"/></svg>'

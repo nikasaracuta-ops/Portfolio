@@ -182,7 +182,7 @@ h3 .p-ink { font-size: clamp(26px, 2.6vw, 37px); line-height: 1.1; }
    language: blue labels, pink stars, the tools sitting in the star flowers' heads */
 .d-facts {
   grid-column: 1 / -1; margin-top: clamp(40px, 5vw, 64px); padding: clamp(22px, 2.6vw, 34px) clamp(22px, 3vw, 44px);
-  display: grid; grid-template-columns: auto minmax(0, 1fr) minmax(0, 1.5fr) auto; gap: 24px clamp(24px, 3.5vw, 56px); align-items: start;
+  display: grid; grid-template-columns: auto minmax(0, 240px) minmax(0, 1fr) auto; gap: 24px clamp(24px, 3.5vw, 56px); align-items: start;
   border-radius: 28px; background: rgba(255, 255, 255, .55); border: 1px solid color-mix(in srgb, var(--pink) 25%, transparent);
   -webkit-backdrop-filter: blur(14px); backdrop-filter: blur(14px);
   box-shadow: 0 30px 60px -44px color-mix(in srgb, var(--pink) 90%, transparent);
@@ -198,7 +198,7 @@ h3 .p-ink { font-size: clamp(26px, 2.6vw, 37px); line-height: 1.1; }
 .d-dot { width: 14px; height: 14px; flex: none; background: color-mix(in srgb, var(--pink) 68%, #fff); -webkit-mask: var(--star6) center / contain no-repeat; mask: var(--star6) center / contain no-repeat; }
 :root { --star6: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 0l2.6 7.5L22.4 6l-5.2 6 5.2 6-7.8-1.5L12 24l-2.6-7.5L1.6 18l5.2-6-5.2-6 7.8 1.5z'/%3E%3C/svg%3E"); }
 
-.d-tools { list-style: none; display: flex; flex-wrap: wrap; gap: 10px 6px; margin-top: -4px; }
+.d-tools { list-style: none; display: flex; flex-wrap: nowrap; gap: 10px 6px; margin-top: -4px; }
 /* static: each tool's icon in a pink star */
 .d-tools li { display: grid; place-items: center; width: 62px; height: 62px; }
 .d-star { grid-area: 1 / 1; width: 62px; height: 62px; overflow: visible; }
@@ -341,16 +341,12 @@ h3 .p-ink { font-size: clamp(26px, 2.6vw, 37px); line-height: 1.1; }
 
 /* case pages sharing the Dior layout: a bare app screen gets a phone frame in the tab colour,
    and a project without a live prototype shows its site in the result window */
-.d-phone-screen { width: 20%; padding: 1.6%; border-radius: 13% / 7%; background: var(--tab, var(--pink)); }
-.d-phone-screen img { border-radius: 10% / 5.5%; }
 .d-still { display: block; width: 100%; height: 100%; object-fit: cover; object-position: top center; }
 /* longer project names (Miles & Meals) a size down, wrapping on small screens */
 .d-title-long .p-title-text { font-size: clamp(56px, 7.6vw, 118px); line-height: 1.05; }
 @media (max-width: 640px) { .d-title .p-title-text { white-space: normal; } .d-title-long .p-title-text { font-size: clamp(48px, 15vw, 72px); } }
 
 /* the phone on the right of the desktop (Moea) */
-.d-phone-right { left: auto; right: -2%; rotate: 4deg; }
-.d-devices:has(.d-phone-right) .p-window { margin: 0 auto 0 0; }
 /* the palette as dots (Moea) */
 .d-dots-pal { list-style: none; display: flex; gap: 14px; }
 .d-dots-pal li { width: clamp(52px, 4.8vw, 68px); aspect-ratio: 1; border-radius: 50%; background: var(--c); box-shadow: 0 12px 22px -14px rgba(29, 29, 31, .55); }
@@ -365,3 +361,22 @@ h3 .p-ink { font-size: clamp(26px, 2.6vw, 37px); line-height: 1.1; }
 .d-result:has(.d-result-phone) .d-browser { margin-bottom: 9%; }
 button.d-badge { border: 0; cursor: zoom-in; font: inherit; }
 @media (max-width: 640px) { .d-result-phone { width: 30%; left: 2%; bottom: -12%; } }
+
+/* facts: Built with sits at the right end; the fields stay on one line where they fit */
+.d-facts > div:last-child { justify-self: end; }
+.d-fields .pill-row { flex-wrap: wrap; row-gap: 6px; }
+/* no shadow around the devices on any project page */
+.d-devices .p-window, .d-phone { filter: none; }
+/* a bare phone screen framed like the Dior phone: a thick rounded stroke in the project colour */
+.d-phone-screen, .d-result-phone {
+  border: clamp(5px, .75vw, 11px) solid var(--tab, var(--pink)); border-radius: clamp(16px, 2.2vw, 30px); background: var(--tab, var(--pink)); overflow: hidden;
+}
+.d-phone-screen { aspect-ratio: 729 / 1253; }
+.d-phone-screen img { width: 100%; height: 100%; object-fit: cover; object-position: top center; border-radius: clamp(10px, 1.4vw, 20px); }
+.d-result-phone { box-shadow: none; }
+.d-result-phone img { border-radius: clamp(10px, 1.4vw, 20px); }
+/* a palette that stays the same in both modes (TYPE01) */
+.d-squares { list-style: none; display: flex; gap: 14px; }
+.d-squares li { width: clamp(52px, 4.8vw, 68px); aspect-ratio: 1; background: var(--c); border: 1px solid rgba(29, 29, 31, .1); box-shadow: 0 12px 22px -16px rgba(29, 29, 31, .5); }
+@media (max-width: 860px) { .d-facts > div:last-child { justify-self: start; } }
+.d-fields:has(.pill-row + .pill-row) .pill-row { flex-wrap: nowrap; }
