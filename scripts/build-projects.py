@@ -87,16 +87,20 @@ PROJECTS = [
        cta=('See Prototype', 'https://www.figma.com/proto/PsD6Cg8ngFq6yRWCCm5I9q/Type01?page-id=0%3A1&node-id=468-7480&viewport=-2609%2C-2191%2C0.15&t=KQAR1eAcC8Ls4MeP-1&scaling=min-zoom&content-scaling=fixed&starting-point-node-id=580%3A48961')),
   dict(file='miles.html', name='Miles & Meals', tab='#1A5BA4',
        layout='dior',
-       subtitle=('Miles &amp; Meals', 'A world of flavours in every box: brand identity and app'),
-       year='2026', client='Miles &amp; Meals', url='Miles &amp; Meals prototype',   # TO CONFIRM: year
-       tools=[('assets/type01/icon-figma.svg', 'Figma'), ('assets/type01/icon-ps.svg', 'Photoshop')],   # TO CONFIRM
+       subtitle=('Miles &amp; Meals – food-box subscription', 'Brand identity and mobile app for a start-up'),
+       year='2026', client='Miles &amp; Meals<br><span class="d-note">(fictional company)</span>', url='Miles &amp; Meals prototype',   # TO CONFIRM: year
+       tools=[('assets/miles/icon-ai.svg', 'Illustrator'), ('assets/type01/icon-figma.svg', 'Figma'), ('assets/type01/icon-ps.svg', 'Photoshop')],
        desktop=('assets/miles/site.webp', 2000, 1288, 'Miles & Meals: brand photography and social media'),
-       mobile=('assets/miles/app.webp', 365, 656, 'The Miles & Meals app: Discover the world in your kitchen'), mobile_screen=True,
+       mobile=('assets/miles/site-mobile.webp', 1112, 2000, 'The Miles & Meals app: Discover the world in your kitchen'), mobile_screen=True, result_mode='phone', title_html='Miles<span class="amp">&amp;</span>Meals',
        lead='<b>Miles &amp; Meals</b> is a food-box subscription that brings <b>iconic local dishes</b> from cities around the world to your kitchen.',
-       brief=['Every box explores a different city through authentic recipes, inspired by how locals really eat. As lead designer, I first created the <b>visual identity</b>, presented in a brandboard, then designed the <b>app</b> where users manage their box and cook the recipes, finished in a <b>clickable prototype</b>.'],
-       palettes=[('Brandboard', ['#FFFFFF', '#F8E1B5', '#9D3B56', '#CE302F', '#112568']),
-                 ('App', ['#FFFFFF', '#F9CA4D', '#777C9B', '#C73F2D', '#0F2366'])],
-       styleboard=('assets/miles/brandboard.webp', 994, 594, 'Miles & Meals brandboard', 'Bright, appetising food shots, a deep navy and coral palette with yellow accents, and a social-media look built around them.'),
+       brief=['Every box explores a different city through authentic recipes, inspired by how locals really eat. The audience: adults aged 25–50 with middle to upper-middle incomes, and four brand values to build on: <b>travel</b>, <b>warm &amp; welcoming</b>, <b>out &amp; social</b> and <b>authentic</b>.<br>First I had to create the <b>visual identity</b>, presented in a brandboard, then design the <b>app</b> where users could manage their box and cook the recipes.'],
+       palettes=None,
+       # the switch changes the colour squares: the brandboard's, and the app's with a lime accent
+       palette_squares=['#0C2968', '#FFC933', '#D42F25', '#D5F0FF'],
+       palette_squares_b=['#0C2968', '#FFC933', '#D42F25', '#D5F0FF', '#BBD760'],
+       board_switch=('Brandboard', 'App'),
+       board_badge=('See brandboard', 'assets/miles/brandboard.webp', 'The Miles & Meals brandboard'),
+       styleboard=('assets/miles/styleboard.webp', 2000, 1320, 'Miles & Meals styleboard: linocut fish and waves, tile patterns, navy and red', 'At first the style focused on linocut imagery and traditional patterns from different cultures, but during the app design process it became simpler.'),
        live='figma',
               title=None, title_text='Miles &amp; Meals',
        lede='A world of flavours in every box — brand identity and app',
@@ -166,10 +170,12 @@ def dior_main(p):
     brief = ''.join(f'\n        <p class="d-text reveal">{t}</p>' for t in p['brief'])
     if p.get('palette_squares'):
         sa, sb_ = p['board_switch']
+        qa, qb = p['palette_squares'], p.get('palette_squares_b') or p['palette_squares']
+        squares = ''.join(f'<li class="{"" if k < len(qa) else "off"}" style="--c:{(qa + [None] * 9)[k] or qb[k]}" data-a="{qa[k] if k < len(qa) else ""}" data-b="{qb[k] if k < len(qb) else ""}"></li>' for k in range(max(len(qa), len(qb))))
         palette = (f'<div class="p-switch" role="tablist" aria-label="Styleboard">'
                    f'<button role="tab" aria-selected="true" data-board="a">{sa}</button><button role="tab" aria-selected="false" data-board="b">{sb_}</button>'
                    f'<span class="p-switch-pill" aria-hidden="true"></span></div>'
-                   '<ul class="d-squares" aria-label="Colour palette">' + ''.join(f'<li style="--c:{c}" title="{c}"></li>' for c in p['palette_squares']) + '</ul>')
+                   '<ul class="d-squares" aria-label="Colour palette">' + squares + '</ul>')
     elif p.get('palette_dots'):
         palette = '<ul class="d-dots-pal" aria-label="Colour palette">' + ''.join(f'<li style="--c:{c}"></li>' for c in p['palette_dots']) + '</ul>'
     else:
@@ -200,6 +206,15 @@ def dior_main(p):
                   + rphone)
     shot = window(*d, p['tab']).replace('</figure>', f'  <span class="d-url" aria-hidden="true">{p["url"]}</span>\n      </figure>', 1)
     link = (ROOT / 'assets/dior/icon-link.svg').read_text().replace('fill="white"', 'fill="currentColor"').replace('<svg ', '<svg class="d-cta-icon" aria-hidden="true" ', 1)
+    phone_result = (f'<div class="d-phone-result reveal"><button class="d-phone-screen" data-zoom aria-label="Enlarge the app screen"><img class="on" src="{m[0]}" width="{m[1]}" height="{m[2]}" alt="{html.escape(m[3])}" loading="lazy"></button>'
+                    + (f'<a class="d-badge" href="{html.escape(cta[1])}" target="_blank" rel="noopener" aria-label="{cta[0]} (opens the prototype)">'
+                       '<svg class="d-badge-ring" viewBox="0 0 120 120" aria-hidden="true"><defs><path id="prRing" d="M60 60m-44 0a44 44 0 1 1 88 0a44 44 0 1 1-88 0"/></defs>'
+                       f'<text><textPath href="#prRing" textLength="272">{cta[0].upper()} • {cta[0].upper()} •</textPath></text></svg>{link}</a>' if cta else '') + '</div>')
+    bb = p.get('board_badge')
+    board_badge = '' if not bb else (f'<button class="d-badge d-board-badge" data-zoom aria-label="{bb[0]}"><img class="on" src="{bb[1]}" alt="{html.escape(bb[2])}" hidden>'
+        '<svg class="d-badge-ring" viewBox="0 0 120 120" aria-hidden="true"><defs><path id="bbRing" d="M60 60m-44 0a44 44 0 1 1 88 0a44 44 0 1 1-88 0"/></defs>'
+        f'<text><textPath href="#bbRing" textLength="272">{bb[0].upper()} • {bb[0].upper()} •</textPath></text></svg>'
+        '<svg class="d-cta-icon" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="10.5" cy="10.5" r="6.5"/><path d="M15.5 15.5 21 21M10.5 7.5v6M7.5 10.5h6"/></svg></button>')
     zoom_icon = '<svg class="d-cta-icon" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="10.5" cy="10.5" r="6.5"/><path d="M15.5 15.5 21 21M10.5 7.5v6M7.5 10.5h6"/></svg>'
     zoom_badge = (f'<button class="d-badge" data-zoom aria-label="Click to zoom in"><img class="on" src="{d[0]}" alt="{html.escape(d[3])}" hidden>'
                   '<svg class="d-badge-ring" viewBox="0 0 120 120" aria-hidden="true"><defs><path id="badgeRing" d="M60 60m-44 0a44 44 0 1 1 88 0a44 44 0 1 1-88 0"/></defs>'
@@ -211,7 +226,7 @@ def dior_main(p):
     <!-- Intro -->
     <section class="d-intro">
       <div class="d-intro-text">
-        <h1 class="d-title{" d-title-long" if len(html.unescape(p["title_text"])) > 6 else ""} reveal" style="--d:.05s"><span class="p-title-text">{p["title_text"]}</span></h1>
+        <h1 class="d-title{" d-title-long" if len(html.unescape(p["title_text"])) > 6 else ""} reveal" style="--d:.05s"><span class="p-title-text">{p.get("title_html") or p["title_text"]}</span></h1>
         <p class="d-sub reveal" style="--d:.1s"><b>{p["subtitle"][0]}</b>{p["subtitle"][1]}</p>
       </div>
       <!-- the site on desktop, with the phone version leaning on it -->
@@ -242,6 +257,7 @@ def dior_main(p):
           {boards}
           <span class="p-zoom-hint" aria-hidden="true">Click to enlarge</span>
         </button>
+        {board_badge}
       </div>
     </section>
 
@@ -249,7 +265,7 @@ def dior_main(p):
     <section class="p-result d-result" aria-labelledby="result-h">
       <h2 class="p-h reveal" id="result-h">{ink("", 0, 0, "The Result")}</h2>
       <!-- the live prototype in a browser window; it loads when the section comes near -->
-      <div class="d-browser reveal" style="--tab:{p["tab"]}">
+      {phone_result if p.get('result_mode') == 'phone' else ''}<div class="d-browser reveal" style="--tab:{p["tab"]}"{' hidden' if p.get('result_mode') == 'phone' else ''}>
         <div class="d-browser-bar">
           <span class="d-lights" aria-hidden="true"><i></i><i></i><i></i></span>
           <div class="d-browser-addr"><span class="d-addr">{url}</span></div>

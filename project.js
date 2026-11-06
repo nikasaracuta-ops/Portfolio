@@ -67,7 +67,7 @@ if (!reduced && matchMedia('(hover: hover)').matches) {
 }
 
 // Dior: the palette switches between the styleboard's colours and the final website's
-const swatches = document.querySelectorAll('.d-swatches li');
+const swatches = document.querySelectorAll('.d-swatches li, .d-squares li[data-a]');
 if (sw && swatches.length) {
   swatches.forEach((li, k) => li.style.setProperty('--k', k));
   sw.addEventListener('pick', (e) => swatches.forEach((li) => {
