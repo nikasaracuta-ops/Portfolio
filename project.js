@@ -2,15 +2,6 @@
 // switch, a lightbox for the boards, and a slight tilt of the browser windows.
 const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-// Dior's iterations strip pans sideways while it scrolls through the screen
-const pan = document.querySelector('.d-pan');
-function panStrip() {
-  const img = pan.querySelector('img'), r = pan.getBoundingClientRect();
-  const t = Math.min(1, Math.max(0, (innerHeight - r.top) / (innerHeight + r.height)));
-  const over = Math.max(0, img.offsetWidth - pan.clientWidth);
-  img.style.setProperty('--pan', `${(reduced ? -over / 2 : -over * t).toFixed(1)}px`);
-}
-
 // reveals: fade in once an element's top passes 88% of the screen
 const pending = new Set(document.querySelectorAll('.reveal'));
 const progress = document.getElementById('progress'), topBar = document.querySelector('.p-top');
@@ -21,7 +12,6 @@ function onScroll() {
   for (const el of pending) {
     if (atBottom || el.getBoundingClientRect().top < innerHeight * .88) { el.classList.add('in'); pending.delete(el); }
   }
-  if (pan) panStrip();
   progress.style.setProperty('--p', max > 0 ? (scrollY / max).toFixed(4) : 0);
   topBar.style.setProperty('--solid', scrollY > 20 ? 1 : 0);
 }
@@ -87,23 +77,29 @@ if (sw && swatches.length) {
   }));
 }
 
-// Dior: the result is a small carousel; it changes by itself and pauses under the pointer
-const show = document.querySelector('.d-show');
-if (show) {
-  const shots = [...show.querySelectorAll('.d-shots img')], dots = [...show.querySelectorAll('.d-dots button')];
-  let cur = 0, timer = null, hover = false;
-  const go = (i) => {
-    cur = (i + shots.length) % shots.length;
-    shots.forEach((im, k) => im.classList.toggle('on', k === cur));
-    dots.forEach((d, k) => d.setAttribute('aria-selected', k === cur));
+// Dior: the result window, a tab for each part of the story and one with the live site
+// (loaded only when that tab is first opened)
+const browser = document.querySelector('.d-browser');
+if (browser) {
+  const tabs = [...browser.querySelectorAll('.d-btab')], panes = [...browser.querySelectorAll('.d-pane')];
+  const open = (i, focus) => {
+    tabs.forEach((t, k) => { t.setAttribute('aria-selected', k === i); t.tabIndex = k === i ? 0 : -1; });
+    panes.forEach((p, k) => p.classList.toggle('on', k === i));
+    const live = panes[i];
+    if (live.dataset.src && !live.querySelector('iframe')) {
+      const f = document.createElement('iframe');
+      f.src = live.dataset.src; f.title = 'The live Dior story'; f.loading = 'lazy';
+      live.prepend(f);
+      f.addEventListener('pointerenter', () => live.classList.add('used'), { once: true });
+    }
+    if (focus) tabs[i].focus();
+    tabs[i].scrollIntoView({ block: 'nearest', inline: 'nearest' });
   };
-  const start = () => { clearInterval(timer); if (!reduced && !hover) timer = setInterval(() => go(cur + 1), 4500); };
-  dots.forEach((d, k) => d.addEventListener('click', () => { go(k); start(); }));
-  show.querySelector('.d-dots').addEventListener('keydown', (e) => {
-    if (e.key !== 'ArrowLeft' && e.key !== 'ArrowRight') return;
-    go(cur + (e.key === 'ArrowRight' ? 1 : -1)); dots[cur].focus(); start();
+  tabs.forEach((t, k) => t.addEventListener('click', () => open(k)));
+  browser.querySelector('.d-btabs').addEventListener('keydown', (e) => {
+    const i = tabs.findIndex((t) => t.getAttribute('aria-selected') === 'true');
+    const to = { ArrowRight: i + 1, ArrowLeft: i - 1, Home: 0, End: tabs.length - 1 }[e.key];
+    if (to === undefined) return;
+    e.preventDefault(); open((to + tabs.length) % tabs.length, true);
   });
-  show.addEventListener('pointerenter', () => { hover = true; clearInterval(timer); });
-  show.addEventListener('pointerleave', () => { hover = false; start(); });
-  start();
 }

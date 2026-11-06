@@ -21,13 +21,13 @@ PROJECTS = [
               ('assets/dior/icon-vscode.webp', 'VS Code'), ('assets/dior/icon-gsap.svg', 'GSAP')],
        desktop=('assets/dior/site-desktop.webp', 2314, 1427, 'The Art of Dressmaking by Christian Dior, the homepage on desktop'),
        mobile=('assets/dior/site-mobile.webp', 729, 1253, 'The homepage on mobile'),
-       lead='<b>MoMu</b>, the Fashion Museum of Antwerp, launched its new digital marketing plan with a series of <b>six interactive online stories</b>, each about a fashion designer.',
-       brief=['My task was to research, design and build the first one: a one-page <b>interactive longread</b> about Walter Van Beirendonk, Christian Dior or Dirk Bikkembergs, told from my own angle. I chose <b>Christian Dior</b> and the art of his dressmaking, and turned his story into an immersive experience about his life and how he made his couture, from the first sketch to the finished gown.'],
+       lead='<b>MoMu</b>, the Fashion Museum of Antwerp, wants to launch its new digital marketing plan with a series of <b>six interactive online stories</b>, each about a fashion designer.',
+       brief=['My task was to research, design and build the first one: a one-page <b>interactive longread</b> about Walter Van Beirendonk, Christian Dior or Dirk Bikkembergs, told from my own angle.<br>I chose <b>Christian Dior</b> and decided to write about the art of his dressmaking, turning his story into an interactive experience, from the first sketch to the finished gown.'],
        # palettes: the styleboard's (also the fan in the intro) and the one the final website ended up with
        palettes=[('Styleboard', ['#FFF4DC', '#FFBCD1', '#B96E85', '#86A4AE', '#6D6D6D', '#3B3B3B']),
                  ('Final website', ['#F0F1ED', '#E5ECEC', '#8EB5C5', '#AE7284', '#303030'])],
        styleboard=('assets/dior/styleboard.webp', 2400, 1697, 'Styleboard for the Dior longread',
-                   'Archive photography of Dior’s couture, fashion sketches and a soft, powdery palette set the tone of the story. While designing, the colours shifted a little towards a cooler, calmer final website.'),
+                   'Archive photography of Dior’s couture, fashion sketches and a soft, powdery palette. While designing, the colours changed towards cooler tones.'),
        iterations=('assets/dior/iterations.webp', 2700, 1091, 'Iterations of the Dior longread, from photo research to the final pages',
                    'A sneak peek of the process: from the first photo research and desktop layouts to the scroll-driven chapters of the final story.'),
        # the result: screens of the story, shown one at a time in the tab: (image, w, h, alt, label)
@@ -76,7 +76,7 @@ PROJECTS = [
 
 def pills(tags):
     """Tags as filled pills in the page's colour, with a small star between them."""
-    return '<span class="d-dot" aria-hidden="true">✦</span>'.join(f'<span class="pill">{t}</span>' for t in tags)
+    return '<span class="d-dot" aria-hidden="true"></span>'.join(f'<span class="pill">{t}</span>' for t in tags)
 
 def ink(src, w, h, alt):
     """A heading set live in The Seasons (Adobe Fonts), in the page's accent colour.
@@ -115,30 +115,38 @@ def step(s, i):
         </div>'''
 
 def dior_main(p):
-    """Dior: an editorial layout. The title next to a fan of the styleboard's colours, the
-    facts, the site on desktop and mobile, the brief as a lead, the styleboard with a
-    palette that switches to the final website's, the iterations as a strip that pans
-    while scrolling, and the result as a carousel of the story's screens in the tab, with a round badge that
-    links to the site."""
-    # the homepage's pink star, holding each tool's icon (it spins away on hover to show the name)
+    """Dior, after the Figma frame 846:133: the title with the site on desktop and mobile,
+    the facts, the brief, the visual style (styleboard + palette switch) and the result as
+    a browser window with a tab per part of the story, plus a tab with the live site."""
     star = '<svg class="d-star" viewBox="0 0 100 100" aria-hidden="true"><polygon points="50.0,2.0 58.7,12.0 70.8,6.8 74.3,19.5 87.5,20.1 85.1,33.1 96.8,39.3 89.0,50.0 96.8,60.7 85.1,66.9 87.5,79.9 74.3,80.5 70.8,93.2 58.7,88.0 50.0,98.0 41.3,88.0 29.2,93.2 25.7,80.5 12.5,79.9 14.9,66.9 3.2,60.7 11.0,50.0 3.2,39.3 14.9,33.1 12.5,20.1 25.7,19.5 29.2,6.8 41.3,12.0"/></svg>'
-    tools = ''.join(f'<li>{star}<img src="{src}" width="48" height="48" alt=""><span class="d-tool-name">{name}</span></li>' for src, name in p['tools'])
-    tags = pills(p['tags'])
-    facts = (f'<div><dt>Year</dt><dd>{p["year"]}</dd></div>'
+    tools = ''.join(f'<li title="{name}">{star}<img src="{src}" width="48" height="48" alt="{name}"></li>' for src, name in p['tools'])
+    facts = (f'<div><dt>Year</dt><dd class="d-year">{p["year"]}</dd></div>'
              f'<div><dt>Client</dt><dd>{p["client"]}</dd></div>'
-             f'<div><dt>Creative fields</dt><dd class="d-fields">{tags}</dd></div>'
+             f'<div><dt>Creative fields</dt><dd class="d-fields">{pills(p["tags"])}</dd></div>'
              f'<div><dt>Built with</dt><dd><ul class="d-tools">{tools}</ul></dd></div>')
     brief = ''.join(f'\n        <p class="d-text reveal">{t}</p>' for t in p['brief'])
     (pa_name, pa), (pb_name, pb) = p['palettes']
     pal = ''.join(f'<li style="--c:{pa[k]}" data-a="{pa[k]}" data-b="{pb[k] if k < len(pb) else ""}"></li>' for k in range(len(pa)))
-    d, m, sb, it = p['desktop'], p['mobile'], p['styleboard'], p['iterations']
+    d, m, sb = p['desktop'], p['mobile'], p['styleboard']
     shot = window(*d, p['tab']).replace('</figure>', f'  <span class="d-url" aria-hidden="true">{p["url"]}</span>\n      </figure>', 1)
-    tab = TAB.replace('${i}', 'res').replace('class="win-svg"', 'class="p-tab"')
-    shots = ''.join(f'''
-          <img{' class="on"' if k == 0 else ''} src="{src}" width="{iw}" height="{ih}" alt="{html.escape(alt)}" loading="lazy">''' for k, (src, iw, ih, alt, lab) in enumerate(p['screens']))
-    dots = ''.join(f'''<button role="tab" aria-selected="{'true' if k == 0 else 'false'}" aria-label="{lab}"></button>''' for k, (src, iw, ih, alt, lab) in enumerate(p['screens']))
+    screens, url, cta = p['screens'], p['url'], p['cta']
+    n = len(screens)
+    tabs = ''.join(
+        f'\n            <button class="d-btab" role="tab" id="dtab{k}" aria-controls="dpane{k}" aria-selected="{"true" if k == 0 else "false"}" tabindex="{0 if k == 0 else -1}"><span>{lab}</span></button>'
+        for k, (src, iw, ih, alt, lab) in enumerate(screens))
+    tabs += (f'\n            <button class="d-btab d-btab-live" role="tab" id="dtab{n}" aria-controls="dpane{n}" aria-selected="false" tabindex="-1">'
+             '<span class="d-live-dot" aria-hidden="true"></span><span>Live prototype</span></button>')
+    panes = ''.join(
+        f'\n          <div class="d-pane{" on" if k == 0 else ""}" role="tabpanel" id="dpane{k}" aria-labelledby="dtab{k}">'
+        f'<button class="d-pane-shot" data-zoom aria-label="Enlarge: {html.escape(alt)}"><img class="on" src="{src}" width="{iw}" height="{ih}" alt="{html.escape(alt)}" loading="lazy"></button></div>'
+        for k, (src, iw, ih, alt, lab) in enumerate(screens))
+    panes += (f'\n          <div class="d-pane d-pane-live" role="tabpanel" id="dpane{n}" aria-labelledby="dtab{n}" data-src="{html.escape(cta[1])}">'
+              f'<p class="d-live-note">Scroll inside the window to try the story, or <a href="{html.escape(cta[1])}" target="_blank" rel="noopener">open it in a new tab ↗</a></p></div>')
     link = (ROOT / 'assets/dior/icon-link.svg').read_text().replace('fill="white"', 'fill="currentColor"').replace('<svg ', '<svg class="d-cta-icon" aria-hidden="true" ', 1)
-    return f'''
+    badge = (f'<a class="d-badge" href="{html.escape(cta[1])}" target="_blank" rel="noopener" aria-label="{cta[0]} (opens the website)">'
+             f'<svg class="d-badge-ring" viewBox="0 0 120 120" aria-hidden="true"><defs><path id="badgeRing" d="M60 60m-44 0a44 44 0 1 1 88 0a44 44 0 1 1-88 0"/></defs>'
+             f'<text><textPath href="#badgeRing" textLength="272">{cta[0].upper()} • {cta[0].upper()} •</textPath></text></svg>{link}</a>')
+    return f"""
     <!-- Intro -->
     <section class="d-intro">
       <div class="d-intro-text">
@@ -155,23 +163,15 @@ def dior_main(p):
 
     <!-- The Brief -->
     <section class="d-brief" aria-labelledby="brief-h">
-      <div class="d-head">
-        <span class="p-num">01</span>
-        <h2 class="p-h reveal" id="brief-h">{ink("assets/type01/type-brief.svg", 403, 79, "The Brief")}</h2>
-      </div>
+      <h2 class="p-h d-head reveal" id="brief-h">{ink("", 0, 0, "The Brief")}</h2>
       <p class="d-lead reveal">{p["lead"]}</p>{brief}
     </section>
 
-    <!-- The process -->
+    <!-- Visual style -->
     <section class="d-process" aria-labelledby="process-h">
-      <div class="d-head">
-        <span class="p-num">02</span>
-        <h2 class="p-h reveal" id="process-h">{ink("assets/type01/type-visual-process.svg", 616, 104, "Visual process")}</h2>
-      </div>
-
+      <h2 class="p-h d-head reveal" id="process-h">{ink("", 0, 0, "Visual Style")}</h2>
       <div class="d-step d-style reveal">
         <div class="d-style-text">
-          <h3>{ink("assets/type01/type-styleboard.svg", 229, 41, "1. Styleboard")}</h3>
           <p class="p-note">{sb[4]}</p>
           <div class="d-palette">
             <div class="p-switch" role="tablist" aria-label="Palette">
@@ -186,39 +186,24 @@ def dior_main(p):
           <span class="p-zoom-hint" aria-hidden="true">Click to enlarge</span>
         </button>
       </div>
-
-      <div class="d-step reveal">
-        <div class="d-step-text">
-          <h3>{ink("assets/type01/type-iterations.svg", 214, 29, "2. Iterations")}</h3>
-          <p class="p-note">{it[4]}</p>
-        </div>
-        <button class="p-board d-pan" data-zoom aria-label="Enlarge the iterations">
-          <img class="on" src="{it[0]}" width="{it[1]}" height="{it[2]}" alt="{html.escape(it[3])}" loading="lazy">
-          <span class="p-zoom-hint" aria-hidden="true">Click to enlarge</span>
-        </button>
-      </div>
     </section>
 
-    <!-- The Result -->
+    <!-- The Result: a browser window with a tab per part of the story, and one with the live site -->
     <section class="p-result d-result" aria-labelledby="result-h">
-      <span class="p-num">03</span>
-      <h2 class="p-h reveal" id="result-h">{ink("assets/type01/type-result.svg", 443, 79, "The Result")}</h2>
-      <div class="d-show reveal">
-        <figure class="p-window d-show-win" style="--tab:{p["tab"]}">
-          <button class="d-shots" data-zoom aria-label="Enlarge this screen">{shots}
-          </button>
-          {tab}
-          <span class="d-url" aria-hidden="true">{p["url"]}</span>
-        </figure>
-        <!-- the link: a round badge with its name circling an arrow -->
-        <a class="d-badge" href="{html.escape(p["cta"][1])}" target="_blank" rel="noopener" aria-label="{p["cta"][0]} (opens the website)">
-          <svg class="d-badge-ring" viewBox="0 0 120 120" aria-hidden="true"><defs><path id="badgeRing" d="M60 60m-44 0a44 44 0 1 1 88 0a44 44 0 1 1-88 0"/></defs><text><textPath href="#badgeRing" textLength="272">{p["cta"][0].upper()} • {p["cta"][0].upper()} •</textPath></text></svg>
-          {link}
-        </a>
-        <div class="d-dots" role="tablist" aria-label="Screens of the story">{dots}</div>
+      <h2 class="p-h reveal" id="result-h">{ink("", 0, 0, "The Result")}</h2>
+      <div class="d-browser reveal" style="--tab:{p["tab"]}">
+        <div class="d-browser-bar">
+          <span class="d-lights" aria-hidden="true"><i></i><i></i><i></i></span>
+          <div class="d-btabs" role="tablist" aria-label="Parts of the story">{tabs}
+          </div>
+        </div>
+        <div class="d-browser-addr"><span class="d-addr">{url}</span></div>
+        <div class="d-panes">{panes}
+        </div>
+        {badge}
       </div>
     </section>
-'''
+"""
 
 def page(i, p):
     n = len(PROJECTS); prev, nxt = PROJECTS[(i - 1) % n], PROJECTS[(i + 1) % n]
@@ -306,21 +291,20 @@ def page(i, p):
   <header class="p-top">
     <a class="p-back" href="index.html#work">
       <span class="p-back-dot" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M20 12H5M11 5l-7 7 7 7"/></svg></span>
-      <span>All projects</span>
+      <span>Back</span>
     </a>
-    <span class="p-count">Project {i + 1:02d} / {n:02d}</span>
   </header>
 
   <main class="p-main{" d-main" if p.get("layout") == "dior" else ""}">{dior_main(p) if p.get("layout") == "dior" else GENERIC}    <!-- Previous / next project -->
     <nav class="p-next reveal" aria-label="More projects">
       <a class="p-prev-link" href="{prev["file"]}">
         <span class="p-arrow" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M20 12H5M11 5l-7 7 7 7"/></svg></span>
-        <span class="p-dir">previous</span>
+        <span class="p-dir">project</span>
         <span class="p-name">{prev["name"].replace("&", "&amp;")}</span>
       </a>
       <a class="p-next-link" href="{nxt["file"]}">
         <span class="p-arrow" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 12h15M13 5l7 7-7 7"/></svg></span>
-        <span class="p-dir">next</span>
+        <span class="p-dir">project</span>
         <span class="p-name">{nxt["name"].replace("&", "&amp;")}</span>
       </a>
     </nav>
