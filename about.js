@@ -6,13 +6,13 @@
   const $ = (s) => document.querySelector(s);
 
   // The photo: wherever the cursor (or a finger) passes, soft patches of the photo
-  // turn into one of two heat-map versions and fade back after a moment.
+  // turn into the blue-pink heat-map version and fade back after a moment.
   (() => {
     const box = $('#polaroid'), cv = $('#heat'), hint = $('#heatHint');
     if (!box || !cv) return;
     if (matchMedia('(pointer: coarse)').matches) hint.textContent = 'Drag over the photo';
     const ctx = cv.getContext('2d'), mask = document.createElement('canvas'), mctx = mask.getContext('2d');
-    const heats = ['assets/about/heat-a.webp', 'assets/about/heat-b.webp'].map((src) => { const i = new Image(); i.src = src; return i; });
+    const heats = ['assets/about/heat-a.webp'].map((src) => { const i = new Image(); i.src = src; return i; });
     let blobs = [], raf = 0, W = 0, H = 0, last = null, piece = 0, count = 0;
     const LIFE = 1700;
     const size = () => {
@@ -27,7 +27,7 @@
       blobs = blobs.filter((b) => now - b.t < LIFE);
       ctx.clearRect(0, 0, W, H);
       const [hx, hy, hw, hh] = place();
-      for (let k = 0; k < 2; k++) {
+      for (let k = 0; k < heats.length; k++) {
         const mine = blobs.filter((b) => b.k === k);
         if (!mine.length || !heats[k].complete) continue;
         mctx.globalCompositeOperation = 'source-over'; mctx.clearRect(0, 0, W, H);
@@ -42,7 +42,6 @@
       raf = blobs.length ? requestAnimationFrame(draw) : 0;
     };
     const add = (x, y) => {
-      if (++count % 7 === 0) piece = 1 - piece;   // every few patches the other heat map
       blobs.push({ x, y, r: (W * (.12 + Math.random() * .1)), t: performance.now(), k: piece });
       if (!raf) raf = requestAnimationFrame(draw);
     };
@@ -99,7 +98,7 @@
     const finish = () => {
       pop.classList.add('full');
       setTimeout(() => { plate.classList.add('in'); onPopScroll(); const p = $('#polaroid'); if (p && p.sweep) p.sweep(); }, 250);
-      closeBtn.focus({ preventScroll: true });
+      closeBtn.focus({ preventScroll: true, focusVisible: false });
     };
     if (reduce) { finish(); return; }
     pop.classList.remove('full'); setMask(origin.w * .5, origin.x, origin.y, 0);
