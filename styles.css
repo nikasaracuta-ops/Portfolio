@@ -528,17 +528,20 @@ a:focus-visible { outline: 2px solid var(--white); outline-offset: 4px; }
 .toolbox { max-width: 1180px; margin: clamp(60px, 8vw, 110px) auto 0; padding-top: 30px; text-align: left; }
 
 .toolbox h3 { display: block; font: 700 clamp(48px, 5.6vw, 84px)/1 var(--f-seasons); color: var(--fg-pink); margin: 0 0 clamp(30px, 4vw, 56px); }
-.tool-groups { display: grid; grid-template-columns: auto auto; justify-content: space-between; align-items: end; gap: clamp(30px, 4vw, 60px) clamp(32px, 5vw, 80px); }
-.tools.g3 { grid-column: 1 / -1; justify-self: center; }
+/* the three patches stand side by side on one continuous hill of grass */
+.tool-groups { display: flex; justify-content: space-between; align-items: flex-end; gap: clamp(20px, 3vw, 48px); padding: 0 clamp(16px, 3vw, 44px) 8px;
+  background: radial-gradient(52% 100% at 50% 100%, color-mix(in srgb, var(--c-teal) 30%, #fff) 0 98%, transparent) bottom / 100% 34px no-repeat; }
+.tg { display: grid; justify-items: center; gap: 18px; }
+.tg-label { font: 600 16px/1 var(--font-body); color: var(--fg-pink); }
+.cloudpop .tool { width: clamp(72px, 6.4vw, 92px); }
 .cloudpop .tool .burst polygon { fill: var(--fg-pink); stroke: var(--fg-pink); }
 .cloudpop .tool .word { color: var(--fg-deep); }
 .cloudpop .stem .st { stroke: var(--c-blue); }
 .cloudpop .stem .lf, .cloudpop .stem .lf.r { fill: var(--c-blue); }
-/* the ground: a whole rounded hill under each patch, never cut off at the sides */
-.cloudpop .tools { background: radial-gradient(50% 100% at 50% 100%, color-mix(in srgb, var(--c-teal) 30%, #fff) 0 98%, transparent) bottom / 100% 30px no-repeat; padding-inline: 34px; }
+.cloudpop .tools { background: none; padding: 0; gap: 0 4px; }
 
-.cp-more { color: var(--fg-pink); font: 600 16px/1 var(--font-body); letter-spacing: 0; text-transform: none; box-shadow: 0 10px 30px -14px rgba(201, 65, 142, .5); }
-.cp-more svg { stroke: var(--fg-pink); }
+.cp-more { color: #fff; background: var(--fg-pink) !important; font: 600 16px/1 var(--font-body); letter-spacing: 0; text-transform: none; box-shadow: 0 10px 30px -14px rgba(201, 65, 142, .5); }
+.cp-more svg { stroke: #fff; }
 /* Back, as on the project pages */
 .cloudpop .cp-back { left: var(--gutter); right: auto; top: calc(env(safe-area-inset-top, 0px) + 18px); display: inline-flex; align-items: center; gap: 12px; padding: 0; border: 0; background: none; cursor: pointer;
   color: var(--fg-pink); font: 600 18px/1 var(--font-body); text-transform: uppercase; }
@@ -557,7 +560,8 @@ a:focus-visible { outline: 2px solid var(--white); outline-offset: 4px; }
 }
 @media (max-width: 560px) {
   .facts-list { grid-template-columns: minmax(0, 1fr); }
-  .tool-groups { grid-template-columns: minmax(0, 1fr); justify-items: center; }
+  .tool-groups { flex-direction: column; align-items: stretch; gap: 40px; background: none; padding: 0; }
+  .tg .tools { padding: 0 20px 8px; background: radial-gradient(52% 100% at 50% 100%, color-mix(in srgb, var(--c-teal) 30%, #fff) 0 98%, transparent) bottom / 100% 30px no-repeat; }
 }
 @media (prefers-reduced-motion: reduce) {
   .qbtn .q-glyph, .pulse { animation: none; }
@@ -768,3 +772,4 @@ html.sparkle-on, html.sparkle-on * { cursor: none !important; }
 .is-loading, .is-loading body { overflow: hidden; }
 @keyframes loader-spin { to { transform: rotate(360deg); } }
 @media (prefers-reduced-motion: reduce) { .loader-logo { animation-duration: 12s; } }
+@media (min-width: 821px) { .cloudpop .tools { flex-wrap: nowrap; } }
