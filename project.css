@@ -347,3 +347,21 @@ h3 .p-ink { font-size: clamp(26px, 2.6vw, 37px); line-height: 1.1; }
 /* longer project names (Miles & Meals) a size down, wrapping on small screens */
 .d-title-long .p-title-text { font-size: clamp(56px, 7.6vw, 118px); line-height: 1.05; }
 @media (max-width: 640px) { .d-title .p-title-text { white-space: normal; } .d-title-long .p-title-text { font-size: clamp(48px, 15vw, 72px); } }
+
+/* the phone on the right of the desktop (Moea) */
+.d-phone-right { left: auto; right: -2%; rotate: 4deg; }
+.d-devices:has(.d-phone-right) .p-window { margin: 0 auto 0 0; }
+/* the palette as dots (Moea) */
+.d-dots-pal { list-style: none; display: flex; gap: 14px; }
+.d-dots-pal li { width: clamp(52px, 4.8vw, 68px); aspect-ratio: 1; border-radius: 50%; background: var(--c); box-shadow: 0 12px 22px -14px rgba(29, 29, 31, .55); }
+/* a result without a prototype: the site opens large on click, the phone sits on its corner */
+.d-zoomable { display: block; width: 100%; padding: 0; border: 0; cursor: zoom-in; }
+.d-zoomable:focus-visible { outline: 2px solid var(--blue); outline-offset: -4px; }
+.d-result-phone {
+  position: absolute; z-index: 2; left: -3%; bottom: -16%; width: 21%; padding: 0; border: 0; cursor: zoom-in;
+  background: none; border-radius: 16px; overflow: hidden; box-shadow: 0 30px 50px -28px rgba(10, 40, 50, .6);
+}
+.d-result-phone img { display: block; width: 100%; height: auto; }
+.d-result:has(.d-result-phone) .d-browser { margin-bottom: 9%; }
+button.d-badge { border: 0; cursor: zoom-in; font: inherit; }
+@media (max-width: 640px) { .d-result-phone { width: 30%; left: 2%; bottom: -12%; } }

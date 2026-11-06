@@ -42,20 +42,21 @@ PROJECTS = [
   dict(file='moea.html', name='Moea', tab='#3EBDCD',
        layout='dior',
        subtitle=('Moea – Mother Earth', 'An animated 3D website hero for a sustainable fashion brand'),
-       year='2025', client='Moea', url='',   # TO CONFIRM: year
-       tools=[('assets/moea/icon-blender.svg', 'Blender')],
+       year='2026', client='Moea', url='',
+       tools=[('assets/moea/icon-ae.svg', 'After Effects'), ('assets/type01/icon-figma.svg', 'Figma'), ('assets/moea/icon-blender.svg', 'Blender')],
        desktop=('assets/moea/site.webp', 2000, 1240, 'The Moea homepage with its 3D hero'),
-       mobile=('assets/dior/site-mobile.webp', 729, 1253, 'Placeholder phone (Dior) until the Moea mobile screen is added'),   # PLACEHOLDER
+       mobile=('assets/moea/site-mobile.webp', 1001, 1812, 'The Moea homepage on mobile, with the 3D hero'), mobile_screen=True, phone_right=True,
        lead='A client has heard that <b>3D is the next big thing on the web</b> and wants it on their website as a <b>promotional header</b>.',
-       brief=['Imagining I worked at a design agency, I could pick the brand myself, so I chose a responsible one: <b>Moea</b>, short for <b>Mother Earth</b>, a label that rethinks how fashion is made, with respect for the planet.<br>The hero had to tell a <b>visual concept</b>, a little world built around the product, and <b>couldn’t be static</b>: animation brings it to life. I designed and animated it in <b>Blender</b>.'],
-       palettes=[('Styleboard', ['#FFF4DC', '#FFBCD1', '#B96E85', '#86A4AE', '#6D6D6D', '#3B3B3B']),   # PLACEHOLDER (Dior)
-                 ('Final website', ['#FFFFFF', '#B69EF9', '#29829D', '#005568', '#1B1B3A'])],
-       styleboard=('assets/dior/styleboard.webp', 2400, 1697, 'Placeholder styleboard (Dior) until the Moea styleboard is added', 'Before modelling in Blender, a mood and styleboard showed the client where the little world around the product was heading.'),   # PLACEHOLDER image
-       live=None,
+       brief=['For this assignment, I could pick the brand myself, so I chose <b>Moea</b>, short for <b>Mother Earth</b>, a label that rethinks how fashion is made, with respect for the planet.<br>The hero had to tell a <b>visual concept</b>, a little world built around the product, and needed to be <b>animated</b> (the animation is coming soon!).'],
+       palettes=None,
+       # the palette as dots, as on the styleboard: chrome, sage, lavender, teal, deep teal
+       palette_dots=['linear-gradient(160deg, #787D85, #B5B7B9 50%, #747C80)', '#BECD8D', '#AF9BE9', '#4796A4', 'linear-gradient(#142B2C, #106C81)'],
+       styleboard=('assets/moea/styleboard.webp', 2000, 1413, 'Moea styleboard: chrome, stone, moss, flowers and water', 'I wanted to go for a chrome style in combination with natural elements: liquid metal next to stone, moss, flowers and water.'),
+       live=None, zoom=True,   # no prototype yet: the result opens large instead
               title=None, title_text='MOEA',
        lede='An animated 3D website hero for Moea, a sustainable fashion brand',
        facts=[('Made with', 'Blender'), ('Status', 'Case study in progress')],
-       tags=['3D design', 'Animation', 'Web design'],
+       tags=['3D hero', 'Animation', 'Web design'],
        site=('assets/moea/site.webp', 2000, 1240, 'The Moea homepage with its 3D hero'),
        steps=[], result=None, cta=None),
   dict(file='type01.html', name='Type01', tab='#E770B2',
@@ -158,8 +159,14 @@ def dior_main(p):
              f'<div><dt>Creative fields</dt><dd class="d-fields">{pills(p["tags"])}</dd></div>'
              f'<div><dt>Built with</dt><dd><ul class="d-tools">{tools}</ul></dd></div>')
     brief = ''.join(f'\n        <p class="d-text reveal">{t}</p>' for t in p['brief'])
-    (pa_name, pa), (pb_name, pb) = p['palettes']
-    pal = ''.join(f'<li style="--c:{pa[k]}" data-a="{pa[k]}" data-b="{pb[k] if k < len(pb) else ""}"></li>' for k in range(len(pa)))
+    if p.get('palette_dots'):
+        palette = '<ul class="d-dots-pal" aria-label="Colour palette">' + ''.join(f'<li style="--c:{c}"></li>' for c in p['palette_dots']) + '</ul>'
+    else:
+        (pa_name, pa), (pb_name, pb) = p['palettes']
+        pal = ''.join(f'<li style="--c:{pa[k]}" data-a="{pa[k]}" data-b="{pb[k] if k < len(pb) else ""}"></li>' for k in range(len(pa)))
+        palette = (f'<div class="p-switch" role="tablist" aria-label="Palette">'
+                   f'<button role="tab" aria-selected="true" data-board="a">{pa_name}</button><button role="tab" aria-selected="false" data-board="b">{pb_name}</button>'
+                   f'<span class="p-switch-pill" aria-hidden="true"></span></div><ul class="d-swatches" aria-label="Colour palette">{pal}</ul>')
     d, m, sb = p['desktop'], p['mobile'], p['styleboard']
     url, cta = p['url'], p['cta']
     # the styleboard, and a second board when the palette switch has one (TYPE01: light / dark)
@@ -176,10 +183,15 @@ def dior_main(p):
         emb = 'https://www.figma.com/embed?embed_host=share&url=' + quote(cta[1], safe='')
         result = f'<div class="d-panes d-live" data-src="{html.escape(emb)}"></div>'
     else:
-        result = f'<div class="d-panes"><img class="d-still" src="{d[0]}" width="{d[1]}" height="{d[2]}" alt="{html.escape(d[3])}" loading="lazy"></div>'
+        result = (f'<button class="d-panes d-zoomable" data-zoom aria-label="Enlarge the website"><img class="d-still on" src="{d[0]}" width="{d[1]}" height="{d[2]}" alt="{html.escape(d[3])}" loading="lazy"></button>'
+                  f'<button class="d-result-phone" data-zoom aria-label="Enlarge the mobile version"><img class="on" src="{m[0]}" width="{m[1]}" height="{m[2]}" alt="{html.escape(m[3])}" loading="lazy"></button>')
     shot = window(*d, p['tab']).replace('</figure>', f'  <span class="d-url" aria-hidden="true">{p["url"]}</span>\n      </figure>', 1)
     link = (ROOT / 'assets/dior/icon-link.svg').read_text().replace('fill="white"', 'fill="currentColor"').replace('<svg ', '<svg class="d-cta-icon" aria-hidden="true" ', 1)
-    badge = '' if not cta else (f'<a class="d-badge" href="{html.escape(cta[1])}" target="_blank" rel="noopener" aria-label="{cta[0]} (opens the website)">'
+    zoom_icon = '<svg class="d-cta-icon" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="10.5" cy="10.5" r="6.5"/><path d="M15.5 15.5 21 21M10.5 7.5v6M7.5 10.5h6"/></svg>'
+    zoom_badge = (f'<button class="d-badge" data-zoom aria-label="Click to zoom in"><img class="on" src="{d[0]}" alt="{html.escape(d[3])}" hidden>'
+                  '<svg class="d-badge-ring" viewBox="0 0 120 120" aria-hidden="true"><defs><path id="badgeRing" d="M60 60m-44 0a44 44 0 1 1 88 0a44 44 0 1 1-88 0"/></defs>'
+                  f'<text><textPath href="#badgeRing" textLength="272">CLICK TO ZOOM IN • CLICK TO ZOOM IN •</textPath></text></svg>{zoom_icon}</button>')
+    badge = zoom_badge if p.get('zoom') else '' if not cta else (f'<a class="d-badge" href="{html.escape(cta[1])}" target="_blank" rel="noopener" aria-label="{cta[0]} (opens the website)">'
              f'<svg class="d-badge-ring" viewBox="0 0 120 120" aria-hidden="true"><defs><path id="badgeRing" d="M60 60m-44 0a44 44 0 1 1 88 0a44 44 0 1 1-88 0"/></defs>'
              f'<text><textPath href="#badgeRing" textLength="272">{cta[0].upper()} • {cta[0].upper()} •</textPath></text></svg>{link}</a>')
     return f"""
@@ -192,7 +204,7 @@ def dior_main(p):
       <!-- the site on desktop, with the phone version leaning on it -->
       <div class="d-devices reveal" style="--d:.2s">
         {shot}
-        <figure class="d-phone{' d-phone-screen' if p.get('mobile_screen') else ''}"><img src="{m[0]}" width="{m[1]}" height="{m[2]}" alt="{html.escape(m[3])}"></figure>
+        <figure class="d-phone{' d-phone-screen' if p.get('mobile_screen') else ''}{' d-phone-right' if p.get('phone_right') else ''}"><img src="{m[0]}" width="{m[1]}" height="{m[2]}" alt="{html.escape(m[3])}"></figure>
       </div>
       <dl class="d-facts reveal" style="--d:.15s">{facts}</dl>
     </section>
@@ -210,11 +222,7 @@ def dior_main(p):
         <div class="d-style-text">
           <p class="p-note">{sb[4]}</p>
           <div class="d-palette">
-            <div class="p-switch" role="tablist" aria-label="Palette">
-              <button role="tab" aria-selected="true" data-board="a">{pa_name}</button><button role="tab" aria-selected="false" data-board="b">{pb_name}</button>
-              <span class="p-switch-pill" aria-hidden="true"></span>
-            </div>
-            <ul class="d-swatches" aria-label="Colour palette">{pal}</ul>
+            {palette}
           </div>
         </div>
         <button class="p-board" data-zoom aria-label="Enlarge the styleboard">
