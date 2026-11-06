@@ -112,7 +112,7 @@ if (sparkle && matchMedia('(hover: hover) and (pointer: fine)').matches) {
 // lets go and Work scrolls up.
 const about = document.getElementById('about');
 const puff = document.getElementById('skyPuff');
-const cloudsL = document.getElementById('cloudsL'), cloudsR = document.getElementById('cloudsR');
+const cloudsL = document.getElementById('cloudsL'), cloudsR = document.getElementById('cloudsR'), fog = document.getElementById('pinFog');
 const PIN_TOP = 459, PIN_BOTTOM = 1720, HOLD = 380;
 const LEAD = 150;   // the transition starts this much scrolling before the scene pins
 const PUFF_CX = 631.4 + 763 / 2;                        // the shape's centre line on the stage
@@ -129,8 +129,11 @@ function moveSky() {
   }
   // 0 just before the scene pins (LEAD px earlier), 1 when it lets go
   const t = Math.max(0, Math.min(1, (-stage.getBoundingClientRect().top / z - (PIN_BOTTOM - vh - LEAD)) / (HOLD + LEAD)));
-  const fade = ramp(t, 0, .25), part = ramp(t, .05, .45), glide = ramp(t, .1, .45), sink = ramp(t, .45, .78);
+  // the Hello text stays readable longer and drifts up with the scroll before it fades; the shape
+  // sinks right up to the moment the scene lets go, so no empty purple screen is left
+  const fade = ramp(t, .3, .58), part = ramp(t, .3, .65), glide = ramp(t, .35, .7), sink = ramp(t, .62, 1);
   about.style.opacity = fade ? (1 - fade).toFixed(3) : '';
+  about.style.transform = !reduceMotion.matches && t ? `translateY(${(-260 * ramp(t, 0, .58)).toFixed(1)}px)` : '';
   about.style.visibility = fade >= 1 ? 'hidden' : '';
   const move = !reduceMotion.matches;
   const cx = 420 * part, cy = -200 * part;
@@ -141,7 +144,13 @@ function moveSky() {
   // sky's edge into the white, leaving just a horizontal line
   const g = move ? glide : 0, dy = 180 * g + (move ? 500 * sink : 0);
   puff.style.transform = g ? `translate(${((720 - PUFF_CX) * g).toFixed(1)}px, ${dy.toFixed(1)}px) scale(${(1 - .2 * g).toFixed(3)})` : '';
-  puff.style.opacity = sink ? (1 - ramp(t, .62, .78)).toFixed(3) : '';
+  puff.style.opacity = sink ? (1 - ramp(t, .85, 1)).toFixed(3) : '';
+  // white mist rises from below while the shape sinks: by the time the scene lets go the
+  // lower part of the screen is already white, so Work follows without a long purple stretch
+  if (fog) {
+    const end = (PIN_BOTTOM - PIN_TOP) - vh * .75, k = ramp(t, .42, 1);
+    fog.style.transform = `translateY(${(1500 - (1500 - end) * k).toFixed(1)}px)`;
+  }
 }
 if (about && puff && cloudsL && cloudsR) {
   const queueSky = () => { if (!skyQueued) { skyQueued = true; requestAnimationFrame(moveSky); } };

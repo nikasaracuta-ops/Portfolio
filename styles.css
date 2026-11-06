@@ -97,6 +97,8 @@ body {
 /* moved by script.js while pinned: the white cloud shape settles in the centre,
    the blue cloud bank parts left and right, then the shape sinks out of sight */
 .sky-puff, .clouds-px { pointer-events: none; }
+.pin-fog { position: absolute; left: 0; top: 0; width: 1440px; height: 1500px; pointer-events: none; transform: translateY(1500px);
+  background: linear-gradient(rgba(255, 255, 255, 0), rgba(255, 255, 255, .35) 180px, rgba(255, 255, 255, .8) 360px, #fff 520px); }
 .sky-puff { transform-origin: 50% 100%; }
 /* the two halves cross-fade over the middle third, so parting them leaves no seam */
 .clouds-l { -webkit-mask-image: linear-gradient(to right, #000 33%, transparent 67%); mask-image: linear-gradient(to right, #000 33%, transparent 67%); }
@@ -171,8 +173,9 @@ button, input, select, textarea { font-family: inherit; }
    from stage y 5350 down; your caustics float on it behind the laptop */
 .sea {
   pointer-events: none;
+  /* the sea (Figma 916:8223): aquamarine at the surface, deepening to the portfolio blue */
   background: linear-gradient(rgba(62, 189, 205, 0) 60px, rgba(62, 189, 205, .02) 156px, rgba(62, 189, 205, .16) 253px,
-    rgba(62, 189, 205, .5) 350px, rgba(62, 189, 205, .84) 447px, rgba(62, 189, 205, .98) 544px, #3EBDCD 640px);
+    rgba(62, 189, 205, .5) 350px, rgba(62, 189, 205, .84) 447px, rgba(62, 189, 205, .98) 544px, #3EBDCD 640px, #1A5BA4 100%);
 }
 .caustics, .deco { pointer-events: none; }
 /* contact (Figma 717:48856): the email is bold type with an arrow; Behance and
@@ -591,7 +594,7 @@ a:focus-visible { outline: 2px solid var(--white); outline-offset: 4px; }
 .topbar.on-light .logo-blue { opacity: 1; }
 /* the link texts sit 584px wide, ending at x 1379; each link carries the pill's 20px side padding */
 .topbar-links {
-  position: absolute; left: calc(735px * var(--z)); width: calc(664px * var(--z)); top: calc(9.5px * var(--z));
+  position: absolute; left: calc(775px * var(--z)); width: calc(624px * var(--z)); top: calc(9.5px * var(--z));
   display: flex; justify-content: space-between;
 }
 .topbar-links a {
@@ -601,12 +604,6 @@ a:focus-visible { outline: 2px solid var(--white); outline-offset: 4px; }
 }
 .topbar.on-light .topbar-links a { color: #497cb6; }
 .topbar-links { align-items: center; }
-/* Behance in the menu: the footer's round glass icon, smaller */
-.topbar-links .topbar-be { display: grid; place-items: center; width: calc(40px * var(--z)); height: calc(40px * var(--z)); padding: 0; border-radius: 50%;
-  border: 1px solid rgba(255, 255, 255, .25); background: rgba(255, 255, 255, .14); transition: background .3s, transform .35s cubic-bezier(.3, 1.6, .5, 1); }
-.topbar-be img { width: 56%; height: auto; display: block; }
-.topbar.on-light .topbar-be { background: #497cb6; border-color: #497cb6; }
-.topbar-links .topbar-be:hover, .topbar-links .topbar-be:focus-visible { transform: rotate(-8deg) scale(1.06); text-decoration: none; }
 .topbar-links a:hover, .topbar-links a:focus-visible { text-decoration: underline; text-underline-offset: 6px; text-decoration-thickness: 1px; outline: none; }
 
 /* ---------- Sunset ---------- */
@@ -615,7 +612,7 @@ a:focus-visible { outline: 2px solid var(--white); outline-offset: 4px; }
 .laptop-float { width: 754px; height: 644px; transform-origin: 376px 470px; }
 /* the empty tab that stays in the laptop as its screen (chameleon.js), on the screen glass */
 /* on the laptop the window is solid aquamarine (only the top bar keeps its details) */
-.laptop-tab .thumb { background: #1A5BA4; }
+.laptop-tab .thumb { background: linear-gradient(#3EBDCD, #1A5BA4); }
 .laptop-tab { position: absolute; left: 29.55px; top: 115.05px; width: 449px; transform: rotate(-10.57deg); transform-origin: 0 0; pointer-events: none; cursor: default; }
 #screen { transition: opacity .5s; }
 #screen.off { opacity: 0; pointer-events: none; }
@@ -629,11 +626,17 @@ a:focus-visible { outline: 2px solid var(--white); outline-offset: 4px; }
   display: grid; place-items: center; align-content: center; gap: 10px; padding: 44px 24px 16px;
   border: 0; border-radius: 14px; background: none; color: #fff; text-align: center; cursor: pointer;
 }
-.screen .s-k { font: 600 18px/1.4 var(--font-body); white-space: normal; max-width: 340px; }
-.screen .s-t { font: 700 62px/1.05 var(--f-seasons); white-space: nowrap; }
+.screen .s-k { font: 400 24px/1.3 var(--font-body); white-space: normal; max-width: 380px; }
+.screen .s-t { display: inline-flex; align-items: center; gap: 12px; font: 700 64px/1.05 var(--f-seasons); white-space: nowrap; transition: transform .35s cubic-bezier(.3, 1.6, .5, 1); }
+.screen .s-link { width: 26px; height: 26px; fill: none; stroke: #fff; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; transition: transform .35s cubic-bezier(.3, 1.6, .5, 1); }
+.screen:hover .s-t, .screen:focus-visible .s-t { transform: scale(1.05); }
+.screen:hover .s-link, .screen:focus-visible .s-link { transform: translate(4px, -4px); animation: none; }
+/* the link arrow nudges up-right now and then, so the screen reads as a link to Behance */
+.screen .s-link { animation: s-nudge 2.6s ease-in-out infinite; }
+@keyframes s-nudge { 0%, 70%, 100% { translate: 0 0; } 80% { translate: 4px -4px; } 90% { translate: 0 0; } }
+@media (prefers-reduced-motion: reduce) { .screen .s-link { animation: none; } }
 /* "on" in the body face, Behance in The Seasons */
 .screen .s-on { font: 400 26px/1 var(--font-body); vertical-align: .55em; margin-right: .1em; }
-.screen:hover .s-t, .screen:focus-visible .s-t { text-decoration: underline; text-underline-offset: 6px; text-decoration-thickness: 1px; }
 .screen:focus-visible { outline: 2px solid #fff; outline-offset: -6px; }
 .caret { display: inline-block; width: 2px; height: .9em; background: #fff; vertical-align: -.1em; margin-left: 3px; animation: blink 1s steps(1) infinite; }
 @keyframes blink { 50% { opacity: 0; } }
@@ -719,6 +722,7 @@ a:focus-visible { outline: 2px solid var(--white); outline-offset: 4px; }
   #contact { min-height: 600px; padding-top: 44px; padding-bottom: 150px; text-align: center; overflow: hidden; }
   /* the stage-level corals and seabed are drawn as backgrounds of the contact section here */
   .stage > .deco, .stage > .sea { display: none; }
+  .pin-fog { display: none; }
   #contact {
     background: url("assets/coral.svg") right -30px bottom 40px / 150px auto no-repeat,
                 url("assets/coral-small.svg") right 110px bottom 40px / 70px auto no-repeat,
@@ -735,7 +739,6 @@ a:focus-visible { outline: 2px solid var(--white); outline-offset: 4px; }
   .topbar-logo { left: 16px; width: 43px; height: 40px; }
   .topbar-links { left: auto; right: 10px; width: auto; top: 6px; gap: 2px; }
   .topbar-links a { padding: 5px 10px; font-size: 13px; line-height: 18px; }
-  .topbar-links .topbar-be { width: 28px; height: 28px; margin-left: 4px; }
 }
 
 /* ---------- Sparkle cursor ----------

@@ -178,7 +178,7 @@
     const O = { x: 381 + 376, y: 180 + 470 };        // its pivot (laptop.svg 376, 470) in sunset coords
     const GLASS = { x: 29.55 - 376, y: 115.05 - 470, w: 449, rot: -10.57 };   // the screen glass, from the pivot
     const HOVER = -70, REST = 0;               // laptop offset before the drop, and floating in the sea
-    const TEAL = [26, 91, 164], WHITE = [246, 250, 252];   // the laptop screen: the portfolio's blue #1A5BA4
+    const TEAL = [62, 189, 205], WHITE = [246, 250, 252];   // TEAL: the laptop's tab, Figma #3EBDCD
     const hex = h => [1, 3, 5].map(i => parseInt(h.slice(i, i + 2), 16));
     const mix = (a, b, t) => `rgb(${a.map((v, i) => Math.round(v + (b[i] - v) * t)).join(',')})`;
     const smooth = t => t * t * (3 - 2 * t);
