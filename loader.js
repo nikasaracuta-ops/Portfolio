@@ -3,6 +3,19 @@
 (() => {
   const loader = document.getElementById('loader');
   if (!loader) return;
+  // back from a project page: no counter, the clouds part instead (styles.css .cloud-veil)
+  if (document.documentElement.classList.contains('cloud-in')) {
+    const root = document.documentElement, veil = document.getElementById('cloudVeil');
+    loader.remove(); root.classList.remove('is-loading');
+    const open = () => {
+      requestAnimationFrame(() => veil && veil.classList.add('open'));
+      window.dispatchEvent(new Event('site:loaded'));
+      if (veil) setTimeout(() => veil.remove(), 1600);
+    };
+    if (document.readyState === 'complete') setTimeout(open, 120);
+    else { window.addEventListener('load', () => setTimeout(open, 120), { once: true }); setTimeout(open, 2500); }
+    return;
+  }
   const num = document.getElementById('loaderNum');
   const root = document.documentElement;
   const imgs = [...document.images].filter((img) => img.loading !== 'lazy');

@@ -11,10 +11,12 @@
   <link rel="preconnect" href="https://use.typekit.net" crossorigin>
   <link rel="stylesheet" href="https://use.typekit.net/gfn8yzd.css">
   <link rel="stylesheet" href="https://fonts.cdnfonts.com/css/wasted-vindey">
-  <link rel="stylesheet" href="styles.css?v=f0eea73f">
-  <script>document.documentElement.classList.add('js', 'is-loading')</script>
+  <link rel="stylesheet" href="styles.css?v=cf61eea1">
+  <script>document.documentElement.classList.add('js', 'is-loading'); try { if (sessionStorage.getItem('cloudIn')) { sessionStorage.removeItem('cloudIn'); document.documentElement.classList.add('cloud-in'); } } catch (e) {}</script>
 </head>
 <body>
+  <!-- Coming back from a project: clouds part instead of the loading screen (loader.js) -->
+  <div class="cloud-veil" id="cloudVeil" aria-hidden="true"><i class="cv cv1"></i><i class="cv cv2"></i><i class="cv cv3"></i><i class="cv cv4"></i><i class="cv cv5"></i></div>
   <!-- Loading screen: the spinning logo and a percentage, driven by loader.js -->
   <div class="loader" id="loader" role="progressbar" aria-label="Loading" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
     <img class="loader-logo" src="assets/loader-logo.webp" alt="" width="256" height="256">
@@ -230,7 +232,7 @@
   </section>
   </div>
 
-  <script src="loader.js?v=68ee955a"></script>
+  <script src="loader.js?v=af4be1f2"></script>
   <script src="script.js?v=9980ea7a"></script>
   <script src="about.js?v=0855be33"></script>
   <script src="bird.js?v=2bb9b1fb"></script>
