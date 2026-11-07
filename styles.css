@@ -144,7 +144,6 @@ body::before {
 .ttl-open span { color: #D8FF66; }
 /* Nika Saracuta / Digital creator (Figma 916:8396): The Seasons Light, the first letter italic */
 .hero-sub { margin: 0; font: 300 50.34px/1.3 var(--f-seasons); color: #fff; white-space: nowrap; }
-.hero-sub i { font-style: italic; letter-spacing: .1em; }
 /* "Portfolio" and the "?" in Wasted Vindey (cdnfonts link in index.html), as in Figma */
 .ttl-vindey, .q-glyph { font-family: "Wasted Vindey", serif; font-weight: 400; font-style: normal; letter-spacing: 0; white-space: nowrap; }
 .ttl-portfolio { margin: 0; font-size: 391.46px; line-height: 1.027; color: #fff; }
@@ -724,7 +723,7 @@ a:focus-visible { outline: 2px solid var(--white); outline-offset: 4px; }
   #about .qbtn, #about .btn-hello { position: absolute; left: 0; right: 0; margin: 0 auto; width: fit-content; }
   #about .qbtn { bottom: 38vw; opacity: calc(1 - max(0, var(--pp, 0) - .55) * 2.4); }
   #about .qbtn .q-glyph { margin: 0; font-size: clamp(110px, 32vw, 150px); line-height: .9; }
-  #about .btn-hello { z-index: 2; bottom: 17vw; display: inline-flex; height: 48px; padding: 0 30px; font-size: 16px; box-shadow: 0 10px 24px -12px rgba(153, 132, 188, .8); }
+  #about .btn-hello { z-index: 2; bottom: 17vw; opacity: calc(1 - max(0, var(--pp, 0) - .55) * 2.4); display: inline-flex; height: 48px; padding: 0 30px; font-size: 16px; box-shadow: 0 10px 24px -12px rgba(153, 132, 188, .8); }
 
   #work { --y0: 1800; --s: 1; padding: 24px 0 8px; background: #fff; }
   #mywork { order: 0; margin: 0 20px; font-size: clamp(56px, 16vw, 72px); line-height: 1.02; white-space: normal; }
@@ -733,10 +732,10 @@ a:focus-visible { outline: 2px solid var(--white); outline-offset: 4px; }
   /* the projects sit side by side: swipe them, the one in the middle is in focus */
   .work-list {
     order: 2; display: flex; gap: 14px; margin-top: 8px; padding: 6px 10vw 10px;
-    overflow-x: auto; overscroll-behavior-x: contain; scroll-snap-type: x mandatory; scrollbar-width: none;
+    overflow-x: auto; overscroll-behavior-x: contain; scroll-snap-type: x mandatory; scroll-behavior: smooth; scrollbar-width: none; -webkit-overflow-scrolling: touch;
   }
   .work-list::-webkit-scrollbar { display: none; }
-  .work-list li { flex: 0 0 80vw; scroll-snap-align: center; }
+  .work-list li { flex: 0 0 80vw; scroll-snap-align: center; scroll-snap-stop: always; }
   .wcard { filter: none; text-align: left; }
   .wcard .win::after { opacity: .45; }
   .wcard.stuck { transform: translateY(-5px); }
@@ -758,6 +757,7 @@ a:focus-visible { outline: 2px solid var(--white); outline-offset: 4px; }
     background: linear-gradient(rgba(62, 189, 205, 0) 320px, rgba(62, 189, 205, .02) 416px, rgba(62, 189, 205, .16) 513px,
       rgba(62, 189, 205, .5) 610px, rgba(62, 189, 205, .84) 707px, rgba(62, 189, 205, .98) 804px, #3EBDCD 900px); }
   .sunset-art .l { position: absolute; left: var(--x); top: var(--y); width: auto; height: auto; }
+  .sunset-art .screen { width: 449px; height: 301px; }   /* the text stays centred on the laptop screen */
 
   #contact { padding-top: 40px; padding-bottom: 210px; text-align: center; overflow: hidden; }
   /* the stage-level corals and seabed are drawn as backgrounds of the contact section here */
@@ -766,7 +766,7 @@ a:focus-visible { outline: 2px solid var(--white); outline-offset: 4px; }
   #contact {
     background: url("assets/coral.svg") right -30px bottom 3px / 150px auto no-repeat,
                 url("assets/coral-small.svg") right 112px bottom 9px / 70px auto no-repeat,
-                url("assets/seabed.svg") center bottom -6px / 110% auto no-repeat, #3EBDCD;
+                url("assets/seabed.svg") center bottom -6px / 110% auto no-repeat, linear-gradient(#3EBDCD, #1A5BA4);
   }
   #open { width: auto; font-size: clamp(46px, 13vw, 64px); line-height: 1.08; white-space: normal; }
   .t-email { margin-top: 26px; font-size: 18px; line-height: 26px; white-space: normal !important; }
@@ -815,6 +815,7 @@ a:focus-visible { outline: 2px solid var(--white); outline-offset: 4px; }
   .menu-foot { display: grid; gap: 18px; margin-top: auto; }
   .topbar .menu-foot .menu-mail { padding: 0; font: 600 18px/1.3 var(--font-body); color: var(--ice); }
   .menu-foot .socials { justify-content: flex-start; margin: 0; }
+  .topbar .menu-foot .social { padding: 0; font: inherit; }
   html.menu-open, html.menu-open body { overflow: hidden; }
 }
 
@@ -886,3 +887,20 @@ html.sparkle-on, html.sparkle-on * { cursor: none !important; }
 @keyframes loader-spin { to { transform: rotate(360deg); } }
 @media (prefers-reduced-motion: reduce) { .loader-logo { animation-duration: 12s; } }
 @media (min-width: 821px) { .cloudpop .tools { flex-wrap: nowrap; } }
+
+/* ---------- Desktop note (phones only, script.js) ---------- */
+.desk-note {
+  position: fixed; z-index: 95; left: 16px; right: 16px; bottom: calc(env(safe-area-inset-bottom, 0px) + 16px);
+  display: flex; align-items: center; gap: 12px; padding: 12px 10px 12px 16px; border-radius: 18px;
+  background: rgba(255, 255, 255, .9); -webkit-backdrop-filter: blur(14px); backdrop-filter: blur(14px);
+  box-shadow: 0 14px 34px -14px rgba(26, 91, 164, .45); color: var(--c-blue);
+  font: 500 14px/1.35 var(--font-body);
+  transform: translateY(calc(100% + 30px)); opacity: 0; transition: transform .5s cubic-bezier(.3, 1.3, .5, 1), opacity .35s;
+}
+.desk-note[hidden] { display: none; }
+.desk-note.show { transform: none; opacity: 1; }
+.desk-note svg { flex: none; width: 24px; height: 24px; fill: none; stroke: #E770B2; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+.desk-note p { flex: 1; margin: 0; }
+.desk-note button { flex: none; width: 34px; height: 34px; border: 0; border-radius: 50%; background: color-mix(in srgb, #E770B2 16%, #fff); color: #E770B2; font: 600 14px/1 var(--font-body); cursor: pointer; }
+@media (prefers-reduced-motion: reduce) { .desk-note { transition: opacity .3s; } }
+html.menu-open .desk-note { opacity: 0; pointer-events: none; }

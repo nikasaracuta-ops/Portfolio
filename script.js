@@ -256,3 +256,27 @@ if (topbar && burger) {
 // Focus rings only for keyboard users: a click or tap leaves no outline behind (styles.css)
 addEventListener('pointerdown', () => document.documentElement.classList.add('pointer-nav'), true);
 addEventListener('keydown', (e) => { if (e.key === 'Tab') document.documentElement.classList.remove('pointer-nav'); }, true);
+
+// Phones: a small note recommends the desktop version; it slides in once the page has
+// loaded, can be closed, and stays closed for the rest of the visit.
+const deskNote = document.getElementById('deskNote');
+if (deskNote && MOBILE.matches) {
+  let seen = false;
+  try { seen = !!sessionStorage.getItem('deskNoteSeen'); } catch (e) { /* storage blocked */ }
+  if (!seen) {
+    let shown = false;
+    const show = () => {
+      if (shown) return; shown = true;
+      deskNote.hidden = false;
+      requestAnimationFrame(() => requestAnimationFrame(() => deskNote.classList.add('show')));
+    };
+    const hide = () => {
+      deskNote.classList.remove('show');
+      try { sessionStorage.setItem('deskNoteSeen', '1'); } catch (e) { /* storage blocked */ }
+      setTimeout(() => { deskNote.hidden = true; }, 500);
+    };
+    addEventListener('site:loaded', () => setTimeout(show, 900));
+    setTimeout(show, 4500);   // in case the loader event already fired
+    document.getElementById('deskNoteClose').addEventListener('click', hide);
+  }
+}

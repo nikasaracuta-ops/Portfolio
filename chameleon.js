@@ -198,13 +198,24 @@
       const m = centre(mouth), r = cards[target].querySelector('.thumb').getBoundingClientRect();
       // desktop: a straight horizontal line to the tab's edge; phones: down to the list
       const t = { x: clamp(m.x, r.left + 28 * z, r.right - 28 * z), y: PHONE.matches ? clamp(m.y, r.top + 28 * z, r.bottom - 28 * z) : m.y };
-      const k = easeOut(ext), x = m.x + (t.x - m.x) * k, y = m.y + (t.y - m.y) * k;
+      const k = easeOut(ext);
+      let x = m.x + (t.x - m.x) * k, y = m.y + (t.y - m.y) * k, d = `M${m.x},${m.y} L${x},${y}`;
+      if (PHONE.matches) {
+        // phones: the tongue leaves the lips going forward, then curves down onto the project
+        t.x = clamp(m.x + 46, r.left + 20, r.right - 20); t.y = r.top + 34;
+        const c = { x: t.x, y: m.y };                                   // the curve's control point
+        const q1 = { x: m.x + (c.x - m.x) * k, y: m.y + (c.y - m.y) * k };
+        const q2 = { x: c.x + (t.x - c.x) * k, y: c.y + (t.y - c.y) * k };
+        x = q1.x + (q2.x - q1.x) * k; y = q1.y + (q2.y - q1.y) * k;
+        d = `M${m.x},${m.y} Q${q1.x},${q1.y} ${x},${y}`;
+      }
       const dist = Math.hypot(x - m.x, y - m.y);
-      tongue.setAttribute('d', dist > 2 ? `M${m.x},${m.y} L${x},${y}` : '');
+      tongue.setAttribute('d', dist > 2 ? d : '');
       const cb = chamBody.getBoundingClientRect();
       chamCut.setAttribute('transform', `translate(${cb.left} ${cb.top}) scale(${cb.width / 361} ${cb.height / 308})`);
-      tongue.setAttribute('stroke-width', 5 * z);
-      tip.setAttribute('cx', x); tip.setAttribute('cy', y); tip.setAttribute('r', dist > 2 ? 13 * z : 0);
+      const thin = PHONE.matches ? .6 : 1;                              // a finer tongue on phones
+      tongue.setAttribute('stroke-width', 5 * z * thin);
+      tip.setAttribute('cx', x); tip.setAttribute('cy', y); tip.setAttribute('r', dist > 2 ? 13 * z * (PHONE.matches ? .55 : 1) : 0);
       cards[target].classList.toggle('stuck', ext >= 1);
     }
     requestAnimationFrame(frame);
