@@ -5,63 +5,6 @@
   const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
   const $ = (s) => document.querySelector(s);
 
-  // The photo: wherever the cursor (or a finger) passes, soft patches of the photo
-  // turn into the blue-pink heat-map version and fade back after a moment.
-  (() => {
-    const box = $('#polaroid'), cv = $('#heat'), hint = $('#heatHint');
-    if (!box || !cv) return;
-    if (matchMedia('(pointer: coarse)').matches) hint.textContent = 'Drag over the photo';
-    const ctx = cv.getContext('2d'), mask = document.createElement('canvas'), mctx = mask.getContext('2d');
-    const heats = ['assets/about/heat-a.webp'].map((src) => { const i = new Image(); i.src = src; return i; });
-    let blobs = [], raf = 0, W = 0, H = 0, last = null, piece = 0, count = 0;
-    const LIFE = 1700;
-    const size = () => {
-      const r = box.getBoundingClientRect(), d = Math.min(2, devicePixelRatio || 1);
-      W = r.width; H = r.height;
-      cv.width = mask.width = Math.round(W * d); cv.height = mask.height = Math.round(H * d);
-      ctx.setTransform(d, 0, 0, d, 0, 0); mctx.setTransform(d, 0, 0, d, 0, 0);
-    };
-    // the heat maps are cut exactly like the photo, so they cover it one to one
-    const place = () => [0, 0, W, H];
-    const draw = (now) => {
-      blobs = blobs.filter((b) => now - b.t < LIFE);
-      ctx.clearRect(0, 0, W, H);
-      const [hx, hy, hw, hh] = place();
-      for (let k = 0; k < heats.length; k++) {
-        const mine = blobs.filter((b) => b.k === k);
-        if (!mine.length || !heats[k].complete) continue;
-        mctx.globalCompositeOperation = 'source-over'; mctx.clearRect(0, 0, W, H);
-        for (const b of mine) {
-          const a = 1 - (now - b.t) / LIFE, g = mctx.createRadialGradient(b.x, b.y, 0, b.x, b.y, b.r);
-          g.addColorStop(0, `rgba(0,0,0,${(a * .95).toFixed(3)})`); g.addColorStop(.55, `rgba(0,0,0,${(a * .7).toFixed(3)})`); g.addColorStop(1, 'rgba(0,0,0,0)');
-          mctx.fillStyle = g; mctx.fillRect(b.x - b.r, b.y - b.r, b.r * 2, b.r * 2);
-        }
-        mctx.globalCompositeOperation = 'source-in'; mctx.drawImage(heats[k], hx, hy, hw, hh);
-        ctx.drawImage(mask, 0, 0, W, H);
-      }
-      raf = blobs.length ? requestAnimationFrame(draw) : 0;
-    };
-    const add = (x, y) => {
-      blobs.push({ x, y, r: (W * (.12 + Math.random() * .1)), t: performance.now(), k: piece });
-      if (!raf) raf = requestAnimationFrame(draw);
-    };
-    box.addEventListener('pointermove', (e) => {
-      if (!W) size();
-      const r = box.getBoundingClientRect(), x = e.clientX - r.left, y = e.clientY - r.top;
-      if (last && Math.hypot(x - last[0], y - last[1]) < W * .04) return;
-      last = [x, y]; add(x, y); hint.classList.add('gone');
-    }, { passive: true });
-    box.addEventListener('pointerleave', () => { last = null; });
-    addEventListener('resize', () => { W = 0; });
-    // a little hint when the page opens: a short heat trail across the face
-    box.sweep = () => {
-      if (reduce) return;
-      size(); let i = 0;
-      const step = () => { add(W * (.3 + i * .05), H * (.3 + Math.sin(i / 2) * .05)); if (++i < 9) setTimeout(step, 70); };
-      setTimeout(step, 700);
-    };
-  })();
-
   const pop = $('#aboutPop'), plate = $('#plate'), closeBtn = $('#cpClose');
   let opener = null, origin = null, anim = 0;
 
@@ -97,7 +40,7 @@
     pop.hidden = false; pop.scrollTop = 0; more.classList.remove('gone'); toolbox.classList.remove('in'); document.body.style.overflow = 'hidden'; plate.classList.remove('in');
     const finish = () => {
       pop.classList.add('full');
-      setTimeout(() => { plate.classList.add('in'); onPopScroll(); const p = $('#polaroid'); if (p && p.sweep) p.sweep(); }, 250);
+      setTimeout(() => { plate.classList.add('in'); onPopScroll(); }, 250);
       closeBtn.focus({ preventScroll: true, focusVisible: false });
     };
     if (reduce) { finish(); return; }

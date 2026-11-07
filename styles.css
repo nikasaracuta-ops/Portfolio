@@ -513,15 +513,12 @@ a:focus-visible { outline: 2px solid var(--white); outline-offset: 4px; }
 .facts-list dd { margin: 10px 0 0; font: 400 clamp(16px, 1.3vw, 19px)/1.45 var(--font-body); color: var(--fg-ink); }
 .facts-list > div:first-child dd { font: 400 clamp(44px, 4vw, 60px)/.9 "Wasted Vindey", serif; color: var(--fg-pink); }
 
-/* the photo in a white print border on a pink glow; it becomes a heat map under the cursor */
+/* the photo in a white print border on a pink glow */
 .portrait { margin: 0; display: grid; justify-items: center; gap: 14px; position: relative; }
 .portrait::before { content: ""; position: absolute; z-index: -1; inset: -18% -30%; background: radial-gradient(closest-side, rgba(240, 140, 205, .45), rgba(240, 140, 205, .16) 55%, transparent); pointer-events: none; }
 .photo-card { padding: 4.5% 4.5% 13%; background: #fff; box-shadow: 0 30px 50px -34px rgba(201, 65, 142, .45); transform: rotate(-1.5deg); }
 .photo { position: relative; width: clamp(200px, 18vw, 260px); aspect-ratio: 700 / 1000; cursor: crosshair; touch-action: pan-y; overflow: hidden; }
-.photo .me, .photo .heat { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
-.photo .heat { pointer-events: none; }
-.heat-hint { font: 400 14px/1 var(--font-body); color: var(--muted, #6b6b73); transition: opacity .6s; }
-.heat-hint.gone { opacity: 0; }
+.photo .me { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
 
 /* main tools: pink flowers on dark-blue stems with aquamarine leaves, three patches without labels */
 .toolbox { max-width: 1180px; margin: clamp(60px, 8vw, 110px) auto 0; padding-top: 30px; text-align: left; }
@@ -658,7 +655,7 @@ a:focus-visible { outline: 2px solid var(--white); outline-offset: 4px; }
 }
 
 /* phone-only pieces of the menu and the project row */
-.nav-burger, .menu-foot, .wcap, .wdots, .hero-foot { display: none; }
+.nav-burger, .menu-foot, .wcap, .wdots { display: none; }
 .wcard.drop { position: absolute; }
 .wcard.drop[hidden] { display: none; }
 
@@ -691,25 +688,19 @@ a:focus-visible { outline: 2px solid var(--white); outline-offset: 4px; }
   .type img { width: 100%; height: auto; }
 
   /* hero + about share one continuous crop of the sky (same scale and x offset) */
-  /* hero: an editorial page. Name and role on a ruled line at the top, the title split
-     over two huge lines (Port / folio, left and right), a small footer line at the bottom */
+  /* hero: the title split over two huge lines (Port / folio, left and right); the name sits
+     above it on the left, the role below it on the right, at the same distance from the title */
   .hero {
-    --y0: 0; --s: .8; height: 640px; padding: 92px 20px 26px; background-position: calc(-60px * var(--s)) 0;
-    display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: auto 1fr auto; align-items: start;
+    --y0: 0; --s: .8; --gap: 22px; height: 640px; padding: 104px 20px 40px; background-position: calc(-60px * var(--s)) 0;
+    display: grid; grid-template-rows: auto auto auto; align-content: center; row-gap: var(--gap);
   }
-  .hero .hero-sub { grid-row: 1; padding-bottom: 12px; border-bottom: 1px solid rgba(255, 255, 255, .45); font-size: clamp(19px, 5.4vw, 24px); }
-  .hero .hero-sub:last-of-type { text-align: right; }
-  .hero h1 { grid-row: 2; grid-column: 1 / -1; align-self: center; display: grid; font-size: 44vw; line-height: .8; }
+  .hero .hero-sub { font-size: clamp(20px, 6vw, 26px); }
+  .hero .hero-sub:first-of-type { grid-row: 1; justify-self: start; }
+  .hero h1 { grid-row: 2; display: grid; font-size: 44vw; line-height: .8; }
+  .hero .hero-sub:last-of-type { grid-row: 3; justify-self: end; margin-top: -4.6vw; }
+  .hero h1 { margin-top: 3.6vw; }   /* evens out the type's own space above and below the title */
   .hero h1 .pf1 { justify-self: start; margin-left: -1vw; }
   .hero h1 .pf2 { justify-self: end; margin-right: -1vw; }
-  .hero-foot {
-    grid-row: 3; grid-column: 1 / -1; display: flex; justify-content: space-between; align-items: center;
-    font: 600 13px/1 var(--font-ui); text-transform: uppercase; color: rgba(255, 255, 255, .85);
-  }
-  .hf-scroll { display: inline-flex; align-items: center; gap: 10px; }
-  .hf-scroll i { position: relative; width: 1px; height: 34px; overflow: hidden; background: rgba(255, 255, 255, .3); }
-  .hf-scroll i::after { content: ""; position: absolute; left: 0; top: -40%; width: 1px; height: 40%; background: #fff; animation: hf-drop 1.8s ease-in-out infinite; }
-  @keyframes hf-drop { to { top: 100%; } }
 
   /* crop to the blue sky on the left so the white text stays readable */
   /* the cloud bank sits on its own layer on desktop; here it is drawn back in as a
