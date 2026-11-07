@@ -98,7 +98,7 @@
     b.className = 'wcard'; b.style.setProperty('--c', p.tint || p.hex); b.style.setProperty('--tab', p.tab || '#E770B2');
     b.setAttribute('aria-label', `Open project ${i + 1}: ${p.name}`);
     // the preview sits in the browser-window tab from Figma (tab.svg), its pink swapped for the project's colour
-    b.innerHTML = `<span class="win"><span class="thumb">${p.img ? `<img src="${p.img}" alt="" loading="lazy" decoding="async">` : 'Coming soon'}</span>${tabSvg(i)}</span>`;
+    b.innerHTML = `<span class="win"><span class="thumb">${p.img ? `<img src="${p.img}" alt="" loading="lazy" decoding="async">` : 'Coming soon'}</span>${tabSvg(i)}</span><span class="wcap" aria-hidden="true"><b>${p.name}</b><small>${p.kind}</small></span>`;
     // every project opens its own page (the project sheet is only a fallback)
     b.addEventListener('click', () => { if (p.page) location.href = p.page; else openProject(i, b); });
     b.addEventListener('mouseenter', () => activate(i));
@@ -108,11 +108,12 @@
   });
 
   // switching project: pull the tongue back first, then shoot it at the new one
-  let target = -1, pending = -1, ext = 0, goal = 0;
+  let target = -1, pending = -1, ext = 0, goal = 0, dotBtns = [];
   let speed = 0, lastY = scrollY, fast = false, pinkNow = false;
   function activate(i) {
     if (i === pending || (i === target && pending < 0)) return;
     cards.forEach((c, j) => c.classList.toggle('active', j === i));
+    dotBtns.forEach((d, j) => d.setAttribute('aria-current', j === i));
     if (target >= 0) cards[target].classList.remove('stuck');
     // the chameleon, its branch and tongue take the colour of the project's tab
     if (!fast) document.documentElement.style.setProperty('--cham', PROJECTS[i].tab);
@@ -124,15 +125,42 @@
   // scrolling fast: the chameleon stays its default pink and keeps its tongue in; once the
   // page slows down it catches whichever project is in the middle of the screen
   const FAST = 1800;   // px per second
+  // phones: the projects sit side by side in a swipeable row; the one in the middle counts
   const middleCard = () => {
     let best = -1, d = 1e9;
-    cards.forEach((c, j) => { const r = c.getBoundingClientRect(), dd = Math.abs(r.top + r.height / 2 - innerHeight / 2); if (dd < d) { d = dd; best = j; } });
+    const lr = list.getBoundingClientRect();
+    cards.forEach((c, j) => {
+      const r = c.getBoundingClientRect();
+      const dd = PHONE.matches ? Math.abs(r.left + r.width / 2 - (lr.left + lr.width / 2)) : Math.abs(r.top + r.height / 2 - innerHeight / 2);
+      if (dd < d) { d = dd; best = j; }
+    });
     return best;
   };
   const io = new IntersectionObserver(entries => {
+    if (PHONE.matches) return;
     entries.forEach(e => { if (e.isIntersecting && !fast) activate(cards.indexOf(e.target)); });
   }, { rootMargin: '-45% 0px -45% 0px' });
   cards.forEach(c => io.observe(c));
+
+  // phones: dots under the row show where you are and jump to a project
+  const dots = document.createElement('div');
+  dots.className = 'wdots';
+  dots.innerHTML = PROJECTS.map((p, i) => `<button type="button" aria-label="Show ${p.name}" style="--tab:${p.tab}"></button>`).join('');
+  list.after(dots);
+  dotBtns = [...dots.children];
+  dotBtns[Math.max(0, pending)].setAttribute('aria-current', true);
+  dotBtns.forEach((d, i) => d.addEventListener('click', () => {
+    const li = cards[i].parentElement;
+    list.scrollTo({ left: li.offsetLeft - (list.clientWidth - li.offsetWidth) / 2, behavior: reduce ? 'auto' : 'smooth' });
+  }));
+  let swipeQueued = false;
+  const onSwipe = () => {
+    swipeQueued = false;
+    if (!PHONE.matches) return;
+    const m = middleCard();
+    if (m >= 0) activate(m);
+  };
+  list.addEventListener('scroll', () => { if (!swipeQueued) { swipeQueued = true; requestAnimationFrame(onSwipe); } }, { passive: true });
 
   const centre = el => { const r = el.getBoundingClientRect(); return { x: r.left + r.width / 2, y: r.top + r.height / 2 }; };
   const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
@@ -231,7 +259,9 @@
       const z = slot.getBoundingClientRect(), a = art.getBoundingClientRect(), k = a.width / 1440, g = glass();
       const from = z.top + z.height / 2 - innerHeight * .5;
       const to = a.top + (O.y + HOVER + GLASS.y * S + 120 * S) * k - innerHeight * .5;
-      const p = reduce ? 0 : clamp(from / (from - to || 1), 0, 1);
+      // phones: the projects scroll sideways, so the last tab stays in the row and the
+      // laptop already shows its own screen
+      const p = reduce || PHONE.matches ? 0 : clamp(from / (from - to || 1), 0, 1);
       last.classList.toggle('flying', p > 0);
       workStage.classList.toggle('let-go', p > 0);   // on phones the chameleon steps aside
       if (p <= 0) {
@@ -252,8 +282,8 @@
         last.style.opacity = 1 - clamp((p - .94) / .04, 0, 1);
       }
       // it hands over to the identical tab inside the laptop, which then rides along with it
-      screenTab.style.opacity = reduce ? 1 : clamp((p - .94) / .04, 0, 1);
-      landed = p >= .98;
+      screenTab.style.opacity = reduce || PHONE.matches ? 1 : clamp((p - .94) / .04, 0, 1);
+      landed = p >= .98 || PHONE.matches;
       screenLink.classList.toggle('off', !landed && !reduce);
     }
 

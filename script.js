@@ -125,6 +125,10 @@ function moveSky() {
   stage.style.setProperty('--pin-top', (vh - (PIN_BOTTOM - PIN_TOP)).toFixed(1) + 'px');
   if (MOBILE.matches) {
     for (const el of [about, puff, cloudsL, cloudsR]) { el.style.transform = el.style.opacity = el.style.visibility = ''; }
+    // phones: the white cloud shape under Hello swells as you scroll on and turns into
+    // the white of Work (styles.css, #about::before)
+    const b = about.getBoundingClientRect().bottom;
+    about.style.setProperty('--pp', reduceMotion.matches ? 0 : Math.max(0, Math.min(1, (innerHeight - b) / (innerHeight * .7))).toFixed(3));
     return;
   }
   // 0 just before the scene pins (LEAD px earlier), 1 when it lets go
@@ -200,7 +204,7 @@ const sunsetArt = document.querySelector('.sunset-art');
 // stretch from where the sky fades out above Work down to the sea;
 // the link of the section you are in gets aria-current.
 const work = document.getElementById('work');
-const navLinks = topbar ? [...topbar.querySelectorAll('.topbar-links a')] : [];
+const navLinks = topbar ? [...topbar.querySelectorAll('.topbar-links > a')] : [];
 const navSections = [about, work, sunsetArt];   // About me, Work, Contact
 let navQueued = false;
 function toneNav() {
@@ -219,4 +223,20 @@ if (topbar && work && sunsetArt) {
   addEventListener('scroll', queueNav, { passive: true });
   addEventListener('resize', queueNav);
   toneNav();
+}
+
+// Phones: the menu folds into a hamburger; it opens as a full-screen sky with the links,
+// the email and the socials, and closes on a link, on Escape or on the button again.
+const burger = document.getElementById('navBurger');
+if (topbar && burger) {
+  const setMenu = (open) => {
+    topbar.classList.toggle('open', open);
+    document.documentElement.classList.toggle('menu-open', open);
+    burger.setAttribute('aria-expanded', open);
+    burger.setAttribute('aria-label', open ? 'Close the menu' : 'Open the menu');
+  };
+  burger.addEventListener('click', () => setMenu(!topbar.classList.contains('open')));
+  topbar.querySelectorAll('.topbar-links a').forEach((a) => a.addEventListener('click', () => setMenu(false)));
+  addEventListener('keydown', (e) => { if (e.key === 'Escape' && topbar.classList.contains('open')) { setMenu(false); burger.focus(); } });
+  MOBILE.addEventListener('change', () => setMenu(false));
 }

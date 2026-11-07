@@ -553,6 +553,8 @@ a:focus-visible { outline: 2px solid var(--white); outline-offset: 4px; }
   .plate { grid-template-columns: minmax(0, 1fr); justify-items: center; gap: 36px; }
   .portrait::before { inset: -10% -12%; }
   .facts-list { width: 100%; }
+  /* the Back button floats over the text as you scroll: a frosted pill keeps it readable */
+  .cloudpop .cp-back { padding-right: 18px; border-radius: 30px; background: rgba(255, 255, 255, .8); -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); box-shadow: 0 6px 20px -10px rgba(201, 65, 142, .4); }
 }
 @media (max-width: 560px) {
   .facts-list { grid-template-columns: minmax(0, 1fr); }
@@ -652,6 +654,9 @@ a:focus-visible { outline: 2px solid var(--white); outline-offset: 4px; }
   .caret { animation: none; }
 }
 
+/* phone-only pieces of the menu and the project row */
+.nav-burger, .menu-foot, .wcap, .wdots { display: none; }
+
 /* ---------- Phones ----------
    Instead of shrinking the 1440px canvas, sections stack in normal flow. Each
    section shows its own crop of the artwork: --y0 is where the section starts
@@ -685,39 +690,62 @@ a:focus-visible { outline: 2px solid var(--white); outline-offset: 4px; }
      second background, and the crop fades into the white of the Work section */
   #about {
     /* continues the hero's crop (600px / .8 = stage y 750), so the sky runs on without a seam */
-    --y0: 750; --s: .8; min-height: 690px; padding-top: 40px; padding-bottom: 110px;
+    --y0: 750; --s: .8; padding-top: 40px; padding-bottom: calc(112vw + 40px); overflow: clip;
     --sky-xy: calc(-60px * var(--s)) calc(var(--y0) * var(--s) * -1px);
     --sky-wh: calc(1440px * var(--s)) calc(2000px * var(--s));
     background-image: url("assets/clouds-bank.png?v=3"), url("assets/clouds-hero.png?v=3"), var(--sky-h), var(--sky-v);
     background-size: calc(1440px * var(--s)) auto, var(--sky-wh), var(--sky-wh), var(--sky-wh);
     background-position: calc(-60px * var(--s)) calc((1100 - var(--y0)) * var(--s) * 1px), var(--sky-xy), var(--sky-xy), var(--sky-xy);
   }
-  #about::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 110px; pointer-events: none; background: linear-gradient(rgba(255, 255, 255, 0), #fff); }
-  #hello { font-size: clamp(64px, 19vw, 96px); line-height: 1.15; }
-  .t-intro { margin-top: 26px; max-width: 34ch; font-size: 17px; line-height: 1.6; }
-  .t-intro p + p { margin-top: 1em; }
-  #about .btn-hello { display: inline-flex; margin-top: 30px; height: 48px; padding: 0 30px; font-size: 16px; }
-  #about .qbtn { position: absolute; right: 24px; top: 36px; }
-  #about .qbtn .q-glyph { font-size: 106px; }
-
-  #work { --y0: 1800; --s: 1; padding-top: 56px; padding-bottom: 40px; text-align: center; background-color: #fff; }
-  #mywork { margin: 0 auto; font-size: clamp(52px, 15vw, 72px); line-height: 1.05; text-align: center; }
-  /* the chameleon pins under the menu; its tongue reaches down to the list */
-  .work-layout { grid-template-columns: minmax(0, 1fr); gap: 24px; margin-top: 0; }
-  .work-stage { display: contents; }
-  .cham-wrap {
-    position: sticky; top: 58px; z-index: 5; margin: 0 -20px; padding: 8px 20px; display: grid; justify-items: end;
-    background: color-mix(in srgb, #fff 82%, transparent); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+  #about::after { content: ""; position: absolute; z-index: 1; left: 0; right: 0; bottom: 0; height: 46vw; pointer-events: none;
+    background: linear-gradient(rgba(255, 255, 255, 0), rgba(255, 255, 255, .25) 30%, rgba(255, 255, 255, .7) 62%, #fff 92%); }
+  /* the white cloud shape from the desktop scene rises under the text; scrolling on, it
+     swells (--pp, script.js) until the screen turns into the white of Work */
+  #about::before {
+    content: ""; position: absolute; left: 50%; bottom: -30vw; width: 118vw; aspect-ratio: 763 / 869; pointer-events: none;
+    background: url("assets/sky-puff.webp?v=2") center / 100% 100% no-repeat;
+    transform-origin: 50% 100%; transform: translateX(-50%) scale(calc(1 + var(--pp, 0) * .7));
   }
-  .work-list { margin-top: 0; }
-  .cham { width: 120px; }
-  .cham .branch { display: none; }
-  .cham-wrap { transition: opacity .4s; }
-  .work-stage.let-go .cham-wrap { opacity: 0; pointer-events: none; }
-  .work-list { gap: 22px; }
-  .wcard .win::after { opacity: .35; }
-  .wcard.stuck { transform: translateY(-6px); }
+  #about > * { z-index: 1; }
+  #hello { font-size: clamp(64px, 19vw, 88px); line-height: 1.1; }
+  .t-intro { margin-top: 20px; max-width: 34ch; font-size: 17px; line-height: 1.6; }
+  .t-intro p + p { margin-top: 1em; }
+  #about .btn-hello { display: inline-flex; margin-top: 28px; height: 48px; padding: 0 28px; font-size: 16px; }
+  /* the "?" sits inside the white shape and opens the About pop-up */
+  #about .qbtn {
+    position: absolute; left: 50%; bottom: 34vw; display: grid; justify-items: center; gap: 4px;
+    translate: -50% 0; opacity: calc(1 - var(--pp, 0) * 1.6);
+  }
+  #about .qbtn .q-glyph { margin: 0; font-size: clamp(110px, 32vw, 150px); line-height: .9; }
+  #about .qbtn::after { content: "Meet Nika"; font: 600 14px/1 var(--font-ui); text-transform: uppercase; color: #9984BC; }
+
+  #work { --y0: 1800; --s: 1; padding: 24px 0 8px; background: #fff; }
+  #mywork { order: 0; margin: 0 20px; font-size: clamp(56px, 16vw, 72px); line-height: 1.02; white-space: normal; }
+  .work-layout { display: flex; flex-direction: column; align-items: stretch; gap: 0; margin-top: 0; min-width: 0; }
+  .work-stage { display: contents; }
+  /* the projects sit side by side: swipe them, the one in the middle is in focus */
+  .work-list {
+    order: 1; display: flex; gap: 14px; margin-top: 26px; padding: 6px 10vw 10px;
+    overflow-x: auto; overscroll-behavior-x: contain; scroll-snap-type: x mandatory; scrollbar-width: none;
+  }
+  .work-list::-webkit-scrollbar { display: none; }
+  .work-list li { flex: 0 0 80vw; scroll-snap-align: center; }
+  .wcard { filter: none; text-align: left; }
+  .wcard .win::after { opacity: .45; }
+  .wcard.stuck { transform: translateY(5px); }
   .wcard .thumb { font-size: 22px; }
+  .wcap { display: grid; gap: 2px; margin-top: 12px; padding: 0 2px; opacity: .45; transition: opacity .3s; }
+  .wcard.active .wcap { opacity: 1; }
+  .wcap b { font: 400 26px/1.1 var(--f-seasons); color: var(--c-blue); }
+  .wcap small { font: 14px/1.3 var(--font-ui); color: var(--c-body); }
+  .wdots { order: 2; display: flex; justify-content: center; gap: 10px; margin-top: 10px; }
+  .wdots button { width: 10px; height: 10px; padding: 0; border: 0; border-radius: 5px; background: color-mix(in srgb, var(--tab) 35%, #fff); cursor: pointer; transition: width .35s cubic-bezier(.3, 1.6, .5, 1), background .3s; }
+  .wdots button[aria-current="true"] { width: 28px; background: var(--tab); }
+  /* the chameleon sits on its branch under the row; its tongue reaches up to the project */
+  /* it sits on the right, so its tongue reaches the tab beside the caption, not through it */
+  .cham-wrap { order: 3; position: relative; display: flex; justify-content: flex-end; margin-top: 18px; padding: 0 20px; overflow: hidden; }
+  .cham { width: 150px; }
+  .cham .branch { display: block; left: calc(170px - 100vw); top: calc(71% - 41 * 100vw / 1440); width: 100vw; height: calc(100vw * 139 / 1440); }
 
   .sunset { padding: 0; overflow: hidden; background: none; }
   .sunset-art { zoom: var(--mz, .45); margin-left: -300px;
@@ -725,7 +753,7 @@ a:focus-visible { outline: 2px solid var(--white); outline-offset: 4px; }
       rgba(62, 189, 205, .5) 610px, rgba(62, 189, 205, .84) 707px, rgba(62, 189, 205, .98) 804px, #3EBDCD 900px); }
   .sunset-art .l { position: absolute; left: var(--x); top: var(--y); width: auto; height: auto; }
 
-  #contact { min-height: 600px; padding-top: 44px; padding-bottom: 150px; text-align: center; overflow: hidden; }
+  #contact { padding-top: 40px; padding-bottom: 210px; text-align: center; overflow: hidden; }
   /* the stage-level corals and seabed are drawn as backgrounds of the contact section here */
   .stage > .deco, .stage > .sea { display: none; }
   .pin-fog { display: none; }
@@ -734,8 +762,8 @@ a:focus-visible { outline: 2px solid var(--white); outline-offset: 4px; }
                 url("assets/coral-small.svg") right 110px bottom 40px / 70px auto no-repeat,
                 url("assets/seabed.svg") center bottom -6px / 110% auto no-repeat, #3EBDCD;
   }
-  #open { width: auto; font-size: clamp(44px, 12vw, 64px); line-height: 1.1; white-space: normal; }
-  .t-email { margin-top: 28px; font-size: 19px; line-height: 28px; white-space: normal !important; }
+  #open { width: auto; font-size: clamp(46px, 13vw, 64px); line-height: 1.08; white-space: normal; }
+  .t-email { margin-top: 26px; font-size: 18px; line-height: 26px; white-space: normal !important; }
   .socials { margin-top: 22px; }
   .social { width: 56px; height: 56px; }
   .t-copy { margin-top: 20px; font-size: 14px; }
@@ -743,8 +771,43 @@ a:focus-visible { outline: 2px solid var(--white); outline-offset: 4px; }
   .topbar { top: 12px; height: 40px; }
   .topbar::before { top: -12px; height: 76px; }
   .topbar-logo { left: 16px; width: 43px; height: 40px; }
-  .topbar-links { left: auto; right: 10px; width: auto; top: 6px; gap: 2px; }
-  .topbar-links a { padding: 5px 10px; font-size: 13px; line-height: 18px; }
+  .nav-burger {
+    display: grid; align-content: center; justify-items: center; gap: 6px; position: absolute; right: 16px; top: 0;
+    width: 44px; height: 44px; margin-top: -2px; padding: 0; border: 1px solid rgba(255, 255, 255, .3); border-radius: 50%;
+    background: rgba(14, 63, 115, .16); -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px);
+    color: #fff; cursor: pointer; pointer-events: auto; transition: color .35s, background .35s, border-color .35s;
+  }
+  .nav-burger span { display: block; width: 18px; height: 2px; border-radius: 1px; background: currentColor; transition: transform .35s cubic-bezier(.3, 1.4, .5, 1); }
+  .topbar.on-light .nav-burger { color: #497cb6; background: rgba(73, 124, 182, .1); border-color: rgba(73, 124, 182, .2); }
+  .topbar.open .nav-burger { color: #fff; background: rgba(14, 63, 115, .16); border-color: rgba(255, 255, 255, .3); }
+  .topbar.open .nav-burger span:first-child { transform: translateY(4px) rotate(45deg); }
+  .topbar.open .nav-burger span:last-child { transform: translateY(-4px) rotate(-45deg); }
+  .nav-burger:focus-visible { outline: 2px solid currentColor; outline-offset: 3px; }
+  .topbar.open .logo-white { opacity: 1; }
+  .topbar.open .logo-blue { opacity: 0; }
+  /* the open menu: the hero's sky, big The Seasons links, the email and socials at the foot */
+  .topbar-links {
+    position: fixed; z-index: -1; inset: 0; left: 0; width: auto; top: 0; padding: 112px 28px 40px;
+    display: flex; flex-direction: column; align-items: flex-start; justify-content: flex-start; gap: 4px;
+    background: url("assets/clouds-hero.png?v=3") -48px 0 / 1152px auto no-repeat, var(--sky-h), var(--sky-v);
+    background-color: #1A5BA4;
+    visibility: hidden; opacity: 0; pointer-events: none; transition: opacity .35s, visibility 0s .35s;
+  }
+  .topbar.open .topbar-links { visibility: visible; opacity: 1; pointer-events: auto; transition: opacity .35s; }
+  .topbar-links > a {
+    padding: 4px 0; font: 400 clamp(46px, 13vw, 60px)/1.15 var(--f-seasons); font-style: normal; color: #fff;
+    translate: 0 16px; opacity: 0; transition: translate .5s cubic-bezier(.2, .8, .2, 1), opacity .4s;
+  }
+  .topbar.on-light .topbar-links > a { color: #fff; }
+  .topbar.open .topbar-links > a { translate: 0 0; opacity: 1; }
+  .topbar.open .topbar-links > a:nth-child(2) { transition-delay: .06s; }
+  .topbar.open .topbar-links > a:nth-child(3) { transition-delay: .12s; }
+  .topbar-links > a[aria-current] { color: #D5FF59; }
+  .topbar-links > a:hover, .topbar-links > a:focus-visible { text-decoration: none; color: #D5FF59; }
+  .menu-foot { display: grid; gap: 18px; margin-top: auto; }
+  .topbar .menu-foot .menu-mail { padding: 0; font: 600 18px/1.3 var(--font-body); color: var(--ice); }
+  .menu-foot .socials { justify-content: flex-start; margin: 0; }
+  html.menu-open, html.menu-open body { overflow: hidden; }
 }
 
 /* ---------- Sparkle cursor ----------
