@@ -167,9 +167,20 @@ if (about && puff && cloudsL && cloudsR) {
 // The fish swims across the sea at a calm pace; when the cursor comes close it
 // darts away (faster, and up or down away from the pointer), then calms down.
 const fishSwimmer = document.getElementById('fishSwimmer');
-if (fishSwimmer && !MOBILE.matches) {
+// phones: the sea sits inside the contact section, so the fish swims in front of the corals there
+const ocean = fishSwimmer && fishSwimmer.closest('.ocean'), oceanHome = ocean && ocean.nextElementSibling;
+function placeOcean() {
+  if (!ocean || !contact) return;
+  if (MOBILE.matches && ocean.parentElement !== contact) contact.appendChild(ocean);
+  else if (!MOBILE.matches && ocean.parentElement === contact) stage.insertBefore(ocean, oceanHome);
+}
+placeOcean();
+MOBILE.addEventListener('change', placeOcean);
+if (fishSwimmer) {
   const calm = matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const START = -380, END = 1500, SLOW = 70, FAST = 620;   // stage px, stage px per second
+  let START = -380, END = 1500, SLOW = 70, FAST = 620;   // stage px, stage px per second
+  const sizeSea = () => { [START, END, SLOW, FAST] = MOBILE.matches ? [-160, innerWidth + 30, 38, 340] : [-380, 1500, 70, 620]; };
+  sizeSea(); addEventListener('resize', sizeSea);
   let x = 420, y = 0, vy = 0, speed = SLOW, last = performance.now(), px = -1e4, py = -1e4;
   addEventListener('pointermove', (e) => { px = e.clientX; py = e.clientY; }, { passive: true });
   addEventListener('pointerleave', () => { px = py = -1e4; });
@@ -180,9 +191,10 @@ if (fishSwimmer && !MOBILE.matches) {
       const z = parseFloat(stage.style.zoom) || 1;
       const cx = r.left + r.width / 2, cy = r.top + r.height / 2;
       const d = Math.hypot(px - cx, py - cy) / z;             // cursor distance in stage px
-      const scared = d < 260;
+      const scared = d < (MOBILE.matches ? 120 : 260);
       speed += ((scared ? FAST : SLOW) - speed) * Math.min(1, dt * (scared ? 6 : 1.2));
-      vy += ((scared ? (cy > py ? 90 : -90) : 0) - y) * dt * 2.5 - vy * dt * 3;
+      const dodge = MOBILE.matches ? 30 : 90;
+      vy += ((scared ? (cy > py ? dodge : -dodge) : 0) - y) * dt * 2.5 - vy * dt * 3;
       y += vy * dt;
       x += speed * dt;
       if (x > END) { x = START; y = vy = 0; }
@@ -194,7 +206,7 @@ if (fishSwimmer && !MOBILE.matches) {
     }
     requestAnimationFrame(swim);
   }
-  if (calm) fishSwimmer.style.setProperty('--fx', '560px');
+  if (calm) fishSwimmer.style.setProperty('--fx', MOBILE.matches ? '40px' : '560px');
   requestAnimationFrame(swim);
 }
 
@@ -240,3 +252,7 @@ if (topbar && burger) {
   addEventListener('keydown', (e) => { if (e.key === 'Escape' && topbar.classList.contains('open')) { setMenu(false); burger.focus(); } });
   MOBILE.addEventListener('change', () => setMenu(false));
 }
+
+// Focus rings only for keyboard users: a click or tap leaves no outline behind (styles.css)
+addEventListener('pointerdown', () => document.documentElement.classList.add('pointer-nav'), true);
+addEventListener('keydown', (e) => { if (e.key === 'Tab') document.documentElement.classList.remove('pointer-nav'); }, true);

@@ -22,7 +22,11 @@
   --navy: #0E3F73;
 }
 
-* { box-sizing: border-box; margin: 0; padding: 0; }
+* { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+/* focus rings only for keyboard use: after a click or a tap nothing stays outlined
+   (html.pointer-nav is set on pointer use and removed on Tab, script.js / project.js) */
+:focus:not(:focus-visible) { outline: none; }
+html.pointer-nav :focus, html.pointer-nav :focus * { outline: none !important; }
 
 html { scroll-behavior: smooth; }
 
@@ -553,12 +557,12 @@ a:focus-visible { outline: 2px solid var(--white); outline-offset: 4px; }
   .plate { grid-template-columns: minmax(0, 1fr); justify-items: center; gap: 36px; }
   .portrait::before { inset: -10% -12%; }
   .facts-list { width: 100%; }
-  /* the Back button floats over the text as you scroll: a frosted pill keeps it readable */
-  .cloudpop .cp-back { padding-right: 18px; border-radius: 30px; background: rgba(255, 255, 255, .8); -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); box-shadow: 0 6px 20px -10px rgba(201, 65, 142, .4); }
 }
 @media (max-width: 560px) {
   .facts-list { grid-template-columns: minmax(0, 1fr); }
   .tool-groups { flex-direction: column; align-items: stretch; gap: 40px; background: none; padding: 0; }
+  .cloudpop .tools { flex-wrap: nowrap; }
+  .cloudpop .tool { width: min(64px, calc((100vw - 120px) / 5)); }
   .tg .tools { padding: 0 20px 8px; background: radial-gradient(52% 100% at 50% 100%, color-mix(in srgb, var(--c-teal) 30%, #fff) 0 98%, transparent) bottom / 100% 30px no-repeat; }
 }
 @media (prefers-reduced-motion: reduce) {
@@ -664,7 +668,13 @@ a:focus-visible { outline: 2px solid var(--white); outline-offset: 4px; }
 @media (max-width: 760px) {
   .stage { width: 100%; height: auto; background: #fff; display: flex; flex-direction: column; }
   .hero { order: 1; } #about { order: 2; } #work { order: 3; } .sunset { order: 4; } #contact { order: 5; }
-  .bird, .ocean, .sky-puff, .clouds-px, .stage .nav { display: none !important; }
+  .sky-puff, .clouds-px, .stage .nav { display: none !important; }
+  /* the bird flies across the hero (bird.js), the fish swims in front of the corals (script.js) */
+  .hero .l.bird { position: absolute; left: -16%; top: 230px; width: 132%; height: auto; aspect-ratio: 692 / 291; }
+  .stage > .ocean { display: none; }
+  #contact .ocean { position: absolute; left: 0; right: 0; bottom: 64px; height: 90px; width: auto; top: auto; }
+  #contact .fish-swimmer { top: 0; }
+  #contact .fish { width: 130px; filter: blur(2px); }
   .pin-wrap, .pin { display: contents; }   /* no pinned scene on phones: About is a normal section */
 
   .sec {
@@ -690,7 +700,7 @@ a:focus-visible { outline: 2px solid var(--white); outline-offset: 4px; }
      second background, and the crop fades into the white of the Work section */
   #about {
     /* continues the hero's crop (600px / .8 = stage y 750), so the sky runs on without a seam */
-    --y0: 750; --s: .8; padding-top: 40px; padding-bottom: calc(112vw + 40px); overflow: clip;
+    --y0: 750; --s: .8; padding-top: 40px; padding-bottom: 92vw; overflow: clip;
     --sky-xy: calc(-60px * var(--s)) calc(var(--y0) * var(--s) * -1px);
     --sky-wh: calc(1440px * var(--s)) calc(2000px * var(--s));
     background-image: url("assets/clouds-bank.png?v=3"), url("assets/clouds-hero.png?v=3"), var(--sky-h), var(--sky-v);
@@ -710,14 +720,11 @@ a:focus-visible { outline: 2px solid var(--white); outline-offset: 4px; }
   #hello { font-size: clamp(64px, 19vw, 88px); line-height: 1.1; }
   .t-intro { margin-top: 20px; max-width: 34ch; font-size: 17px; line-height: 1.6; }
   .t-intro p + p { margin-top: 1em; }
-  #about .btn-hello { display: inline-flex; margin-top: 28px; height: 48px; padding: 0 28px; font-size: 16px; }
-  /* the "?" sits inside the white shape and opens the About pop-up */
-  #about .qbtn {
-    position: absolute; left: 50%; bottom: 34vw; display: grid; justify-items: center; gap: 4px;
-    translate: -50% 0; opacity: calc(1 - var(--pp, 0) * 1.6);
-  }
+  /* the "?" and the About me button sit inside the white shape; both open the About pop-up */
+  #about .qbtn, #about .btn-hello { position: absolute; left: 0; right: 0; margin: 0 auto; width: fit-content; }
+  #about .qbtn { bottom: 38vw; opacity: calc(1 - max(0, var(--pp, 0) - .55) * 2.4); }
   #about .qbtn .q-glyph { margin: 0; font-size: clamp(110px, 32vw, 150px); line-height: .9; }
-  #about .qbtn::after { content: "Meet Nika"; font: 600 14px/1 var(--font-ui); text-transform: uppercase; color: #9984BC; }
+  #about .btn-hello { z-index: 2; bottom: 17vw; display: inline-flex; height: 48px; padding: 0 30px; font-size: 16px; box-shadow: 0 10px 24px -12px rgba(153, 132, 188, .8); }
 
   #work { --y0: 1800; --s: 1; padding: 24px 0 8px; background: #fff; }
   #mywork { order: 0; margin: 0 20px; font-size: clamp(56px, 16vw, 72px); line-height: 1.02; white-space: normal; }
@@ -725,27 +732,26 @@ a:focus-visible { outline: 2px solid var(--white); outline-offset: 4px; }
   .work-stage { display: contents; }
   /* the projects sit side by side: swipe them, the one in the middle is in focus */
   .work-list {
-    order: 1; display: flex; gap: 14px; margin-top: 26px; padding: 6px 10vw 10px;
+    order: 2; display: flex; gap: 14px; margin-top: 8px; padding: 6px 10vw 10px;
     overflow-x: auto; overscroll-behavior-x: contain; scroll-snap-type: x mandatory; scrollbar-width: none;
   }
   .work-list::-webkit-scrollbar { display: none; }
   .work-list li { flex: 0 0 80vw; scroll-snap-align: center; }
   .wcard { filter: none; text-align: left; }
   .wcard .win::after { opacity: .45; }
-  .wcard.stuck { transform: translateY(5px); }
+  .wcard.stuck { transform: translateY(-5px); }
   .wcard .thumb { font-size: 22px; }
   .wcap { display: grid; gap: 2px; margin-top: 12px; padding: 0 2px; opacity: .45; transition: opacity .3s; }
   .wcard.active .wcap { opacity: 1; }
   .wcap b { font: 400 26px/1.1 var(--f-seasons); color: var(--c-blue); }
   .wcap small { font: 14px/1.3 var(--font-ui); color: var(--c-body); }
-  .wdots { order: 2; display: flex; justify-content: center; gap: 10px; margin-top: 10px; }
-  .wdots button { width: 10px; height: 10px; padding: 0; border: 0; border-radius: 5px; background: color-mix(in srgb, var(--tab) 35%, #fff); cursor: pointer; transition: width .35s cubic-bezier(.3, 1.6, .5, 1), background .3s; }
-  .wdots button[aria-current="true"] { width: 28px; background: var(--tab); }
-  /* the chameleon sits on its branch under the row; its tongue reaches up to the project */
-  /* it sits on the right, so its tongue reaches the tab beside the caption, not through it */
-  .cham-wrap { order: 3; position: relative; display: flex; justify-content: flex-end; margin-top: 18px; padding: 0 20px; overflow: hidden; }
-  .cham { width: 150px; }
-  .cham .branch { display: block; left: calc(170px - 100vw); top: calc(71% - 41 * 100vw / 1440); width: 100vw; height: calc(100vw * 139 / 1440); }
+  .wdots { order: 3; display: flex; justify-content: center; gap: 10px; margin-top: 12px; }
+  .wdots button { width: 10px; height: 10px; padding: 0; border: 0; border-radius: 5px; background: color-mix(in srgb, #E770B2 30%, #fff); cursor: pointer; transition: width .35s cubic-bezier(.3, 1.6, .5, 1), background .3s; }
+  .wdots button[aria-current="true"] { width: 28px; background: #E770B2; }
+  /* the chameleon sits on its branch above the row; its tongue reaches down to the project */
+  .cham-wrap { order: 1; position: relative; display: flex; justify-content: flex-start; margin-top: 14px; padding: 0 20px; overflow: hidden; }
+  .cham { width: 140px; }
+  .cham .branch { display: block; left: -20px; top: calc(71% - 110 * 100vw / 1440); width: 100vw; height: calc(100vw * 139 / 1440); }
 
   .sunset { padding: 0; overflow: hidden; background: none; }
   .sunset-art { zoom: var(--mz, .45); margin-left: -300px;
@@ -758,14 +764,16 @@ a:focus-visible { outline: 2px solid var(--white); outline-offset: 4px; }
   .stage > .deco, .stage > .sea { display: none; }
   .pin-fog { display: none; }
   #contact {
-    background: url("assets/coral.svg") right -30px bottom 40px / 150px auto no-repeat,
-                url("assets/coral-small.svg") right 110px bottom 40px / 70px auto no-repeat,
+    background: url("assets/coral.svg") right -30px bottom 3px / 150px auto no-repeat,
+                url("assets/coral-small.svg") right 112px bottom 9px / 70px auto no-repeat,
                 url("assets/seabed.svg") center bottom -6px / 110% auto no-repeat, #3EBDCD;
   }
   #open { width: auto; font-size: clamp(46px, 13vw, 64px); line-height: 1.08; white-space: normal; }
   .t-email { margin-top: 26px; font-size: 18px; line-height: 26px; white-space: normal !important; }
   .socials { margin-top: 22px; }
   .social { width: 56px; height: 56px; }
+  .social img { height: 20px; }
+  .social[aria-label="LinkedIn"] img { height: 24px; }
   .t-copy { margin-top: 20px; font-size: 14px; }
 
   .topbar { top: 12px; height: 40px; }

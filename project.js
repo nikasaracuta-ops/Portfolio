@@ -108,3 +108,7 @@ document.querySelectorAll('a[href^="index.html"]').forEach((a) => a.addEventList
   requestAnimationFrame(() => requestAnimationFrame(() => veil.classList.add('shut')));
   setTimeout(() => { location.href = a.href; }, 750);
 }));
+
+// Focus rings only for keyboard users: a click or tap leaves no outline behind (styles.css)
+addEventListener('pointerdown', () => document.documentElement.classList.add('pointer-nav'), true);
+addEventListener('keydown', (e) => { if (e.key === 'Tab') document.documentElement.classList.remove('pointer-nav'); }, true);

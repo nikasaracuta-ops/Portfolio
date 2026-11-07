@@ -6,7 +6,7 @@
 // harder and flies off faster.
 (() => {
   const svg = document.getElementById('birdSvg');
-  if (!svg || matchMedia('(max-width: 760px)').matches) return;
+  if (!svg) return;   // phones too: there it crosses the hero at a smaller size (styles.css)
   const [farEl, bodyEl, nearEl] = ['birdFar', 'birdBody', 'birdNear'].map((id) => document.getElementById(id));
 
   // flight path on the 692 x 291 canvas (the GIF's own route), left low to right high
