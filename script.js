@@ -125,10 +125,6 @@ function moveSky() {
   stage.style.setProperty('--pin-top', (vh - (PIN_BOTTOM - PIN_TOP)).toFixed(1) + 'px');
   if (MOBILE.matches) {
     for (const el of [about, puff, cloudsL, cloudsR]) { el.style.transform = el.style.opacity = el.style.visibility = ''; }
-    // phones: the white cloud shape under Hello swells as you scroll on and turns into
-    // the white of Work (styles.css, #about::before)
-    const b = about.getBoundingClientRect().bottom;
-    about.style.setProperty('--pp', reduceMotion.matches ? 0 : Math.max(0, Math.min(1, (innerHeight - b) / (innerHeight * .7))).toFixed(3));
     return;
   }
   // 0 just before the scene pins (LEAD px earlier), 1 when it lets go

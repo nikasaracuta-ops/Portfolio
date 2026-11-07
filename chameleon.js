@@ -240,7 +240,6 @@
     const hex = h => [1, 3, 5].map(i => parseInt(h.slice(i, i + 2), 16));
     const mix = (a, b, t) => `rgb(${a.map((v, i) => Math.round(v + (b[i] - v) * t)).join(',')})`;
     const smooth = t => t * t * (3 - 2 * t);
-    const lastTab = hex(LAST.tab);
     // the sea's surface: two slow swells
     const wave = (x, t) => 7 * Math.sin(x / 150 + t * 1.25) + 4 * Math.sin(x / 61 - t * .85);
 
@@ -265,36 +264,60 @@
                rot: GLASS.rot + tilt, w: GLASS.w * S };
     }
 
+    // phones: the projects sit side by side, so a copy of the project in the middle lets go
+    // of the row and falls (the card itself hides meanwhile); desktop: the last tab falls
+    const drop = document.createElement('span');
+    drop.className = 'wcard active flying drop'; drop.setAttribute('aria-hidden', 'true'); drop.hidden = true;
+    $('#work').appendChild(drop);
+    let dropIdx = -1;
+
     function flight() {
-      // 0 when the last tab sits in the middle of the screen, 1 when the laptop screen does
-      const z = slot.getBoundingClientRect(), a = art.getBoundingClientRect(), k = a.width / 1440, g = glass();
+      const phone = PHONE.matches;
+      if (phone && dropIdx < 0) dropIdx = Math.max(0, middleCard());
+      const src = phone ? cards[dropIdx] : last, P = phone ? PROJECTS[dropIdx] : LAST;
+      const home = src.parentElement;
+      // 0 when the tab sits in the middle of the screen, 1 when the laptop screen does
+      const z = home.getBoundingClientRect(), a = art.getBoundingClientRect(), k = a.width / 1440, g = glass();
       const from = z.top + z.height / 2 - innerHeight * .5;
       const to = a.top + (O.y + HOVER + GLASS.y * S + 120 * S) * k - innerHeight * .5;
-      // phones: the projects scroll sideways, so the last tab stays in the row and the
-      // laptop already shows its own screen
-      const p = reduce || PHONE.matches ? 0 : clamp(from / (from - to || 1), 0, 1);
-      last.classList.toggle('flying', p > 0);
-      workStage.classList.toggle('let-go', p > 0);   // on phones the chameleon steps aside
-      if (p <= 0) {
-        last.style.transform = last.style.opacity = ''; last.style.setProperty('--deep', 0);
-        last.style.setProperty('--tab', LAST.tab); last.style.setProperty('--c', LAST.tint || LAST.hex);
-        if (lastImg) lastImg.style.opacity = '';
+      const p = reduce ? 0 : clamp(from / (from - to || 1), 0, 1);
+      let fly = last;
+      if (phone) {
+        fly = drop;
+        if (p > 0 && drop.hidden) {
+          // the copy takes the card's place in the section and its look
+          const w = $('#work').getBoundingClientRect();
+          drop.innerHTML = src.querySelector('.win').outerHTML;
+          if (!drop.querySelector('.lap-frame')) drop.querySelector('.win').insertAdjacentHTML('beforeend', last.querySelector('.lap-frame').outerHTML);
+          drop.style.left = (z.left - w.left) + 'px'; drop.style.top = (z.top - w.top) + 'px'; drop.style.width = z.width + 'px';
+          drop.hidden = false; src.style.visibility = 'hidden';
+        }
+        if (p <= 0 && !drop.hidden) { drop.hidden = true; src.style.visibility = ''; dropIdx = -1; }
       } else {
-        const e = smooth(p), unit = z.width / slot.offsetWidth;     // screen px per card px
+        last.classList.toggle('flying', p > 0);
+        if (!drop.hidden) { drop.hidden = true; cards.forEach(c => { c.style.visibility = ''; }); dropIdx = -1; }
+      }
+      const img = fly.querySelector('.thumb img');
+      if (p <= 0) {
+        fly.style.transform = fly.style.opacity = ''; fly.style.setProperty('--deep', 0);
+        fly.style.setProperty('--tab', P.tab); fly.style.setProperty('--c', P.tint || P.hex);
+        if (img) img.style.opacity = '';
+      } else {
+        const e = smooth(p), unit = z.width / (phone ? z.width : home.offsetWidth);   // screen px per card px
         const dx = (a.left + g.x * k - z.left) / unit, dy = (a.top + g.y * k - z.top) / unit;
         const sc = 1 + ((g.w * k) / z.width - 1) * e;
         const rot = g.rot * e + 5 * Math.sin(Math.PI * p);          // a little sway on the way down
-        last.style.transform = `translate(${dx * e}px, ${dy * e}px) rotate(${rot}deg) scale(${sc})`;
-        if (lastImg) lastImg.style.opacity = 1 - clamp(p / .12, 0, 1);
+        fly.style.transform = `translate(${dx * e}px, ${dy * e}px) rotate(${rot}deg) scale(${sc})`;
+        if (img) img.style.opacity = 1 - clamp(p / .12, 0, 1);
         const c = clamp((p - .2) / .6, 0, 1);
-        last.style.setProperty('--tab', mix(lastTab, TEAL, c));
-        last.style.setProperty('--c', mix(WHITE, TEAL, c));
-        last.style.setProperty('--deep', c.toFixed(3));
-        last.style.opacity = 1 - clamp((p - .94) / .04, 0, 1);
+        fly.style.setProperty('--tab', mix(hex(P.tab), TEAL, c));
+        fly.style.setProperty('--c', mix(WHITE, TEAL, c));
+        fly.style.setProperty('--deep', c.toFixed(3));
+        fly.style.opacity = 1 - clamp((p - .94) / .04, 0, 1);
       }
       // it hands over to the identical tab inside the laptop, which then rides along with it
-      screenTab.style.opacity = reduce || PHONE.matches ? 1 : clamp((p - .94) / .04, 0, 1);
-      landed = p >= .98 || PHONE.matches;
+      screenTab.style.opacity = reduce ? 1 : clamp((p - .94) / .04, 0, 1);
+      landed = p >= .98;
       screenLink.classList.toggle('off', !landed && !reduce);
     }
 
