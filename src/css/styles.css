@@ -18,8 +18,25 @@
   --ice: #ecf5ff;
   /* one accessible pink for text and buttons (4.6:1 with white) */
   --pink: #D62E88;
-  --btn-pink: #E770B2;
+  --btn-pink: var(--color-pink);
   --navy: #0E3F73;
+
+  /* colours */
+  --color-pink: #E770B2;       /* buttons, the chameleon, titles */
+  --color-blue: #1A5BA4;       /* portfolio blue */
+  --color-aqua: #3EBDCD;       /* the sea, the laptop */
+  --color-nav-blue: #497CB6;   /* the menu over white */
+  --color-lime: #D5FF59;       /* "New projects", the current menu link */
+
+  --c-blue: var(--color-blue);
+  --c-teal: #3BBDCC;
+  --c-pink: #FB72BE;
+  --c-body: #515151;
+  --f-seasons: "the-seasons", serif;
+  --f-label: var(--font-ui);
+  --cham: var(--color-pink);   /* changed by chameleon.js */
+  --noise: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 .9 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  --star6: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 0l2.6 7.5L22.4 6l-5.2 6 5.2 6-7.8-1.5L12 24l-2.6-7.5L1.6 18l5.2-6-5.2-6 7.8 1.5z'/%3E%3C/svg%3E");
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
@@ -45,7 +62,7 @@ body {
   overflow: clip;   /* not hidden: that would stop the sticky chameleon */
   /* the sky: the Figma gradient (1751px tall, blurred edges) drawn in CSS, with the
      Figma hero clouds on top (clouds-hero.png); the sea below is drawn in code */
-  background: url("assets/clouds-hero.png?v=3") 0 0 / 1440px 2000px no-repeat,
+  background: url("../assets/clouds-hero.png?v=3") 0 0 / 1440px 2000px no-repeat,
               var(--sky-h) 0 0 / 1440px 2000px no-repeat, var(--sky-v) 0 0 / 1440px 2000px no-repeat, #fff;
   /* script.js sets `zoom` so the 1440px design fills the viewport width */
 }
@@ -94,7 +111,7 @@ body {
 .pin-wrap { position: absolute; left: 0; top: 459px; width: 1440px; height: 1880px; }
 .pin {
   position: sticky; top: var(--pin-top, -361px); width: 1440px; height: 1500px; overflow: clip;
-  background: url("assets/clouds-hero.png?v=3") 0 -459px / 1440px 2000px no-repeat,
+  background: url("../assets/clouds-hero.png?v=3") 0 -459px / 1440px 2000px no-repeat,
               var(--sky-h) 0 -459px / 1440px 2000px no-repeat, var(--sky-v) 0 -459px / 1440px 2000px no-repeat, #fff;
 }
 
@@ -135,11 +152,10 @@ body::before {
 }
 
 /* ---------- Type ---------- */
-.type img { display: block; }
 /* display titles set live in The Seasons (Adobe Fonts), sized as in the Figma file */
 .ttl { margin: 0; font-family: var(--f-seasons); font-weight: 700; font-style: normal; letter-spacing: 0; white-space: nowrap; }
 .ttl-hello { font-weight: 700; font-size: 128px; line-height: 1.25; color: #fff; }
-.ttl-work { font-size: 96px; line-height: 101px; color: #E770B2; }
+.ttl-work { font-size: 96px; line-height: 101px; color: var(--color-pink); }
 .ttl-open { font-size: 96px; line-height: 105px; color: #fff; text-align: center; }
 .ttl-open span { color: #D8FF66; }
 /* Nika Saracuta / Digital creator (Figma 916:8396): The Seasons Light, the first letter italic */
@@ -150,14 +166,7 @@ body::before {
 .q-glyph { display: block; font-size: 202.84px; line-height: 1.025; color: #9984BC; }
 :where(.l):where(p, h1, h2, a, nav) { white-space: nowrap; color: var(--white); font-weight: 400; }
 
-.nav {
-  display: flex;
-  gap: 87px;
-  transform: translateX(-50%);
-  font: 20px var(--font-ui);
-}
-.nav a, .social { color: inherit; text-decoration: none; transition: opacity .2s; }
-.nav a:hover { opacity: .7; }
+.social { color: inherit; text-decoration: none; transition: opacity .2s; }
 
 /* Hello: a light, clean sans with the key words in a serif italic that echoes "Hello," */
 .t-intro {
@@ -172,13 +181,13 @@ button, input, select, textarea { font-family: inherit; }
 .t-intro b { font-weight: 600; color: #fff; }
 
 
-/* the sea (Figma 717:48893): #3EBDCD under a very soft top edge (Figma blur 194),
+/* the sea (Figma 717:48893): var(--color-aqua) under a very soft top edge (Figma blur 194),
    from stage y 5350 down; your caustics float on it behind the laptop */
 .sea {
   pointer-events: none;
   /* the sea (Figma 916:8223): aquamarine at the surface, deepening to the portfolio blue */
   background: linear-gradient(rgba(62, 189, 205, 0) 60px, rgba(62, 189, 205, .02) 156px, rgba(62, 189, 205, .16) 253px,
-    rgba(62, 189, 205, .5) 350px, rgba(62, 189, 205, .84) 447px, rgba(62, 189, 205, .98) 544px, #3EBDCD 640px, #1A5BA4 100%);
+    rgba(62, 189, 205, .5) 350px, rgba(62, 189, 205, .84) 447px, rgba(62, 189, 205, .98) 544px, var(--color-aqua) 640px, var(--color-blue) 100%);
 }
 .caustics, .deco { pointer-events: none; }
 /* contact (Figma 717:48856): the email is bold type with an arrow; Behance and
@@ -228,27 +237,18 @@ a:focus-visible { outline: 2px solid var(--white); outline-offset: 4px; }
    Ported from the work-page artifact. Sizes are fixed in design pixels (the
    whole 1440px stage is zoomed by script.js); the tongue and the project sheet
    sit outside the stage at real screen size. */
-:root {
-  --c-blue: #1A5BA4;
-  --c-teal: #3BBDCC;
-  --c-pink: #FB72BE;
-  --c-body: #515151;
-  --f-seasons: "the-seasons", serif;
-  --f-label: var(--font-ui);
-  --cham: #E770B2;
-  --noise: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 .9 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-}
 
 
-.work-layout { display: grid; grid-template-columns: 361px 686px; column-gap: 160px; align-items: start; white-space: normal; }
+
+.work__layout { display: grid; grid-template-columns: 361px 686px; column-gap: 160px; align-items: start; white-space: normal; }
 
 /* the chameleon on its branch (Figma vectors), in the colour of the project in focus (--cham) */
 /* title, chameleon and branch are one block that pins below the menu, so only
    the projects move; as in Figma the chameleon sits 310px below the top of the title */
-.work-stage { position: sticky; top: 100px; z-index: 1; }
+.work__stage { position: sticky; top: 100px; z-index: 1; }
 #mywork { margin: -7px 0 7px -4.4px; }
 .cham-wrap { margin-top: 130px; }
-.work-list { position: relative; z-index: 2; margin-top: 134px; }
+.work__list { position: relative; z-index: 2; margin-top: 134px; }
 .cham { position: relative; width: 361px; aspect-ratio: 361 / 308; }
 .cham svg { position: absolute; display: block; overflow: visible; }
 .cham-body { inset: 0; width: 100%; height: 100%; }
@@ -262,37 +262,37 @@ a:focus-visible { outline: 2px solid var(--white); outline-offset: 4px; }
 
 /* the tongue, over the page in screen pixels */
 .tongue-layer { position: fixed; inset: 0; width: 100%; height: 100%; pointer-events: none; z-index: 6; overflow: visible; }
-/* a little lighter than the chameleon (Figma: #E770B2 → #EFB3D4) */
+/* a little lighter than the chameleon (Figma: var(--color-pink) → #EFB3D4) */
 #tongue { fill: none; stroke: color-mix(in srgb, var(--cham) 62%, #fff); stroke-linecap: round; transition: stroke .8s ease; }
 #tongueTip { fill: var(--cham); transition: fill .8s ease; }
 
 /* the project list: the project in the middle of the screen is in focus */
-.work-list { list-style: none; display: grid; gap: 36px; }
-.wcard {
+.work__list { list-style: none; display: grid; gap: 36px; }
+.work-card {
   display: block; width: 100%; padding: 0; border: 0; background: none; cursor: pointer; font: inherit;
   filter: blur(1.2px);
   transition: transform .35s cubic-bezier(.3, 1.6, .5, 1), filter .3s;
 }
-.wcard.active { filter: none; }
+.work-card.work-card--active { filter: none; }
 /* projects out of focus fade under an opaque veil, so they still cover the branch */
-.wcard .win::after {
+.work-card .work-card__window::after {
   content: ""; position: absolute; inset: 0; border-radius: 1.85% / 2.76%; pointer-events: none;
   background: #f8f8f8; opacity: .55; transition: opacity .3s;
 }
-.wcard.active .win::after { opacity: 0; }
-.wcard.stuck { transform: translateX(-12px); }
-.wcard:focus-visible { outline: 2px solid var(--c-pink); outline-offset: 6px; border-radius: 14px; }
+.work-card.work-card--active .work-card__window::after { opacity: 0; }
+.work-card.work-card--stuck { transform: translateX(-12px); }
+.work-card:focus-visible { outline: 2px solid var(--c-pink); outline-offset: 6px; border-radius: 14px; }
 /* the preview in the browser-window tab from Figma (tab.svg, 742 × 497, drawn on
    top in the project's colour); the picture fills the window inside its 10px frame (x 10–731, y 58–487) */
-.wcard .win { position: relative; display: block; aspect-ratio: 742 / 497; color: var(--tab); }
-.wcard .win-svg { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
-.wcard .thumb {
+.work-card .work-card__window { position: relative; display: block; aspect-ratio: 742 / 497; color: var(--tab); }
+.work-card .work-card__svg { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
+.work-card .work-card__thumb {
   position: absolute; left: 1.348%; top: 11.67%; width: 97.17%; height: 86.32%; overflow: hidden;
   display: grid; place-items: center; border-radius: 0 0 1.4% 1.4% / 0 0 2.3% 2.3%;
   background: radial-gradient(120% 90% at 25% 20%, color-mix(in srgb, var(--c) 30%, #fff) 0%, var(--c) 55%, color-mix(in srgb, var(--c) 70%, var(--c-blue)) 120%);
   font: 400 30px var(--f-seasons); color: #fff;
 }
-.wcard .thumb img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: top center; }
+.work-card .work-card__thumb img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: top center; }
 
 /* ---------- Project sheet ---------- */
 .sheet {
@@ -333,8 +333,8 @@ a:focus-visible { outline: 2px solid var(--white); outline-offset: 4px; }
 .p-head .tagline { font-family: var(--f-seasons); font-size: clamp(1.2rem, 2.6vw, 1.7rem); margin: 10px 0 0; color: var(--c-body); }
 .p-mini {
   width: clamp(110px, 16vw, 180px); aspect-ratio: 600 / 400; background: var(--c);
-  -webkit-mask: url("assets/chameleon.png") center / contain no-repeat;
-          mask: url("assets/chameleon.png") center / contain no-repeat;
+  -webkit-mask: url("../assets/chameleon.png") center / contain no-repeat;
+          mask: url("../assets/chameleon.png") center / contain no-repeat;
 }
 .pills { display: flex; flex-wrap: wrap; gap: 8px; margin: 18px 0 0; padding: 0; list-style: none; }
 .sheet .pills li {
@@ -378,7 +378,7 @@ a:focus-visible { outline: 2px solid var(--white); outline-offset: 4px; }
 @media (max-width: 820px) { .tabpane { grid-template-columns: minmax(0, 1fr); } }
 @media (max-width: 560px) { .p-head { grid-template-columns: minmax(0, 1fr); } .p-mini { display: none; } }
 @media (prefers-reduced-motion: reduce) {
-  .sheet, .panel, .wcard, .wcard .win::after, .cham path, #tongue, #tongueTip { transition: none; }
+  .sheet, .panel, .work-card, .work-card .work-card__window::after, .cham path, #tongue, #tongueTip { transition: none; }
 }
 
 /* ---------- Scroll reveals ----------
@@ -410,7 +410,7 @@ a:focus-visible { outline: 2px solid var(--white); outline-offset: 4px; }
   position: fixed; inset: 0; z-index: 85; overflow-y: auto; overscroll-behavior: contain;
   font: 16px/1.6 var(--font-body); color: var(--c-body);
   /* a plain pink wash at the top, as on the project pages */
-  background: linear-gradient(color-mix(in srgb, #E770B2 42%, #fff) 0, #fff 260px) no-repeat, #fff; background-attachment: local;
+  background: linear-gradient(color-mix(in srgb, var(--color-pink) 42%, #fff) 0, #fff 260px) no-repeat, #fff; background-attachment: local;
   /* opens like a soft mist spreading out of whatever was clicked (about.js): five
      feathered blobs around the click, with no defined outline */
   --r: 0px; --cx: 50%; --cy: 50%; --w: 0;
@@ -490,9 +490,9 @@ a:focus-visible { outline: 2px solid var(--white); outline-offset: 4px; }
 .cloudpop:not(.full) .cp-more { opacity: 0; }
 .cloudpop :focus-visible { outline: 2px solid var(--c-pink); outline-offset: 4px; border-radius: 6px; }
 
-:root { --star6: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 0l2.6 7.5L22.4 6l-5.2 6 5.2 6-7.8-1.5L12 24l-2.6-7.5L1.6 18l5.2-6-5.2-6 7.8 1.5z'/%3E%3C/svg%3E"); }
+
 /* ---------- About: a field-guide page in pink ---------- */
-.cloudpop { overflow-x: hidden; --fg-ink: #3B2733; --fg-pink: #E770B2; --fg-deep: #C9418E; --fg-lead: #3BBDCC; color: var(--fg-ink); }
+.cloudpop { overflow-x: hidden; --fg-ink: #3B2733; --fg-pink: var(--color-pink); --fg-deep: #C9418E; --fg-lead: #3BBDCC; color: var(--fg-ink); }
 .field-head { text-align: center; position: relative; z-index: 1; }
 .fg-eyebrow { display: inline-flex; align-items: center; gap: 12px; margin: 0; font: 600 16px/1 var(--font-body); color: var(--fg-pink); }
 .fg-eyebrow i { width: 9px; height: 9px; background: var(--fg-pink); -webkit-mask: var(--star6) center / contain no-repeat; mask: var(--star6) center / contain no-repeat; transform: scale(1.6); }
@@ -574,40 +574,40 @@ a:focus-visible { outline: 2px solid var(--white); outline-offset: 4px; }
    on purpose: a fixed element inside it made browsers draw the page at a lower
    resolution. As in Figma (frame 697:47124): the logo on the left, the links on
    the right. White over the blue parts of the page, blue with the colour logo over
-   the white parts (.on-light, script.js); */
-.topbar {
+   the white parts (.site-nav.site-nav--light, script.js); */
+.site-nav {
   --z: 1;
   position: fixed; z-index: 70; top: calc(20px * var(--z)); left: 0; right: 0;
   height: calc(62px * var(--z)); pointer-events: none;
 }
 /* a soft full-width backdrop so the menu stays readable over whatever scrolls under it */
-.topbar::before {
+.site-nav::before {
   content: ""; position: absolute; z-index: -1; left: 0; right: 0; top: calc(-20px * var(--z)); height: calc(112px * var(--z));
   /* no backdrop: the menu sits straight on the page */
   display: none; background: none;
   -webkit-mask-image: linear-gradient(#000 55%, transparent); mask-image: linear-gradient(#000 55%, transparent);
   transition: background .35s;
 }
-.topbar.on-light::before { background: none; -webkit-backdrop-filter: none; backdrop-filter: none; }
-.topbar a { pointer-events: auto; text-decoration: none; }
-.topbar-logo { position: absolute; left: calc(51px * var(--z)); top: 0; width: calc(67px * var(--z)); height: calc(62px * var(--z)); }
-.topbar-logo img { position: absolute; inset: 0; width: 100%; height: 100%; transition: opacity .35s; }
-.topbar-logo .logo-blue { opacity: 0; }
-.topbar.on-light .logo-white { opacity: 0; }
-.topbar.on-light .logo-blue { opacity: 1; }
+.site-nav.site-nav--light::before { background: none; -webkit-backdrop-filter: none; backdrop-filter: none; }
+.site-nav a { pointer-events: auto; text-decoration: none; }
+.site-nav__logo { position: absolute; left: calc(51px * var(--z)); top: 0; width: calc(67px * var(--z)); height: calc(62px * var(--z)); }
+.site-nav__logo img { position: absolute; inset: 0; width: 100%; height: 100%; transition: opacity .35s; }
+.site-nav__logo .logo-blue { opacity: 0; }
+.site-nav.site-nav--light .logo-white { opacity: 0; }
+.site-nav.site-nav--light .logo-blue { opacity: 1; }
 /* the link texts sit 584px wide, ending at x 1379; each link carries the pill's 20px side padding */
-.topbar-links {
+.site-nav__links {
   position: absolute; left: calc(775px * var(--z)); width: calc(624px * var(--z)); top: calc(9.5px * var(--z));
   display: flex; justify-content: space-between;
 }
-.topbar-links a {
+.site-nav__links a {
   position: relative; z-index: 1; padding: calc(7px * var(--z)) calc(20px * var(--z));
   font: italic 400 calc(18px * var(--z))/calc(29px * var(--z)) var(--font-body); color: #fff; white-space: nowrap;
   transition: color .35s;
 }
-.topbar.on-light .topbar-links a { color: #497cb6; }
-.topbar-links { align-items: center; }
-.topbar-links a:hover, .topbar-links a:focus-visible { text-decoration: underline; text-underline-offset: 6px; text-decoration-thickness: 1px; outline: none; }
+.site-nav.site-nav--light .site-nav__links a { color: var(--color-nav-blue); }
+.site-nav__links { align-items: center; }
+.site-nav__links a:hover, .site-nav__links a:focus-visible { text-decoration: underline; text-underline-offset: 6px; text-decoration-thickness: 1px; outline: none; }
 
 /* ---------- Sunset ---------- */
 .sunset-art { position: relative; width: 1440px; height: 860px; }
@@ -615,18 +615,18 @@ a:focus-visible { outline: 2px solid var(--white); outline-offset: 4px; }
 .laptop-float { width: 754px; height: 644px; transform-origin: 376px 470px; }
 /* the empty tab that stays in the laptop as its screen (chameleon.js), on the screen glass */
 /* on the laptop the window is solid aquamarine (only the top bar keeps its details) */
-.laptop-tab .thumb { background: linear-gradient(#3EBDCD, #1A5BA4); }
+.work-card--laptop .work-card__thumb { background: linear-gradient(var(--color-aqua), var(--color-blue)); }
 /* while it falls, the tab's frame fades into the laptop's gradient copy (chameleon.js --deep) */
-.wcard .lap-frame { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; opacity: var(--deep, 0); pointer-events: none; }
+.work-card .work-card__frame { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; opacity: var(--deep, 0); pointer-events: none; }
 /* while it falls, the tab's window deepens towards the same gradient (chameleon.js --deep) */
-.wcard.flying .thumb { background: linear-gradient(rgba(26, 91, 164, 0), rgba(26, 91, 164, var(--deep, 0))),
+.work-card.work-card--flying .work-card__thumb { background: linear-gradient(rgba(26, 91, 164, 0), rgba(26, 91, 164, var(--deep, 0))),
   radial-gradient(120% 90% at 25% 20%, color-mix(in srgb, var(--c) 30%, #fff) 0%, var(--c) 55%, color-mix(in srgb, var(--c) 70%, var(--c-blue)) 120%), #fff; }
-.laptop-tab { position: absolute; left: 29.55px; top: 115.05px; width: 449px; transform: rotate(-10.57deg); transform-origin: 0 0; pointer-events: none; cursor: default; }
+.work-card--laptop { position: absolute; left: 29.55px; top: 115.05px; width: 449px; transform: rotate(-10.57deg); transform-origin: 0 0; pointer-events: none; cursor: default; }
 #screen { transition: opacity .5s; }
 #screen.off { opacity: 0; pointer-events: none; }
 /* the last project tab on its way into the laptop (chameleon.js) */
-.wcard.flying { transform-origin: 0 0; transition: none; filter: none; z-index: 30; }
-.wcard.flying .win::after { opacity: 0; }
+.work-card.work-card--flying { transform-origin: 0 0; transition: none; filter: none; z-index: 30; }
+.work-card.work-card--flying .work-card__window::after { opacity: 0; }
 /* laptop screen: shows the projects one by one; click opens the one on screen */
 .screen {
   text-decoration: none;
@@ -650,14 +650,14 @@ a:focus-visible { outline: 2px solid var(--white); outline-offset: 4px; }
 @keyframes blink { 50% { opacity: 0; } }
 
 @media (prefers-reduced-motion: reduce) {
-  .topbar-links a, .topbar-logo img, .t-email, .social { transition: none; }
+  .site-nav__links a, .site-nav__logo img, .t-email, .social { transition: none; }
   .caret { animation: none; }
 }
 
 /* phone-only pieces of the menu and the project row */
-.nav-burger, .menu-foot, .wcap, .wdots { display: none; }
-.wcard.drop { position: absolute; }
-.wcard.drop[hidden] { display: none; }
+.site-nav__burger, .site-nav__footer, .work-card__caption, .work__dots { display: none; }
+.work-card.work-card--drop { position: absolute; }
+.work-card.work-card--drop[hidden] { display: none; }
 
 /* ---------- Phones ----------
    Instead of shrinking the 1440px canvas, sections stack in normal flow. Each
@@ -666,7 +666,7 @@ a:focus-visible { outline: 2px solid var(--white); outline-offset: 4px; }
 @media (max-width: 760px) {
   .stage { width: 100%; height: auto; background: #fff; display: flex; flex-direction: column; }
   .hero { order: 1; } #about { order: 2; } #work { order: 3; } .sunset { order: 4; } #contact { order: 5; }
-  .sky-puff, .clouds-px, .stage .nav { display: none !important; }
+  .sky-puff, .clouds-px { display: none !important; }
   /* the bird flies across the hero (bird.js), the fish swims in front of the corals (script.js) */
   .hero .l.bird { position: absolute; left: -16%; top: 230px; width: 132%; height: auto; aspect-ratio: 692 / 291; }
   .stage > .ocean { display: none; }
@@ -679,13 +679,12 @@ a:focus-visible { outline: 2px solid var(--white); outline-offset: 4px; }
     position: relative; top: auto !important; width: 100%; padding: 0 20px;
     /* the same sky as on desktop: clouds, then the CSS gradient (its side fade and its colours) */
     --sky-pos: center calc(var(--y0, 0) * var(--s, 1) * -1px);
-    background: url("assets/clouds-hero.png?v=3"), var(--sky-h), var(--sky-v);
+    background: url("../assets/clouds-hero.png?v=3"), var(--sky-h), var(--sky-v);
     background-repeat: no-repeat;
     background-size: calc(1440px * var(--s, 1)) calc(2000px * var(--s, 1));
     background-position: var(--sky-pos);
   }
   .sec .l { position: relative; left: auto; top: auto; width: auto; height: auto; }
-  .type img { width: 100%; height: auto; }
 
   /* hero + about share one continuous crop of the sky (same scale and x offset) */
   /* hero: the title split over two huge lines (Port / folio, left and right); the name sits
@@ -710,7 +709,7 @@ a:focus-visible { outline: 2px solid var(--white); outline-offset: 4px; }
     --y0: 800; --s: .8; padding-top: 96vw; padding-bottom: 150px; overflow: clip;
     --sky-xy: calc(-60px * var(--s)) calc(var(--y0) * var(--s) * -1px);
     --sky-wh: calc(1440px * var(--s)) calc(2000px * var(--s));
-    background-image: url("assets/clouds-bank.png?v=3"), url("assets/clouds-hero.png?v=3"), var(--sky-h), var(--sky-v);
+    background-image: url("../assets/clouds-bank.png?v=3"), url("../assets/clouds-hero.png?v=3"), var(--sky-h), var(--sky-v);
     background-size: calc(1440px * var(--s)) auto, var(--sky-wh), var(--sky-wh), var(--sky-wh);
     background-position: calc(-60px * var(--s)) calc((1100 - var(--y0)) * var(--s) * 1px), var(--sky-xy), var(--sky-xy), var(--sky-xy);
   }
@@ -719,7 +718,7 @@ a:focus-visible { outline: 2px solid var(--white); outline-offset: 4px; }
   /* phones: the white cloud shape from the desktop scene floats above Hello, with the "?" in it */
   #about::before {
     content: ""; position: absolute; left: 50%; top: -8vw; width: 92vw; aspect-ratio: 763 / 869; pointer-events: none;
-    background: url("assets/sky-puff.webp?v=2") center / 100% 100% no-repeat; transform: translateX(-50%);
+    background: url("../assets/sky-puff.webp?v=2") center / 100% 100% no-repeat; transform: translateX(-50%);
   }
   #about > * { z-index: 1; }
   #hello { font-size: clamp(64px, 19vw, 88px); line-height: 1.1; }
@@ -732,27 +731,27 @@ a:focus-visible { outline: 2px solid var(--white); outline-offset: 4px; }
 
   #work { --y0: 1800; --s: 1; padding: 24px 0 8px; background: #fff; }
   #mywork { order: 0; margin: 0 20px; font-size: clamp(56px, 16vw, 72px); line-height: 1.02; white-space: normal; }
-  .work-layout { display: flex; flex-direction: column; align-items: stretch; gap: 0; margin-top: 0; min-width: 0; }
-  .work-stage { display: contents; }
+  .work__layout { display: flex; flex-direction: column; align-items: stretch; gap: 0; margin-top: 0; min-width: 0; }
+  .work__stage { display: contents; }
   /* the projects sit side by side: swipe them, the one in the middle is in focus */
-  .work-list {
+  .work__list {
     order: 2; display: flex; gap: 14px; margin-top: 8px; padding: 6px 10vw 10px;
     overflow-x: auto; overscroll-behavior-x: contain; scroll-snap-type: x mandatory; scroll-behavior: smooth; scrollbar-width: none; -webkit-overflow-scrolling: touch;
   }
-  .work-list::-webkit-scrollbar { display: none; }
-  .work-list li { flex: 0 0 80vw; scroll-snap-align: center; scroll-snap-stop: always; }
-  .wcard { filter: none; text-align: left; }
-  .wcard .win::after { opacity: .45; }
-  .wcard.stuck { transform: none; }
+  .work__list::-webkit-scrollbar { display: none; }
+  .work__list li { flex: 0 0 80vw; scroll-snap-align: center; scroll-snap-stop: always; }
+  .work-card { filter: none; text-align: left; }
+  .work-card .work-card__window::after { opacity: .45; }
+  .work-card.work-card--stuck { transform: none; }
   .tongue-layer { display: none; }
-  .wcard .thumb { font-size: 22px; }
-  .wcap { display: grid; gap: 2px; margin-top: 12px; padding: 0 2px; opacity: .45; transition: opacity .3s; }
-  .wcard.active .wcap { opacity: 1; }
-  .wcap b { font: 400 26px/1.1 var(--f-seasons); color: var(--c-blue); }
-  .wcap small { font: 14px/1.3 var(--font-ui); color: var(--c-body); }
-  .wdots { order: 3; display: flex; justify-content: center; gap: 10px; margin-top: 12px; }
-  .wdots button { width: 10px; height: 10px; padding: 0; border: 0; border-radius: 5px; background: color-mix(in srgb, #E770B2 30%, #fff); cursor: pointer; transition: width .35s cubic-bezier(.3, 1.6, .5, 1), background .3s; }
-  .wdots button[aria-current="true"] { width: 28px; background: #E770B2; }
+  .work-card .work-card__thumb { font-size: 22px; }
+  .work-card__caption { display: grid; gap: 2px; margin-top: 12px; padding: 0 2px; opacity: .45; transition: opacity .3s; }
+  .work-card.work-card--active .work-card__caption { opacity: 1; }
+  .work-card__caption b { font: 400 26px/1.1 var(--f-seasons); color: var(--c-blue); }
+  .work-card__caption small { font: 14px/1.3 var(--font-ui); color: var(--c-body); }
+  .work__dots { order: 3; display: flex; justify-content: center; gap: 10px; margin-top: 12px; }
+  .work__dots button { width: 10px; height: 10px; padding: 0; border: 0; border-radius: 5px; background: color-mix(in srgb, var(--color-pink) 30%, #fff); cursor: pointer; transition: width .35s cubic-bezier(.3, 1.6, .5, 1), background .3s; }
+  .work__dots button[aria-current="true"] { width: 28px; background: var(--color-pink); }
   /* the chameleon sits on its branch above the row; its tongue reaches down to the project */
   .cham-wrap { order: 1; position: relative; display: flex; justify-content: flex-start; margin-top: 14px; padding: 0 20px; overflow: hidden; }
   .cham { width: 140px; }
@@ -761,7 +760,7 @@ a:focus-visible { outline: 2px solid var(--white); outline-offset: 4px; }
   .sunset { padding: 0; overflow: hidden; background: none; }
   .sunset-art { zoom: var(--mz, .45); margin-left: -300px;
     background: linear-gradient(rgba(62, 189, 205, 0) 320px, rgba(62, 189, 205, .02) 416px, rgba(62, 189, 205, .16) 513px,
-      rgba(62, 189, 205, .5) 610px, rgba(62, 189, 205, .84) 707px, rgba(62, 189, 205, .98) 804px, #3EBDCD 900px); }
+      rgba(62, 189, 205, .5) 610px, rgba(62, 189, 205, .84) 707px, rgba(62, 189, 205, .98) 804px, var(--color-aqua) 900px); }
   .sunset-art .l { position: absolute; left: var(--x); top: var(--y); width: auto; height: auto; }
   .sunset-art .screen { width: 449px; height: 301px; }   /* the text stays centred on the laptop screen */
 
@@ -770,9 +769,9 @@ a:focus-visible { outline: 2px solid var(--white); outline-offset: 4px; }
   .stage > .deco, .stage > .sea { display: none; }
   .pin-fog { display: none; }
   #contact {
-    background: url("assets/coral.svg") right -30px bottom 3px / 150px auto no-repeat,
-                url("assets/coral-small.svg") right 112px bottom 9px / 70px auto no-repeat,
-                url("assets/seabed.svg") center bottom -6px / 110% auto no-repeat, linear-gradient(#3EBDCD, #1A5BA4);
+    background: url("../assets/coral.svg") right -30px bottom 3px / 150px auto no-repeat,
+                url("../assets/coral-small.svg") right 112px bottom 9px / 70px auto no-repeat,
+                url("../assets/seabed.svg") center bottom -6px / 110% auto no-repeat, linear-gradient(var(--color-aqua), var(--color-blue));
   }
   #open { width: auto; font-size: clamp(46px, 13vw, 64px); line-height: 1.08; white-space: normal; }
   .t-email { margin-top: 26px; font-size: 18px; line-height: 26px; white-space: normal !important; }
@@ -782,46 +781,46 @@ a:focus-visible { outline: 2px solid var(--white); outline-offset: 4px; }
   .social[aria-label="LinkedIn"] img { height: 24px; }
   .t-copy { margin-top: 20px; font-size: 14px; }
 
-  .topbar { top: 12px; height: 40px; }
-  .topbar::before { top: -12px; height: 76px; }
-  .topbar-logo { left: 16px; width: 43px; height: 40px; }
-  .nav-burger {
+  .site-nav { top: 12px; height: 40px; }
+  .site-nav::before { top: -12px; height: 76px; }
+  .site-nav__logo { left: 16px; width: 43px; height: 40px; }
+  .site-nav__burger {
     display: grid; align-content: center; justify-items: center; gap: 6px; position: absolute; right: 16px; top: 0;
     width: 44px; height: 44px; margin-top: -2px; padding: 0; border: 1px solid rgba(255, 255, 255, .3); border-radius: 50%;
     background: rgba(14, 63, 115, .16); -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px);
     color: #fff; cursor: pointer; pointer-events: auto; transition: color .35s, background .35s, border-color .35s;
   }
-  .nav-burger span { display: block; width: 18px; height: 2px; border-radius: 1px; background: currentColor; transition: transform .35s cubic-bezier(.3, 1.4, .5, 1); }
-  .topbar.on-light .nav-burger { color: #497cb6; background: rgba(73, 124, 182, .1); border-color: rgba(73, 124, 182, .2); }
-  .topbar.open .nav-burger { color: #fff; background: rgba(14, 63, 115, .16); border-color: rgba(255, 255, 255, .3); }
-  .topbar.open .nav-burger span:first-child { transform: translateY(4px) rotate(45deg); }
-  .topbar.open .nav-burger span:last-child { transform: translateY(-4px) rotate(-45deg); }
-  .nav-burger:focus-visible { outline: 2px solid currentColor; outline-offset: 3px; }
-  .topbar.open .logo-white { opacity: 1; }
-  .topbar.open .logo-blue { opacity: 0; }
+  .site-nav__burger span { display: block; width: 18px; height: 2px; border-radius: 1px; background: currentColor; transition: transform .35s cubic-bezier(.3, 1.4, .5, 1); }
+  .site-nav.site-nav--light .site-nav__burger { color: var(--color-nav-blue); background: rgba(73, 124, 182, .1); border-color: rgba(73, 124, 182, .2); }
+  .site-nav.site-nav--open .site-nav__burger { color: #fff; background: rgba(14, 63, 115, .16); border-color: rgba(255, 255, 255, .3); }
+  .site-nav.site-nav--open .site-nav__burger span:first-child { transform: translateY(4px) rotate(45deg); }
+  .site-nav.site-nav--open .site-nav__burger span:last-child { transform: translateY(-4px) rotate(-45deg); }
+  .site-nav__burger:focus-visible { outline: 2px solid currentColor; outline-offset: 3px; }
+  .site-nav.site-nav--open .logo-white { opacity: 1; }
+  .site-nav.site-nav--open .logo-blue { opacity: 0; }
   /* the open menu: the hero's sky, big The Seasons links, the email and socials at the foot */
-  .topbar-links {
+  .site-nav__links {
     position: fixed; z-index: -1; inset: 0; left: 0; width: auto; top: 0; padding: 112px 28px 40px;
     display: flex; flex-direction: column; align-items: flex-start; justify-content: flex-start; gap: 4px;
-    background: url("assets/clouds-hero.png?v=3") -48px 0 / 1152px auto no-repeat, var(--sky-h), var(--sky-v);
-    background-color: #1A5BA4;
+    background: url("../assets/clouds-hero.png?v=3") -48px 0 / 1152px auto no-repeat, var(--sky-h), var(--sky-v);
+    background-color: var(--color-blue);
     visibility: hidden; opacity: 0; pointer-events: none; transition: opacity .35s, visibility 0s .35s;
   }
-  .topbar.open .topbar-links { visibility: visible; opacity: 1; pointer-events: auto; transition: opacity .35s; }
-  .topbar-links > a {
+  .site-nav.site-nav--open .site-nav__links { visibility: visible; opacity: 1; pointer-events: auto; transition: opacity .35s; }
+  .site-nav__links > a {
     padding: 4px 0; font: 400 clamp(46px, 13vw, 60px)/1.15 var(--f-seasons); font-style: normal; color: #fff;
     translate: 0 16px; opacity: 0; transition: translate .5s cubic-bezier(.2, .8, .2, 1), opacity .4s;
   }
-  .topbar.on-light .topbar-links > a { color: #fff; }
-  .topbar.open .topbar-links > a { translate: 0 0; opacity: 1; }
-  .topbar.open .topbar-links > a:nth-child(2) { transition-delay: .06s; }
-  .topbar.open .topbar-links > a:nth-child(3) { transition-delay: .12s; }
-  .topbar-links > a[aria-current] { color: #D5FF59; }
-  .topbar-links > a:hover, .topbar-links > a:focus-visible { text-decoration: none; color: #D5FF59; }
-  .menu-foot { display: grid; gap: 18px; margin-top: auto; }
-  .topbar .topbar-links .menu-foot .menu-mail { padding: 0; font: 600 18px/1.3 var(--font-body); color: var(--ice); }
-  .menu-foot .socials { justify-content: flex-start; margin: 0; }
-  .topbar .menu-foot .social { padding: 0; font: inherit; }
+  .site-nav.site-nav--light .site-nav__links > a { color: #fff; }
+  .site-nav.site-nav--open .site-nav__links > a { translate: 0 0; opacity: 1; }
+  .site-nav.site-nav--open .site-nav__links > a:nth-child(2) { transition-delay: .06s; }
+  .site-nav.site-nav--open .site-nav__links > a:nth-child(3) { transition-delay: .12s; }
+  .site-nav__links > a[aria-current] { color: var(--color-lime); }
+  .site-nav__links > a:hover, .site-nav__links > a:focus-visible { text-decoration: none; color: var(--color-lime); }
+  .site-nav__footer { display: grid; gap: 18px; margin-top: auto; }
+  .site-nav .site-nav__links .site-nav__footer .site-nav__mail { padding: 0; font: 600 18px/1.3 var(--font-body); color: var(--ice); }
+  .site-nav__footer .socials { justify-content: flex-start; margin: 0; }
+  .site-nav .site-nav__footer .social { padding: 0; font: inherit; }
   html.menu-open, html.menu-open body { overflow: hidden; }
 }
 
@@ -905,8 +904,8 @@ html.sparkle-on, html.sparkle-on * { cursor: none !important; }
 }
 .desk-note[hidden] { display: none; }
 .desk-note.show { transform: none; opacity: 1; }
-.desk-note svg { flex: none; width: 24px; height: 24px; fill: none; stroke: #E770B2; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+.desk-note svg { flex: none; width: 24px; height: 24px; fill: none; stroke: var(--color-pink); stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
 .desk-note p { flex: 1; margin: 0; }
-.desk-note button { flex: none; width: 34px; height: 34px; border: 0; border-radius: 50%; background: color-mix(in srgb, #E770B2 16%, #fff); color: #E770B2; font: 600 14px/1 var(--font-body); cursor: pointer; }
+.desk-note button { flex: none; width: 34px; height: 34px; border: 0; border-radius: 50%; background: color-mix(in srgb, var(--color-pink) 16%, #fff); color: var(--color-pink); font: 600 14px/1 var(--font-body); cursor: pointer; }
 @media (prefers-reduced-motion: reduce) { .desk-note { transition: opacity .3s; } }
 html.menu-open .desk-note { opacity: 0; pointer-events: none; }

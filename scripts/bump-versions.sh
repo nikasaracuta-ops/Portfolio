@@ -2,11 +2,12 @@
 # Cache-busting: stamp each CSS/JS link in the pages (index.html and the project pages) with a short hash of the
 # file's contents (?v=…), so browsers fetch fresh files after every change
 # instead of mixing a new page with old cached styles/scripts.
-# Run it before committing whenever styles.css or a .js file changed.
+# Run it before committing whenever a CSS or JS file in src/ changed.
 set -euo pipefail
 cd "$(dirname "$0")/.."
-for f in styles.css project.css loader.js script.js chameleon.js about.js bird.js project.js; do
+pages=(index.html dior.html type01.html moea.html miles.html)
+for f in src/css/*.css src/js/*.js; do
   v=$(sha256sum "$f" | cut -c1-8)
-  sed -i -E "s#(href|src)=\"${f//./\\.}(\?v=[0-9a-f]+)?\"#\1=\"$f?v=$v\"#" index.html dior.html type01.html moea.html miles.html
+  perl -pi -e "s#(href|src)=\"\Q$f\E(?:\?v=[0-9a-f]+)?\"#\$1=\"$f?v=$v\"#g" "${pages[@]}"
 done
-grep -oE '([a-z]+\.css|[a-z]+\.js)\?v=[0-9a-f]+' index.html dior.html type01.html moea.html miles.html
+grep -ohE 'src/(css|js)/[a-z]+\.(css|js)\?v=[0-9a-f]+' "${pages[@]}" | sort | uniq -c

@@ -5,13 +5,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Nika Saracuta — Portfolio</title>
   <meta name="description" content="Portfolio of Nika Saracuta, digital creator and Digital Design & Development student.">
-  <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png">
-  <link rel="icon" type="image/png" sizes="192x192" href="assets/favicon-192.png">
-  <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="src/assets/favicon-32.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="src/assets/favicon-192.png">
+  <link rel="apple-touch-icon" href="src/assets/apple-touch-icon.png">
   <link rel="preconnect" href="https://use.typekit.net" crossorigin>
   <link rel="stylesheet" href="https://use.typekit.net/gfn8yzd.css">
   <link rel="stylesheet" href="https://fonts.cdnfonts.com/css/wasted-vindey">
-  <link rel="stylesheet" href="styles.css?v=c75314f5">
+  <link rel="stylesheet" href="src/css/styles.css?v=aceef458">
   <script>document.documentElement.classList.add('js', 'is-loading'); try { if (sessionStorage.getItem('cloudIn')) { sessionStorage.removeItem('cloudIn'); document.documentElement.classList.add('cloud-in'); } } catch (e) {}</script>
 </head>
 <body>
@@ -19,7 +19,7 @@
   <div class="cloud-veil" id="cloudVeil" aria-hidden="true"><i class="cv cv1"></i><i class="cv cv2"></i><i class="cv cv3"></i><i class="cv cv4"></i><i class="cv cv5"></i></div>
   <!-- Loading screen: the spinning logo and a percentage, driven by loader.js -->
   <div class="loader" id="loader" role="progressbar" aria-label="Loading" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
-    <img class="loader-logo" src="assets/loader-logo.webp" alt="" width="256" height="256">
+    <img class="loader-logo" src="src/assets/loader-logo.webp" alt="" width="256" height="256">
     <p class="loader-text">Loading <span id="loaderNum">0</span>%</p>
   </div>
   <!-- Built from Figma frame "Main" (1440 × 4237). The artwork is one exported
@@ -39,9 +39,9 @@
          positions are relative to the scene (stage y − 459). -->
     <div class="pin-wrap" id="pinWrap">
       <div class="pin" id="pin">
-        <img class="l sky-puff" id="skyPuff" style="--x:631.4px;--y:413.4px;--w:763px;--h:869px" src="assets/sky-puff.webp?v=2" alt="">
-        <img class="l clouds-px clouds-l" id="cloudsL" style="--x:0;--y:641px;--w:1440px;--h:910px" src="assets/clouds-bank.png?v=3" alt="">
-        <img class="l clouds-px clouds-r" id="cloudsR" style="--x:0;--y:641px;--w:1440px;--h:910px" src="assets/clouds-bank.png?v=3" alt="">
+        <img class="l sky-puff" id="skyPuff" style="--x:631.4px;--y:413.4px;--w:763px;--h:869px" src="src/assets/sky-puff.webp?v=2" alt="">
+        <img class="l clouds-px clouds-l" id="cloudsL" style="--x:0;--y:641px;--w:1440px;--h:910px" src="src/assets/clouds-bank.png?v=3" alt="">
+        <img class="l clouds-px clouds-r" id="cloudsR" style="--x:0;--y:641px;--w:1440px;--h:910px" src="src/assets/clouds-bank.png?v=3" alt="">
 
         <!-- white mist rising from below as the shape sinks (script.js), so the scene ends in white -->
         <div class="pin-fog" id="pinFog" aria-hidden="true"></div>
@@ -75,9 +75,9 @@
         <!-- The laptop and its screen move together (chameleon.js): the last project
              tab falls into the empty screen, then the laptop drops into the sea, bounces
              and floats on the waves drawn in front of it. -->
-        <img class="l caustics" style="--x:0px;--y:504px" src="assets/caustics.svg" width="1440" height="251" alt="">
+        <img class="l caustics" style="--x:0px;--y:504px" src="src/assets/caustics.svg" width="1440" height="251" alt="">
         <div class="l laptop-float" id="laptop" style="--x:381px;--y:180px">
-          <img class="l" style="--x:0px;--y:0px" src="assets/laptop.svg?v=3" width="754" height="644" alt="">
+          <img class="l" style="--x:0px;--y:0px" src="src/assets/laptop.svg?v=3" width="754" height="644" alt="">
           <a class="l screen" id="screen" style="--x:29.55px;--y:115.05px" href="https://www.behance.net/nikasaracuta" data-behance target="_blank" rel="noopener" aria-label="Discover more UX projects on Behance (opens Behance)">
             <span class="s-k">Discover more UX projects on</span><span class="s-t">Behance<svg class="s-link" viewBox="0 0 21 21" aria-hidden="true"><path d="M11.3 4.6H2a1.3 1.3 0 0 0-1.3 1.3v13.1A1.3 1.3 0 0 0 2 20.3h13.1a1.3 1.3 0 0 0 1.3-1.3V9.7" /><path d="M13.8.7h6.5v6.5M20.3.7 8.5 12.5"/></svg></span>
           </a>
@@ -87,23 +87,23 @@
     <!-- Seabed and corals (Figma 745:129, 717:48906, 717:48915), layered as in Figma:
          sand, small coral, the fish swimming between the corals, then the pink coral
          standing on the sand -->
-    <img class="l deco seabed" style="--x:0px;--y:5947.5px" src="assets/seabed.svg" width="1440" height="87" alt="">
-    <img class="l deco coral-small" style="--x:985px;--y:5788px" src="assets/coral-small.svg" width="146" height="177" alt="">
-    <!-- The fish (assets/fish-silhouette.svg, split into body, tail and fins): it swims across the
+    <img class="l deco seabed" style="--x:0px;--y:5947.5px" src="src/assets/seabed.svg" width="1440" height="87" alt="">
+    <img class="l deco coral-small" style="--x:985px;--y:5788px" src="src/assets/coral-small.svg" width="146" height="177" alt="">
+    <!-- The fish (src/assets/fish-silhouette.svg, split into body, tail and fins): it swims across the
          sea in a gentle wave, darts away from the cursor (script.js), between the two corals -->
     <div class="l ocean" style="--x:0px;--y:5616px;--w:1440px;--h:330px" aria-hidden="true">
       <div class="fish-swimmer" id="fishSwimmer"><div class="fish"><svg class="fish-svg" viewBox="-4 -4 212 111" aria-hidden="true"><path class="fish-tail" d="M56 44 L46 43 L23 17 L12 11 L3 10 L0 11 L0 12 L7 19 L10 29 L12 31 L16 42 L23 51 L17 56 L13 63 L1 97 L10 94 L19 87 L29 76 L33 69 L40 62 L44 60 L56 59Z"/><path class="fish-fin top" d="M136 19 L124 7 L111 0 L105 0 L101 2 L97 8 L96 14 L99 19 L108 25 L114 26 L115 27 L114 28 L126 27Z"/><path class="fish-fin bottom" d="M106 77 L108 79 L96 85 L96 89 L99 90 L100 92 L90 100 L90 102 L99 101 L111 96 L129 81 L118 75Z"/><path class="fish-body" d="M203 49 L191 41 L183 33 L177 29 L165 23 L162 23 L158 21 L148 19 L141 19 L140 18 L136 19 L114 28 L99 28 L86 31 L69 37 L60 42 L52 44 L52 59 L65 62 L84 72 L101 77 L106 77 L129 81 L136 79 L149 78 L181 69 L197 59 L203 52Z"/></svg></div></div>
     </div>
-    <img class="l deco coral" style="--x:1067.5px;--y:5626px" src="assets/coral.svg?v=2" width="303" height="371" alt="">
+    <img class="l deco coral" style="--x:1067.5px;--y:5626px" src="src/assets/coral.svg?v=2" width="303" height="371" alt="">
 
 
     <!-- Work -->
-    <section class="sec" id="work" style="top:2010px" aria-labelledby="mywork">
+    <section class="sec work" id="work" style="top:2010px" aria-labelledby="mywork">
       <!-- Title, chameleon and branch pin together (sticky) once the title reaches the
            top of the screen; only the project list scrolls (Figma frame 717:48856:
            the chameleon sits 310px below the top of the title, the first tab 134px). -->
-      <div class="l work-layout" style="--x:172px;--y:24px;--w:1207px">
-        <aside class="work-stage reveal" style="--d:.1s" aria-live="polite">
+      <div class="l work__layout" style="--x:172px;--y:24px;--w:1207px">
+        <aside class="work__stage reveal" style="--d:.1s" aria-live="polite">
           <h2 class="ttl ttl-work" id="mywork">Selected<br>Work</h2>
           <p class="sr-only" id="nowName">Dior</p>
           <div class="cham-wrap">
@@ -115,7 +115,7 @@
           </div>
         </aside>
         <!-- filled in by chameleon.js -->
-        <ol class="work-list" id="workList" aria-label="Projects"></ol>
+        <ol class="work__list" id="workList" aria-label="Projects"></ol>
       </div>
     </section>
 
@@ -125,8 +125,8 @@
       <a class="l reveal t-email" style="--d:.12s;--x:320px;--y:300px;--w:800px" href="mailto:nikasaracuta@gmail.com">nikasaracuta@gmail.com <span aria-hidden="true">→</span></a>
       <!-- TODO: replace # with the real LinkedIn URL -->
       <div class="l reveal socials" style="--d:.2s;--x:641px;--y:387px;--w:158px">
-        <a class="social" href="#" data-behance target="_blank" rel="noopener" aria-label="Behance"><img src="assets/icon-behance.svg" width="41" height="27" alt=""></a>
-        <a class="social" href="#" aria-label="LinkedIn"><img src="assets/icon-linkedin.svg" width="38" height="38" alt=""></a>
+        <a class="social" href="#" data-behance target="_blank" rel="noopener" aria-label="Behance"><img src="src/assets/icon-behance.svg" width="41" height="27" alt=""></a>
+        <a class="social" href="#" aria-label="LinkedIn"><img src="src/assets/icon-linkedin.svg" width="38" height="38" alt=""></a>
       </div>
       <p class="l reveal t-copy" style="--d:.28s;--x:520px;--y:478px;--w:400px">©2026 Nika Saracuta</p>
     </section>
@@ -144,25 +144,25 @@
   </svg>
 
   <!-- Sparkle cursor (mouse/trackpad only), driven by script.js -->
-  <div class="sparkle" id="sparkle" aria-hidden="true"><img src="assets/sparkle.png" width="160" height="160" alt=""></div>
+  <div class="sparkle" id="sparkle" aria-hidden="true"><img src="src/assets/sparkle.png" width="160" height="160" alt=""></div>
 
   <!-- The menu: fixed at the top for the whole page (styles.css, script.js) -->
-  <nav class="topbar" id="topbar" aria-label="Main">
-    <a class="topbar-logo" href="#home" aria-label="Home">
-      <img class="logo-white" src="assets/logo-nav-white.png" width="67" height="62" alt="">
-      <img class="logo-blue" src="assets/logo-nav-blue.png" width="67" height="62" alt="">
+  <nav class="site-nav" id="site-nav" aria-label="Main">
+    <a class="site-nav__logo" href="#home" aria-label="Home">
+      <img class="logo-white" src="src/assets/logo-nav-white.png" width="67" height="62" alt="">
+      <img class="logo-blue" src="src/assets/logo-nav-blue.png" width="67" height="62" alt="">
     </a>
     <!-- phones: the links fold into a hamburger and open as a full-screen sky (script.js) -->
-    <button class="nav-burger" id="navBurger" type="button" aria-expanded="false" aria-controls="topbarLinks" aria-label="Open the menu"><span></span><span></span></button>
-    <div class="topbar-links" id="topbarLinks">
+    <button class="site-nav__burger" id="navBurger" type="button" aria-expanded="false" aria-controls="site-nav-links" aria-label="Open the menu"><span></span><span></span></button>
+    <div class="site-nav__links" id="site-nav-links">
       <a href="#about" data-about>About me</a>
       <a href="#work">Work</a>
       <a href="#contact">Contact</a>
-      <div class="menu-foot">
-        <a class="menu-mail" href="mailto:nikasaracuta@gmail.com">nikasaracuta@gmail.com</a>
+      <div class="site-nav__footer">
+        <a class="site-nav__mail" href="mailto:nikasaracuta@gmail.com">nikasaracuta@gmail.com</a>
         <div class="socials">
-          <a class="social" href="https://www.behance.net/nikasaracuta" target="_blank" rel="noopener" aria-label="Behance"><img src="assets/icon-behance.svg" width="41" height="27" alt=""></a>
-          <a class="social" href="#" aria-label="LinkedIn"><img src="assets/icon-linkedin.svg" width="38" height="38" alt=""></a>
+          <a class="social" href="https://www.behance.net/nikasaracuta" target="_blank" rel="noopener" aria-label="Behance"><img src="src/assets/icon-behance.svg" width="41" height="27" alt=""></a>
+          <a class="social" href="#" aria-label="LinkedIn"><img src="src/assets/icon-linkedin.svg" width="38" height="38" alt=""></a>
         </div>
       </div>
     </div>
@@ -211,7 +211,7 @@
     <div class="plate" id="plate">
       <figure class="portrait">
         <div class="photo-card"><div class="photo" id="polaroid">
-          <img class="me" src="assets/about/me.webp" width="700" height="1000" alt="Portrait of Nika Saracuta">
+          <img class="me" src="src/assets/about/me.webp" width="700" height="1000" alt="Portrait of Nika Saracuta">
         </div></div>
       </figure>
       <dl class="facts-list">
@@ -231,9 +231,9 @@
     <div class="toolbox" id="toolbox">
       <h3>Main tools</h3>
       <div class="tool-groups">
-        <div class="tg"><span class="tg-label">Visual &amp; experience design</span><ul class="tools g1"><li class="tool" tabindex="0" aria-label="Figma"><span class="flower"><span class="head"><svg class="burst" viewBox="0 0 100 100" aria-hidden="true"><polygon points="50.0,2.0 58.7,12.0 70.8,6.8 74.3,19.5 87.5,20.1 85.1,33.1 96.8,39.3 89.0,50.0 96.8,60.7 85.1,66.9 87.5,79.9 74.3,80.5 70.8,93.2 58.7,88.0 50.0,98.0 41.3,88.0 29.2,93.2 25.7,80.5 12.5,79.9 14.9,66.9 3.2,60.7 11.0,50.0 3.2,39.3 14.9,33.1 12.5,20.1 25.7,19.5 29.2,6.8 41.3,12.0"/></svg><img src="assets/tools/figma.svg" width="64" height="64" alt="" loading="lazy"><span class="word" aria-hidden="true">Figma</span></span><svg class="stem" viewBox="0 0 40 160" preserveAspectRatio="none" aria-hidden="true"><path class="st" d="M20 0 C18 50 23 100 20 160"/><path class="lf" d="M20 92 C8 82 2 70 4 58 C14 62 20 74 20 92Z"/><path class="lf r" d="M20 120 C32 110 38 98 36 86 C26 90 20 102 20 120Z"/></svg></span></li><li class="tool" tabindex="0" aria-label="Miro"><span class="flower"><span class="head"><svg class="burst" viewBox="0 0 100 100" aria-hidden="true"><polygon points="50.0,2.0 58.7,12.0 70.8,6.8 74.3,19.5 87.5,20.1 85.1,33.1 96.8,39.3 89.0,50.0 96.8,60.7 85.1,66.9 87.5,79.9 74.3,80.5 70.8,93.2 58.7,88.0 50.0,98.0 41.3,88.0 29.2,93.2 25.7,80.5 12.5,79.9 14.9,66.9 3.2,60.7 11.0,50.0 3.2,39.3 14.9,33.1 12.5,20.1 25.7,19.5 29.2,6.8 41.3,12.0"/></svg><img src="assets/tools/miro.svg" width="64" height="64" alt="" loading="lazy"><span class="word" aria-hidden="true">Miro</span></span><svg class="stem" viewBox="0 0 40 160" preserveAspectRatio="none" aria-hidden="true"><path class="st" d="M20 0 C18 50 23 100 20 160"/><path class="lf" d="M20 92 C8 82 2 70 4 58 C14 62 20 74 20 92Z"/><path class="lf r" d="M20 120 C32 110 38 98 36 86 C26 90 20 102 20 120Z"/></svg></span></li><li class="tool mid" tabindex="0" aria-label="Photoshop"><span class="flower"><span class="head"><svg class="burst" viewBox="0 0 100 100" aria-hidden="true"><polygon points="50.0,2.0 58.7,12.0 70.8,6.8 74.3,19.5 87.5,20.1 85.1,33.1 96.8,39.3 89.0,50.0 96.8,60.7 85.1,66.9 87.5,79.9 74.3,80.5 70.8,93.2 58.7,88.0 50.0,98.0 41.3,88.0 29.2,93.2 25.7,80.5 12.5,79.9 14.9,66.9 3.2,60.7 11.0,50.0 3.2,39.3 14.9,33.1 12.5,20.1 25.7,19.5 29.2,6.8 41.3,12.0"/></svg><img src="assets/tools/photoshop.svg" width="64" height="64" alt="" loading="lazy"><span class="word" aria-hidden="true">Photoshop</span></span><svg class="stem" viewBox="0 0 40 160" preserveAspectRatio="none" aria-hidden="true"><path class="st" d="M20 0 C18 50 23 100 20 160"/><path class="lf" d="M20 92 C8 82 2 70 4 58 C14 62 20 74 20 92Z"/><path class="lf r" d="M20 120 C32 110 38 98 36 86 C26 90 20 102 20 120Z"/></svg></span></li><li class="tool long" tabindex="0" aria-label="Illustrator"><span class="flower"><span class="head"><svg class="burst" viewBox="0 0 100 100" aria-hidden="true"><polygon points="50.0,2.0 58.7,12.0 70.8,6.8 74.3,19.5 87.5,20.1 85.1,33.1 96.8,39.3 89.0,50.0 96.8,60.7 85.1,66.9 87.5,79.9 74.3,80.5 70.8,93.2 58.7,88.0 50.0,98.0 41.3,88.0 29.2,93.2 25.7,80.5 12.5,79.9 14.9,66.9 3.2,60.7 11.0,50.0 3.2,39.3 14.9,33.1 12.5,20.1 25.7,19.5 29.2,6.8 41.3,12.0"/></svg><img src="assets/tools/illustrator.svg" width="64" height="64" alt="" loading="lazy"><span class="word" aria-hidden="true">Illustrator</span></span><svg class="stem" viewBox="0 0 40 160" preserveAspectRatio="none" aria-hidden="true"><path class="st" d="M20 0 C18 50 23 100 20 160"/><path class="lf" d="M20 92 C8 82 2 70 4 58 C14 62 20 74 20 92Z"/><path class="lf r" d="M20 120 C32 110 38 98 36 86 C26 90 20 102 20 120Z"/></svg></span></li><li class="tool mid" tabindex="0" aria-label="Procreate"><span class="flower"><span class="head"><svg class="burst" viewBox="0 0 100 100" aria-hidden="true"><polygon points="50.0,2.0 58.7,12.0 70.8,6.8 74.3,19.5 87.5,20.1 85.1,33.1 96.8,39.3 89.0,50.0 96.8,60.7 85.1,66.9 87.5,79.9 74.3,80.5 70.8,93.2 58.7,88.0 50.0,98.0 41.3,88.0 29.2,93.2 25.7,80.5 12.5,79.9 14.9,66.9 3.2,60.7 11.0,50.0 3.2,39.3 14.9,33.1 12.5,20.1 25.7,19.5 29.2,6.8 41.3,12.0"/></svg><img src="assets/tools/procreate.svg" width="64" height="64" alt="" loading="lazy"><span class="word" aria-hidden="true">Procreate</span></span><svg class="stem" viewBox="0 0 40 160" preserveAspectRatio="none" aria-hidden="true"><path class="st" d="M20 0 C18 50 23 100 20 160"/><path class="lf" d="M20 92 C8 82 2 70 4 58 C14 62 20 74 20 92Z"/><path class="lf r" d="M20 120 C32 110 38 98 36 86 C26 90 20 102 20 120Z"/></svg></span></li></ul></div>
-        <div class="tg"><span class="tg-label">Motion &amp; 3D</span><ul class="tools g2"><li class="tool long" tabindex="0" aria-label="After Effects"><span class="flower"><span class="head"><svg class="burst" viewBox="0 0 100 100" aria-hidden="true"><polygon points="50.0,2.0 58.7,12.0 70.8,6.8 74.3,19.5 87.5,20.1 85.1,33.1 96.8,39.3 89.0,50.0 96.8,60.7 85.1,66.9 87.5,79.9 74.3,80.5 70.8,93.2 58.7,88.0 50.0,98.0 41.3,88.0 29.2,93.2 25.7,80.5 12.5,79.9 14.9,66.9 3.2,60.7 11.0,50.0 3.2,39.3 14.9,33.1 12.5,20.1 25.7,19.5 29.2,6.8 41.3,12.0"/></svg><img src="assets/tools/aftereffects.svg" width="64" height="64" alt="" loading="lazy"><span class="word" aria-hidden="true">After Effects</span></span><svg class="stem" viewBox="0 0 40 160" preserveAspectRatio="none" aria-hidden="true"><path class="st" d="M20 0 C18 50 23 100 20 160"/><path class="lf" d="M20 92 C8 82 2 70 4 58 C14 62 20 74 20 92Z"/><path class="lf r" d="M20 120 C32 110 38 98 36 86 C26 90 20 102 20 120Z"/></svg></span></li><li class="tool mid" tabindex="0" aria-label="Blender"><span class="flower"><span class="head"><svg class="burst" viewBox="0 0 100 100" aria-hidden="true"><polygon points="50.0,2.0 58.7,12.0 70.8,6.8 74.3,19.5 87.5,20.1 85.1,33.1 96.8,39.3 89.0,50.0 96.8,60.7 85.1,66.9 87.5,79.9 74.3,80.5 70.8,93.2 58.7,88.0 50.0,98.0 41.3,88.0 29.2,93.2 25.7,80.5 12.5,79.9 14.9,66.9 3.2,60.7 11.0,50.0 3.2,39.3 14.9,33.1 12.5,20.1 25.7,19.5 29.2,6.8 41.3,12.0"/></svg><img src="assets/tools/blender.svg" width="64" height="64" alt="" loading="lazy"><span class="word" aria-hidden="true">Blender</span></span><svg class="stem" viewBox="0 0 40 160" preserveAspectRatio="none" aria-hidden="true"><path class="st" d="M20 0 C18 50 23 100 20 160"/><path class="lf" d="M20 92 C8 82 2 70 4 58 C14 62 20 74 20 92Z"/><path class="lf r" d="M20 120 C32 110 38 98 36 86 C26 90 20 102 20 120Z"/></svg></span></li></ul></div>
-        <div class="tg"><span class="tg-label">Development</span><ul class="tools g3"><li class="tool mid" tabindex="0" aria-label="VS Code"><span class="flower"><span class="head"><svg class="burst" viewBox="0 0 100 100" aria-hidden="true"><polygon points="50.0,2.0 58.7,12.0 70.8,6.8 74.3,19.5 87.5,20.1 85.1,33.1 96.8,39.3 89.0,50.0 96.8,60.7 85.1,66.9 87.5,79.9 74.3,80.5 70.8,93.2 58.7,88.0 50.0,98.0 41.3,88.0 29.2,93.2 25.7,80.5 12.5,79.9 14.9,66.9 3.2,60.7 11.0,50.0 3.2,39.3 14.9,33.1 12.5,20.1 25.7,19.5 29.2,6.8 41.3,12.0"/></svg><img src="assets/tools/vscode.svg" width="64" height="64" alt="" loading="lazy"><span class="word" aria-hidden="true">VS Code</span></span><svg class="stem" viewBox="0 0 40 160" preserveAspectRatio="none" aria-hidden="true"><path class="st" d="M20 0 C18 50 23 100 20 160"/><path class="lf" d="M20 92 C8 82 2 70 4 58 C14 62 20 74 20 92Z"/><path class="lf r" d="M20 120 C32 110 38 98 36 86 C26 90 20 102 20 120Z"/></svg></span></li><li class="tool" tabindex="0" aria-label="HTML"><span class="flower"><span class="head"><svg class="burst" viewBox="0 0 100 100" aria-hidden="true"><polygon points="50.0,2.0 58.7,12.0 70.8,6.8 74.3,19.5 87.5,20.1 85.1,33.1 96.8,39.3 89.0,50.0 96.8,60.7 85.1,66.9 87.5,79.9 74.3,80.5 70.8,93.2 58.7,88.0 50.0,98.0 41.3,88.0 29.2,93.2 25.7,80.5 12.5,79.9 14.9,66.9 3.2,60.7 11.0,50.0 3.2,39.3 14.9,33.1 12.5,20.1 25.7,19.5 29.2,6.8 41.3,12.0"/></svg><img src="assets/tools/html.svg" width="64" height="64" alt="" loading="lazy"><span class="word" aria-hidden="true">HTML</span></span><svg class="stem" viewBox="0 0 40 160" preserveAspectRatio="none" aria-hidden="true"><path class="st" d="M20 0 C18 50 23 100 20 160"/><path class="lf" d="M20 92 C8 82 2 70 4 58 C14 62 20 74 20 92Z"/><path class="lf r" d="M20 120 C32 110 38 98 36 86 C26 90 20 102 20 120Z"/></svg></span></li><li class="tool" tabindex="0" aria-label="CSS"><span class="flower"><span class="head"><svg class="burst" viewBox="0 0 100 100" aria-hidden="true"><polygon points="50.0,2.0 58.7,12.0 70.8,6.8 74.3,19.5 87.5,20.1 85.1,33.1 96.8,39.3 89.0,50.0 96.8,60.7 85.1,66.9 87.5,79.9 74.3,80.5 70.8,93.2 58.7,88.0 50.0,98.0 41.3,88.0 29.2,93.2 25.7,80.5 12.5,79.9 14.9,66.9 3.2,60.7 11.0,50.0 3.2,39.3 14.9,33.1 12.5,20.1 25.7,19.5 29.2,6.8 41.3,12.0"/></svg><img src="assets/tools/css.svg" width="64" height="64" alt="" loading="lazy"><span class="word" aria-hidden="true">CSS</span></span><svg class="stem" viewBox="0 0 40 160" preserveAspectRatio="none" aria-hidden="true"><path class="st" d="M20 0 C18 50 23 100 20 160"/><path class="lf" d="M20 92 C8 82 2 70 4 58 C14 62 20 74 20 92Z"/><path class="lf r" d="M20 120 C32 110 38 98 36 86 C26 90 20 102 20 120Z"/></svg></span></li><li class="tool long" tabindex="0" aria-label="JavaScript"><span class="flower"><span class="head"><svg class="burst" viewBox="0 0 100 100" aria-hidden="true"><polygon points="50.0,2.0 58.7,12.0 70.8,6.8 74.3,19.5 87.5,20.1 85.1,33.1 96.8,39.3 89.0,50.0 96.8,60.7 85.1,66.9 87.5,79.9 74.3,80.5 70.8,93.2 58.7,88.0 50.0,98.0 41.3,88.0 29.2,93.2 25.7,80.5 12.5,79.9 14.9,66.9 3.2,60.7 11.0,50.0 3.2,39.3 14.9,33.1 12.5,20.1 25.7,19.5 29.2,6.8 41.3,12.0"/></svg><img src="assets/tools/js.svg" width="64" height="64" alt="" loading="lazy"><span class="word" aria-hidden="true">JavaScript</span></span><svg class="stem" viewBox="0 0 40 160" preserveAspectRatio="none" aria-hidden="true"><path class="st" d="M20 0 C18 50 23 100 20 160"/><path class="lf" d="M20 92 C8 82 2 70 4 58 C14 62 20 74 20 92Z"/><path class="lf r" d="M20 120 C32 110 38 98 36 86 C26 90 20 102 20 120Z"/></svg></span></li></ul></div>
+        <div class="tg"><span class="tg-label">Visual &amp; experience design</span><ul class="tools g1"><li class="tool" tabindex="0" aria-label="Figma"><span class="flower"><span class="head"><svg class="burst" viewBox="0 0 100 100" aria-hidden="true"><polygon points="50.0,2.0 58.7,12.0 70.8,6.8 74.3,19.5 87.5,20.1 85.1,33.1 96.8,39.3 89.0,50.0 96.8,60.7 85.1,66.9 87.5,79.9 74.3,80.5 70.8,93.2 58.7,88.0 50.0,98.0 41.3,88.0 29.2,93.2 25.7,80.5 12.5,79.9 14.9,66.9 3.2,60.7 11.0,50.0 3.2,39.3 14.9,33.1 12.5,20.1 25.7,19.5 29.2,6.8 41.3,12.0"/></svg><img src="src/assets/tools/figma.svg" width="64" height="64" alt="" loading="lazy"><span class="word" aria-hidden="true">Figma</span></span><svg class="stem" viewBox="0 0 40 160" preserveAspectRatio="none" aria-hidden="true"><path class="st" d="M20 0 C18 50 23 100 20 160"/><path class="lf" d="M20 92 C8 82 2 70 4 58 C14 62 20 74 20 92Z"/><path class="lf r" d="M20 120 C32 110 38 98 36 86 C26 90 20 102 20 120Z"/></svg></span></li><li class="tool" tabindex="0" aria-label="Miro"><span class="flower"><span class="head"><svg class="burst" viewBox="0 0 100 100" aria-hidden="true"><polygon points="50.0,2.0 58.7,12.0 70.8,6.8 74.3,19.5 87.5,20.1 85.1,33.1 96.8,39.3 89.0,50.0 96.8,60.7 85.1,66.9 87.5,79.9 74.3,80.5 70.8,93.2 58.7,88.0 50.0,98.0 41.3,88.0 29.2,93.2 25.7,80.5 12.5,79.9 14.9,66.9 3.2,60.7 11.0,50.0 3.2,39.3 14.9,33.1 12.5,20.1 25.7,19.5 29.2,6.8 41.3,12.0"/></svg><img src="src/assets/tools/miro.svg" width="64" height="64" alt="" loading="lazy"><span class="word" aria-hidden="true">Miro</span></span><svg class="stem" viewBox="0 0 40 160" preserveAspectRatio="none" aria-hidden="true"><path class="st" d="M20 0 C18 50 23 100 20 160"/><path class="lf" d="M20 92 C8 82 2 70 4 58 C14 62 20 74 20 92Z"/><path class="lf r" d="M20 120 C32 110 38 98 36 86 C26 90 20 102 20 120Z"/></svg></span></li><li class="tool mid" tabindex="0" aria-label="Photoshop"><span class="flower"><span class="head"><svg class="burst" viewBox="0 0 100 100" aria-hidden="true"><polygon points="50.0,2.0 58.7,12.0 70.8,6.8 74.3,19.5 87.5,20.1 85.1,33.1 96.8,39.3 89.0,50.0 96.8,60.7 85.1,66.9 87.5,79.9 74.3,80.5 70.8,93.2 58.7,88.0 50.0,98.0 41.3,88.0 29.2,93.2 25.7,80.5 12.5,79.9 14.9,66.9 3.2,60.7 11.0,50.0 3.2,39.3 14.9,33.1 12.5,20.1 25.7,19.5 29.2,6.8 41.3,12.0"/></svg><img src="src/assets/tools/photoshop.svg" width="64" height="64" alt="" loading="lazy"><span class="word" aria-hidden="true">Photoshop</span></span><svg class="stem" viewBox="0 0 40 160" preserveAspectRatio="none" aria-hidden="true"><path class="st" d="M20 0 C18 50 23 100 20 160"/><path class="lf" d="M20 92 C8 82 2 70 4 58 C14 62 20 74 20 92Z"/><path class="lf r" d="M20 120 C32 110 38 98 36 86 C26 90 20 102 20 120Z"/></svg></span></li><li class="tool long" tabindex="0" aria-label="Illustrator"><span class="flower"><span class="head"><svg class="burst" viewBox="0 0 100 100" aria-hidden="true"><polygon points="50.0,2.0 58.7,12.0 70.8,6.8 74.3,19.5 87.5,20.1 85.1,33.1 96.8,39.3 89.0,50.0 96.8,60.7 85.1,66.9 87.5,79.9 74.3,80.5 70.8,93.2 58.7,88.0 50.0,98.0 41.3,88.0 29.2,93.2 25.7,80.5 12.5,79.9 14.9,66.9 3.2,60.7 11.0,50.0 3.2,39.3 14.9,33.1 12.5,20.1 25.7,19.5 29.2,6.8 41.3,12.0"/></svg><img src="src/assets/tools/illustrator.svg" width="64" height="64" alt="" loading="lazy"><span class="word" aria-hidden="true">Illustrator</span></span><svg class="stem" viewBox="0 0 40 160" preserveAspectRatio="none" aria-hidden="true"><path class="st" d="M20 0 C18 50 23 100 20 160"/><path class="lf" d="M20 92 C8 82 2 70 4 58 C14 62 20 74 20 92Z"/><path class="lf r" d="M20 120 C32 110 38 98 36 86 C26 90 20 102 20 120Z"/></svg></span></li><li class="tool mid" tabindex="0" aria-label="Procreate"><span class="flower"><span class="head"><svg class="burst" viewBox="0 0 100 100" aria-hidden="true"><polygon points="50.0,2.0 58.7,12.0 70.8,6.8 74.3,19.5 87.5,20.1 85.1,33.1 96.8,39.3 89.0,50.0 96.8,60.7 85.1,66.9 87.5,79.9 74.3,80.5 70.8,93.2 58.7,88.0 50.0,98.0 41.3,88.0 29.2,93.2 25.7,80.5 12.5,79.9 14.9,66.9 3.2,60.7 11.0,50.0 3.2,39.3 14.9,33.1 12.5,20.1 25.7,19.5 29.2,6.8 41.3,12.0"/></svg><img src="src/assets/tools/procreate.webp" width="64" height="64" alt="" loading="lazy"><span class="word" aria-hidden="true">Procreate</span></span><svg class="stem" viewBox="0 0 40 160" preserveAspectRatio="none" aria-hidden="true"><path class="st" d="M20 0 C18 50 23 100 20 160"/><path class="lf" d="M20 92 C8 82 2 70 4 58 C14 62 20 74 20 92Z"/><path class="lf r" d="M20 120 C32 110 38 98 36 86 C26 90 20 102 20 120Z"/></svg></span></li></ul></div>
+        <div class="tg"><span class="tg-label">Motion &amp; 3D</span><ul class="tools g2"><li class="tool long" tabindex="0" aria-label="After Effects"><span class="flower"><span class="head"><svg class="burst" viewBox="0 0 100 100" aria-hidden="true"><polygon points="50.0,2.0 58.7,12.0 70.8,6.8 74.3,19.5 87.5,20.1 85.1,33.1 96.8,39.3 89.0,50.0 96.8,60.7 85.1,66.9 87.5,79.9 74.3,80.5 70.8,93.2 58.7,88.0 50.0,98.0 41.3,88.0 29.2,93.2 25.7,80.5 12.5,79.9 14.9,66.9 3.2,60.7 11.0,50.0 3.2,39.3 14.9,33.1 12.5,20.1 25.7,19.5 29.2,6.8 41.3,12.0"/></svg><img src="src/assets/tools/aftereffects.svg" width="64" height="64" alt="" loading="lazy"><span class="word" aria-hidden="true">After Effects</span></span><svg class="stem" viewBox="0 0 40 160" preserveAspectRatio="none" aria-hidden="true"><path class="st" d="M20 0 C18 50 23 100 20 160"/><path class="lf" d="M20 92 C8 82 2 70 4 58 C14 62 20 74 20 92Z"/><path class="lf r" d="M20 120 C32 110 38 98 36 86 C26 90 20 102 20 120Z"/></svg></span></li><li class="tool mid" tabindex="0" aria-label="Blender"><span class="flower"><span class="head"><svg class="burst" viewBox="0 0 100 100" aria-hidden="true"><polygon points="50.0,2.0 58.7,12.0 70.8,6.8 74.3,19.5 87.5,20.1 85.1,33.1 96.8,39.3 89.0,50.0 96.8,60.7 85.1,66.9 87.5,79.9 74.3,80.5 70.8,93.2 58.7,88.0 50.0,98.0 41.3,88.0 29.2,93.2 25.7,80.5 12.5,79.9 14.9,66.9 3.2,60.7 11.0,50.0 3.2,39.3 14.9,33.1 12.5,20.1 25.7,19.5 29.2,6.8 41.3,12.0"/></svg><img src="src/assets/tools/blender.webp" width="64" height="64" alt="" loading="lazy"><span class="word" aria-hidden="true">Blender</span></span><svg class="stem" viewBox="0 0 40 160" preserveAspectRatio="none" aria-hidden="true"><path class="st" d="M20 0 C18 50 23 100 20 160"/><path class="lf" d="M20 92 C8 82 2 70 4 58 C14 62 20 74 20 92Z"/><path class="lf r" d="M20 120 C32 110 38 98 36 86 C26 90 20 102 20 120Z"/></svg></span></li></ul></div>
+        <div class="tg"><span class="tg-label">Development</span><ul class="tools g3"><li class="tool mid" tabindex="0" aria-label="VS Code"><span class="flower"><span class="head"><svg class="burst" viewBox="0 0 100 100" aria-hidden="true"><polygon points="50.0,2.0 58.7,12.0 70.8,6.8 74.3,19.5 87.5,20.1 85.1,33.1 96.8,39.3 89.0,50.0 96.8,60.7 85.1,66.9 87.5,79.9 74.3,80.5 70.8,93.2 58.7,88.0 50.0,98.0 41.3,88.0 29.2,93.2 25.7,80.5 12.5,79.9 14.9,66.9 3.2,60.7 11.0,50.0 3.2,39.3 14.9,33.1 12.5,20.1 25.7,19.5 29.2,6.8 41.3,12.0"/></svg><img src="src/assets/tools/vscode.webp" width="64" height="64" alt="" loading="lazy"><span class="word" aria-hidden="true">VS Code</span></span><svg class="stem" viewBox="0 0 40 160" preserveAspectRatio="none" aria-hidden="true"><path class="st" d="M20 0 C18 50 23 100 20 160"/><path class="lf" d="M20 92 C8 82 2 70 4 58 C14 62 20 74 20 92Z"/><path class="lf r" d="M20 120 C32 110 38 98 36 86 C26 90 20 102 20 120Z"/></svg></span></li><li class="tool" tabindex="0" aria-label="HTML"><span class="flower"><span class="head"><svg class="burst" viewBox="0 0 100 100" aria-hidden="true"><polygon points="50.0,2.0 58.7,12.0 70.8,6.8 74.3,19.5 87.5,20.1 85.1,33.1 96.8,39.3 89.0,50.0 96.8,60.7 85.1,66.9 87.5,79.9 74.3,80.5 70.8,93.2 58.7,88.0 50.0,98.0 41.3,88.0 29.2,93.2 25.7,80.5 12.5,79.9 14.9,66.9 3.2,60.7 11.0,50.0 3.2,39.3 14.9,33.1 12.5,20.1 25.7,19.5 29.2,6.8 41.3,12.0"/></svg><img src="src/assets/tools/html.svg" width="64" height="64" alt="" loading="lazy"><span class="word" aria-hidden="true">HTML</span></span><svg class="stem" viewBox="0 0 40 160" preserveAspectRatio="none" aria-hidden="true"><path class="st" d="M20 0 C18 50 23 100 20 160"/><path class="lf" d="M20 92 C8 82 2 70 4 58 C14 62 20 74 20 92Z"/><path class="lf r" d="M20 120 C32 110 38 98 36 86 C26 90 20 102 20 120Z"/></svg></span></li><li class="tool" tabindex="0" aria-label="CSS"><span class="flower"><span class="head"><svg class="burst" viewBox="0 0 100 100" aria-hidden="true"><polygon points="50.0,2.0 58.7,12.0 70.8,6.8 74.3,19.5 87.5,20.1 85.1,33.1 96.8,39.3 89.0,50.0 96.8,60.7 85.1,66.9 87.5,79.9 74.3,80.5 70.8,93.2 58.7,88.0 50.0,98.0 41.3,88.0 29.2,93.2 25.7,80.5 12.5,79.9 14.9,66.9 3.2,60.7 11.0,50.0 3.2,39.3 14.9,33.1 12.5,20.1 25.7,19.5 29.2,6.8 41.3,12.0"/></svg><img src="src/assets/tools/css.svg" width="64" height="64" alt="" loading="lazy"><span class="word" aria-hidden="true">CSS</span></span><svg class="stem" viewBox="0 0 40 160" preserveAspectRatio="none" aria-hidden="true"><path class="st" d="M20 0 C18 50 23 100 20 160"/><path class="lf" d="M20 92 C8 82 2 70 4 58 C14 62 20 74 20 92Z"/><path class="lf r" d="M20 120 C32 110 38 98 36 86 C26 90 20 102 20 120Z"/></svg></span></li><li class="tool long" tabindex="0" aria-label="JavaScript"><span class="flower"><span class="head"><svg class="burst" viewBox="0 0 100 100" aria-hidden="true"><polygon points="50.0,2.0 58.7,12.0 70.8,6.8 74.3,19.5 87.5,20.1 85.1,33.1 96.8,39.3 89.0,50.0 96.8,60.7 85.1,66.9 87.5,79.9 74.3,80.5 70.8,93.2 58.7,88.0 50.0,98.0 41.3,88.0 29.2,93.2 25.7,80.5 12.5,79.9 14.9,66.9 3.2,60.7 11.0,50.0 3.2,39.3 14.9,33.1 12.5,20.1 25.7,19.5 29.2,6.8 41.3,12.0"/></svg><img src="src/assets/tools/js.svg" width="64" height="64" alt="" loading="lazy"><span class="word" aria-hidden="true">JavaScript</span></span><svg class="stem" viewBox="0 0 40 160" preserveAspectRatio="none" aria-hidden="true"><path class="st" d="M20 0 C18 50 23 100 20 160"/><path class="lf" d="M20 92 C8 82 2 70 4 58 C14 62 20 74 20 92Z"/><path class="lf r" d="M20 120 C32 110 38 98 36 86 C26 90 20 102 20 120Z"/></svg></span></li></ul></div>
       </div>
     </div>
   </section>
@@ -246,10 +246,10 @@
     <button type="button" id="deskNoteClose" aria-label="Close the note">✕</button>
   </div>
 
-  <script src="loader.js?v=af4be1f2"></script>
-  <script src="script.js?v=cfaea4cc"></script>
-  <script src="about.js?v=0e3d6a65"></script>
-  <script src="bird.js?v=bdb3f045"></script>
-  <script src="chameleon.js?v=61dc9972"></script>
+  <script src="src/js/loader.js?v=af4be1f2"></script>
+  <script src="src/js/script.js?v=d75c0782"></script>
+  <script src="src/js/about.js?v=0e3d6a65"></script>
+  <script src="src/js/bird.js?v=bdb3f045"></script>
+  <script src="src/js/chameleon.js?v=1d7fecc5"></script>
 </body>
 </html>

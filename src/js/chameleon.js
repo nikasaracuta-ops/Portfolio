@@ -14,7 +14,7 @@
   // is no 'img' (the card then says "Coming soon").
   const PROJECTS = [
     {
-      id: 'dior', page: 'dior.html', name: 'Dior', hex: '#FB72BE', tab: '#E770B2', kind: 'UI · UX · Web design', img: 'assets/projects/p-dior.webp',
+      id: 'dior', page: 'dior.html', name: 'Dior', hex: '#FB72BE', tab: '#E770B2', kind: 'UI · UX · Web design', img: 'src/assets/projects/p-dior.webp',
       title: 'The Art of Dressmaking', tagline: 'by Christian Dior — an interactive longread for MoMu',
       tags: ['UI', 'UX', 'Web-design', 'Web-development'],
       brief: [
@@ -28,7 +28,7 @@
       link: 'https://nikasaracuta.github.io/Integration-3/'
     },
     {
-      id: 'moea', page: 'moea.html', name: 'Moea', hex: '#3BBDCC', tab: '#3EBDCD', kind: 'UI · UX · Web design', img: 'assets/projects/p-moea.webp',
+      id: 'moea', page: 'moea.html', name: 'Moea', hex: '#3BBDCC', tab: '#3EBDCD', kind: 'UI · UX · Web design', img: 'src/assets/projects/p-moea.webp',
       title: 'MOEA', tagline: 'Moea stands for Mother Earth — case study in progress',
       tags: ['UI', 'UX', 'Web-design'],
       brief: ['This chameleon is still changing colour. The full Moea case study — brief, styleboard and iterations — lands here soon.'],
@@ -39,7 +39,7 @@
       link: ''   // paste the live URL here when it's ready
     },
     {
-      id: 'type01', name: 'Type01', page: 'type01.html', hex: '#1A5BA4', tab: '#E770B2', tint: '#6f9bd4', kind: 'UI · UX · Web design', img: 'assets/projects/p-type01.webp',
+      id: 'type01', name: 'Type01', page: 'type01.html', hex: '#1A5BA4', tab: '#E770B2', tint: '#6f9bd4', kind: 'UI · UX · Web design', img: 'src/assets/projects/p-type01.webp',
       title: 'TYPE01 Conference', tagline: 'Typography in print, motion design and branding',
       tags: ['UI', 'UX', 'Web-design'],
       brief: [
@@ -53,7 +53,7 @@
       link: 'https://www.figma.com/proto/PsD6Cg8ngFq6yRWCCm5I9q/Type01?page-id=0%3A1&node-id=468-7480&viewport=-2609%2C-2191%2C0.15&t=KQAR1eAcC8Ls4MeP-1&scaling=min-zoom&content-scaling=fixed&starting-point-node-id=580%3A48961'
     },
     {
-      id: 'miles', page: 'miles.html', name: 'Miles & Meals', hex: '#D5FF59', tab: '#1A5BA4', kind: 'App · Demo', img: 'assets/projects/p-miles.webp',
+      id: 'miles', page: 'miles.html', name: 'Miles & Meals', hex: '#D5FF59', tab: '#1A5BA4', kind: 'App · Demo', img: 'src/assets/projects/p-miles.webp',
       title: 'Miles & Meals', tagline: 'Discover the world in your kitchen',
       tags: ['UI', 'UX', 'App-design'],
       brief: ['An app that brings iconic local dishes and street food from cities around the world straight to your kitchen — so you can travel by recipe.'],
@@ -66,7 +66,7 @@
   ];
 
   const page = $('.stage');
-  const list = $('#workList'), workStage = $('.work-stage'), nowName = $('#nowName');
+  const list = $('#workList'), workStage = $('.work__stage'), nowName = $('#nowName');
   const mouth = $('#mouth'), tongue = $('#tongue'), tip = $('#tongueTip');
   // the tongue layer cuts out the chameleon's shape, so the tongue starts behind it
   const chamBody = $('.cham-body'), chamCut = $('#tongueMaskCham');
@@ -74,7 +74,7 @@
 
   // one card per project
   // tab.svg from Figma, unchanged except that its pink (#E770B2) is currentColor
-  const tabSvg = i => `<svg class="win-svg" viewBox="0 0 742 497" fill="none" aria-hidden="true">
+  const tabSvg = i => `<svg class="work-card__svg" viewBox="0 0 742 497" fill="none" aria-hidden="true">
 <path d="M0 13.7C0 6.13367 6.13368 0 13.7 0H727.344C734.91 0 741.044 6.13368 741.044 13.7V48.5726H0V13.7Z" fill="currentColor"/>
 <mask id="tabM0-${i}" fill="white"><path d="M0 13.7C0 6.13367 6.13368 0 13.7 0H727.344C734.91 0 741.044 6.13368 741.044 13.7V48.5726H0V13.7Z"/></mask>
 <path d="M741.044 48.5726V13.7C741.044 6.13368 734.91 0 727.344 0H13.7C6.13368 0 0 6.13367 0 13.7V48.5726H741.044Z" stroke-width="2.4909" stroke="currentColor" mask="url(#tabM0-${i})"/>
@@ -95,10 +95,10 @@
   const cards = PROJECTS.map((p, i) => {
     const li = document.createElement('li');
     const b = document.createElement('button');
-    b.className = 'wcard'; b.style.setProperty('--c', p.tint || p.hex); b.style.setProperty('--tab', p.tab || '#E770B2');
+    b.className = 'work-card'; b.style.setProperty('--c', p.tint || p.hex); b.style.setProperty('--tab', p.tab || '#E770B2');
     b.setAttribute('aria-label', `Open project ${i + 1}: ${p.name}`);
     // the preview sits in the browser-window tab from Figma (tab.svg), its pink swapped for the project's colour
-    b.innerHTML = `<span class="win"><span class="thumb">${p.img ? `<img src="${p.img}" alt="" loading="lazy" decoding="async">` : 'Coming soon'}</span>${tabSvg(i)}</span><span class="wcap" aria-hidden="true"><b>${p.name}</b><small>${p.kind}</small></span>`;
+    b.innerHTML = `<span class="work-card__window"><span class="work-card__thumb">${p.img ? `<img src="${p.img}" alt="" loading="lazy" decoding="async">` : 'Coming soon'}</span>${tabSvg(i)}</span><span class="work-card__caption" aria-hidden="true"><b>${p.name}</b><small>${p.kind}</small></span>`;
     // every project opens its own page (the project sheet is only a fallback)
     b.addEventListener('click', () => { if (p.page) location.href = p.page; else openProject(i, b); });
     b.addEventListener('mouseenter', () => activate(i));
@@ -112,9 +112,9 @@
   let speed = 0, lastY = scrollY, fast = false, pinkNow = false;
   function activate(i) {
     if (i === pending || (i === target && pending < 0)) return;
-    cards.forEach((c, j) => c.classList.toggle('active', j === i));
+    cards.forEach((c, j) => c.classList.toggle('work-card--active', j === i));
     dotBtns.forEach((d, j) => d.setAttribute('aria-current', j === i));
-    if (target >= 0) cards[target].classList.remove('stuck');
+    if (target >= 0) cards[target].classList.remove('work-card--stuck');
     // the chameleon, its branch and tongue take the colour of the project's tab
     if (!fast) document.documentElement.style.setProperty('--cham', PROJECTS[i].tab);
     nowName.textContent = `Now viewing: ${PROJECTS[i].name}`;
@@ -144,7 +144,7 @@
 
   // phones: dots under the row show where you are and jump to a project
   const dots = document.createElement('div');
-  dots.className = 'wdots';
+  dots.className = 'work__dots';
   dots.innerHTML = PROJECTS.map((p, i) => `<button type="button" aria-label="Show ${p.name}" style="--tab:${p.tab}"></button>`).join('');
   list.after(dots);
   dotBtns = [...dots.children];
@@ -185,9 +185,9 @@
       const r = cards[target].getBoundingClientRect();
       // let go when the project leaves the screen (or before the chameleon has appeared);
       // on desktop the tongue only shoots straight across, so the tab must be level with the mouth
-      const my = centre(mouth).y, th = cards[target].querySelector('.thumb').getBoundingClientRect();
+      const my = centre(mouth).y, th = cards[target].querySelector('.work-card__thumb').getBoundingClientRect();
       const level = PHONE.matches || (my > th.top + 20 && my < th.bottom - 20);
-      goal = !fast && r.bottom > 0 && r.top < innerHeight && level && !hidden() && !cards[target].classList.contains('flying') ? 1 : 0;
+      goal = !fast && r.bottom > 0 && r.top < innerHeight && level && !hidden() && !cards[target].classList.contains('work-card--flying') ? 1 : 0;
     }
     if (reduce) ext = goal;
     else if (goal > ext) ext = Math.min(1, ext + dt / .2);
@@ -195,7 +195,7 @@
 
     if (target >= 0) {
       const z = parseFloat(page.style.zoom) || 1;        // tongue thickness follows the page zoom
-      const m = centre(mouth), r = cards[target].querySelector('.thumb').getBoundingClientRect();
+      const m = centre(mouth), r = cards[target].querySelector('.work-card__thumb').getBoundingClientRect();
       // desktop: a straight horizontal line to the tab's edge; phones: down to the list
       const t = { x: clamp(m.x, r.left + 28 * z, r.right - 28 * z), y: PHONE.matches ? clamp(m.y, r.top + 28 * z, r.bottom - 28 * z) : m.y };
       const k = easeOut(ext);
@@ -216,7 +216,7 @@
       const thin = PHONE.matches ? .6 : 1;                              // a finer tongue on phones
       tongue.setAttribute('stroke-width', 5 * z * thin);
       tip.setAttribute('cx', x); tip.setAttribute('cy', y); tip.setAttribute('r', dist > 2 ? 13 * z * (PHONE.matches ? .55 : 1) : 0);
-      cards[target].classList.toggle('stuck', ext >= 1);
+      cards[target].classList.toggle('work-card--stuck', ext >= 1);
     }
     requestAnimationFrame(frame);
   }
@@ -231,7 +231,7 @@
   const laptop = $('#laptop'), screenLink = $('#screen'), art = $('.sunset-art');
   if (laptop && screenLink && art) {
     const LAST = PROJECTS[PROJECTS.length - 1];
-    const last = cards[cards.length - 1], slot = last.parentElement, lastImg = last.querySelector('.thumb img');
+    const last = cards[cards.length - 1], slot = last.parentElement, lastImg = last.querySelector('.work-card__thumb img');
     const S = 1;                                     // the laptop at its Figma size (group 745:85)
     const O = { x: 381 + 376, y: 180 + 470 };        // its pivot (laptop.svg 376, 470) in sunset coords
     const GLASS = { x: 29.55 - 376, y: 115.05 - 470, w: 449, rot: -10.57 };   // the screen glass, from the pivot
@@ -245,15 +245,15 @@
 
     // the empty tab that stays in the laptop as its screen, under the text
     const screenTab = document.createElement('span');
-    screenTab.className = 'wcard active laptop-tab';
+    screenTab.className = 'work-card work-card--active work-card--laptop';
     screenTab.setAttribute('aria-hidden', 'true');
     screenTab.style.setProperty('--tab', `rgb(${TEAL})`); screenTab.style.setProperty('--c', `rgb(${TEAL})`);
     // the laptop's tab: frame and screen in one gradient, aquamarine to blue, like the laptop screen
     const lapSvg = tabSvg('lap').replace(/currentColor/g, 'url(#lapGrad)')
       .replace('<path', '<defs><linearGradient id="lapGrad" x1="0" y1="0" x2="0" y2="497" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#3EBDCD"/><stop offset="1" stop-color="#1A5BA4"/></linearGradient></defs><path');
-    screenTab.innerHTML = `<span class="win"><span class="thumb"></span>${lapSvg}</span>`;
+    screenTab.innerHTML = `<span class="work-card__window"><span class="work-card__thumb"></span>${lapSvg}</span>`;
     // the falling tab carries the same gradient frame, faded in as it reaches the laptop
-    last.querySelector('.win').insertAdjacentHTML('beforeend', lapSvg.replace(/lapGrad/g, 'lapGrad2').replace('class="win-svg"', 'class="lap-frame"').replace(/tabM(\d)-lap/g, 'tabM$1-lap2'));
+    last.querySelector('.work-card__window').insertAdjacentHTML('beforeend', lapSvg.replace(/lapGrad/g, 'lapGrad2').replace('class="work-card__svg"', 'class="work-card__frame"').replace(/tabM(\d)-lap/g, 'tabM$1-lap2'));
     laptop.insertBefore(screenTab, screenLink);
 
     // where the screen glass is right now: its corner (sunset coords) and its angle
@@ -267,7 +267,7 @@
     // phones: the projects sit side by side, so a copy of the project in the middle lets go
     // of the row and falls (the card itself hides meanwhile); desktop: the last tab falls
     const drop = document.createElement('span');
-    drop.className = 'wcard active flying drop'; drop.setAttribute('aria-hidden', 'true'); drop.hidden = true;
+    drop.className = 'work-card work-card--active work-card--flying work-card--drop'; drop.setAttribute('aria-hidden', 'true'); drop.hidden = true;
     $('#work').appendChild(drop);
     let dropIdx = -1;
 
@@ -287,17 +287,17 @@
         if (p > 0 && drop.hidden) {
           // the copy takes the card's place in the section and its look
           const w = $('#work').getBoundingClientRect();
-          drop.innerHTML = src.querySelector('.win').outerHTML;
-          if (!drop.querySelector('.lap-frame')) drop.querySelector('.win').insertAdjacentHTML('beforeend', last.querySelector('.lap-frame').outerHTML);
+          drop.innerHTML = src.querySelector('.work-card__window').outerHTML;
+          if (!drop.querySelector('.work-card__frame')) drop.querySelector('.work-card__window').insertAdjacentHTML('beforeend', last.querySelector('.work-card__frame').outerHTML);
           drop.style.left = (z.left - w.left) + 'px'; drop.style.top = (z.top - w.top) + 'px'; drop.style.width = z.width + 'px';
           drop.hidden = false; src.style.visibility = 'hidden';
         }
         if (p <= 0 && !drop.hidden) { drop.hidden = true; src.style.visibility = ''; dropIdx = -1; }
       } else {
-        last.classList.toggle('flying', p > 0);
+        last.classList.toggle('work-card--flying', p > 0);
         if (!drop.hidden) { drop.hidden = true; cards.forEach(c => { c.style.visibility = ''; }); dropIdx = -1; }
       }
-      const img = fly.querySelector('.thumb img');
+      const img = fly.querySelector('.work-card__thumb img');
       if (p <= 0) {
         fly.style.transform = fly.style.opacity = ''; fly.style.setProperty('--deep', 0);
         fly.style.setProperty('--tab', P.tab); fly.style.setProperty('--c', P.tint || P.hex);

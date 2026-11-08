@@ -35,10 +35,10 @@ function placeFooter() {
 }
 
 // Sticky menu: slides in once the menu at the top has scrolled away (always on phones)
-const topbar = document.getElementById('topbar');
+const siteNav = document.getElementById('site-nav');
 function updateTopbar() {
   // the menu scales with the page on desktop (styles.css)
-  if (topbar) topbar.style.setProperty('--z', MOBILE.matches ? 1 : (document.documentElement.clientWidth / DESIGN_WIDTH).toFixed(4));
+  if (siteNav) siteNav.style.setProperty('--z', MOBILE.matches ? 1 : (document.documentElement.clientWidth / DESIGN_WIDTH).toFixed(4));
 }
 
 fit();
@@ -212,21 +212,21 @@ const sunsetArt = document.querySelector('.sunset-art');
 // stretch from where the sky fades out above Work down to the sea;
 // the link of the section you are in gets aria-current.
 const work = document.getElementById('work');
-const navLinks = topbar ? [...topbar.querySelectorAll('.topbar-links > a')] : [];
+const navLinks = siteNav ? [...siteNav.querySelectorAll('.siteNav-links > a')] : [];
 const navSections = [about, work, sunsetArt];   // About me, Work, Contact
 let navQueued = false;
 function toneNav() {
   navQueued = false;
-  const r = topbar.getBoundingClientRect(), y = r.top + r.height / 2;   // the menu's line on screen
+  const r = siteNav.getBoundingClientRect(), y = r.top + r.height / 2;   // the menu's line on screen
   const art = sunsetArt.getBoundingClientRect();
   const z = MOBILE.matches ? 1 : parseFloat(stage.style.zoom) || 1;
-  topbar.classList.toggle('on-light', work.getBoundingClientRect().top - 620 * z <= y && art.top + art.height * .64 > y);
+  siteNav.classList.toggle('site-nav--light', work.getBoundingClientRect().top - 620 * z <= y && art.top + art.height * .64 > y);
   // current section: the last one whose top has passed 40% of the screen
   let cur = -1;
   navSections.forEach((el, i) => { if (el && el.getBoundingClientRect().top <= innerHeight * .4) cur = i; });
   navLinks.forEach((a, i) => i === cur ? a.setAttribute('aria-current', 'location') : a.removeAttribute('aria-current'));
 }
-if (topbar && work && sunsetArt) {
+if (siteNav && work && sunsetArt) {
   const queueNav = () => { if (!navQueued) { navQueued = true; requestAnimationFrame(toneNav); } };
   addEventListener('scroll', queueNav, { passive: true });
   addEventListener('resize', queueNav);
@@ -236,16 +236,16 @@ if (topbar && work && sunsetArt) {
 // Phones: the menu folds into a hamburger; it opens as a full-screen sky with the links,
 // the email and the socials, and closes on a link, on Escape or on the button again.
 const burger = document.getElementById('navBurger');
-if (topbar && burger) {
+if (siteNav && burger) {
   const setMenu = (open) => {
-    topbar.classList.toggle('open', open);
+    siteNav.classList.toggle('site-nav--open', open);
     document.documentElement.classList.toggle('menu-open', open);
     burger.setAttribute('aria-expanded', open);
     burger.setAttribute('aria-label', open ? 'Close the menu' : 'Open the menu');
   };
-  burger.addEventListener('click', () => setMenu(!topbar.classList.contains('open')));
-  topbar.querySelectorAll('.topbar-links a').forEach((a) => a.addEventListener('click', () => setMenu(false)));
-  addEventListener('keydown', (e) => { if (e.key === 'Escape' && topbar.classList.contains('open')) { setMenu(false); burger.focus(); } });
+  burger.addEventListener('click', () => setMenu(!siteNav.classList.contains('site-nav--open')));
+  siteNav.querySelectorAll('.siteNav-links a').forEach((a) => a.addEventListener('click', () => setMenu(false)));
+  addEventListener('keydown', (e) => { if (e.key === 'Escape' && siteNav.classList.contains('site-nav--open')) { setMenu(false); burger.focus(); } });
   MOBILE.addEventListener('change', () => setMenu(false));
 }
 
