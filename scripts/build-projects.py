@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 """Builds the project pages (dior.html, type01.html, moea.html, miles.html) from the
 PROJECTS list below and one shared template, so they all share the same structure.
 Edit the texts here, then run:  python3 scripts/build-projects.py && scripts/bump-versions.sh"""
@@ -7,8 +6,6 @@ from urllib.parse import quote
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 
-# The tab around the screenshots: the portfolio's browser tab (same as on the home page),
-# drawn in the project's colour (currentColor).
 TAB = re.search(r"const tabSvg = i => `(<svg[\s\S]*?</svg>)`", (ROOT / 'src/js/chameleon.js').read_text()).group(1)
 
 PROJECTS = [
@@ -24,12 +21,10 @@ PROJECTS = [
        mobile=('src/assets/dior/site-mobile.webp', 729, 1253, 'The homepage on mobile'),
        lead='<b>MoMu</b>, the Fashion Museum of Antwerp, wants to launch its new digital marketing plan with a series of <b>six interactive online stories</b>, each about a fashion designer.',
        brief=['My task was to research, design and build the first one: a one-page <b>interactive longread</b> about Walter Van Beirendonk, Christian Dior or Dirk Bikkembergs, told from my own angle.<br>I chose <b>Christian Dior</b> and decided to write about the art of his dressmaking, turning his story into an interactive experience, from the first sketch to the finished gown.'],
-       # palettes: the styleboard's (also the fan in the intro) and the one the final website ended up with
        palettes=[('Styleboard', ['#FFF4DC', '#FFBCD1', '#B96E85', '#86A4AE', '#6D6D6D', '#3B3B3B']),
                  ('Final website', ['#F0F1ED', '#E5ECEC', '#8EB5C5', '#AE7284', '#303030'])],
        styleboard=('src/assets/dior/styleboard.webp', 2400, 1697, 'Styleboard for the Dior longread',
                    'Archive photography of Dior’s couture, fashion sketches and a soft, powdery palette. While designing, the colours changed towards cooler tones.'),
-       # the result: screens of the story, shown one at a time in the tab: (image, w, h, alt, label)
        cta=('See Prototype', 'https://nikasaracuta.github.io/Integration-3/')),
   dict(file='moea.html', name='Moea', tab='#3EBDCD',
        subtitle=('Moea – Mother Earth', 'An animated 3D website hero for a sustainable fashion brand'),
@@ -40,10 +35,9 @@ PROJECTS = [
        lead='A client has heard that <b>3D is the next big thing on the web</b> and wants it on their website as a <b>promotional header</b>.',
        brief=['For this assignment, I could pick the brand myself, so I chose <b>Moea</b>, short for <b>Mother Earth</b>, a label that rethinks how fashion is made, with respect for the planet.<br>The hero had to tell a <b>visual concept</b>, a little world built around the product, and needed to be <b>animated</b> (the animation is coming soon!).'],
        palettes=None,
-       # the palette as dots, as on the styleboard: chrome, sage, lavender, teal, deep teal
        palette_dots=['linear-gradient(160deg, #787D85, #B5B7B9 50%, #747C80)', '#BECD8D', '#AF9BE9', '#4796A4', 'linear-gradient(#142B2C, #106C81)'],
        styleboard=('src/assets/moea/styleboard.webp', 2000, 1413, 'Moea styleboard: chrome, stone, moss, flowers and water', 'I wanted to go for a chrome style in combination with natural elements: liquid metal next to stone, moss, flowers and water.'),
-       live=None, zoom=True,   # no prototype yet: the result opens large instead
+       live=None, zoom=True,
               title_text='MOEA',
        lede='An animated 3D website hero for Moea, a sustainable fashion brand',
        tags=['3D hero', 'Animation', 'Web design'],
@@ -58,7 +52,6 @@ PROJECTS = [
        lead='<b>TYPE01 Magazine</b>, a publication for graphic designers and typographers, was hosting its first-ever <b>conference</b>: two days in London on typography in print, motion design and branding.',
        brief=['My task was to design a responsive <b>conference website</b> for desktop and mobile that fits TYPE01’s identity but takes a <b>bolder approach</b>. Text and photos of the speakers were already provided.'],
        palettes=None,
-       # the conference colours, the same in both modes: ink, pink, green, white
        palette_squares=['#262221', '#E6A2D9', '#2AA764', '#FFFFFF'],
        board_switch=('Light', 'Dark'),
        styleboard=('src/assets/type01/styleboard-light.webp', 2000, 1258, 'Styleboard, light version', 'I created two styleboards, one for a light and one for a dark mode, both mixing bold type with pixel and halftone patterns, collaged photography, pink and green. The final website uses the light mode.'),
@@ -69,14 +62,13 @@ PROJECTS = [
        cta=('See Prototype', 'https://www.figma.com/proto/PsD6Cg8ngFq6yRWCCm5I9q/Type01?page-id=0%3A1&node-id=468-7480&viewport=-2609%2C-2191%2C0.15&t=KQAR1eAcC8Ls4MeP-1&scaling=min-zoom&content-scaling=fixed&starting-point-node-id=580%3A48961')),
   dict(file='miles.html', name='Miles & Meals', tab='#1A5BA4',
        subtitle=('Miles &amp; Meals – food-box subscription', 'Brand identity and mobile app for a start-up'),
-       year='2026', client='Miles &amp; Meals<br><span class="d-note">(fictional company)</span>', url='Miles &amp; Meals prototype',   # TO CONFIRM: year
+       year='2026', client='Miles &amp; Meals<br><span class="d-note">(fictional company)</span>', url='Miles &amp; Meals prototype',
        tools=[('src/assets/tools/illustrator.svg', 'Illustrator'), ('src/assets/type01/icon-figma.svg', 'Figma'), ('src/assets/type01/icon-ps.svg', 'Photoshop')],
        desktop=('src/assets/miles/site.webp', 2000, 1288, 'Miles & Meals: brand photography and social media'),
        mobile=('src/assets/miles/site-mobile.webp', 1112, 2000, 'The Miles & Meals app: Discover the world in your kitchen'), mobile_screen=True, result_mode='phone', title_html='Miles<span class="amp">&amp;</span>Meals',
        lead='<b>Miles &amp; Meals</b> is a food-box subscription that brings <b>iconic local dishes</b> from cities around the world to your kitchen.',
        brief=['Every box explores a different city through authentic recipes, inspired by how locals really eat. The audience: adults aged 25–50 with middle to upper-middle incomes, and four brand values to build on: <b>travel</b>, <b>warm &amp; welcoming</b>, <b>out &amp; social</b> and <b>authentic</b>.<br>First I had to create the <b>visual identity</b>, presented in a brandboard, then design the <b>app</b> where users could manage their box and cook the recipes.'],
        palettes=None,
-       # the switch changes the colour squares: the brandboard's, and the app's with a lime accent
        palette_squares=['#0C2968', '#FFC933', '#D42F25', '#D5F0FF'],
        palette_squares_b=['#0C2968', '#FFC933', '#D42F25', '#D5F0FF', '#BBD760'],
        board_switch=('Brandboard', 'App'),
@@ -89,6 +81,22 @@ PROJECTS = [
        tags=['UI', 'UX', 'Branding', 'App design'],
        cta=('See Prototype', 'https://www.figma.com/proto/JhFdOzlcgGCV38btM2Tumv/Miles---Meals?page-id=6817%3A1887&node-id=59585-34744&viewport=-13885%2C-407%2C0.32&t=BZlwAt149MrtAhmE-1&scaling=min-zoom&content-scaling=fixed&starting-point-node-id=59585%3A34763&show-proto-sidebar=1')),
 ]
+
+def slug(p):
+    return p['file'].removesuffix('.html')
+
+def colours(p):
+    page = f'.project-page--{slug(p)}'
+    rules = [f'{page} {{ --accent: {p["tab"]}; }}']
+    if p.get('palette_squares'):
+        qa, qb = p['palette_squares'], p.get('palette_squares_b') or p['palette_squares']
+        cs, ul = [(qa + [None] * 9)[k] or qb[k] for k in range(max(len(qa), len(qb)))], 'd-squares'
+    elif p.get('palette_dots'):
+        cs, ul = p['palette_dots'], 'd-dots-pal'
+    else:
+        cs, ul = p['palettes'][0][1], 'd-swatches'
+    rules += [f'{page} .{ul} li:nth-child({k + 1}) {{ --c: {c}; }}' for k, c in enumerate(cs)]
+    return '\n'.join(rules)
 
 def pills(tags, rows=False):
     """Tags as filled pills in the page's colour with a small star between them: on one
@@ -105,7 +113,7 @@ def ink(alt):
 
 def window(src, w, h, alt, tab, extra='', lazy=False):
     svg = TAB.replace('${i}', 'x').replace('class="work-card__svg"', 'class="p-tab"')
-    return f'''<figure class="p-window reveal{extra}" style="--tab:{tab}" data-tilt>
+    return f'''<figure class="p-window reveal{extra}" data-tilt>
         <img class="p-shot" src="{src}" width="{w}" height="{h}" alt="{html.escape(alt)}"{' loading="lazy"' if lazy else ''}>
         {svg}
       </figure>'''
@@ -124,29 +132,27 @@ def dior_main(p):
     if p.get('palette_squares'):
         sa, sb_ = p['board_switch']
         qa, qb = p['palette_squares'], p.get('palette_squares_b') or p['palette_squares']
-        squares = ''.join(f'<li class="{"" if k < len(qa) else "off"}" style="--c:{(qa + [None] * 9)[k] or qb[k]}" data-a="{qa[k] if k < len(qa) else ""}" data-b="{qb[k] if k < len(qb) else ""}"></li>' for k in range(max(len(qa), len(qb))))
+        squares = ''.join(f'<li{"" if k < len(qa) else ' class="off"'} data-a="{qa[k] if k < len(qa) else ""}" data-b="{qb[k] if k < len(qb) else ""}"></li>' for k in range(max(len(qa), len(qb))))
         palette = (f'<div class="p-switch" role="tablist" aria-label="Styleboard">'
                    f'<button role="tab" aria-selected="true" data-board="a">{sa}</button><button role="tab" aria-selected="false" data-board="b">{sb_}</button>'
                    f'<span class="p-switch-pill" aria-hidden="true"></span></div>'
                    '<ul class="d-squares" aria-label="Colour palette">' + squares + '</ul>')
     elif p.get('palette_dots'):
-        palette = '<ul class="d-dots-pal" aria-label="Colour palette">' + ''.join(f'<li style="--c:{c}"></li>' for c in p['palette_dots']) + '</ul>'
+        palette = '<ul class="d-dots-pal" aria-label="Colour palette">' + '<li></li>' * len(p['palette_dots']) + '</ul>'
     else:
         (pa_name, pa), (pb_name, pb) = p['palettes']
-        pal = ''.join(f'<li style="--c:{pa[k]}" data-a="{pa[k]}" data-b="{pb[k] if k < len(pb) else ""}"></li>' for k in range(len(pa)))
+        pal = ''.join(f'<li data-a="{pa[k]}" data-b="{pb[k] if k < len(pb) else ""}"></li>' for k in range(len(pa)))
         palette = (f'<div class="p-switch" role="tablist" aria-label="Palette">'
                    f'<button role="tab" aria-selected="true" data-board="a">{pa_name}</button><button role="tab" aria-selected="false" data-board="b">{pb_name}</button>'
                    f'<span class="p-switch-pill" aria-hidden="true"></span></div><ul class="d-swatches" aria-label="Colour palette">{pal}</ul>')
     d, m, sb = p['desktop'], p['mobile'], p['styleboard']
     url, cta = p['url'], p['cta']
-    # the styleboard, and a second board when the palette switch has one (TYPE01: light / dark)
     if p.get('styleboard_b'):
         b2 = p['styleboard_b']
         boards = (f'<img class="on" data-board="a" src="{sb[0]}" width="{sb[1]}" height="{sb[2]}" alt="{html.escape(sb[3])}" loading="lazy">'
                   f'<img data-board="b" src="{b2[0]}" width="{b2[1]}" height="{b2[2]}" alt="{html.escape(b2[3])}" loading="lazy">')
     else:
         boards = f'<img class="on" src="{sb[0]}" width="{sb[1]}" height="{sb[2]}" alt="{html.escape(sb[3])}" loading="lazy">'
-    # the result: the live site, the Figma prototype (embedded), or the site's screenshot
     rphone = (f'<button class="d-result-phone" data-zoom aria-label="Enlarge the mobile version"><img class="on" src="{m[0]}" width="{m[1]}" height="{m[2]}" alt="{html.escape(m[3])}" loading="lazy"></button>'
               if p.get('result_phone') else '')
     if p.get('live') == 'site':
@@ -176,27 +182,23 @@ def dior_main(p):
              f'<svg class="d-badge-ring" viewBox="0 0 120 120" aria-hidden="true"><defs><path id="badgeRing" d="M60 60m-44 0a44 44 0 1 1 88 0a44 44 0 1 1-88 0"/></defs>'
              f'<text><textPath href="#badgeRing" textLength="272">{cta[0].upper()} • {cta[0].upper()} •</textPath></text></svg>{link}</a>')
     return f"""
-    <!-- Intro -->
     <section class="d-intro">
       <div class="d-intro-text">
-        <h1 class="d-title{" d-title-long" if len(html.unescape(p["title_text"])) > 6 else ""} reveal" style="--d:.05s"><span class="p-title-text">{p.get("title_html") or p["title_text"]}</span></h1>
-        <p class="d-sub reveal" style="--d:.1s"><b>{p["subtitle"][0]}</b>{p["subtitle"][1]}</p>
+        <h1 class="d-title{" d-title-long" if len(html.unescape(p["title_text"])) > 6 else ""} reveal"><span class="p-title-text">{p.get("title_html") or p["title_text"]}</span></h1>
+        <p class="d-sub reveal"><b>{p["subtitle"][0]}</b>{p["subtitle"][1]}</p>
       </div>
-      <!-- the site on desktop, with the phone version leaning on it -->
-      <div class="d-devices reveal" style="--d:.2s">
+      <div class="d-devices reveal">
         {shot}
         <figure class="d-phone{' d-phone-screen' if p.get('mobile_screen') else ''}{' d-phone-right' if p.get('phone_right') else ''}"><img src="{m[0]}" width="{m[1]}" height="{m[2]}" alt="{html.escape(m[3])}"></figure>
       </div>
-      <dl class="d-facts reveal" style="--d:.15s">{facts}</dl>
+      <dl class="d-facts reveal">{facts}</dl>
     </section>
 
-    <!-- The Brief -->
     <section class="d-brief" aria-labelledby="brief-h">
       <h2 class="p-h d-head reveal" id="brief-h">{ink("The Brief")}</h2>
       <p class="d-lead reveal">{p["lead"]}</p>{brief}
     </section>
 
-    <!-- Visual style -->
     <section class="d-process" aria-labelledby="process-h">
       <h2 class="p-h d-head reveal" id="process-h">{ink("Visual Style")}</h2>
       <div class="d-step d-style reveal">
@@ -214,11 +216,9 @@ def dior_main(p):
       </div>
     </section>
 
-    <!-- The Result: a browser window with a tab per part of the story, and one with the live site -->
     <section class="p-result d-result" aria-labelledby="result-h">
       <h2 class="p-h reveal" id="result-h">{ink("The Result")}</h2>
-      <!-- the live prototype in a browser window; it loads when the section comes near -->
-      {phone_result if p.get('result_mode') == 'phone' else ''}<div class="d-browser reveal" style="--tab:{p["tab"]}"{' hidden' if p.get('result_mode') == 'phone' else ''}>
+      {phone_result if p.get('result_mode') == 'phone' else ''}<div class="d-browser reveal"{' hidden' if p.get('result_mode') == 'phone' else ''}>
         <div class="d-browser-bar">
           <span class="d-lights" aria-hidden="true"><i></i><i></i><i></i></span>
           <div class="d-browser-addr"><span class="d-addr">{url}</span></div>
@@ -244,12 +244,12 @@ def page(i, p):
   <link rel="preconnect" href="https://use.typekit.net" crossorigin>
   <link rel="stylesheet" href="https://use.typekit.net/gfn8yzd.css">
   <link rel="stylesheet" href="https://fonts.cdnfonts.com/css/wasted-vindey">
+  <link rel="stylesheet" href="src/css/reset.css">
   <link rel="stylesheet" href="src/css/styles.css">
   <link rel="stylesheet" href="src/css/project.css">
   <script>document.documentElement.classList.add('js')</script>
 </head>
-<body class="project-page" style="--accent:{p["tab"]}">
-  <!-- Generated by scripts/build-projects.py: edit the texts there, not here. -->
+<body class="project-page project-page--{slug(p)}">
   <div class="p-progress" id="progress" aria-hidden="true"></div>
 
   <header class="p-top">
@@ -259,7 +259,7 @@ def page(i, p):
     </a>
   </header>
 
-  <main class="p-main d-main">{dior_main(p)}    <!-- Previous / next project -->
+  <main class="p-main d-main">{dior_main(p)}
     <nav class="p-next reveal" aria-label="More projects">
       <a class="p-prev-link" href="{prev["file"]}">
         <span class="p-arrow" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M20 12H5M11 5l-7 7 7 7"/></svg></span>
@@ -279,6 +279,7 @@ def page(i, p):
     <img alt="">
   </dialog>
 
+  <script src="src/js/common.js"></script>
   <script src="src/js/project.js"></script>
 </body>
 </html>
@@ -287,3 +288,9 @@ def page(i, p):
 for i, p in enumerate(PROJECTS):
     (ROOT / p['file']).write_text(page(i, p))
     print('wrote', p['file'])
+
+MARK = '/* project colours: written by scripts/build-projects.py */'
+css = ROOT / 'src/css/project.css'
+base = css.read_text().split(MARK)[0].rstrip()
+css.write_text(base + '\n\n' + MARK + '\n' + '\n'.join(colours(p) for p in PROJECTS) + '\n')
+print('wrote project colours into', css.name)

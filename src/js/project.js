@@ -1,17 +1,8 @@
-// Project pages: scroll reveals, reading progress, the light/dark styleboard
-// switch, a lightbox for the boards, and a slight tilt of the browser windows.
 const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-// reveals: fade in once an element's top passes 88% of the screen
-const pending = new Set(document.querySelectorAll('.reveal'));
 const progress = document.getElementById('progress'), topBar = document.querySelector('.p-top');
 function onScroll() {
-  // at the very bottom nothing can scroll higher, so show whatever is left
   const max = document.documentElement.scrollHeight - innerHeight;
-  const atBottom = scrollY >= max - 4;
-  for (const el of pending) {
-    if (atBottom || el.getBoundingClientRect().top < innerHeight * .88) { el.classList.add('in'); pending.delete(el); }
-  }
   progress.style.setProperty('--p', max > 0 ? (scrollY / max).toFixed(4) : 0);
   topBar.style.setProperty('--solid', scrollY > 20 ? 1 : 0);
 }
@@ -19,7 +10,6 @@ addEventListener('scroll', onScroll, { passive: true });
 addEventListener('resize', onScroll);
 onScroll();
 
-// light / dark styleboard
 const sw = document.querySelector('.p-switch');
 if (sw) {
   const pill = sw.querySelector('.p-switch-pill'), tabs = [...sw.querySelectorAll('button')];
@@ -44,7 +34,6 @@ if (sw) {
   if (document.fonts) document.fonts.ready.then(() => place(current()));
 }
 
-// lightbox
 const lb = document.getElementById('lightbox');
 if (lb && lb.showModal) {
   const big = lb.querySelector('img');
@@ -55,7 +44,6 @@ if (lb && lb.showModal) {
   lb.addEventListener('click', e => { if (e.target === lb) lb.close(); });
 }
 
-// browser windows lean slightly towards the pointer
 if (!reduced && matchMedia('(hover: hover)').matches) {
   document.querySelectorAll('[data-tilt]').forEach(el => {
     el.addEventListener('pointermove', e => {
@@ -66,7 +54,6 @@ if (!reduced && matchMedia('(hover: hover)').matches) {
   });
 }
 
-// Dior: the palette switches between the styleboard's colours and the final website's
 const swatches = document.querySelectorAll('.d-swatches li, .d-squares li[data-a]');
 if (sw && swatches.length) {
   swatches.forEach((li, k) => li.style.setProperty('--k', k));
@@ -77,8 +64,6 @@ if (sw && swatches.length) {
   }));
 }
 
-// Dior: the live prototype loads in the browser window once the section comes near;
-// visitors scroll it themselves.
 const live = document.querySelector('.d-live');
 if (live) {
   const load = () => {
@@ -93,8 +78,6 @@ if (live) {
   } else load();
 }
 
-// Back to the homepage: clouds drift in and cover the page, then it opens on the
-// homepage, where they part again (index.html, loader.js)
 document.querySelectorAll('a[href^="index.html"]').forEach((a) => a.addEventListener('click', (e) => {
   if (e.metaKey || e.ctrlKey || e.shiftKey || e.button !== 0) return;
   try { sessionStorage.setItem('cloudIn', '1'); } catch (err) { return; }
@@ -109,6 +92,3 @@ document.querySelectorAll('a[href^="index.html"]').forEach((a) => a.addEventList
   setTimeout(() => { location.href = a.href; }, 750);
 }));
 
-// Focus rings only for keyboard users: a click or tap leaves no outline behind (styles.css)
-addEventListener('pointerdown', () => document.documentElement.classList.add('pointer-nav'), true);
-addEventListener('keydown', (e) => { if (e.key === 'Tab') document.documentElement.classList.remove('pointer-nav'); }, true);

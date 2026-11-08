@@ -1,73 +1,41 @@
-/* ---------- Fonts ----------
-   Only three typefaces: Avenir Next (all text and labels), The Seasons (headings) and
-   Wasted Vindey (big titles). The Seasons comes from Adobe Fonts (web project gfn8yzd),
-   Avenir Next from the same project once Avenir Next LT Pro is added to it (Macs have it
-   built in), Wasted Vindey from cdnfonts. All linked in each page's <head>. */
-
+/* ---------- Tokens ---------- */
 :root {
-  /* the Figma sky (717:48952): #1A5BA4 to #E770B2, a rect from y 0 to 1751 (x -70 to 1478)
-     blurred by 230px; stops computed from that blur, so its edges fade to white exactly. The
-     last of the blur is eased out by y 1940, before the pinned About scene ends (y 1959). */
+  --font-body: "avenir-next-lt-pro", "Avenir Next", sans-serif;
+  --font-heading: "the-seasons", serif;
+
+  --color-pink: #E770B2;
+  --color-pink-bright: #FB72BE;
+  --color-blue: #1A5BA4;
+  --color-nav-blue: #497CB6;
+  --color-aqua: #3EBDCD;
+  --color-lime: #D5FF59;
+  --color-ice: #ecf5ff;
+  --color-white: #fff;
+  --color-text: #515151;
+
+  --cham: var(--color-pink);
+
   --sky-v: linear-gradient(rgb(140,173,210) 0px, rgb(112,151,197) 40px, rgb(87,132,187) 80px, rgb(69,116,178) 120px, rgb(57,106,172) 160px, rgb(51,99,169) 200px, rgb(50,96,167) 240px, rgb(51,95,166) 280px, rgb(53,94,166) 320px, rgb(56,94,166) 360px, rgb(59,94,166) 400px, rgb(62,95,166) 440px, rgb(66,95,167) 480px, rgb(69,95,167) 520px, rgb(72,96,167) 560px, rgb(75,96,167) 600px, rgb(79,96,168) 640px, rgb(82,97,168) 680px, rgb(85,97,168) 720px, rgb(89,97,168) 760px, rgb(92,98,168) 800px, rgb(95,98,169) 840px, rgb(98,98,169) 880px, rgb(102,99,169) 920px, rgb(105,99,169) 960px, rgb(108,99,170) 1000px, rgb(112,100,170) 1040px, rgb(115,100,170) 1080px, rgb(118,100,170) 1120px, rgb(121,101,171) 1160px, rgb(125,101,171) 1200px, rgb(128,101,171) 1240px, rgb(131,102,171) 1280px, rgb(135,102,171) 1320px, rgb(138,103,172) 1360px, rgb(141,103,172) 1400px, rgb(145,104,172) 1440px, rgb(149,105,173) 1480px, rgb(153,107,174) 1520px, rgb(159,112,177) 1560px, rgb(167,119,181) 1600px, rgb(177,130,187) 1640px, rgb(189,145,195) 1680px, rgb(203,166,207) 1720px, rgb(222,196,223) 1760px, rgb(238,224,238) 1800px, rgb(249,243,248) 1840px, rgb(253,252,253) 1880px, rgb(255,255,255) 1920px, rgb(255,255,255) 1940px);
   --sky-h: linear-gradient(to right, rgba(255,255,255,0.272) 0px, rgba(255,255,255,0.218) 20px, rgba(255,255,255,0.170) 40px, rgba(255,255,255,0.130) 60px, rgba(255,255,255,0.097) 80px, rgba(255,255,255,0.070) 100px, rgba(255,255,255,0.050) 120px, rgba(255,255,255,0.034) 140px, rgba(255,255,255,0.023) 160px, rgba(255,255,255,0.015) 180px, rgba(255,255,255,0.010) 200px, rgba(255,255,255,0.004) 240px, rgba(255,255,255,0.001) 280px, rgba(255,255,255,0) 50%, rgba(255,255,255,0.003) 1160px, rgba(255,255,255,0.008) 1200px, rgba(255,255,255,0.020) 1240px, rgba(255,255,255,0.029) 1260px, rgba(255,255,255,0.043) 1280px, rgba(255,255,255,0.061) 1300px, rgba(255,255,255,0.085) 1320px, rgba(255,255,255,0.116) 1340px, rgba(255,255,255,0.153) 1360px, rgba(255,255,255,0.198) 1380px, rgba(255,255,255,0.249) 1400px, rgba(255,255,255,0.307) 1420px, rgba(255,255,255,0.371) 1440px);
-  /* labels and UI share the body face: Avenir Next */
-  --font-ui: "avenir-next-lt-pro", "Avenir Next", sans-serif;
-  --font-body: "avenir-next-lt-pro", "Avenir Next", sans-serif;
-
-  --white: #fff;
-  --ice: #ecf5ff;
-  /* one accessible pink for text and buttons (4.6:1 with white) */
-  --pink: #D62E88;
-  --btn-pink: var(--color-pink);
-  --navy: #0E3F73;
-
-  /* colours */
-  --color-pink: #E770B2;       /* buttons, the chameleon, titles */
-  --color-blue: #1A5BA4;       /* portfolio blue */
-  --color-aqua: #3EBDCD;       /* the sea, the laptop */
-  --color-nav-blue: #497CB6;   /* the menu over white */
-  --color-lime: #D5FF59;       /* "New projects", the current menu link */
-
-  --c-blue: var(--color-blue);
-  --c-teal: #3BBDCC;
-  --c-pink: #FB72BE;
-  --c-body: #515151;
-  --f-seasons: "the-seasons", serif;
-  --f-label: var(--font-ui);
-  --cham: var(--color-pink);   /* changed by chameleon.js */
-  --noise: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 .9 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
   --star6: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 0l2.6 7.5L22.4 6l-5.2 6 5.2 6-7.8-1.5L12 24l-2.6-7.5L1.6 18l5.2-6-5.2-6 7.8 1.5z'/%3E%3C/svg%3E");
 }
 
-* { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
-/* focus rings only for keyboard use: after a click or a tap nothing stays outlined
-   (html.pointer-nav is set on pointer use and removed on Tab, script.js / project.js) */
-:focus:not(:focus-visible) { outline: none; }
 html.pointer-nav :focus, html.pointer-nav :focus * { outline: none !important; }
 
-html { scroll-behavior: smooth; }
-
-body {
-  background: #fff;
-  overflow-x: hidden;
-  font-stretch: 125%;
-  -webkit-font-smoothing: antialiased;
-}
+body { background: #fff; overflow-x: hidden; font-stretch: 125%; font-family: var(--font-body); }
 
 /* ---------- Stage ---------- */
 .stage {
   position: relative;
   width: 1440px;
   height: 6034px;
-  overflow: clip;   /* not hidden: that would stop the sticky chameleon */
-  /* the sky: the Figma gradient (1751px tall, blurred edges) drawn in CSS, with the
-     Figma hero clouds on top (clouds-hero.png); the sea below is drawn in code */
+  overflow: clip;
+
   background: url("../assets/clouds-hero.png?v=3") 0 0 / 1440px 2000px no-repeat,
               var(--sky-h) 0 0 / 1440px 2000px no-repeat, var(--sky-v) 0 0 / 1440px 2000px no-repeat, #fff;
-  /* script.js sets `zoom` so the 1440px design fills the viewport width */
+
 }
 
-/* Absolutely positioned element: geometry comes from inline custom props */
 .l {
   position: absolute;
   left: var(--x, 0);
@@ -76,18 +44,31 @@ body {
   height: var(--h, auto);
 }
 
-/* Section anchors; children are positioned relative to the section's top */
 .sec { position: absolute; left: 0; width: 100%; }
 
-/* ---------- Creatures ----------
-   Blur/opacity fitted to the Figma render (Figma blur values are 2× CSS blur). */
-/* The bird flaps and glides across the sky (bird.js); --a fades it at the path ends. */
-.bird { opacity: var(--a, 0); filter: blur(3px); overflow: visible; pointer-events: none; }
+/* ---------- Positions on the 1440px stage (Figma coordinates) ---------- */
+.clouds-px { --y: 641px; --w: 1440px; --h: 910px; }
+#about { top: 560px; }
+#hello { --x: 173px; --y: -10px; }
+.hero { top: 0; }
+.hero-sub--name { --d: .25s; --x: 56px; --y: 425px; }
+.hero-sub--role { --d: .3s; --x: 1063px; --y: 426px; }
+.sunset { top: 4352px; }
+.caustics { --y: 504px; }
+.laptop-float > img { --x: 0; --y: 0; }
+.seabed { --y: 5947.5px; }
+.coral-small { --x: 985px; --y: 5788px; }
+.coral { --x: 1067.5px; --y: 5626px; }
+#work { top: 2010px; }
+#contact { top: 5244px; }
+#open { --x: 332px; --y: 38px; --w: 776px; }
+#contact .socials { --d: .2s; --x: 641px; --y: 387px; --w: 158px; }
+
+/* ---------- Bird and fish ---------- */
+.bird { --x: -6.61px; --y: 239.23px; --w: 1328.29px; --h: 558.57px; opacity: var(--a, 0); filter: blur(3px); overflow: visible; pointer-events: none; }
 .bird path { fill: #fff; }
-/* The fish swims behind the pink coral (drawn in front of it, index.html), across the
-   sea from left to right (script.js moves it, darting away when the cursor comes close),
-   with a gentle up-and-down drift and tilt, the tail beating and the fins waving. */
-.ocean { pointer-events: none; overflow: visible; }
+
+.ocean { --y: 5616px; --w: 1440px; --h: 330px; pointer-events: none; overflow: visible; }
 .fish-swimmer { position: absolute; left: 0; top: 110px; transform: translate3d(var(--fx, -380px), var(--fy, 0px), 0); will-change: transform; }
 .fish { width: 340px; filter: blur(3px); animation: fish-float 4.2s ease-in-out infinite; transform-origin: 60% 50%; }
 .fish-svg { display: block; width: 100%; height: auto; overflow: visible; }
@@ -105,9 +86,7 @@ body {
 @keyframes fish-tail { from { transform: rotate(-13deg); } to { transform: rotate(13deg); } }
 @media (prefers-reduced-motion: reduce) { .fish, .fish-tail, .fish-fin { animation: none; } }
 
-/* About, pinned (script.js): the wrapper is the scene (1500px, stage y 459–1959)
-   plus 380px of scrolling during which the scene stays on screen. --pin-top
-   (script.js) sticks it so the screen's bottom edge sits at stage y 1720. */
+/* ---------- About, pinned ---------- */
 .pin-wrap { position: absolute; left: 0; top: 459px; width: 1440px; height: 1880px; }
 .pin {
   position: sticky; top: var(--pin-top, -361px); width: 1440px; height: 1500px; overflow: clip;
@@ -115,13 +94,11 @@ body {
               var(--sky-h) 0 -459px / 1440px 2000px no-repeat, var(--sky-v) 0 -459px / 1440px 2000px no-repeat, #fff;
 }
 
-/* moved by script.js while pinned: the white cloud shape settles in the centre,
-   the blue cloud bank parts left and right, then the shape sinks out of sight */
 .sky-puff, .clouds-px { pointer-events: none; }
 .pin-fog { position: absolute; left: 0; top: 0; width: 1440px; height: 1500px; pointer-events: none; transform: translateY(1500px);
   background: linear-gradient(rgba(255, 255, 255, 0), rgba(255, 255, 255, .08) 120px, rgba(255, 255, 255, .25) 260px, rgba(255, 255, 255, .5) 400px, rgba(255, 255, 255, .78) 540px, rgba(255, 255, 255, .94) 660px, #fff 760px); }
-.sky-puff { transform-origin: 50% 100%; }
-/* the two halves cross-fade over the middle third, so parting them leaves no seam */
+.sky-puff { --x: 631.4px; --y: 413.4px; --w: 763px; --h: 869px; transform-origin: 50% 100%; }
+
 .clouds-l { -webkit-mask-image: linear-gradient(to right, #000 33%, transparent 67%); mask-image: linear-gradient(to right, #000 33%, transparent 67%); }
 .clouds-r { -webkit-mask-image: linear-gradient(to left, #000 33%, transparent 67%); mask-image: linear-gradient(to left, #000 33%, transparent 67%); }
 
@@ -129,9 +106,7 @@ body {
   body::after { animation: none; }
 }
 
-/* ---------- Film grain ----------
-   Two full-screen layers: an animated grey noise blended with overlay (it
-   jumps between four offsets, like film) and a faint static mottle. */
+/* ---------- Film grain ---------- */
 body::before, body::after { content: ""; position: fixed; inset: -50%; pointer-events: none; z-index: 90; }
 body::after {
   opacity: .6;
@@ -151,50 +126,53 @@ body::before {
   100% { transform: translate(0, 0); }
 }
 
-/* ---------- Type ---------- */
-/* display titles set live in The Seasons (Adobe Fonts), sized as in the Figma file */
-.ttl { margin: 0; font-family: var(--f-seasons); font-weight: 700; font-style: normal; letter-spacing: 0; white-space: nowrap; }
+/* ---------- Text, links and buttons ---------- */
+
+.ttl { margin: 0; font-family: var(--font-heading); font-weight: 700; font-style: normal; letter-spacing: 0; white-space: nowrap; }
 .ttl-hello { font-weight: 700; font-size: 128px; line-height: 1.25; color: #fff; }
 .ttl-work { font-size: 96px; line-height: 101px; color: var(--color-pink); }
 .ttl-open { font-size: 96px; line-height: 105px; color: #fff; text-align: center; }
 .ttl-open span { color: #D8FF66; }
-/* Nika Saracuta / Digital creator (Figma 916:8396): The Seasons Light, the first letter italic */
-.hero-sub { margin: 0; font: 300 50.34px/1.3 var(--f-seasons); color: #fff; white-space: nowrap; }
-/* "Portfolio" and the "?" in Wasted Vindey (cdnfonts link in index.html), as in Figma */
+
+.hero-sub { margin: 0; font: 300 50.34px/1.3 var(--font-heading); color: #fff; white-space: nowrap; }
+
 .ttl-vindey, .q-glyph { font-family: "Wasted Vindey", serif; font-weight: 400; font-style: normal; letter-spacing: 0; white-space: nowrap; }
-.ttl-portfolio { margin: 0; font-size: 391.46px; line-height: 1.027; color: #fff; }
+.ttl-portfolio { --x: 45px; --y: 73px; margin: 0; font-size: 391.46px; line-height: 1.027; color: #fff; }
 .q-glyph { display: block; font-size: 202.84px; line-height: 1.025; color: #9984BC; }
-:where(.l):where(p, h1, h2, a, nav) { white-space: nowrap; color: var(--white); font-weight: 400; }
+:where(.l):where(p, h1, h2, a, nav) { white-space: nowrap; color: var(--color-white); font-weight: 400; }
 
-.social { color: inherit; text-decoration: none; transition: opacity .2s; }
-
-/* Hello: a light, clean sans with the key words in a serif italic that echoes "Hello," */
 .t-intro {
+  --d: .15s;
+  --x: 176px;
+  --y: 156px;
+  --w: 477px;
   font: 400 20px/1.6 var(--font-body);
-  color: color-mix(in srgb, var(--ice) 88%, transparent);
+  color: color-mix(in srgb, var(--color-ice) 88%, transparent);
   letter-spacing: .005em;
 }
 .t-intro p + p { margin-top: 22px; }
-b, strong { font-weight: 600; }
-body { font-family: var(--font-body); }
-button, input, select, textarea { font-family: inherit; }
 .t-intro b { font-weight: 600; color: #fff; }
 
-
-/* the sea (Figma 717:48893): var(--color-aqua) under a very soft top edge (Figma blur 194),
-   from stage y 5350 down; your caustics float on it behind the laptop */
 .sea {
+  --y: 4612px;
+  --w: 1440px;
+  --h: 1422px;
   pointer-events: none;
-  /* the sea (Figma 916:8223): aquamarine at the surface, deepening to the portfolio blue */
   background: linear-gradient(rgba(62, 189, 205, 0) 60px, rgba(62, 189, 205, .02) 156px, rgba(62, 189, 205, .16) 253px,
     rgba(62, 189, 205, .5) 350px, rgba(62, 189, 205, .84) 447px, rgba(62, 189, 205, .98) 544px, var(--color-aqua) 640px, var(--color-blue) 100%);
 }
 .caustics, .deco { pointer-events: none; }
-/* contact (Figma 717:48856): the email is bold type with an arrow; Behance and
-   LinkedIn sit in frosted glass circles; a small copyright line under them */
+
 .t-email {
-  display: block; text-align: center; color: var(--ice) !important;
-  font: 600 32px/40px var(--font-body); text-decoration: none;
+  --d: .12s;
+  --x: 320px;
+  --y: 300px;
+  --w: 800px;
+  display: block;
+  text-align: center;
+  color: var(--color-ice) !important;
+  font: 600 32px/40px var(--font-body);
+  text-decoration: none;
   transition: transform .3s cubic-bezier(.3, 1.6, .5, 1);
 }
 .t-email span { display: inline-block; transition: transform .3s cubic-bezier(.3, 1.6, .5, 1); }
@@ -202,190 +180,115 @@ button, input, select, textarea { font-family: inherit; }
 .t-email:focus-visible { outline: 2px solid #fff; outline-offset: 6px; border-radius: 8px; }
 .socials { display: flex; justify-content: center; gap: 18px; }
 .social {
-  display: grid; place-items: center; width: 70px; height: 70px; border-radius: 50%;
-  border: 1px solid rgba(255, 255, 255, .1); background: rgba(255, 255, 255, .12);
-  -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px);
+  color: inherit;
+  text-decoration: none;
+  display: grid;
+  place-items: center;
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, .1);
+  background: rgba(255, 255, 255, .12);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, .3);
   transition: transform .4s cubic-bezier(.3, 1.6, .5, 1), background .25s;
 }
 .social:hover, .social:focus-visible { background: rgba(255, 255, 255, .26); transform: translateY(-3px) rotate(-8deg); }
 .social img { display: block; width: auto; height: 27px; }
 .social[aria-label="LinkedIn"] img { height: 38px; }
-.t-copy { font: 16px/24px var(--font-body); color: #fff; text-align: center; }
-/* the white fish can swim behind the white text: a faint shadow keeps it readable */
-.t-copy { text-shadow: 0 0 10px rgba(14, 63, 115, .35); }
+
+.t-copy {
+  --d: .28s;
+  --x: 520px;
+  --y: 478px;
+  --w: 400px;
+  font: 16px/24px var(--font-body);
+  color: #fff;
+  text-align: center;
+  text-shadow: 0 0 10px rgba(14, 63, 115, .35);
+}
 
 .btn {
   display: flex;
   align-items: center;
   justify-content: center;
   border-radius: 9px;
-  background: var(--btn-pink);
-  font: 20px/normal var(--font-ui);
-  color: var(--white);
+  background: var(--color-pink);
+  font: 20px/normal var(--font-body);
+  color: var(--color-white);
   text-decoration: none;
   transition: filter .2s;
 }
 .btn:hover { filter: brightness(1.08); }
-/* the Hello button: a soft glass pill with the pink arrow circle used across the site */
-/* the Hello button (Figma 916:8325): pink, Avenir Next Demi Bold, upper case */
-.btn-hello { font: 600 18px/30px var(--font-body); text-transform: uppercase; color: #ecfeff; }
 
-a:focus-visible { outline: 2px solid var(--white); outline-offset: 4px; }
+.btn-hello { --d: .3s; --x: 176px; --y: 378px; --w: 209px; --h: 50px; font: 600 18px/30px var(--font-body); text-transform: uppercase; color: #ecfeff; }
 
-/* ---------- Work: sticky chameleon beside a scrolling project list ----------
-   Ported from the work-page artifact. Sizes are fixed in design pixels (the
-   whole 1440px stage is zoomed by script.js); the tongue and the project sheet
-   sit outside the stage at real screen size. */
+a:focus-visible { outline: 2px solid var(--color-white); outline-offset: 4px; }
 
+/* ---------- Work ---------- */
+.work__layout {
+  --x: 172px;
+  --y: 24px;
+  --w: 1207px;
+  display: grid;
+  grid-template-columns: 361px 686px;
+  column-gap: 160px;
+  align-items: start;
+  white-space: normal;
+}
 
-
-.work__layout { display: grid; grid-template-columns: 361px 686px; column-gap: 160px; align-items: start; white-space: normal; }
-
-/* the chameleon on its branch (Figma vectors), in the colour of the project in focus (--cham) */
-/* title, chameleon and branch are one block that pins below the menu, so only
-   the projects move; as in Figma the chameleon sits 310px below the top of the title */
-.work__stage { position: sticky; top: 100px; z-index: 1; }
+.work__stage { --d: .1s; position: sticky; top: 100px; z-index: 1; }
 #mywork { margin: -7px 0 7px -4.4px; }
 .cham-wrap { margin-top: 130px; }
-.work__list { position: relative; z-index: 2; margin-top: 134px; }
+
 .cham { position: relative; width: 361px; aspect-ratio: 361 / 308; }
 .cham svg { position: absolute; display: block; overflow: visible; }
 .cham-body { inset: 0; width: 100%; height: 100%; }
 .cham-body path { fill: var(--cham); transition: fill .8s ease; }
-/* the branch runs across the whole page under the chameleon (stage x 0, 115.5px below its top) */
+
 .cham .branch { left: -172px; top: 115.5px; width: 1440px; height: 138.5px; }
 .cham .branch path { stroke: var(--cham); transition: stroke .8s ease; }
-/* inside the head, where the tongue starts in Figma (272, 88); the head hides it up to the lips */
+
 #mouth { position: absolute; left: 75.3%; top: 28.6%; width: 2px; height: 2px; }
 .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
 
-/* the tongue, over the page in screen pixels */
 .tongue-layer { position: fixed; inset: 0; width: 100%; height: 100%; pointer-events: none; z-index: 6; overflow: visible; }
-/* a little lighter than the chameleon (Figma: var(--color-pink) → #EFB3D4) */
+
 #tongue { fill: none; stroke: color-mix(in srgb, var(--cham) 62%, #fff); stroke-linecap: round; transition: stroke .8s ease; }
 #tongueTip { fill: var(--cham); transition: fill .8s ease; }
 
-/* the project list: the project in the middle of the screen is in focus */
-.work__list { list-style: none; display: grid; gap: 36px; }
+.work__list { position: relative; z-index: 2; margin-top: 134px; list-style: none; display: grid; gap: 36px; }
 .work-card {
   display: block; width: 100%; padding: 0; border: 0; background: none; cursor: pointer; font: inherit;
   filter: blur(1.2px);
   transition: transform .35s cubic-bezier(.3, 1.6, .5, 1), filter .3s;
 }
 .work-card.work-card--active { filter: none; }
-/* projects out of focus fade under an opaque veil, so they still cover the branch */
+
 .work-card .work-card__window::after {
   content: ""; position: absolute; inset: 0; border-radius: 1.85% / 2.76%; pointer-events: none;
   background: #f8f8f8; opacity: .55; transition: opacity .3s;
 }
 .work-card.work-card--active .work-card__window::after { opacity: 0; }
 .work-card.work-card--stuck { transform: translateX(-12px); }
-.work-card:focus-visible { outline: 2px solid var(--c-pink); outline-offset: 6px; border-radius: 14px; }
-/* the preview in the browser-window tab from Figma (tab.svg, 742 × 497, drawn on
-   top in the project's colour); the picture fills the window inside its 10px frame (x 10–731, y 58–487) */
+.work-card:focus-visible { outline: 2px solid var(--color-pink-bright); outline-offset: 6px; border-radius: 14px; }
+
 .work-card .work-card__window { position: relative; display: block; aspect-ratio: 742 / 497; color: var(--tab); }
 .work-card .work-card__svg { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
 .work-card .work-card__thumb {
   position: absolute; left: 1.348%; top: 11.67%; width: 97.17%; height: 86.32%; overflow: hidden;
   display: grid; place-items: center; border-radius: 0 0 1.4% 1.4% / 0 0 2.3% 2.3%;
-  background: radial-gradient(120% 90% at 25% 20%, color-mix(in srgb, var(--c) 30%, #fff) 0%, var(--c) 55%, color-mix(in srgb, var(--c) 70%, var(--c-blue)) 120%);
-  font: 400 30px var(--f-seasons); color: #fff;
+  background: radial-gradient(120% 90% at 25% 20%, color-mix(in srgb, var(--c) 30%, #fff) 0%, var(--c) 55%, color-mix(in srgb, var(--c) 70%, var(--color-blue)) 120%);
+  font: 400 30px var(--font-heading); color: #fff;
 }
 .work-card .work-card__thumb img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: top center; }
 
-/* ---------- Project sheet ---------- */
-.sheet {
-  position: fixed; inset: 0; z-index: 80; display: grid; place-items: end center;
-  background: rgba(26, 91, 164, .35); backdrop-filter: blur(6px);
-  opacity: 0; transition: opacity .35s;
-  font-family: var(--font-body); font-size: 16px; line-height: 1.6; color: var(--c-body);
-}
-.sheet[hidden] { display: none; }
-.sheet.show { opacity: 1; }
-.sheet p, .sheet li, .sheet dd { font-size: .95rem; }
-.sheet p.tagline { text-transform: none; letter-spacing: normal; }
-.sheet button { font: inherit; color: inherit; }
-.sheet .label { font: 400 .72rem var(--f-label); letter-spacing: 0; text-transform: uppercase; }
-.panel {
-  --c: var(--c-teal);
-  position: relative; width: min(1100px, 100%); max-height: 92svh; overflow: auto; overscroll-behavior: contain;
-  background: #fff; color: var(--c-body);
-  border-radius: 34px 34px 0 0; padding: clamp(22px, 4vw, 48px) clamp(18px, 4vw, 56px) calc(env(safe-area-inset-bottom, 0px) + 40px);
-  transform: translateY(40px); transition: transform .5s cubic-bezier(.2, 1.2, .4, 1);
-}
-.sheet.show .panel { transform: none; }
-.panel::before {
-  content: ""; position: absolute; inset: 0 0 auto 0; height: 220px; pointer-events: none;
-  background: linear-gradient(180deg, color-mix(in srgb, var(--c) 38%, transparent), transparent); border-radius: inherit;
-}
-.panel > * { position: relative; }
-.p-top { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
-.p-nav { display: flex; gap: 8px; }
-.iconbtn {
-  width: 44px; height: 44px; border-radius: 50%; border: 0; cursor: pointer; display: grid; place-items: center; background: #fff;
-  box-shadow: 0 4px 16px -8px rgba(26, 91, 164, .4), 0 0 14px -2px color-mix(in srgb, var(--c-pink) 35%, transparent);
-  font-size: 1.1rem; transition: transform .3s cubic-bezier(.3, 1.6, .5, 1);
-}
-.iconbtn:hover { transform: scale(1.1); }
-.p-head { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 20px; align-items: end; margin-top: 18px; }
-.p-head h3 { font: 400 clamp(2.6rem, 7vw, 5rem)/.95 var(--f-seasons); color: var(--c-blue); margin: 0; text-wrap: balance; }
-.p-head .tagline { font-family: var(--f-seasons); font-size: clamp(1.2rem, 2.6vw, 1.7rem); margin: 10px 0 0; color: var(--c-body); }
-.p-mini {
-  width: clamp(110px, 16vw, 180px); aspect-ratio: 600 / 400; background: var(--c);
-  -webkit-mask: url("../assets/chameleon.png") center / contain no-repeat;
-          mask: url("../assets/chameleon.png") center / contain no-repeat;
-}
-.pills { display: flex; flex-wrap: wrap; gap: 8px; margin: 18px 0 0; padding: 0; list-style: none; }
-.sheet .pills li {
-  font: 400 .64rem var(--f-label); letter-spacing: 0; text-transform: uppercase; padding: 6px 12px; border-radius: 20px;
-  border: 1px solid var(--c-pink); color: var(--c-body); background: #fff;
-  box-shadow: 0 0 14px -2px color-mix(in srgb, var(--c-pink) 35%, transparent);
-}
-.tabs {
-  display: flex; gap: 6px; margin: 28px 0 0; padding: 5px; border-radius: 40px; background: #fff; width: fit-content; max-width: 100%;
-  box-shadow: 0 6px 20px -14px rgba(26, 91, 164, .45); overflow-x: auto;
-}
-.tab {
-  border: 0; background: none; cursor: pointer; border-radius: 30px; padding: 10px 18px; white-space: nowrap;
-  font-family: var(--f-seasons) !important; font-size: 1.05rem !important; color: var(--c-body) !important; transition: background .3s, color .3s;
-}
-.tab[aria-selected="true"] { background: var(--c-pink); color: #fff !important; }
-.tabpane { margin-top: 26px; display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, .9fr); gap: clamp(20px, 4vw, 48px); align-items: start; }
-.tabpane h4 { font: 400 clamp(2rem, 4.5vw, 3.2rem)/1 var(--f-seasons); color: var(--c-pink); margin: 0 0 14px; }
-.tabpane p { margin: 0 0 12px; max-width: 62ch; }
-.steps { list-style: none; padding: 0; margin: 0; display: grid; gap: 14px; }
-.sheet .steps li { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 14px; align-items: start; }
-.steps .n { font: 400 1.8rem/1 var(--f-seasons); color: var(--c-pink); min-width: 1.4ch; }
-.steps b { font: 400 1.2rem var(--f-seasons); display: block; text-transform: none; }
-.facts { background: #fff; border-radius: 24px; padding: 22px; display: grid; gap: 14px; box-shadow: 0 10px 30px -22px rgba(26, 91, 164, .6); margin: 0; }
-.facts div { display: grid; gap: 2px; }
-.facts dt { font: 400 .62rem var(--f-label); letter-spacing: 0; text-transform: uppercase; color: var(--c-body); }
-.facts dd { margin: 0; font-weight: 500; }
-.result-art {
-  border-radius: 24px; aspect-ratio: 4 / 3; position: relative; overflow: hidden; display: grid; place-items: center; text-align: center; padding: 20px;
-  background: radial-gradient(circle at 70% 20%, #fff 0, transparent 50%), linear-gradient(135deg, color-mix(in srgb, var(--c) 12%, #fff), color-mix(in srgb, var(--c) 42%, #fff));
-}
-.result-art .big { font: 400 clamp(1.6rem, 4vw, 2.6rem)/1.05 var(--f-seasons); color: var(--c-blue); text-wrap: balance; }
-.result-art .small { font: 400 .62rem var(--f-label); letter-spacing: 0; text-transform: uppercase; margin-top: 10px; color: var(--c-body); display: block; }
-.soon { color: var(--c-body); font-style: italic; }
-.p-live {
-  display: inline-flex; align-items: center; gap: 10px; text-decoration: none; font: 400 .74rem var(--f-label); letter-spacing: 0; text-transform: uppercase;
-  padding: 12px 22px; border-radius: 40px; background: var(--c-pink); color: #fff;
-}
-.sheet :focus-visible { outline: 2px solid var(--c-pink); outline-offset: 4px; border-radius: 6px; }
-
-@media (max-width: 820px) { .tabpane { grid-template-columns: minmax(0, 1fr); } }
-@media (max-width: 560px) { .p-head { grid-template-columns: minmax(0, 1fr); } .p-mini { display: none; } }
 @media (prefers-reduced-motion: reduce) {
-  .sheet, .panel, .work-card, .work-card .work-card__window::after, .cham path, #tongue, #tongueTip { transition: none; }
+  .work-card, .work-card .work-card__window::after, .cham path, #tongue, #tongueTip { transition: none; }
 }
 
-/* ---------- Scroll reveals ----------
-   Elements marked .reveal fade in, rise and un-blur as they scroll into view
-   (script.js adds .in, then removes both classes once the animation is done so
-   hover transitions behave normally). --d staggers items within a section.
-   Uses the individual `translate` property so existing transforms are kept. */
+/* ---------- Reveals ---------- */
 .js .reveal {
   transition: opacity .9s ease var(--d, 0s), translate 1.1s cubic-bezier(.2, .8, .2, 1) var(--d, 0s), filter .9s ease var(--d, 0s);
 }
@@ -395,40 +298,16 @@ a:focus-visible { outline: 2px solid var(--white); outline-offset: 4px; }
   .js .reveal:not(.in) { translate: none; filter: none; }
 }
 
-/* ---------- About pop-up ----------
-   Ported from the portfolio artifact: clicking "About me" or the "?" spreads a
-   soft mist from the click into a full-screen field-guide
-   page about Nika. Fixed to the screen, outside the zoomed stage. */
-.qbtn { -webkit-appearance: none; appearance: none; border: 0; padding: 0; background: none; cursor: pointer; }
+/* ---------- Question mark and About pop-up ---------- */
+.qbtn { --d: .2s; --x: 974.3px; --y: 126px; -webkit-appearance: none; appearance: none; border: 0; padding: 0; background: none; cursor: pointer; }
 .qbtn .q-glyph { margin: -12px 0 0 -6px; animation: bob 4s ease-in-out infinite; transition: filter .3s; }
 .qbtn:hover .q-glyph { filter: hue-rotate(-95deg) saturate(1.4); }
 .qbtn:focus-visible { outline: 2px solid #fff; outline-offset: 6px; border-radius: 12px; }
 @keyframes bob { 0%, 100% { transform: translateY(0) rotate(-3deg); } 50% { transform: translateY(-14px) rotate(4deg); } }
 
-.cloudpop {
-  --gutter: clamp(16px, 4vw, 56px);
-  position: fixed; inset: 0; z-index: 85; overflow-y: auto; overscroll-behavior: contain;
-  font: 16px/1.6 var(--font-body); color: var(--c-body);
-  /* a plain pink wash at the top, as on the project pages */
-  background: linear-gradient(color-mix(in srgb, var(--color-pink) 42%, #fff) 0, #fff 260px) no-repeat, #fff; background-attachment: local;
-  /* opens like a soft mist spreading out of whatever was clicked (about.js): five
-     feathered blobs around the click, with no defined outline */
-  --r: 0px; --cx: 50%; --cy: 50%; --w: 0;
-  -webkit-mask-image: radial-gradient(calc(var(--r) * 1) calc(var(--r) * 0.86) at calc(var(--cx) + var(--r) * (0 + 0.04 * var(--w))) calc(var(--cy) + var(--r) * (0 + -0.03 * var(--w))), #000 30%, rgba(0, 0, 0, .5) 62%, transparent),
-    radial-gradient(calc(var(--r) * 0.62) calc(var(--r) * 0.5) at calc(var(--cx) + var(--r) * (-0.48 + -0.06 * var(--w))) calc(var(--cy) + var(--r) * (0.22 + 0.05 * var(--w))), #000 30%, rgba(0, 0, 0, .5) 62%, transparent),
-    radial-gradient(calc(var(--r) * 0.58) calc(var(--r) * 0.68) at calc(var(--cx) + var(--r) * (0.5 + 0.05 * var(--w))) calc(var(--cy) + var(--r) * (-0.2 + 0.06 * var(--w))), #000 30%, rgba(0, 0, 0, .5) 62%, transparent),
-    radial-gradient(calc(var(--r) * 0.5) calc(var(--r) * 0.44) at calc(var(--cx) + var(--r) * (0.18 + -0.04 * var(--w))) calc(var(--cy) + var(--r) * (0.52 + 0.05 * var(--w))), #000 30%, rgba(0, 0, 0, .5) 62%, transparent),
-    radial-gradient(calc(var(--r) * 0.46) calc(var(--r) * 0.5) at calc(var(--cx) + var(--r) * (-0.3 + 0.06 * var(--w))) calc(var(--cy) + var(--r) * (-0.46 + -0.04 * var(--w))), #000 30%, rgba(0, 0, 0, .5) 62%, transparent);
-          mask-image: radial-gradient(calc(var(--r) * 1) calc(var(--r) * 0.86) at calc(var(--cx) + var(--r) * (0 + 0.04 * var(--w))) calc(var(--cy) + var(--r) * (0 + -0.03 * var(--w))), #000 30%, rgba(0, 0, 0, .5) 62%, transparent),
-    radial-gradient(calc(var(--r) * 0.62) calc(var(--r) * 0.5) at calc(var(--cx) + var(--r) * (-0.48 + -0.06 * var(--w))) calc(var(--cy) + var(--r) * (0.22 + 0.05 * var(--w))), #000 30%, rgba(0, 0, 0, .5) 62%, transparent),
-    radial-gradient(calc(var(--r) * 0.58) calc(var(--r) * 0.68) at calc(var(--cx) + var(--r) * (0.5 + 0.05 * var(--w))) calc(var(--cy) + var(--r) * (-0.2 + 0.06 * var(--w))), #000 30%, rgba(0, 0, 0, .5) 62%, transparent),
-    radial-gradient(calc(var(--r) * 0.5) calc(var(--r) * 0.44) at calc(var(--cx) + var(--r) * (0.18 + -0.04 * var(--w))) calc(var(--cy) + var(--r) * (0.52 + 0.05 * var(--w))), #000 30%, rgba(0, 0, 0, .5) 62%, transparent),
-    radial-gradient(calc(var(--r) * 0.46) calc(var(--r) * 0.5) at calc(var(--cx) + var(--r) * (-0.3 + 0.06 * var(--w))) calc(var(--cy) + var(--r) * (-0.46 + -0.04 * var(--w))), #000 30%, rgba(0, 0, 0, .5) 62%, transparent);
-  -webkit-mask-repeat: no-repeat; mask-repeat: no-repeat;
-}
 .cloudpop[hidden] { display: none; }
 .cloudpop.full { -webkit-mask-image: none; mask-image: none; }
-.cloudpop .label { font: 400 .72rem var(--f-label); letter-spacing: 0; text-transform: uppercase; }
+
 .cloudpop .field { position: relative; min-height: 100%; padding: clamp(40px, 5vw, 64px) var(--gutter) clamp(40px, 6vw, 80px); }
 .cp-close { position: fixed; z-index: 2; top: calc(env(safe-area-inset-top, 0px) + 18px); right: calc(var(--gutter) + 4px); }
 .cloudpop .field-head, .cloudpop .plate, .cloudpop .toolbox { transition: opacity .5s ease, transform .6s cubic-bezier(.2, 1, .3, 1); }
@@ -436,13 +315,9 @@ a:focus-visible { outline: 2px solid var(--white); outline-offset: 4px; }
 .cloudpop.full .plate { transition-delay: .08s; }
 .cloudpop.full .toolbox { transition-delay: .16s; }
 
-/* tools: a little field of flowers. Each tool is a pink star-flower (with the
-   app's icon) on a swaying stem; on hover the flower head spins away and the
-   tool's name blooms in its place, sized to fit there so nothing overlaps. */
-.tool-groups { align-items: end; }
 .tools {
   list-style: none; margin: 0; padding: 0 24px; display: flex; flex-wrap: wrap; justify-content: center; align-items: flex-end; gap: 0 6px;
-  /* the ground: a soft green hill under each patch of flowers */
+
   background: radial-gradient(60% 28px at 50% 100%, color-mix(in srgb, #50F85E 34%, #fff) 0 98%, transparent) bottom / 100% 28px no-repeat;
   padding-bottom: 8px;
 }
@@ -454,13 +329,13 @@ a:focus-visible { outline: 2px solid var(--white); outline-offset: 4px; }
 @keyframes sway { 0%, 100% { transform: rotate(-2.5deg); } 50% { transform: rotate(2.5deg); } }
 .head { position: relative; display: grid; place-items: center; width: 100%; aspect-ratio: 1; z-index: 1; margin-bottom: -10px; }
 .tool .burst { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; transition: transform .6s cubic-bezier(.3, 1.4, .4, 1), opacity .3s; }
-.tool .burst polygon { fill: var(--c-pink); stroke: var(--c-pink); stroke-width: 6; stroke-linejoin: round; }
+.tool .burst polygon { fill: var(--color-pink-bright); stroke: var(--color-pink-bright); stroke-width: 6; stroke-linejoin: round; }
 .tool:nth-child(3n+2) .burst { transform: rotate(9deg); }
 .tool:nth-child(3n) .burst { transform: rotate(-6deg); }
 .head img { position: relative; width: 44%; height: 44%; border-radius: 22%; box-shadow: 0 6px 14px -8px rgba(14, 63, 115, .6); transition: opacity .25s, transform .45s; }
 .word {
   position: absolute; inset: 0; display: grid; place-items: center; padding: 0 4%; text-align: center;
-  font: 400 clamp(1.3rem, 1.9vw, 1.65rem)/.95 var(--f-seasons); color: #D62E88; text-shadow: 0 0 10px #fff, 0 0 4px #fff;
+  font: 400 clamp(1.3rem, 1.9vw, 1.65rem)/.95 var(--font-heading); color: #D62E88; text-shadow: 0 0 10px #fff, 0 0 4px #fff;
   opacity: 0; transform: scale(.6) rotate(-6deg); transition: opacity .3s, transform .5s cubic-bezier(.3, 1.5, .5, 1);
 }
 .tool.mid .word { font-size: clamp(1.05rem, 1.45vw, 1.3rem); }
@@ -476,32 +351,51 @@ a:focus-visible { outline: 2px solid var(--white); outline-offset: 4px; }
 .toolbox .tool { opacity: 0; transform: translateY(30px); transition: opacity .5s, transform .8s cubic-bezier(.3, 1.4, .5, 1); transition-delay: calc(var(--i, 0) * 70ms); }
 .toolbox.in .tool { opacity: 1; transform: none; }
 
-/* "more below" cue at the bottom of the first screen */
-.cp-more {
-  position: fixed; z-index: 2; left: 50%; bottom: calc(env(safe-area-inset-bottom, 0px) + 22px); transform: translateX(-50%);
-  display: inline-flex; align-items: center; gap: 10px; padding: 10px 18px 10px 20px; border: 0; border-radius: 999px; cursor: pointer;
-  background: rgba(255, 255, 255, .8); -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px);
-  box-shadow: 0 10px 30px -14px rgba(14, 63, 115, .5); color: var(--c-blue); font: 400 .74rem/1 var(--f-label); letter-spacing: 0; text-transform: uppercase;
-  transition: opacity .4s, transform .4s;
-}
-.cp-more svg { width: 18px; height: 18px; fill: none; stroke: var(--c-pink); stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; animation: cp-nudge 1.6s ease-in-out infinite; }
 @keyframes cp-nudge { 50% { transform: translateY(4px); } }
 .cp-more.gone { opacity: 0; pointer-events: none; transform: translate(-50%, 12px); }
 .cloudpop:not(.full) .cp-more { opacity: 0; }
-.cloudpop :focus-visible { outline: 2px solid var(--c-pink); outline-offset: 4px; border-radius: 6px; }
+.cloudpop :focus-visible { outline: 2px solid var(--color-pink-bright); outline-offset: 4px; border-radius: 6px; }
 
-
-/* ---------- About: a field-guide page in pink ---------- */
-.cloudpop { overflow-x: hidden; --fg-ink: #3B2733; --fg-pink: var(--color-pink); --fg-deep: #C9418E; --fg-lead: #3BBDCC; color: var(--fg-ink); }
+/* ---------- About pop-up: content ---------- */
+.cloudpop {
+  --gutter: clamp(16px, 4vw, 56px);
+  position: fixed;
+  inset: 0;
+  z-index: 85;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  font: 16px/1.6 var(--font-body);
+  background: linear-gradient(color-mix(in srgb, var(--color-pink) 42%, #fff) 0, #fff 260px) no-repeat, #fff;
+  background-attachment: local;
+  --r: 0px;
+  --cx: 50%;
+  --cy: 50%;
+  --w: 0;
+  -webkit-mask-image: radial-gradient(calc(var(--r) * 1) calc(var(--r) * 0.86) at calc(var(--cx) + var(--r) * (0 + 0.04 * var(--w))) calc(var(--cy) + var(--r) * (0 + -0.03 * var(--w))), #000 30%, rgba(0, 0, 0, .5) 62%, transparent),
+    radial-gradient(calc(var(--r) * 0.62) calc(var(--r) * 0.5) at calc(var(--cx) + var(--r) * (-0.48 + -0.06 * var(--w))) calc(var(--cy) + var(--r) * (0.22 + 0.05 * var(--w))), #000 30%, rgba(0, 0, 0, .5) 62%, transparent),
+    radial-gradient(calc(var(--r) * 0.58) calc(var(--r) * 0.68) at calc(var(--cx) + var(--r) * (0.5 + 0.05 * var(--w))) calc(var(--cy) + var(--r) * (-0.2 + 0.06 * var(--w))), #000 30%, rgba(0, 0, 0, .5) 62%, transparent),
+    radial-gradient(calc(var(--r) * 0.5) calc(var(--r) * 0.44) at calc(var(--cx) + var(--r) * (0.18 + -0.04 * var(--w))) calc(var(--cy) + var(--r) * (0.52 + 0.05 * var(--w))), #000 30%, rgba(0, 0, 0, .5) 62%, transparent),
+    radial-gradient(calc(var(--r) * 0.46) calc(var(--r) * 0.5) at calc(var(--cx) + var(--r) * (-0.3 + 0.06 * var(--w))) calc(var(--cy) + var(--r) * (-0.46 + -0.04 * var(--w))), #000 30%, rgba(0, 0, 0, .5) 62%, transparent);
+  mask-image: radial-gradient(calc(var(--r) * 1) calc(var(--r) * 0.86) at calc(var(--cx) + var(--r) * (0 + 0.04 * var(--w))) calc(var(--cy) + var(--r) * (0 + -0.03 * var(--w))), #000 30%, rgba(0, 0, 0, .5) 62%, transparent),
+    radial-gradient(calc(var(--r) * 0.62) calc(var(--r) * 0.5) at calc(var(--cx) + var(--r) * (-0.48 + -0.06 * var(--w))) calc(var(--cy) + var(--r) * (0.22 + 0.05 * var(--w))), #000 30%, rgba(0, 0, 0, .5) 62%, transparent),
+    radial-gradient(calc(var(--r) * 0.58) calc(var(--r) * 0.68) at calc(var(--cx) + var(--r) * (0.5 + 0.05 * var(--w))) calc(var(--cy) + var(--r) * (-0.2 + 0.06 * var(--w))), #000 30%, rgba(0, 0, 0, .5) 62%, transparent),
+    radial-gradient(calc(var(--r) * 0.5) calc(var(--r) * 0.44) at calc(var(--cx) + var(--r) * (0.18 + -0.04 * var(--w))) calc(var(--cy) + var(--r) * (0.52 + 0.05 * var(--w))), #000 30%, rgba(0, 0, 0, .5) 62%, transparent),
+    radial-gradient(calc(var(--r) * 0.46) calc(var(--r) * 0.5) at calc(var(--cx) + var(--r) * (-0.3 + 0.06 * var(--w))) calc(var(--cy) + var(--r) * (-0.46 + -0.04 * var(--w))), #000 30%, rgba(0, 0, 0, .5) 62%, transparent);
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  overflow-x: hidden;
+  --fg-ink: #3B2733;
+  --fg-deep: #C9418E;
+  color: var(--fg-ink);
+}
 .field-head { text-align: center; position: relative; z-index: 1; }
-.fg-eyebrow { display: inline-flex; align-items: center; gap: 12px; margin: 0; font: 600 16px/1 var(--font-body); color: var(--fg-pink); }
-.fg-eyebrow i { width: 9px; height: 9px; background: var(--fg-pink); -webkit-mask: var(--star6) center / contain no-repeat; mask: var(--star6) center / contain no-repeat; transform: scale(1.6); }
+.fg-eyebrow { display: inline-flex; align-items: center; gap: 12px; margin: 0; font: 600 16px/1 var(--font-body); color: var(--color-pink); }
+.fg-eyebrow i { width: 9px; height: 9px; background: var(--color-pink); -webkit-mask: var(--star6) center / contain no-repeat; mask: var(--star6) center / contain no-repeat; transform: scale(1.6); }
 .fg-name {
-  margin: clamp(6px, 1vw, 14px) 0 0; font: 400 clamp(64px, 9vw, 140px)/.95 "Wasted Vindey", serif; color: var(--fg-pink);
+  margin: clamp(6px, 1vw, 14px) 0 0; font: 400 clamp(64px, 9vw, 140px)/.95 "Wasted Vindey", serif; color: var(--color-pink);
   letter-spacing: -.01em; white-space: nowrap;
 }
 
-/* the plate: the photo and a calm list of facts beside it */
 .plate {
   display: grid; grid-template-columns: auto minmax(0, 600px); justify-content: center; align-items: center; gap: clamp(40px, 6vw, 96px);
   max-width: 1180px; margin: clamp(20px, 2.4vw, 34px) auto 0;
@@ -509,43 +403,78 @@ a:focus-visible { outline: 2px solid var(--white); outline-offset: 4px; }
 .facts-list { display: grid; grid-template-columns: 1fr 1fr; gap: 0 clamp(24px, 3vw, 40px); margin: 0; }
 .facts-list > div { padding: 18px 0 20px; border-top: 1px solid rgba(231, 112, 178, .28); }
 .facts-list > div.wide { grid-column: 1 / -1; }
-.facts-list dt { font: 600 16px/1 var(--font-body); color: var(--fg-pink); }
+.facts-list dt { font: 600 16px/1 var(--font-body); color: var(--color-pink); }
 .facts-list dd { margin: 10px 0 0; font: 400 clamp(16px, 1.3vw, 19px)/1.45 var(--font-body); color: var(--fg-ink); }
-.facts-list > div:first-child dd { font: 400 clamp(44px, 4vw, 60px)/.9 "Wasted Vindey", serif; color: var(--fg-pink); }
+.facts-list > div:first-child dd { font: 400 clamp(44px, 4vw, 60px)/.9 "Wasted Vindey", serif; color: var(--color-pink); }
 
-/* the photo in a white print border on a pink glow */
 .portrait { margin: 0; display: grid; justify-items: center; gap: 14px; position: relative; }
 .portrait::before { content: ""; position: absolute; z-index: -1; inset: -18% -30%; background: radial-gradient(closest-side, rgba(240, 140, 205, .45), rgba(240, 140, 205, .16) 55%, transparent); pointer-events: none; }
 .photo-card { padding: 4.5% 4.5% 13%; background: #fff; box-shadow: 0 30px 50px -34px rgba(201, 65, 142, .45); transform: rotate(-1.5deg); }
 .photo { position: relative; width: clamp(200px, 18vw, 260px); aspect-ratio: 700 / 1000; cursor: crosshair; touch-action: pan-y; overflow: hidden; }
 .photo .me { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
 
-/* main tools: pink flowers on dark-blue stems with aquamarine leaves, three patches without labels */
 .toolbox { max-width: 1180px; margin: clamp(60px, 8vw, 110px) auto 0; padding-top: 30px; text-align: left; }
 
-.toolbox h3 { display: block; font: 700 clamp(48px, 5.6vw, 84px)/1 var(--f-seasons); color: var(--fg-pink); margin: 0 0 clamp(30px, 4vw, 56px); }
-/* the three patches stand side by side on one continuous hill of grass */
-.tool-groups { display: flex; justify-content: space-between; align-items: flex-end; gap: clamp(20px, 3vw, 48px); padding: 0 clamp(16px, 3vw, 44px) 8px;
-  background: radial-gradient(52% 100% at 50% 100%, color-mix(in srgb, var(--c-teal) 30%, #fff) 0 98%, transparent) bottom / 100% 34px no-repeat; }
+.toolbox h3 { display: block; font: 700 clamp(48px, 5.6vw, 84px)/1 var(--font-heading); color: var(--color-pink); margin: 0 0 clamp(30px, 4vw, 56px); }
+
+.tool-groups {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: clamp(20px, 3vw, 48px);
+  padding: 0 clamp(16px, 3vw, 44px) 8px;
+  background: radial-gradient(52% 100% at 50% 100%, color-mix(in srgb, var(--color-aqua) 30%, #fff) 0 98%, transparent) bottom / 100% 34px no-repeat;
+}
 .tg { display: grid; justify-items: center; gap: 18px; }
-.tg-label { font: 600 16px/1 var(--font-body); color: var(--fg-pink); }
+.tg-label { font: 600 16px/1 var(--font-body); color: var(--color-pink); }
 .cloudpop .tool { width: clamp(72px, 6.4vw, 92px); }
-.cloudpop .tool .burst polygon { fill: var(--fg-pink); stroke: var(--fg-pink); }
+.cloudpop .tool .burst polygon { fill: var(--color-pink); stroke: var(--color-pink); }
 .cloudpop .tool .word { color: var(--fg-deep); }
-.cloudpop .stem .st { stroke: var(--c-blue); }
-.cloudpop .stem .lf, .cloudpop .stem .lf.r { fill: var(--c-blue); }
+.cloudpop .stem .st { stroke: var(--color-blue); }
+.cloudpop .stem .lf, .cloudpop .stem .lf.r { fill: var(--color-blue); }
 .cloudpop .tools { background: none; padding: 0; gap: 0 4px; }
 
-.cp-more { color: #fff; background: var(--fg-pink) !important; font: 600 16px/1 var(--font-body); letter-spacing: 0; text-transform: none; box-shadow: 0 10px 30px -14px rgba(201, 65, 142, .5); }
-.cp-more svg { stroke: #fff; }
-/* Back, as on the project pages */
+.cp-more {
+  position: fixed;
+  z-index: 2;
+  left: 50%;
+  bottom: calc(env(safe-area-inset-bottom, 0px) + 22px);
+  transform: translateX(-50%);
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 18px 10px 20px;
+  border: 0;
+  border-radius: 999px;
+  cursor: pointer;
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  transition: opacity .4s, transform .4s;
+  color: #fff;
+  background: var(--color-pink) !important;
+  font: 600 16px/1 var(--font-body);
+  letter-spacing: 0;
+  text-transform: none;
+  box-shadow: 0 10px 30px -14px rgba(201, 65, 142, .5);
+}
+.cp-more svg {
+  width: 18px;
+  height: 18px;
+  fill: none;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  animation: cp-nudge 1.6s ease-in-out infinite;
+  stroke: #fff;
+}
+
 .cloudpop .cp-back { left: var(--gutter); right: auto; top: calc(env(safe-area-inset-top, 0px) + 18px); display: inline-flex; align-items: center; gap: 12px; padding: 0; border: 0; background: none; cursor: pointer;
-  color: var(--fg-pink); font: 600 18px/1 var(--font-body); text-transform: uppercase; }
-.cp-back-dot { display: grid; place-items: center; width: 48px; height: 48px; border-radius: 50%; background: var(--fg-pink); transition: transform .35s cubic-bezier(.3, 1.6, .5, 1); }
+  color: var(--color-pink); font: 600 18px/1 var(--font-body); text-transform: uppercase; }
+.cp-back-dot { display: grid; place-items: center; width: 48px; height: 48px; border-radius: 50%; background: var(--color-pink); transition: transform .35s cubic-bezier(.3, 1.6, .5, 1); }
 .cp-back-dot svg { width: 22px; height: 22px; fill: none; stroke: #ECF5FF; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
 .cp-back:hover .cp-back-dot, .cp-back:focus-visible .cp-back-dot { transform: translateX(-4px); }
 .cloudpop .cp-back:focus-visible { outline: none; }
-.cloudpop .cp-back:focus-visible .cp-back-dot { outline: 2px solid var(--c-blue); outline-offset: 3px; }
+.cloudpop .cp-back:focus-visible .cp-back-dot { outline: 2px solid var(--color-blue); outline-offset: 3px; }
 
 @media (max-width: 820px) {
   .fg-name { white-space: normal; font-size: clamp(60px, 17vw, 100px); }
@@ -559,31 +488,24 @@ a:focus-visible { outline: 2px solid var(--white); outline-offset: 4px; }
   .tool-groups { flex-direction: column; align-items: stretch; gap: 40px; background: none; padding: 0; }
   .cloudpop .tools { flex-wrap: nowrap; }
   .cloudpop .tool { width: min(64px, calc((100vw - 120px) / 5)); }
-  .tg .tools { padding: 0 20px 8px; background: radial-gradient(52% 100% at 50% 100%, color-mix(in srgb, var(--c-teal) 30%, #fff) 0 98%, transparent) bottom / 100% 30px no-repeat; }
+  .tg .tools { padding: 0 20px 8px; background: radial-gradient(52% 100% at 50% 100%, color-mix(in srgb, var(--color-aqua) 30%, #fff) 0 98%, transparent) bottom / 100% 30px no-repeat; }
 }
 @media (prefers-reduced-motion: reduce) {
   .qbtn .q-glyph, .pulse { animation: none; }
-  .cloudpop .field-head, .cloudpop .plate, .cloudpop .toolbox, .portrait .frame, .notes li::before, .notes li::after, .toolbox .tool { transition: none; }
+  .cloudpop .field-head, .cloudpop .plate, .cloudpop .toolbox, .toolbox .tool { transition: none; }
   .flower { animation: none; }
   .cp-more svg { animation: none; }
 }
 
-/* ---------- Menu ----------
-   One menu for the whole page, fixed at the top and scaled with the page
-   (--z = screen width / 1440, set by script.js). It sits outside the zoomed stage
-   on purpose: a fixed element inside it made browsers draw the page at a lower
-   resolution. As in Figma (frame 697:47124): the logo on the left, the links on
-   the right. White over the blue parts of the page, blue with the colour logo over
-   the white parts (.site-nav.site-nav--light, script.js); */
 .site-nav {
   --z: 1;
   position: fixed; z-index: 70; top: calc(20px * var(--z)); left: 0; right: 0;
   height: calc(62px * var(--z)); pointer-events: none;
 }
-/* a soft full-width backdrop so the menu stays readable over whatever scrolls under it */
+
 .site-nav::before {
   content: ""; position: absolute; z-index: -1; left: 0; right: 0; top: calc(-20px * var(--z)); height: calc(112px * var(--z));
-  /* no backdrop: the menu sits straight on the page */
+
   display: none; background: none;
   -webkit-mask-image: linear-gradient(#000 55%, transparent); mask-image: linear-gradient(#000 55%, transparent);
   transition: background .35s;
@@ -595,89 +517,109 @@ a:focus-visible { outline: 2px solid var(--white); outline-offset: 4px; }
 .site-nav__logo .logo-blue { opacity: 0; }
 .site-nav.site-nav--light .logo-white { opacity: 0; }
 .site-nav.site-nav--light .logo-blue { opacity: 1; }
-/* the link texts sit 584px wide, ending at x 1379; each link carries the pill's 20px side padding */
-.site-nav__links {
-  position: absolute; left: calc(775px * var(--z)); width: calc(624px * var(--z)); top: calc(9.5px * var(--z));
-  display: flex; justify-content: space-between;
-}
+
 .site-nav__links a {
   position: relative; z-index: 1; padding: calc(7px * var(--z)) calc(20px * var(--z));
   font: italic 400 calc(18px * var(--z))/calc(29px * var(--z)) var(--font-body); color: #fff; white-space: nowrap;
   transition: color .35s;
 }
 .site-nav.site-nav--light .site-nav__links a { color: var(--color-nav-blue); }
-.site-nav__links { align-items: center; }
+.site-nav__links {
+  position: absolute;
+  left: calc(775px * var(--z));
+  width: calc(624px * var(--z));
+  top: calc(9.5px * var(--z));
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
 .site-nav__links a:hover, .site-nav__links a:focus-visible { text-decoration: underline; text-underline-offset: 6px; text-decoration-thickness: 1px; outline: none; }
 
-/* ---------- Sunset ---------- */
+/* ---------- Sea and laptop ---------- */
 .sunset-art { position: relative; width: 1440px; height: 860px; }
-/* the laptop and its screen float together on the sea (chameleon.js) */
-.laptop-float { width: 754px; height: 644px; transform-origin: 376px 470px; }
-/* the empty tab that stays in the laptop as its screen (chameleon.js), on the screen glass */
-/* on the laptop the window is solid aquamarine (only the top bar keeps its details) */
+
+.laptop-float { --x: 381px; --y: 180px; width: 754px; height: 644px; transform-origin: 376px 470px; }
+
 .work-card--laptop .work-card__thumb { background: linear-gradient(var(--color-aqua), var(--color-blue)); }
-/* while it falls, the tab's frame fades into the laptop's gradient copy (chameleon.js --deep) */
+
 .work-card .work-card__frame { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; opacity: var(--deep, 0); pointer-events: none; }
-/* while it falls, the tab's window deepens towards the same gradient (chameleon.js --deep) */
+
 .work-card.work-card--flying .work-card__thumb { background: linear-gradient(rgba(26, 91, 164, 0), rgba(26, 91, 164, var(--deep, 0))),
-  radial-gradient(120% 90% at 25% 20%, color-mix(in srgb, var(--c) 30%, #fff) 0%, var(--c) 55%, color-mix(in srgb, var(--c) 70%, var(--c-blue)) 120%), #fff; }
+  radial-gradient(120% 90% at 25% 20%, color-mix(in srgb, var(--c) 30%, #fff) 0%, var(--c) 55%, color-mix(in srgb, var(--c) 70%, var(--color-blue)) 120%), #fff; }
 .work-card--laptop { position: absolute; left: 29.55px; top: 115.05px; width: 449px; transform: rotate(-10.57deg); transform-origin: 0 0; pointer-events: none; cursor: default; }
 #screen { transition: opacity .5s; }
 #screen.off { opacity: 0; pointer-events: none; }
-/* the last project tab on its way into the laptop (chameleon.js) */
+
 .work-card.work-card--flying { transform-origin: 0 0; transition: none; filter: none; z-index: 30; }
 .work-card.work-card--flying .work-card__window::after { opacity: 0; }
-/* laptop screen: shows the projects one by one; click opens the one on screen */
+
 .screen {
+  --x: 29.55px;
+  --y: 115.05px;
   text-decoration: none;
-  width: 449px; height: 301px; transform-origin: 0 0; transform: rotate(-10.57deg);
-  display: grid; place-items: center; align-content: center; gap: 10px; padding: 44px 24px 16px;
-  border: 0; border-radius: 14px; background: none; color: #fff; text-align: center; cursor: pointer;
+  width: 449px;
+  height: 301px;
+  transform-origin: 0 0;
+  transform: rotate(-10.57deg);
+  display: grid;
+  place-items: center;
+  align-content: center;
+  gap: 10px;
+  padding: 44px 24px 16px;
+  border: 0;
+  border-radius: 14px;
+  background: none;
+  color: #fff;
+  text-align: center;
+  cursor: pointer;
 }
 .screen .s-k { font: 400 24px/1.3 var(--font-body); white-space: normal; max-width: 380px; }
-.screen .s-t { display: inline-flex; align-items: center; gap: 12px; font: 700 64px/1.05 var(--f-seasons); white-space: nowrap; transition: transform .35s cubic-bezier(.3, 1.6, .5, 1); }
-.screen .s-link { width: 26px; height: 26px; fill: none; stroke: #fff; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; transition: transform .35s cubic-bezier(.3, 1.6, .5, 1); }
+.screen .s-t { display: inline-flex; align-items: center; gap: 12px; font: 700 64px/1.05 var(--font-heading); white-space: nowrap; transition: transform .35s cubic-bezier(.3, 1.6, .5, 1); }
+
 .screen:hover .s-t, .screen:focus-visible .s-t { transform: scale(1.05); }
 .screen:hover .s-link, .screen:focus-visible .s-link { transform: translate(4px, -4px); animation: none; }
-/* the link arrow nudges up-right now and then, so the screen reads as a link to Behance */
-.screen .s-link { animation: s-nudge 2.6s ease-in-out infinite; }
+
+.screen .s-link {
+  width: 26px;
+  height: 26px;
+  fill: none;
+  stroke: #fff;
+  stroke-width: 1.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  transition: transform .35s cubic-bezier(.3, 1.6, .5, 1);
+  animation: s-nudge 2.6s ease-in-out infinite;
+}
 @keyframes s-nudge { 0%, 70%, 100% { translate: 0 0; } 80% { translate: 4px -4px; } 90% { translate: 0 0; } }
 @media (prefers-reduced-motion: reduce) { .screen .s-link { animation: none; } }
-/* "on" in the body face, Behance in The Seasons */
-.screen .s-on { font: 400 26px/1 var(--font-body); vertical-align: .55em; margin-right: .1em; }
+
 .screen:focus-visible { outline: 2px solid #fff; outline-offset: -6px; }
-.caret { display: inline-block; width: 2px; height: .9em; background: #fff; vertical-align: -.1em; margin-left: 3px; animation: blink 1s steps(1) infinite; }
-@keyframes blink { 50% { opacity: 0; } }
 
 @media (prefers-reduced-motion: reduce) {
   .site-nav__links a, .site-nav__logo img, .t-email, .social { transition: none; }
-  .caret { animation: none; }
+
 }
 
-/* phone-only pieces of the menu and the project row */
 .site-nav__burger, .site-nav__footer, .work-card__caption, .work__dots { display: none; }
 .work-card.work-card--drop { position: absolute; }
 .work-card.work-card--drop[hidden] { display: none; }
 
-/* ---------- Phones ----------
-   Instead of shrinking the 1440px canvas, sections stack in normal flow. Each
-   section shows its own crop of the artwork: --y0 is where the section starts
-   in the design, --s how much the artwork is scaled. */
+/* ---------- Phones ---------- */
 @media (max-width: 760px) {
   .stage { width: 100%; height: auto; background: #fff; display: flex; flex-direction: column; }
   .hero { order: 1; } #about { order: 2; } #work { order: 3; } .sunset { order: 4; } #contact { order: 5; }
   .sky-puff, .clouds-px { display: none !important; }
-  /* the bird flies across the hero (bird.js), the fish swims in front of the corals (script.js) */
+
   .hero .l.bird { position: absolute; left: -16%; top: 230px; width: 132%; height: auto; aspect-ratio: 692 / 291; }
   .stage > .ocean { display: none; }
   #contact .ocean { position: absolute; left: 0; right: 0; bottom: 64px; height: 90px; width: auto; top: auto; }
   #contact .fish-swimmer { top: 0; }
   #contact .fish { width: 130px; filter: blur(2px); }
-  .pin-wrap, .pin { display: contents; }   /* no pinned scene on phones: About is a normal section */
+  .pin-wrap, .pin { display: contents; }
 
   .sec {
     position: relative; top: auto !important; width: 100%; padding: 0 20px;
-    /* the same sky as on desktop: clouds, then the CSS gradient (its side fade and its colours) */
+
     --sky-pos: center calc(var(--y0, 0) * var(--s, 1) * -1px);
     background: url("../assets/clouds-hero.png?v=3"), var(--sky-h), var(--sky-v);
     background-repeat: no-repeat;
@@ -686,9 +628,6 @@ a:focus-visible { outline: 2px solid var(--white); outline-offset: 4px; }
   }
   .sec .l { position: relative; left: auto; top: auto; width: auto; height: auto; }
 
-  /* hero + about share one continuous crop of the sky (same scale and x offset) */
-  /* hero: the title split over two huge lines (Port / folio, left and right); the name sits
-     above it on the left, the role below it on the right, at the same distance from the title */
   .hero {
     --y0: 0; --s: .8; --gap: 22px; height: 640px; padding: 104px 20px 40px; background-position: calc(-60px * var(--s)) 0;
     display: grid; grid-template-rows: auto auto auto; align-content: center; row-gap: var(--gap);
@@ -697,15 +636,11 @@ a:focus-visible { outline: 2px solid var(--white); outline-offset: 4px; }
   .hero .hero-sub:first-of-type { grid-row: 1; justify-self: start; }
   .hero h1 { grid-row: 2; display: grid; font-size: 44vw; line-height: .8; }
   .hero .hero-sub:last-of-type { grid-row: 3; justify-self: end; margin-top: -4.6vw; }
-  .hero h1 { margin-top: 3.6vw; }   /* evens out the type's own space above and below the title */
+  .hero h1 { margin-top: 3.6vw; }
   .hero h1 .pf1 { justify-self: start; margin-left: -1vw; }
   .hero h1 .pf2 { justify-self: end; margin-right: -1vw; }
 
-  /* crop to the blue sky on the left so the white text stays readable */
-  /* the cloud bank sits on its own layer on desktop; here it is drawn back in as a
-     second background, and the crop fades into the white of the Work section */
   #about {
-    /* continues the hero's crop (600px / .8 = stage y 750), so the sky runs on without a seam */
     --y0: 800; --s: .8; padding-top: 96vw; padding-bottom: 150px; overflow: clip;
     --sky-xy: calc(-60px * var(--s)) calc(var(--y0) * var(--s) * -1px);
     --sky-wh: calc(1440px * var(--s)) calc(2000px * var(--s));
@@ -715,7 +650,7 @@ a:focus-visible { outline: 2px solid var(--white); outline-offset: 4px; }
   }
   #about::after { content: ""; position: absolute; z-index: 1; left: 0; right: 0; bottom: 0; height: 130px; pointer-events: none;
     background: linear-gradient(rgba(255, 255, 255, 0), rgba(255, 255, 255, .25) 30%, rgba(255, 255, 255, .7) 62%, #fff 92%); }
-  /* phones: the white cloud shape from the desktop scene floats above Hello, with the "?" in it */
+
   #about::before {
     content: ""; position: absolute; left: 50%; top: -8vw; width: 92vw; aspect-ratio: 763 / 869; pointer-events: none;
     background: url("../assets/sky-puff.webp?v=2") center / 100% 100% no-repeat; transform: translateX(-50%);
@@ -724,7 +659,7 @@ a:focus-visible { outline: 2px solid var(--white); outline-offset: 4px; }
   #hello { font-size: clamp(64px, 19vw, 88px); line-height: 1.1; }
   .t-intro { margin-top: 20px; max-width: 34ch; font-size: 17px; line-height: 1.6; }
   .t-intro p + p { margin-top: 1em; }
-  /* the "?" and the About me button sit inside the white shape; both open the About pop-up */
+
   #about .qbtn { position: absolute; left: 0; right: 0; top: 24vw; margin: 0 auto; width: fit-content; }
   #about .qbtn .q-glyph { margin: 0; font-size: clamp(110px, 32vw, 150px); line-height: .9; }
   #about .btn-hello { display: inline-flex; margin-top: 28px; height: 48px; padding: 0 30px; font-size: 16px; }
@@ -733,7 +668,7 @@ a:focus-visible { outline: 2px solid var(--white); outline-offset: 4px; }
   #mywork { order: 0; margin: 0 20px; font-size: clamp(56px, 16vw, 72px); line-height: 1.02; white-space: normal; }
   .work__layout { display: flex; flex-direction: column; align-items: stretch; gap: 0; margin-top: 0; min-width: 0; }
   .work__stage { display: contents; }
-  /* the projects sit side by side: swipe them, the one in the middle is in focus */
+
   .work__list {
     order: 2; display: flex; gap: 14px; margin-top: 8px; padding: 6px 10vw 10px;
     overflow-x: auto; overscroll-behavior-x: contain; scroll-snap-type: x mandatory; scroll-behavior: smooth; scrollbar-width: none; -webkit-overflow-scrolling: touch;
@@ -747,12 +682,12 @@ a:focus-visible { outline: 2px solid var(--white); outline-offset: 4px; }
   .work-card .work-card__thumb { font-size: 22px; }
   .work-card__caption { display: grid; gap: 2px; margin-top: 12px; padding: 0 2px; opacity: .45; transition: opacity .3s; }
   .work-card.work-card--active .work-card__caption { opacity: 1; }
-  .work-card__caption b { font: 400 26px/1.1 var(--f-seasons); color: var(--c-blue); }
-  .work-card__caption small { font: 14px/1.3 var(--font-ui); color: var(--c-body); }
+  .work-card__caption b { font: 400 26px/1.1 var(--font-heading); color: var(--color-blue); }
+  .work-card__caption small { font: 14px/1.3 var(--font-body); color: var(--color-text); }
   .work__dots { order: 3; display: flex; justify-content: center; gap: 10px; margin-top: 12px; }
   .work__dots button { width: 10px; height: 10px; padding: 0; border: 0; border-radius: 5px; background: color-mix(in srgb, var(--color-pink) 30%, #fff); cursor: pointer; transition: width .35s cubic-bezier(.3, 1.6, .5, 1), background .3s; }
   .work__dots button[aria-current="true"] { width: 28px; background: var(--color-pink); }
-  /* the chameleon sits on its branch above the row; its tongue reaches down to the project */
+
   .cham-wrap { order: 1; position: relative; display: flex; justify-content: flex-start; margin-top: 14px; padding: 0 20px; overflow: hidden; }
   .cham { width: 140px; }
   .cham .branch { display: block; left: -20px; top: calc(71% - 110 * 100vw / 1440); width: 100vw; height: calc(100vw * 139 / 1440); }
@@ -762,10 +697,10 @@ a:focus-visible { outline: 2px solid var(--white); outline-offset: 4px; }
     background: linear-gradient(rgba(62, 189, 205, 0) 320px, rgba(62, 189, 205, .02) 416px, rgba(62, 189, 205, .16) 513px,
       rgba(62, 189, 205, .5) 610px, rgba(62, 189, 205, .84) 707px, rgba(62, 189, 205, .98) 804px, var(--color-aqua) 900px); }
   .sunset-art .l { position: absolute; left: var(--x); top: var(--y); width: auto; height: auto; }
-  .sunset-art .screen { width: 449px; height: 301px; }   /* the text stays centred on the laptop screen */
+  .sunset-art .screen { width: 449px; height: 301px; }
 
   #contact { padding-top: 40px; padding-bottom: 210px; text-align: center; overflow: hidden; }
-  /* the stage-level corals and seabed are drawn as backgrounds of the contact section here */
+
   .stage > .deco, .stage > .sea { display: none; }
   .pin-fog { display: none; }
   #contact {
@@ -798,7 +733,7 @@ a:focus-visible { outline: 2px solid var(--white); outline-offset: 4px; }
   .site-nav__burger:focus-visible { outline: 2px solid currentColor; outline-offset: 3px; }
   .site-nav.site-nav--open .logo-white { opacity: 1; }
   .site-nav.site-nav--open .logo-blue { opacity: 0; }
-  /* the open menu: the hero's sky, big The Seasons links, the email and socials at the foot */
+
   .site-nav__links {
     position: fixed; z-index: -1; inset: 0; left: 0; width: auto; top: 0; padding: 112px 28px 40px;
     display: flex; flex-direction: column; align-items: flex-start; justify-content: flex-start; gap: 4px;
@@ -808,7 +743,7 @@ a:focus-visible { outline: 2px solid var(--white); outline-offset: 4px; }
   }
   .site-nav.site-nav--open .site-nav__links { visibility: visible; opacity: 1; pointer-events: auto; transition: opacity .35s; }
   .site-nav__links > a {
-    padding: 4px 0; font: 400 clamp(46px, 13vw, 60px)/1.15 var(--f-seasons); font-style: normal; color: #fff;
+    padding: 4px 0; font: 400 clamp(46px, 13vw, 60px)/1.15 var(--font-heading); font-style: normal; color: #fff;
     translate: 0 16px; opacity: 0; transition: translate .5s cubic-bezier(.2, .8, .2, 1), opacity .4s;
   }
   .site-nav.site-nav--light .site-nav__links > a { color: #fff; }
@@ -818,16 +753,12 @@ a:focus-visible { outline: 2px solid var(--white); outline-offset: 4px; }
   .site-nav__links > a[aria-current] { color: var(--color-lime); }
   .site-nav__links > a:hover, .site-nav__links > a:focus-visible { text-decoration: none; color: var(--color-lime); }
   .site-nav__footer { display: grid; gap: 18px; margin-top: auto; }
-  .site-nav .site-nav__links .site-nav__footer .site-nav__mail { padding: 0; font: 600 18px/1.3 var(--font-body); color: var(--ice); }
+  .site-nav .site-nav__links .site-nav__footer .site-nav__mail { padding: 0; font: 600 18px/1.3 var(--font-body); color: var(--color-ice); }
   .site-nav__footer .socials { justify-content: flex-start; margin: 0; }
   .site-nav .site-nav__footer .social { padding: 0; font: inherit; }
   html.menu-open, html.menu-open body { overflow: hidden; }
 }
 
-/* ---------- Sparkle cursor ----------
-   Mouse/trackpad only. The sparkle follows the pointer with a little lag,
-   spins slowly and grows over anything clickable. A faint blue glow keeps it
-   findable on the white parts of the page. */
 html.sparkle-on, html.sparkle-on * { cursor: none !important; }
 .sparkle {
   position: fixed; left: 0; top: 0; z-index: 100; width: 64px; height: 64px; margin: -32px 0 0 -32px;
@@ -846,9 +777,6 @@ html.sparkle-on, html.sparkle-on * { cursor: none !important; }
 @keyframes sparkle-spin { to { rotate: 360deg; } }
 @media (prefers-reduced-motion: reduce) { .sparkle img { animation: none; } }
 
-/* ---------- Cloud transition (back from a project page) ----------
-   A sky of soft white clouds: on the project page they drift in from the sides and
-   cover it (.closing -> .shut); on the homepage they start closed and part (.open). */
 .cloud-veil { display: none; }
 .cloud-in .cloud-veil, .cloud-veil.closing {
   position: fixed; inset: 0; z-index: 1001; display: block; overflow: hidden; pointer-events: none;
@@ -862,12 +790,12 @@ html.sparkle-on, html.sparkle-on * { cursor: none !important; }
 .cv3 { left: -10vw; bottom: -25vh; width: 75vw; height: 70vh; }
 .cv4 { right: -15vw; bottom: -20vh; width: 70vw; height: 65vh; }
 .cv5 { left: 25vw; top: 20vh; width: 50vw; height: 55vh; }
-/* homepage: start closed, then part */
+
 .cloud-veil.open { opacity: 0; }
 .cloud-veil.open .cv1, .cloud-veil.open .cv3 { transform: translateX(-70vw) scale(1.2); }
 .cloud-veil.open .cv2, .cloud-veil.open .cv4 { transform: translateX(70vw) scale(1.2); }
 .cloud-veil.open .cv5 { transform: translateY(-60vh) scale(1.4); opacity: 0; }
-/* project page: start parted and transparent, then close */
+
 .cloud-veil.closing { opacity: 0; transition: opacity .45s ease; }
 .cloud-veil.closing .cv1, .cloud-veil.closing .cv3 { transform: translateX(-70vw) scale(1.2); }
 .cloud-veil.closing .cv2, .cloud-veil.closing .cv4 { transform: translateX(70vw) scale(1.2); }
@@ -885,7 +813,7 @@ html.sparkle-on, html.sparkle-on * { cursor: none !important; }
 }
 .loader.done { opacity: 0; visibility: hidden; }
 .loader-logo { width: clamp(120px, 14vw, 170px); height: auto; animation: loader-spin 3.2s linear infinite; }
-.loader-text { margin: 0; font: 400 12px var(--f-label); letter-spacing: 0; text-transform: uppercase; color: #fff; font-variant-numeric: tabular-nums; }
+.loader-text { margin: 0; font: 400 12px var(--font-body); letter-spacing: 0; text-transform: uppercase; color: #fff; font-variant-numeric: tabular-nums; }
 .loader-text span { display: inline-block; min-width: 3ch; text-align: right; }
 .is-loading, .is-loading body { overflow: hidden; }
 .cloud-in .loader { display: none; }
@@ -893,12 +821,12 @@ html.sparkle-on, html.sparkle-on * { cursor: none !important; }
 @media (prefers-reduced-motion: reduce) { .loader-logo { animation-duration: 12s; } }
 @media (min-width: 821px) { .cloudpop .tools { flex-wrap: nowrap; } }
 
-/* ---------- Desktop note (phones only, script.js) ---------- */
+/* ---------- Desktop note (phones) ---------- */
 .desk-note {
   position: fixed; z-index: 95; left: 16px; right: 16px; bottom: calc(env(safe-area-inset-bottom, 0px) + 16px);
   display: flex; align-items: center; gap: 12px; padding: 12px 10px 12px 16px; border-radius: 18px;
   background: rgba(255, 255, 255, .9); -webkit-backdrop-filter: blur(14px); backdrop-filter: blur(14px);
-  box-shadow: 0 14px 34px -14px rgba(26, 91, 164, .45); color: var(--c-blue);
+  box-shadow: 0 14px 34px -14px rgba(26, 91, 164, .45); color: var(--color-blue);
   font: 500 14px/1.35 var(--font-body);
   transform: translateY(calc(100% + 30px)); opacity: 0; transition: transform .5s cubic-bezier(.3, 1.3, .5, 1), opacity .35s;
 }

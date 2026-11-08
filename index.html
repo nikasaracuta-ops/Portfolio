@@ -11,99 +11,69 @@
   <link rel="preconnect" href="https://use.typekit.net" crossorigin>
   <link rel="stylesheet" href="https://use.typekit.net/gfn8yzd.css">
   <link rel="stylesheet" href="https://fonts.cdnfonts.com/css/wasted-vindey">
-  <link rel="stylesheet" href="src/css/styles.css?v=aceef458">
+  <link rel="stylesheet" href="src/css/reset.css?v=ab18581d">
+  <link rel="stylesheet" href="src/css/styles.css?v=19bed25f">
   <script>document.documentElement.classList.add('js', 'is-loading'); try { if (sessionStorage.getItem('cloudIn')) { sessionStorage.removeItem('cloudIn'); document.documentElement.classList.add('cloud-in'); } } catch (e) {}</script>
 </head>
 <body>
-  <!-- Coming back from a project: clouds part instead of the loading screen (loader.js) -->
   <div class="cloud-veil" id="cloudVeil" aria-hidden="true"><i class="cv cv1"></i><i class="cv cv2"></i><i class="cv cv3"></i><i class="cv cv4"></i><i class="cv cv5"></i></div>
-  <!-- Loading screen: the spinning logo and a percentage, driven by loader.js -->
   <div class="loader" id="loader" role="progressbar" aria-label="Loading" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
     <img class="loader-logo" src="src/assets/loader-logo.webp" alt="" width="256" height="256">
     <p class="loader-text">Loading <span id="loaderNum">0</span>%</p>
   </div>
-  <!-- Built from Figma frame "Main" (1440 × 4237). The artwork is one exported
-       background image (bird, laptop and the sea creatures are separate layers on top); display headings are outlined SVGs exported from Figma
-       (exact letterforms); body text, nav, button and icons are live HTML at
-       their Figma positions. script.js scales the 1440px stage to the viewport. -->
   <main class="stage" id="home">
 
-    <!-- The sea (drawn in code, under everything below the sky) -->
-    <div class="l sea" style="--x:0px;--y:4612px;--w:1440px;--h:1422px" aria-hidden="true"></div>
+    <div class="l sea" aria-hidden="true"></div>
 
-    <!-- About, pinned (script.js): once it fills the screen it stays put while the
-         page keeps scrolling; the text and "?" fade, the blue cloud bank parts to the
-         sides and the white cloud shape settles in the centre, then the sky holds for
-         a moment before Work scrolls up. The scene carries its own copy of the
-         background (stage y 459–1959), so the page underneath can move on. Child
-         positions are relative to the scene (stage y − 459). -->
     <div class="pin-wrap" id="pinWrap">
       <div class="pin" id="pin">
-        <img class="l sky-puff" id="skyPuff" style="--x:631.4px;--y:413.4px;--w:763px;--h:869px" src="src/assets/sky-puff.webp?v=2" alt="">
-        <img class="l clouds-px clouds-l" id="cloudsL" style="--x:0;--y:641px;--w:1440px;--h:910px" src="src/assets/clouds-bank.png?v=3" alt="">
-        <img class="l clouds-px clouds-r" id="cloudsR" style="--x:0;--y:641px;--w:1440px;--h:910px" src="src/assets/clouds-bank.png?v=3" alt="">
+        <img class="l sky-puff" id="skyPuff" src="src/assets/sky-puff.webp?v=2" alt="">
+        <img class="l clouds-px clouds-l" id="cloudsL" src="src/assets/clouds-bank.png?v=3" alt="">
+        <img class="l clouds-px clouds-r" id="cloudsR" src="src/assets/clouds-bank.png?v=3" alt="">
 
-        <!-- white mist rising from below as the shape sinks (script.js), so the scene ends in white -->
         <div class="pin-fog" id="pinFog" aria-hidden="true"></div>
 
-        <section class="sec" id="about" style="top:560px" aria-labelledby="hello">
-          <h2 class="l reveal ttl ttl-hello" id="hello" style="--d:0s;--x:173px;--y:-10px">Hello,</h2>
-          <div class="l reveal t-intro" style="--d:.15s;--x:176px;--y:156px;--w:477px">
+        <section class="sec" id="about" aria-labelledby="hello">
+          <h2 class="l reveal ttl ttl-hello" id="hello">Hello,</h2>
+          <div class="l reveal t-intro">
             <p>I’m Nika, a third-year student in <b>Digital Design &amp; Development</b>, currently specialising in <b>Visual Design</b> and <b>Experience Design</b>.</p>
             <p>Inspired by all kind of creative fields,<br> I love creating <b>truly useful</b> and <b>inspiring projects</b>.</p>
           </div>
-          <a class="l reveal btn btn-hello" style="--d:.3s;--x:176px;--y:378px;--w:209px;--h:50px" href="#about" data-about>About me</a>
-          <button class="l reveal qbtn" style="--d:.2s;--x:974.3px;--y:126px" data-about aria-label="Who is behind the question mark? Meet Nika"><span class="q-glyph" aria-hidden="true">?</span></button>
+          <a class="l reveal btn btn-hello" href="#about" data-about>About me</a>
+          <button class="l reveal qbtn" data-about aria-label="Who is behind the question mark? Meet Nika"><span class="q-glyph" aria-hidden="true">?</span></button>
         </section>
       </div>
     </div>
 
-    <header class="sec hero" style="top:0">
-        <!-- The bird: a small 3D-drawn bird that flaps and glides along the GIF's path (bird.js) -->
-    <svg class="l bird" style="--x:-6.61px;--y:239.23px;--w:1328.29px;--h:558.57px" id="birdSvg" viewBox="0 0 692 291" aria-hidden="true"><g><path id="birdFar" d=""/><path id="birdBody" d=""/><path id="birdNear" d=""/></g></svg>
+    <header class="sec hero">
+    <svg class="l bird" id="birdSvg" viewBox="0 0 692 291" aria-hidden="true"><g><path id="birdFar" d=""/><path id="birdBody" d=""/><path id="birdNear" d=""/></g></svg>
 
-
-    <h1 class="l reveal ttl-vindey ttl-portfolio" style="--d:0s;--x:45px;--y:73px" aria-label="Portfolio"><span class="pf1" aria-hidden="true">Port</span><span class="pf2" aria-hidden="true">folio</span></h1>
-    <p class="l reveal hero-sub" style="--d:.25s;--x:56px;--y:425px">Nika Saracuta</p>
-    <p class="l reveal hero-sub" style="--d:.3s;--x:1063px;--y:426px">Digital creator</p>
+    <h1 class="l reveal ttl-vindey ttl-portfolio" aria-label="Portfolio"><span class="pf1" aria-hidden="true">Port</span><span class="pf2" aria-hidden="true">folio</span></h1>
+    <p class="l reveal hero-sub hero-sub--name">Nika Saracuta</p>
+    <p class="l reveal hero-sub hero-sub--role">Digital creator</p>
     </header>
 
-    <!-- Sea: your caustics (Figma 717:48894) and the laptop (Figma group 745:85) floating on them.
-         The laptop screen links to Behance (BEHANCE_URL in script.js). -->
-    <div class="sec sunset" style="top:4352px">
+    <div class="sec sunset">
       <div class="sunset-art">
-        <!-- The laptop and its screen move together (chameleon.js): the last project
-             tab falls into the empty screen, then the laptop drops into the sea, bounces
-             and floats on the waves drawn in front of it. -->
-        <img class="l caustics" style="--x:0px;--y:504px" src="src/assets/caustics.svg" width="1440" height="251" alt="">
-        <div class="l laptop-float" id="laptop" style="--x:381px;--y:180px">
-          <img class="l" style="--x:0px;--y:0px" src="src/assets/laptop.svg?v=3" width="754" height="644" alt="">
-          <a class="l screen" id="screen" style="--x:29.55px;--y:115.05px" href="https://www.behance.net/nikasaracuta" data-behance target="_blank" rel="noopener" aria-label="Discover more UX projects on Behance (opens Behance)">
+        <img class="l caustics" src="src/assets/caustics.svg" width="1440" height="251" alt="">
+        <div class="l laptop-float" id="laptop">
+          <img class="l" src="src/assets/laptop.svg?v=3" width="754" height="644" alt="">
+          <a class="l screen" id="screen" href="https://www.behance.net/nikasaracuta" data-behance target="_blank" rel="noopener" aria-label="Discover more UX projects on Behance (opens Behance)">
             <span class="s-k">Discover more UX projects on</span><span class="s-t">Behance<svg class="s-link" viewBox="0 0 21 21" aria-hidden="true"><path d="M11.3 4.6H2a1.3 1.3 0 0 0-1.3 1.3v13.1A1.3 1.3 0 0 0 2 20.3h13.1a1.3 1.3 0 0 0 1.3-1.3V9.7" /><path d="M13.8.7h6.5v6.5M20.3.7 8.5 12.5"/></svg></span>
           </a>
         </div>
       </div>
     </div>
-    <!-- Seabed and corals (Figma 745:129, 717:48906, 717:48915), layered as in Figma:
-         sand, small coral, the fish swimming between the corals, then the pink coral
-         standing on the sand -->
-    <img class="l deco seabed" style="--x:0px;--y:5947.5px" src="src/assets/seabed.svg" width="1440" height="87" alt="">
-    <img class="l deco coral-small" style="--x:985px;--y:5788px" src="src/assets/coral-small.svg" width="146" height="177" alt="">
-    <!-- The fish (src/assets/fish-silhouette.svg, split into body, tail and fins): it swims across the
-         sea in a gentle wave, darts away from the cursor (script.js), between the two corals -->
-    <div class="l ocean" style="--x:0px;--y:5616px;--w:1440px;--h:330px" aria-hidden="true">
+    <img class="l deco seabed" src="src/assets/seabed.svg" width="1440" height="87" alt="">
+    <img class="l deco coral-small" src="src/assets/coral-small.svg" width="146" height="177" alt="">
+    <div class="l ocean" aria-hidden="true">
       <div class="fish-swimmer" id="fishSwimmer"><div class="fish"><svg class="fish-svg" viewBox="-4 -4 212 111" aria-hidden="true"><path class="fish-tail" d="M56 44 L46 43 L23 17 L12 11 L3 10 L0 11 L0 12 L7 19 L10 29 L12 31 L16 42 L23 51 L17 56 L13 63 L1 97 L10 94 L19 87 L29 76 L33 69 L40 62 L44 60 L56 59Z"/><path class="fish-fin top" d="M136 19 L124 7 L111 0 L105 0 L101 2 L97 8 L96 14 L99 19 L108 25 L114 26 L115 27 L114 28 L126 27Z"/><path class="fish-fin bottom" d="M106 77 L108 79 L96 85 L96 89 L99 90 L100 92 L90 100 L90 102 L99 101 L111 96 L129 81 L118 75Z"/><path class="fish-body" d="M203 49 L191 41 L183 33 L177 29 L165 23 L162 23 L158 21 L148 19 L141 19 L140 18 L136 19 L114 28 L99 28 L86 31 L69 37 L60 42 L52 44 L52 59 L65 62 L84 72 L101 77 L106 77 L129 81 L136 79 L149 78 L181 69 L197 59 L203 52Z"/></svg></div></div>
     </div>
-    <img class="l deco coral" style="--x:1067.5px;--y:5626px" src="src/assets/coral.svg?v=2" width="303" height="371" alt="">
+    <img class="l deco coral" src="src/assets/coral.svg?v=2" width="303" height="371" alt="">
 
-
-    <!-- Work -->
-    <section class="sec work" id="work" style="top:2010px" aria-labelledby="mywork">
-      <!-- Title, chameleon and branch pin together (sticky) once the title reaches the
-           top of the screen; only the project list scrolls (Figma frame 717:48856:
-           the chameleon sits 310px below the top of the title, the first tab 134px). -->
-      <div class="l work__layout" style="--x:172px;--y:24px;--w:1207px">
-        <aside class="work__stage reveal" style="--d:.1s" aria-live="polite">
+    <section class="sec work" id="work" aria-labelledby="mywork">
+      <div class="l work__layout">
+        <aside class="work__stage reveal" aria-live="polite">
           <h2 class="ttl ttl-work" id="mywork">Selected<br>Work</h2>
           <p class="sr-only" id="nowName">Dior</p>
           <div class="cham-wrap">
@@ -114,45 +84,36 @@
             </div>
           </div>
         </aside>
-        <!-- filled in by chameleon.js -->
         <ol class="work__list" id="workList" aria-label="Projects"></ol>
       </div>
     </section>
 
-    <!-- Contact -->
-    <section class="sec" id="contact" style="top:5244px" aria-labelledby="open">
-      <h2 class="l reveal ttl ttl-open" id="open" style="--d:0s;--x:332px;--y:38px;--w:776px">Open for<br><span>New projects</span></h2>
-      <a class="l reveal t-email" style="--d:.12s;--x:320px;--y:300px;--w:800px" href="mailto:nikasaracuta@gmail.com">nikasaracuta@gmail.com <span aria-hidden="true">→</span></a>
-      <!-- TODO: replace # with the real LinkedIn URL -->
-      <div class="l reveal socials" style="--d:.2s;--x:641px;--y:387px;--w:158px">
+    <section class="sec" id="contact" aria-labelledby="open">
+      <h2 class="l reveal ttl ttl-open" id="open">Open for<br><span>New projects</span></h2>
+      <a class="l reveal t-email" href="mailto:nikasaracuta@gmail.com">nikasaracuta@gmail.com <span aria-hidden="true">→</span></a>
+      <div class="l reveal socials">
         <a class="social" href="#" data-behance target="_blank" rel="noopener" aria-label="Behance"><img src="src/assets/icon-behance.svg" width="41" height="27" alt=""></a>
         <a class="social" href="#" aria-label="LinkedIn"><img src="src/assets/icon-linkedin.svg" width="38" height="38" alt=""></a>
       </div>
-      <p class="l reveal t-copy" style="--d:.28s;--x:520px;--y:478px;--w:400px">©2026 Nika Saracuta</p>
+      <p class="l reveal t-copy">©2026 Nika Saracuta</p>
     </section>
 
   </main>
 
-  <!-- Chameleon tongue: drawn in screen coordinates over the page by chameleon.js -->
   <svg class="tongue-layer" id="tongueLayer" aria-hidden="true">
-    <!-- the chameleon's shape is cut out of the tongue (chameleon.js keeps it over
-         the chameleon), so the tongue comes from behind it, out of the mouth -->
     <defs><mask id="tongueMask" maskUnits="userSpaceOnUse" x="-10000" y="-10000" width="30000" height="30000">
       <rect x="-10000" y="-10000" width="30000" height="30000" fill="#fff"/><path id="tongueMaskCham" fill="#000"/>
     </mask></defs>
     <g mask="url(#tongueMask)"><path id="tongue" d=""/><circle id="tongueTip" r="0"/></g>
   </svg>
 
-  <!-- Sparkle cursor (mouse/trackpad only), driven by script.js -->
   <div class="sparkle" id="sparkle" aria-hidden="true"><img src="src/assets/sparkle.png" width="160" height="160" alt=""></div>
 
-  <!-- The menu: fixed at the top for the whole page (styles.css, script.js) -->
   <nav class="site-nav" id="site-nav" aria-label="Main">
     <a class="site-nav__logo" href="#home" aria-label="Home">
       <img class="logo-white" src="src/assets/logo-nav-white.png" width="67" height="62" alt="">
       <img class="logo-blue" src="src/assets/logo-nav-blue.png" width="67" height="62" alt="">
     </a>
-    <!-- phones: the links fold into a hamburger and open as a full-screen sky (script.js) -->
     <button class="site-nav__burger" id="navBurger" type="button" aria-expanded="false" aria-controls="site-nav-links" aria-label="Open the menu"><span></span><span></span></button>
     <div class="site-nav__links" id="site-nav-links">
       <a href="#about" data-about>About me</a>
@@ -168,46 +129,14 @@
     </div>
   </nav>
 
-  <!-- Project sheet: opens when a project name is clicked -->
-  <div class="sheet" id="sheet" hidden>
-    <article class="panel" id="panel" role="dialog" aria-modal="true" aria-labelledby="pTitle" tabindex="-1">
-      <div class="p-top">
-        <span class="label" id="pCount">01 / 05</span>
-        <div class="p-nav">
-          <button class="iconbtn" id="pPrev" aria-label="Previous project">←</button>
-          <button class="iconbtn" id="pNext" aria-label="Next project">→</button>
-          <button class="iconbtn" id="pClose" aria-label="Close project">✕</button>
-        </div>
-      </div>
-      <div class="p-head">
-        <div>
-          <h3 id="pTitle"></h3>
-          <p class="tagline" id="pTag"></p>
-          <ul class="pills" id="pPills"></ul>
-        </div>
-        <div class="p-mini" aria-hidden="true"></div>
-      </div>
-      <div class="tabs" role="tablist" aria-label="Case study">
-        <button class="tab" role="tab" id="t-brief" aria-selected="true" aria-controls="pane">The Brief</button>
-        <button class="tab" role="tab" id="t-process" aria-selected="false" aria-controls="pane">The Process</button>
-        <button class="tab" role="tab" id="t-result" aria-selected="false" aria-controls="pane">The Result</button>
-      </div>
-      <div class="tabpane" id="pane" role="tabpanel"></div>
-    </article>
-  </div>
-
-  <!-- About pop-up: the cloud behind the "?" opens up to fill the screen (from the portfolio artifact) -->
   <div class="cloudpop" id="aboutPop" role="dialog" aria-modal="true" aria-labelledby="about-h" hidden>
     <button class="cp-close cp-back" id="cpClose" type="button" aria-label="Back to the portfolio"><span class="cp-back-dot" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M20 12H5M11 5l-7 7 7 7"/></svg></span><span>Back</span></button>
     <section class="field">
-    <!-- a field-guide page in the homepage's language: a pink mist, Wasted Vindey for the name,
-         The Seasons for the notes -->
     <header class="field-head">
       <p class="fg-eyebrow"><span>Field guide</span><i aria-hidden="true"></i><span>Species no. 2005</span></p>
       <h2 id="about-h" class="fg-name">Nika Saracuta</h2>
     </header>
 
-    <!-- the photo on the left, the facts on the right -->
     <div class="plate" id="plate">
       <figure class="portrait">
         <div class="photo-card"><div class="photo" id="polaroid">
@@ -225,7 +154,6 @@
       </dl>
     </div>
 
-    <!-- scroll cue: the tools are below the plate (about.js hides it once you scroll) -->
     <button class="cp-more" id="cpMore" type="button"><span>Main tools</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12l7 7 7-7"/></svg></button>
 
     <div class="toolbox" id="toolbox">
@@ -239,17 +167,17 @@
   </section>
   </div>
 
-  <!-- Phones: a gentle note that the portfolio is made for a bigger screen (script.js) -->
   <div class="desk-note" id="deskNote" role="status" hidden>
     <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="5" width="16" height="11" rx="1.5"/><path d="M2 19h20"/></svg>
     <p>For the best experience, visit this portfolio on a desktop.</p>
     <button type="button" id="deskNoteClose" aria-label="Close the note">✕</button>
   </div>
 
-  <script src="src/js/loader.js?v=af4be1f2"></script>
-  <script src="src/js/script.js?v=d75c0782"></script>
-  <script src="src/js/about.js?v=0e3d6a65"></script>
-  <script src="src/js/bird.js?v=bdb3f045"></script>
-  <script src="src/js/chameleon.js?v=1d7fecc5"></script>
+  <script src="src/js/common.js?v=65a87655"></script>
+  <script src="src/js/loader.js?v=1abcd7f5"></script>
+  <script src="src/js/script.js?v=6eaab3be"></script>
+  <script src="src/js/about.js?v=5a08b923"></script>
+  <script src="src/js/bird.js?v=9b4d26cd"></script>
+  <script src="src/js/chameleon.js?v=57601ba4"></script>
 </body>
 </html>

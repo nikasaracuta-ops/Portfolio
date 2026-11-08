@@ -1,6 +1,3 @@
-// About pop-up (ported from the portfolio artifact): a soft mist spreads
-// out of whatever was clicked ("About me" link/button or the "?") until it fills
-// the screen, then shrinks back into it on close.
 (() => {
   const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
   const $ = (s) => document.querySelector(s);
@@ -8,14 +5,11 @@
   const pop = $('#aboutPop'), plate = $('#plate'), closeBtn = $('#cpClose');
   let opener = null, origin = null, anim = 0;
 
-  // The pop-up is revealed through a soft, shapeless mist: several feathered blobs
-  // (styles.css) around the click that grow together and drift a little as they
-  // grow, so no clear outline ever shows. r is the mist's size in px.
   function setMask(r, cx, cy, t) {
     pop.style.setProperty('--r', `${r}px`);
     pop.style.setProperty('--cx', `${cx}px`);
     pop.style.setProperty('--cy', `${cy}px`);
-    pop.style.setProperty('--w', (Math.sin(t * Math.PI * 1.5) * .5).toFixed(3));   // the drift
+    pop.style.setProperty('--w', (Math.sin(t * Math.PI * 1.5) * .5).toFixed(3));
   }
   function animateMask(from, to, dur, curve, done) {
     cancelAnimationFrame(anim);
@@ -26,8 +20,6 @@
       if (t < 1) anim = requestAnimationFrame(step); else if (done) done();
     })(t0);
   }
-  // just big enough for the mist's solid core to cover the farthest corner of the
-  // screen: growing or shrinking beyond that would show nothing (and feel like a pause)
   const coverR = () => Math.max(...[[0, 0], [innerWidth, 0], [0, innerHeight], [innerWidth, innerHeight]]
     .map(([x, y]) => Math.hypot(x - origin.x, y - origin.y))) / .42;
   const easeOut = (t) => 1 - Math.pow(1 - t, 3), easeInOut = (t) => (t < .5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2);
@@ -54,12 +46,10 @@
       if (opener) opener.focus({ preventScroll: true });
     };
     if (reduce) { end(); return; }
-    // start exactly where the mist just covers the screen, so it shrinks from the first frame
     setMask(coverR(), origin.x, origin.y, 1); pop.classList.remove('full');
     animateMask(coverR(), 0, 800, easeInOut, end);
   }
 
-  // the page continues below the plate: a cue leads to the tools, which pop in as they come into view
   const more = $('#cpMore'), toolbox = $('#toolbox');
   toolbox.querySelectorAll('.tool').forEach((t, i) => t.style.setProperty('--i', i));
   more.addEventListener('click', () => toolbox.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'start' }));
@@ -75,7 +65,7 @@
   document.addEventListener('keydown', (e) => {
     if (pop.hidden) return;
     if (e.key === 'Escape') closeAbout();
-    if (e.key === 'Tab') { // keep focus inside the pop-up
+    if (e.key === 'Tab') {
       const f = [...pop.querySelectorAll('button, a[href], [tabindex="0"]')]; if (!f.length) return;
       if (e.shiftKey && document.activeElement === f[0]) { f[f.length - 1].focus(); e.preventDefault(); }
       else if (!e.shiftKey && document.activeElement === f[f.length - 1]) { f[0].focus(); e.preventDefault(); }
