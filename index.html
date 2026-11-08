@@ -11,8 +11,8 @@
   <link rel="preconnect" href="https://use.typekit.net" crossorigin>
   <link rel="stylesheet" href="https://use.typekit.net/gfn8yzd.css">
   <link rel="stylesheet" href="https://fonts.cdnfonts.com/css/wasted-vindey">
-  <link rel="stylesheet" href="src/css/reset.css?v=ab18581d">
-  <link rel="stylesheet" href="src/css/styles.css?v=19bed25f">
+  <link rel="stylesheet" href="src/css/reset.css?v=f0fbd376">
+  <link rel="stylesheet" href="src/css/styles.css?v=6b48d1fe">
   <script>document.documentElement.classList.add('js', 'is-loading'); try { if (sessionStorage.getItem('cloudIn')) { sessionStorage.removeItem('cloudIn'); document.documentElement.classList.add('cloud-in'); } } catch (e) {}</script>
 </head>
 <body>
@@ -73,7 +73,7 @@
 
     <section class="sec work" id="work" aria-labelledby="mywork">
       <div class="l work__layout">
-        <aside class="work__stage reveal" aria-live="polite">
+        <div class="work__stage reveal" aria-live="polite">
           <h2 class="ttl ttl-work" id="mywork">Selected<br>Work</h2>
           <p class="sr-only" id="nowName">Dior</p>
           <div class="cham-wrap">
@@ -83,20 +83,22 @@
               <span id="mouth"></span>
             </div>
           </div>
-        </aside>
+        </div>
         <ol class="work__list" id="workList" aria-label="Projects"></ol>
       </div>
     </section>
 
-    <section class="sec" id="contact" aria-labelledby="open">
+    <footer class="sec" id="contact" aria-labelledby="open">
       <h2 class="l reveal ttl ttl-open" id="open">Open for<br><span>New projects</span></h2>
-      <a class="l reveal t-email" href="mailto:nikasaracuta@gmail.com">nikasaracuta@gmail.com <span aria-hidden="true">→</span></a>
-      <div class="l reveal socials">
-        <a class="social" href="#" data-behance target="_blank" rel="noopener" aria-label="Behance"><img src="src/assets/icon-behance.svg" width="41" height="27" alt=""></a>
-        <a class="social" href="#" aria-label="LinkedIn"><img src="src/assets/icon-linkedin.svg" width="38" height="38" alt=""></a>
-      </div>
+      <address>
+        <a class="l reveal t-email" href="mailto:nikasaracuta@gmail.com">nikasaracuta@gmail.com <span aria-hidden="true">→</span></a>
+        <div class="l reveal socials">
+          <a class="social" href="#" data-behance target="_blank" rel="noopener" aria-label="Behance"><img src="src/assets/icon-behance.svg" width="41" height="27" alt=""></a>
+          <a class="social" href="#" aria-label="LinkedIn"><img src="src/assets/icon-linkedin.svg" width="38" height="38" alt=""></a>
+        </div>
+      </address>
       <p class="l reveal t-copy">©2026 Nika Saracuta</p>
-    </section>
+    </footer>
 
   </main>
 

@@ -8,3 +8,4 @@ b, strong { font-weight: 600; }
 button, input, select, textarea { font-family: inherit; }
 
 :focus:not(:focus-visible) { outline: none; }
+address { font-style: normal; }

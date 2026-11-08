@@ -260,18 +260,20 @@ def page(i, p):
   </header>
 
   <main class="p-main d-main">{dior_main(p)}
-    <nav class="p-next reveal" aria-label="More projects">
-      <a class="p-prev-link" href="{prev["file"]}">
-        <span class="p-arrow" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M20 12H5M11 5l-7 7 7 7"/></svg></span>
-        <span class="p-dir">project</span>
-        <span class="p-name">{prev["name"].replace("&", "&amp;")}</span>
-      </a>
-      <a class="p-next-link" href="{nxt["file"]}">
-        <span class="p-arrow" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 12h15M13 5l7 7-7 7"/></svg></span>
-        <span class="p-dir">project</span>
-        <span class="p-name">{nxt["name"].replace("&", "&amp;")}</span>
-      </a>
-    </nav>
+    <footer>
+      <nav class="p-next reveal" aria-label="More projects">
+        <a class="p-prev-link" href="{prev["file"]}">
+          <span class="p-arrow" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M20 12H5M11 5l-7 7 7 7"/></svg></span>
+          <span class="p-dir">project</span>
+          <span class="p-name">{prev["name"].replace("&", "&amp;")}</span>
+        </a>
+        <a class="p-next-link" href="{nxt["file"]}">
+          <span class="p-arrow" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 12h15M13 5l7 7-7 7"/></svg></span>
+          <span class="p-dir">project</span>
+          <span class="p-name">{nxt["name"].replace("&", "&amp;")}</span>
+        </a>
+      </nav>
+    </footer>
   </main>
 
   <dialog class="p-lightbox" id="lightbox" aria-label="Enlarged image">
