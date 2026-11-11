@@ -27,4 +27,42 @@
   addEventListener('scroll', queue, { passive: true });
   addEventListener('resize', queue);
   queue();
+
+  const DREAM = 800;
+  const calm = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  // grow from the middle of the screen, whatever each part's position on the page
+  const centre = () => document.querySelectorAll('body > :not(script)').forEach((el) => {
+    el.style.transformOrigin = `50% ${innerHeight / 2 - el.getBoundingClientRect().top}px`;
+  });
+
+  window.goTo = (url) => {
+    if (calm) { location.href = url; return; }
+    try { sessionStorage.setItem('dreamIn', '1'); } catch (e) { /* storage blocked: the next page simply appears */ }
+    centre();
+    root.classList.add('dream-out');
+    setTimeout(() => { location.href = url; }, DREAM);
+  };
+
+  document.addEventListener('click', (e) => {
+    const a = e.target.closest('a[href]');
+    if (!a || e.defaultPrevented || a.target || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+    const url = new URL(a.href, location.href);
+    if (url.origin !== location.origin || !url.pathname.endsWith('.html') || url.pathname === location.pathname) return;
+    e.preventDefault();
+    window.goTo(a.href);
+  });
+
+  if (root.classList.contains('dream-in')) {
+    requestAnimationFrame(() => requestAnimationFrame(() => {
+      const target = location.hash && document.querySelector(location.hash);
+      if (target) target.scrollIntoView({ behavior: 'instant' });
+      centre();
+      root.classList.add('dream-entering');
+      root.classList.remove('dream-in');
+      setTimeout(() => root.classList.remove('dream-entering'), DREAM + 50);
+    }));
+  }
+
+  // coming back with the browser's Back button: the page is restored as it was left
+  addEventListener('pageshow', (e) => { if (e.persisted) root.classList.remove('dream-out', 'dream-in', 'dream-entering'); });
 })();

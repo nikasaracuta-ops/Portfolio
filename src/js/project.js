@@ -77,18 +77,3 @@ if (live) {
     io.observe(live);
   } else load();
 }
-
-document.querySelectorAll('a[href^="index.html"]').forEach((a) => a.addEventListener('click', (e) => {
-  if (e.metaKey || e.ctrlKey || e.shiftKey || e.button !== 0) return;
-  try { sessionStorage.setItem('cloudIn', '1'); } catch (err) { return; }
-  if (reduced) return;
-  e.preventDefault();
-  const veil = document.createElement('div');
-  veil.className = 'cloud-veil closing';
-  veil.setAttribute('aria-hidden', 'true');
-  veil.innerHTML = '<i class="cv cv1"></i><i class="cv cv2"></i><i class="cv cv3"></i><i class="cv cv4"></i><i class="cv cv5"></i>';
-  document.body.appendChild(veil);
-  requestAnimationFrame(() => requestAnimationFrame(() => veil.classList.add('shut')));
-  setTimeout(() => { location.href = a.href; }, 750);
-}));
-

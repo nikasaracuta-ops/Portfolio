@@ -247,7 +247,7 @@ def page(i, p):
   <link rel="stylesheet" href="src/css/reset.css">
   <link rel="stylesheet" href="src/css/styles.css">
   <link rel="stylesheet" href="src/css/project.css">
-  <script>document.documentElement.classList.add('js')</script>
+  <script>document.documentElement.classList.add('js'); try {{ if (sessionStorage.getItem('dreamIn')) {{ sessionStorage.removeItem('dreamIn'); document.documentElement.classList.add('dream-in'); }} }} catch (e) {{}}</script>
 </head>
 <body class="project-page project-page--{slug(p)}">
   <div class="p-progress" id="progress" aria-hidden="true"></div>

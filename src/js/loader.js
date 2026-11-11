@@ -1,16 +1,10 @@
 (() => {
   const loader = document.getElementById('loader');
   if (!loader) return;
-  if (document.documentElement.classList.contains('cloud-in')) {
-    const root = document.documentElement, veil = document.getElementById('cloudVeil');
-    loader.remove(); root.classList.remove('is-loading');
-    const open = () => {
-      requestAnimationFrame(() => veil && veil.classList.add('open'));
-      window.dispatchEvent(new Event('site:loaded'));
-      if (veil) setTimeout(() => veil.remove(), 1600);
-    };
-    if (document.readyState === 'complete') setTimeout(open, 120);
-    else { window.addEventListener('load', () => setTimeout(open, 120), { once: true }); setTimeout(open, 2500); }
+  if (document.documentElement.classList.contains('dream-in')) {
+    loader.remove();
+    document.documentElement.classList.remove('is-loading');
+    window.dispatchEvent(new Event('site:loaded'));
     return;
   }
   const num = document.getElementById('loaderNum');

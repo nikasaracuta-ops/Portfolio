@@ -13,13 +13,13 @@ dior.html moea.html type01.html miles.html
 src/css/reset.css               the reset
 src/css/styles.css              tokens (:root), homepage, About pop-up, phones, shared bits
 src/css/project.css             project pages (the colours block at the end is written by build-projects.py)
-src/js/common.js                every page: scroll reveals, focus rings only for keyboard users
+src/js/common.js                every page: scroll reveals, keyboard-only focus rings, the blurry page transition
 src/js/script.js                stage scaling, the pinned About scene, fish, menu, desktop note
-src/js/loader.js                loading screen / the clouds when coming back from a project
+src/js/loader.js                loading screen (skipped when arriving from another page)
 src/js/about.js                 the About pop-up
 src/js/bird.js                  the bird
 src/js/chameleon.js             the projects (PROJECTS list), the chameleon, the tab that falls into the laptop
-src/js/project.js               project pages: progress, live preview, palette switch, back transition
+src/js/project.js               project pages: progress, live preview, palette switch
 src/assets/                     images; src/assets/<project>/ per project, src/assets/tools/ shared tool icons
 scripts/build-projects.py       the project pages' texts and images, and their one template
 scripts/bump-versions.sh        cache-busting (see below)
