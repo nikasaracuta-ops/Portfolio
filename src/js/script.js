@@ -146,7 +146,7 @@ if (fishSwimmer) {
 const sunsetArt = document.querySelector('.sunset-art');
 
 const work = document.getElementById('work');
-const navLinks = siteNav ? [...siteNav.querySelectorAll('.siteNav-links > a')] : [];
+const navLinks = siteNav ? [...siteNav.querySelectorAll('.site-nav__links > a')] : [];
 const navSections = [about, work, sunsetArt];
 let navQueued = false;
 function toneNav() {
@@ -175,7 +175,7 @@ if (siteNav && burger) {
     burger.setAttribute('aria-label', open ? 'Close the menu' : 'Open the menu');
   };
   burger.addEventListener('click', () => setMenu(!siteNav.classList.contains('site-nav--open')));
-  siteNav.querySelectorAll('.siteNav-links a').forEach((a) => a.addEventListener('click', () => setMenu(false)));
+  siteNav.querySelectorAll('.site-nav__links a').forEach((a) => a.addEventListener('click', () => setMenu(false)));
   addEventListener('keydown', (e) => { if (e.key === 'Escape' && siteNav.classList.contains('site-nav--open')) { setMenu(false); burger.focus(); } });
   MOBILE.addEventListener('change', () => setMenu(false));
 }

@@ -185,6 +185,7 @@
     const drop = document.createElement('span');
     drop.className = 'work-card work-card--active work-card--flying work-card--drop'; drop.setAttribute('aria-hidden', 'true'); drop.hidden = true;
     $('#work').appendChild(drop);
+    drop.addEventListener('click', () => { if (dropIdx >= 0) window.goTo(PROJECTS[dropIdx].page); });
     let dropIdx = -1;
 
     function flight() {
