@@ -73,6 +73,7 @@ function moveSky() {
   stage.style.setProperty('--pin-top', (vh - (PIN_BOTTOM - PIN_TOP)).toFixed(1) + 'px');
   if (MOBILE.matches) {
     for (const el of [about, puff, cloudsL, cloudsR]) { el.style.transform = el.style.opacity = el.style.visibility = ''; }
+    about.style.setProperty('--sink', reduceMotion.matches ? 0 : ramp(scrollY / (innerHeight * .7), 0, 1).toFixed(3));
     return;
   }
   const t = Math.max(0, Math.min(1, (-stage.getBoundingClientRect().top / z - (PIN_BOTTOM - vh - LEAD)) / (HOLD + LEAD)));
@@ -88,7 +89,8 @@ function moveSky() {
   cloudsL.style.opacity = cloudsR.style.opacity = part ? (1 - part).toFixed(3) : '';
   const g = move ? glide : 0, dy = 180 * g + (move ? 500 * sink : 0);
   puff.style.transform = g ? `translate(${((720 - PUFF_CX) * g).toFixed(1)}px, ${dy.toFixed(1)}px) scale(${(1 - .2 * g).toFixed(3)})` : '';
-  puff.style.opacity = sink ? (1 - ramp(t, .85, 1)).toFixed(3) : '';
+  const gone = move ? dy / 680 : ramp(t, .85, 1);
+  puff.style.opacity = gone ? (1 - gone).toFixed(3) : '';
   if (fog) {
     const end = (PIN_BOTTOM - PIN_TOP) - vh * 1.05, k = ramp(t, .42, 1);
     fog.style.transform = `translateY(${(1500 - (1500 - end) * k).toFixed(1)}px)`;

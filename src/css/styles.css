@@ -65,8 +65,15 @@ body { background: #fff; overflow-x: hidden; font-stretch: 125%; font-family: va
 #contact .socials { --d: .2s; --x: 641px; --y: 387px; --w: 158px; }
 
 /* ---------- Bird and fish ---------- */
-.bird { --x: -6.61px; --y: 239.23px; --w: 1328.29px; --h: 558.57px; opacity: var(--a, 0); filter: blur(3px); overflow: visible; pointer-events: none; }
+.bird { --x: -6.61px; --y: 349px; --w: 1328.29px; --h: 558.57px; opacity: var(--a, 0); filter: blur(3px); overflow: visible; pointer-events: none; }
 .bird path { fill: #fff; }
+/* the clouds on the left again, above the bird: it sets off behind them, then flies over the rest */
+.clouds-front {
+  --w: 1440px; --h: 1000px; pointer-events: none;
+  background: url("../assets/clouds-hero.png?v=3") 0 0 / 1440px 2000px no-repeat;
+  -webkit-mask-image: radial-gradient(30% 22% at 18% 76%, #000 55%, transparent 100%);
+          mask-image: radial-gradient(30% 22% at 18% 76%, #000 55%, transparent 100%);
+}
 
 .ocean { --y: 5616px; --w: 1440px; --h: 330px; pointer-events: none; overflow: visible; }
 .fish-swimmer { position: absolute; left: 0; top: 110px; transform: translate3d(var(--fx, -380px), var(--fy, 0px), 0); will-change: transform; }
@@ -617,9 +624,9 @@ a:focus-visible { outline: 2px solid var(--color-white); outline-offset: 4px; }
 @media (max-width: 760px) {
   .stage { width: 100%; height: auto; background: #fff; display: flex; flex-direction: column; }
   .hero { order: 1; } #about { order: 2; } #work { order: 3; } .sunset { order: 4; } #contact { order: 5; }
-  .sky-puff, .clouds-px { display: none !important; }
+  .sky-puff, .clouds-px, .clouds-front { display: none !important; }
 
-  .hero .l.bird { position: absolute; left: -16%; top: 230px; width: 132%; height: auto; aspect-ratio: 692 / 291; }
+  .hero .l.bird { position: absolute; left: -16%; top: 205px; width: 132%; height: auto; aspect-ratio: 692 / 291; }
   #contact .ocean { position: absolute; left: 0; right: 0; bottom: 64px; height: 90px; width: auto; top: auto; }
   #contact .fish-swimmer { top: 0; }
   #contact .fish { width: 130px; filter: blur(2px); }
@@ -637,19 +644,16 @@ a:focus-visible { outline: 2px solid var(--color-white); outline-offset: 4px; }
   .sec .l { position: relative; left: auto; top: auto; width: auto; height: auto; }
 
   .hero {
-    --y0: 0; --s: .8; --gap: 22px; height: 640px; padding: 104px 20px 40px; background-position: calc(-60px * var(--s)) 0;
-    display: grid; grid-template-rows: auto auto auto; align-content: center; row-gap: var(--gap);
+    --y0: 0; --s: .8; height: 300px; padding: 96px 20px 0; background-position: calc(-60px * var(--s)) 0;
+    display: grid; grid-template-rows: auto auto auto; align-content: start;
   }
-  .hero .hero-sub { font-size: clamp(1.25rem, 6vw, 1.625rem); }
+  .hero .hero-sub { font-size: clamp(1.5rem, 7.2vw, 1.875rem); line-height: 1.15; }
   .hero .hero-sub:first-of-type { grid-row: 1; justify-self: start; }
-  .hero h1 { grid-row: 2; display: grid; font-size: 44vw; line-height: .8; }
-  .hero .hero-sub:last-of-type { grid-row: 3; justify-self: end; margin-top: -4.6vw; }
-  .hero h1 { margin-top: 3.6vw; }
-  .hero h1 .pf1 { justify-self: start; margin-left: -1vw; }
-  .hero h1 .pf2 { justify-self: end; margin-right: -1vw; }
+  .hero h1 { grid-row: 2; margin: 0 0 0 -1vw; font-size: 26.5vw; line-height: .95; white-space: nowrap; }
+  .hero .hero-sub:last-of-type { grid-row: 3; justify-self: end; }
 
   #about {
-    --y0: 800; --s: .8; padding-top: 96vw; padding-bottom: 150px; overflow: clip;
+    --y0: 375; --s: .8; padding-top: 185px; padding-bottom: 150px; overflow: clip;
     --sky-xy: calc(-60px * var(--s)) calc(var(--y0) * var(--s) * -1px);
     --sky-wh: calc(1440px * var(--s)) calc(2000px * var(--s));
     background-image: url("../assets/clouds-bank.png?v=3"), url("../assets/clouds-hero.png?v=3"), var(--sky-h), var(--sky-v);
@@ -658,19 +662,20 @@ a:focus-visible { outline: 2px solid var(--color-white); outline-offset: 4px; }
   }
   #about::after { content: ""; position: absolute; z-index: 1; left: 0; right: 0; bottom: 0; height: 130px; pointer-events: none;
     background: linear-gradient(rgba(255, 255, 255, 0), rgba(255, 255, 255, .25) 30%, rgba(255, 255, 255, .7) 62%, #fff 92%); }
-
+  /* the white shape behind Hello, soft and see-through; scrolling on, it sinks and fades (--sink, script.js) */
   #about::before {
-    content: ""; position: absolute; left: 50%; top: -8vw; width: 92vw; aspect-ratio: 763 / 869; pointer-events: none;
-    background: url("../assets/sky-puff.webp?v=2") center / 100% 100% no-repeat; transform: translateX(-50%);
+    content: ""; position: absolute; left: 50%; top: -40px; width: 78vw; aspect-ratio: 763 / 869; pointer-events: none;
+    background: url("../assets/sky-puff.webp?v=2") center / 100% 100% no-repeat;
+    opacity: calc(.55 * (1 - var(--sink, 0))); transform: translateX(-50%) translateY(calc(var(--sink, 0) * 140px));
   }
   #about > * { z-index: 1; }
-  #hello { font-size: clamp(4rem, 19vw, 5.5rem); line-height: 1.1; }
-  .t-intro { margin-top: 20px; max-width: 34ch; font-size: 1.0625rem; line-height: 1.6; }
+  #hello { font-size: clamp(3.75rem, 18vw, 4.5rem); line-height: 1.1; }
+  .t-intro { margin-top: 16px; max-width: 34ch; font-size: 1.0625rem; line-height: 1.6; }
   .t-intro p + p { margin-top: 1em; }
 
-  #about .qbtn { position: absolute; left: 0; right: 0; top: 24vw; margin: 0 auto; width: fit-content; }
-  #about .qbtn .q-glyph { margin: 0; font-size: clamp(6.875rem, 32vw, 9.375rem); line-height: .9; }
-  #about .btn-hello { display: inline-flex; margin-top: 28px; height: 48px; padding: 0 30px; font-size: 1rem; }
+  #about .qbtn { position: absolute; left: 0; right: 0; top: 30px; margin: 0 auto; width: fit-content; opacity: calc(1 - var(--sink, 0)); }
+  #about .qbtn .q-glyph { margin: 0; font-size: clamp(5rem, 24vw, 6.5rem); line-height: .9; color: var(--color-pink); }
+  #about .btn-hello { display: flex; width: 100%; margin-top: 24px; height: 48px; padding: 0 30px; font-size: 1.125rem; }
 
   #work { --y0: 1800; --s: 1; padding: 24px 0 8px; background: #fff; }
   #mywork { order: 0; margin: 0 20px; font-size: clamp(3.5rem, 16vw, 4.5rem); line-height: 1.02; white-space: normal; }
