@@ -72,8 +72,13 @@ function moveSky() {
   const z = parseFloat(stage.style.zoom) || 1, vh = innerHeight / z;
   stage.style.setProperty('--pin-top', (vh - (PIN_BOTTOM - PIN_TOP)).toFixed(1) + 'px');
   if (MOBILE.matches) {
-    for (const el of [about, puff, cloudsL, cloudsR]) { el.style.transform = el.style.opacity = el.style.visibility = ''; }
+    for (const el of [about, puff]) { el.style.transform = el.style.opacity = el.style.visibility = ''; }
     about.style.setProperty('--sink', reduceMotion.matches ? 0 : ramp(scrollY / (innerHeight * .7), 0, 1).toFixed(3));
+    const open = ramp((innerHeight * .5 - cloudsL.getBoundingClientRect().top) / (innerHeight * .45), 0, 1);
+    const dx = reduceMotion.matches ? 0 : innerWidth * .55 * open;
+    cloudsL.style.transform = dx ? `translateX(${-dx.toFixed(1)}px)` : '';
+    cloudsR.style.transform = dx ? `translateX(${-dx.toFixed(1)}px)` : '';
+    cloudsL.style.opacity = cloudsR.style.opacity = open ? (1 - open).toFixed(3) : '';
     return;
   }
   const t = Math.max(0, Math.min(1, (-stage.getBoundingClientRect().top / z - (PIN_BOTTOM - vh - LEAD)) / (HOLD + LEAD)));

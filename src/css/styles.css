@@ -303,6 +303,10 @@ a:focus-visible { outline: 2px solid var(--color-white); outline-offset: 4px; }
   transition: opacity .9s ease var(--d, 0s), translate 1.1s cubic-bezier(.2, .8, .2, 1) var(--d, 0s), filter .9s ease var(--d, 0s);
 }
 .js .reveal:not(.in) { opacity: 0; translate: 0 40px; filter: blur(6px); }
+@media (prefers-reduced-motion: no-preference) {
+  .js .hero-sub--name.reveal:not(.in) { translate: -80px 0; }
+  .js .hero-sub--role.reveal:not(.in) { translate: 80px 0; }
+}
 @media (prefers-reduced-motion: reduce) {
   .js .reveal { transition: opacity .4s ease; }
   .js .reveal:not(.in) { translate: none; filter: none; }
@@ -626,14 +630,21 @@ a:focus-visible { outline: 2px solid var(--color-white); outline-offset: 4px; }
 /* ---------- Phones ---------- */
 @media (max-width: 760px) {
   .stage {
-    width: 100%; height: auto; background: #fff; display: flex; flex-direction: column;
-    --sky-m: linear-gradient(rgb(87, 118, 180), rgb(112, 121, 181) 300px, rgb(142, 125, 184) 550px, rgb(168, 128, 185) 750px,
-      rgb(189, 153, 200) 850px, rgb(220, 207, 230) 950px, rgb(239, 237, 246) 1050px, #fff 1150px) 0 0 / 100% 1150px no-repeat;
+    width: 100%; height: auto; display: flex; flex-direction: column;
+    background: linear-gradient(rgb(87, 118, 180), rgb(112, 121, 181) 430px, rgb(142, 125, 184) 680px, rgb(168, 128, 185) 880px,
+      rgb(189, 153, 200) 980px, rgb(220, 207, 230) 1080px, rgb(239, 237, 246) 1180px, #fff 1280px) 0 0 / 100% 1280px no-repeat, #fff;
   }
-  .hero { order: 1; } #about { order: 2; } #work { order: 3; } .sunset { order: 4; } #contact { order: 5; }
-  .sky-puff, .clouds-px, .clouds-front { display: none !important; }
+  .hero { order: 1; } #about { order: 2; } .clouds-px { order: 3; } #work { order: 4; } .sunset { order: 5; } #contact { order: 6; }
+  .sky-puff, .clouds-front { display: none !important; }
+  .clouds-px { position: relative; z-index: 2; left: 0; top: 0; width: 160vw; max-width: none; height: auto; aspect-ratio: 720 / 455; margin: -400px 0 0 -30vw;
+    --puff: rgba(255, 255, 255, .9); filter: blur(6px);
+    background: radial-gradient(16% 22% at 26% 46%, var(--puff), transparent), radial-gradient(14% 20% at 38% 52%, var(--puff), transparent),
+      radial-gradient(20% 18% at 22% 62%, var(--puff), transparent), radial-gradient(18% 17% at 44% 64%, var(--puff), transparent),
+      radial-gradient(12% 15% at 52% 55%, rgba(255, 255, 255, .6), transparent);
+  }
+  .clouds-px.clouds-r { scale: -1 1; margin-top: calc(-160vw * 455 / 720); -webkit-mask-image: linear-gradient(to right, #000 33%, transparent 67%); mask-image: linear-gradient(to right, #000 33%, transparent 67%); }
 
-  .hero .l.bird { position: absolute; left: -16%; top: 205px; width: 132%; height: auto; aspect-ratio: 692 / 291; }
+  .hero .l.bird { position: absolute; z-index: 2; left: -16%; top: 205px; width: 132%; height: auto; aspect-ratio: 692 / 291; }
   #contact .ocean { position: absolute; left: 0; right: 0; bottom: 64px; height: 90px; width: auto; top: auto; }
   #contact .fish-swimmer { top: 0; }
   #contact .fish { width: 130px; filter: blur(2px); }
@@ -652,7 +663,7 @@ a:focus-visible { outline: 2px solid var(--color-white); outline-offset: 4px; }
   .sec .l { position: relative; left: auto; top: auto; width: auto; height: auto; }
 
   .hero {
-    height: 300px; padding: 89px 19px 0; background: var(--sky-m);
+    height: 300px; padding: 89px 19px 0; background: none;
     display: grid; grid-template-rows: auto auto auto; align-content: start;
   }
   .hero .hero-sub { font-size: clamp(1.5rem, 7.7vw, 1.875rem); line-height: 1.3; }
@@ -661,16 +672,12 @@ a:focus-visible { outline: 2px solid var(--color-white); outline-offset: 4px; }
   .hero .hero-sub:last-of-type { grid-row: 3; justify-self: end; margin-top: -12px; font-size: clamp(1.25rem, 6vw, 1.4631rem); }
 
   #about {
-    padding: 173px 23px 245px; overflow-x: clip;
-    background: url("../assets/clouds-bank.png?v=3") -40px 560px / 1152px auto no-repeat, var(--sky-m);
-    background-position: -40px 560px, 0 -300px;
+    padding: 310px 23px 240px; overflow-x: clip; background: none;
   }
-  #about::after { content: ""; position: absolute; z-index: 1; left: 0; right: 0; bottom: 0; height: 130px; pointer-events: none;
-    background: linear-gradient(rgba(255, 255, 255, 0), rgba(255, 255, 255, .25) 30%, rgba(255, 255, 255, .7) 62%, #fff 92%); }
   #about::before {
     content: ""; position: absolute; left: 9.2vw; top: -70px; width: 78.7vw; aspect-ratio: 307 / 384; pointer-events: none;
     background: url("../assets/sky-puff.webp?v=2") center / 100% 100% no-repeat; filter: blur(10px);
-    opacity: calc(.45 * (1 - var(--sink, 0))); transform: translateY(calc(var(--sink, 0) * 140px));
+    opacity: calc(.62 * (1 - var(--sink, 0))); transform: translateY(calc(var(--sink, 0) * 140px));
   }
   #about > * { z-index: 1; }
   #hello { font-size: clamp(3.75rem, 19vw, 4.632rem); line-height: 1.28; }
@@ -678,10 +685,10 @@ a:focus-visible { outline: 2px solid var(--color-white); outline-offset: 4px; }
   .t-intro p + p { margin-top: 1.375rem; }
 
   #about .qbtn { position: absolute; left: 0; right: 0; top: 24px; margin: 0 auto; width: fit-content; opacity: calc(1 - var(--sink, 0)); }
-  #about .qbtn .q-glyph { margin: 0; font-size: clamp(5rem, 25.4vw, 6.1875rem); line-height: 1.03; color: var(--color-pink); }
+  #about .qbtn .q-glyph { margin: 0; font-size: clamp(5rem, 25.4vw, 6.1875rem); line-height: 1.03; color: rgb(108, 120, 181); }
   #about .btn-hello { display: flex; width: 100%; max-width: 320px; margin-top: 14px; height: 48px; padding: 0 30px; border-radius: 10px; font-size: 1.08rem; }
 
-  #work { padding: 70px 0 8px; background: #fff; }
+  #work { margin-top: calc(400px - 160vw * 455 / 720); padding: 70px 0 8px; background: linear-gradient(rgba(255, 255, 255, 0), #fff 240px); }
   #mywork { order: 0; align-self: flex-end; margin: 0 26px 0 0; font-size: clamp(2.75rem, 12.8vw, 3.125rem); line-height: 1.08; text-align: right; white-space: normal; }
   .work__layout { display: flex; flex-direction: column; align-items: stretch; gap: 0; margin-top: 0; min-width: 0; }
   .work__stage { display: contents; }
