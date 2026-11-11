@@ -54,7 +54,7 @@ if (!reduced && matchMedia('(hover: hover)').matches) {
   });
 }
 
-const swatches = document.querySelectorAll('.d-swatches li, .d-squares li[data-a]');
+const swatches = document.querySelectorAll('.d-dots-pal li[data-a]');
 if (sw && swatches.length) {
   swatches.forEach((li, k) => li.style.setProperty('--k', k));
   sw.addEventListener('pick', (e) => swatches.forEach((li) => {

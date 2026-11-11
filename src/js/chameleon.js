@@ -10,11 +10,8 @@
     { page: 'miles.html', name: 'Miles & Meals', kind: 'App · Demo', tab: '#1A5BA4', bg: '#D5FF59', img: 'src/assets/projects/p-miles.webp' }
   ];
 
-  const page = $('.stage');
   const list = $('#workList'), workStage = $('.work__stage'), nowName = $('#nowName');
-  const mouth = $('#mouth'), tongue = $('#tongue'), tip = $('#tongueTip');
-  const chamBody = $('.cham-body'), chamCut = $('#tongueMaskCham');
-  chamCut.setAttribute('d', chamBody.querySelector('path').getAttribute('d'));
+  const cham = $('#cham'), mouth = $('#mouth'), tongue = $('#tongue'), tip = $('#tongueTip');
 
   const tabSvg = i => `<svg class="work-card__svg" viewBox="0 0 742 497" fill="none" aria-hidden="true">
 <path d="M0 13.7C0 6.13367 6.13368 0 13.7 0H727.344C734.91 0 741.044 6.13368 741.044 13.7V48.5726H0V13.7Z" fill="currentColor"/>
@@ -48,19 +45,17 @@
   });
 
   let target = -1, pending = -1, ext = 0, goal = 0, dotBtns = [];
-  let speed = 0, lastY = scrollY, fast = false, pinkNow = false;
   function activate(i) {
     if (i === pending || (i === target && pending < 0)) return;
     cards.forEach((c, j) => c.classList.toggle('work-card--active', j === i));
     dotBtns.forEach((d, j) => d.setAttribute('aria-current', j === i));
     if (target >= 0) cards[target].classList.remove('work-card--stuck');
-    if (!fast) document.documentElement.style.setProperty('--cham', PROJECTS[i].tab);
+    document.documentElement.style.setProperty('--cham', PROJECTS[i].tab);
     nowName.textContent = `Now viewing: ${PROJECTS[i].name}`;
     pending = i; goal = 0;
   }
   activate(0);
 
-  const FAST = 1800;
   const middleCard = () => {
     let best = -1, d = 1e9;
     const lr = list.getBoundingClientRect();
@@ -73,7 +68,7 @@
   };
   const io = new IntersectionObserver(entries => {
     if (PHONE.matches) return;
-    entries.forEach(e => { if (e.isIntersecting && !fast) activate(cards.indexOf(e.target)); });
+    entries.forEach(e => { if (e.isIntersecting) activate(cards.indexOf(e.target)); });
   }, { rootMargin: '-45% 0px -45% 0px' });
   cards.forEach(c => io.observe(c));
 
@@ -104,47 +99,27 @@
   let last = performance.now();
   function frame(now) {
     const dt = Math.min(.05, (now - last) / 1000); last = now;
-    speed = Math.max(Math.abs(scrollY - lastY) / Math.max(dt, .001), speed * Math.exp(-dt * 5)); lastY = scrollY;
-    const wasFast = fast;
-    fast = !reduce && speed > FAST;
-    if (fast && ext <= 0 && !pinkNow) { document.documentElement.style.setProperty('--cham', '#E770B2'); pinkNow = true; }
-    if (wasFast && !fast) {
-      pinkNow = false;
-      const m = middleCard();
-      if (m >= 0) { if (m === target && pending < 0) document.documentElement.style.setProperty('--cham', PROJECTS[m].tab); else activate(m); }
-    }
-    if (goal === 0 && ext <= 0 && pending >= 0 && !fast) { target = pending; pending = -1; goal = 1; }
+    if (goal === 0 && ext <= 0 && pending >= 0) { target = pending; pending = -1; goal = 1; }
     if (target >= 0 && pending < 0) {
       const r = cards[target].getBoundingClientRect();
       const my = centre(mouth).y, th = cards[target].querySelector('.work-card__thumb').getBoundingClientRect();
       const level = PHONE.matches || (my > th.top + 20 && my < th.bottom - 20);
-      goal = !fast && r.bottom > 0 && r.top < innerHeight && level && !hidden() && !cards[target].classList.contains('work-card--flying') ? 1 : 0;
+      goal = r.bottom > 0 && r.top < innerHeight && level && !hidden() && !cards[target].classList.contains('work-card--flying') ? 1 : 0;
     }
     if (reduce) ext = goal;
     else if (goal > ext) ext = Math.min(1, ext + dt / .2);
     else if (goal < ext) ext = Math.max(0, ext - dt / .12);
 
-    if (target >= 0) {
-      const z = parseFloat(page.style.zoom) || 1;
-      const m = centre(mouth), r = cards[target].querySelector('.work-card__thumb').getBoundingClientRect();
-      const t = { x: clamp(m.x, r.left + 28 * z, r.right - 28 * z), y: PHONE.matches ? clamp(m.y, r.top + 28 * z, r.bottom - 28 * z) : m.y };
-      const k = easeOut(ext);
-      let x = m.x + (t.x - m.x) * k, y = m.y + (t.y - m.y) * k, d = `M${m.x},${m.y} L${x},${y}`;
-      if (PHONE.matches) {
-        t.x = clamp(m.x + 46, r.left + 20, r.right - 20); t.y = r.top + 34;
-        const c = { x: t.x, y: m.y };
-        const q1 = { x: m.x + (c.x - m.x) * k, y: m.y + (c.y - m.y) * k };
-        const q2 = { x: c.x + (t.x - c.x) * k, y: c.y + (t.y - c.y) * k };
-        x = q1.x + (q2.x - q1.x) * k; y = q1.y + (q2.y - q1.y) * k;
-        d = `M${m.x},${m.y} Q${q1.x},${q1.y} ${x},${y}`;
-      }
+    if (target >= 0 && !PHONE.matches) {
+      const cb = cham.getBoundingClientRect(), z = cb.width / parseFloat(getComputedStyle(cham).width);
+      const local = (px, py) => ({ x: (px - cb.left) / z, y: (py - cb.top) / z });
+      const mc = centre(mouth), r = cards[target].querySelector('.work-card__thumb').getBoundingClientRect();
+      const m = local(mc.x, mc.y), t = local(Math.max(mc.x, r.left), mc.y);
+      const k = easeOut(ext), x = m.x + (t.x - m.x) * k, y = m.y + (t.y - m.y) * k;
       const dist = Math.hypot(x - m.x, y - m.y);
-      tongue.setAttribute('d', dist > 2 ? d : '');
-      const cb = chamBody.getBoundingClientRect();
-      chamCut.setAttribute('transform', `translate(${cb.left} ${cb.top}) scale(${cb.width / 361} ${cb.height / 308})`);
-      const thin = PHONE.matches ? .6 : 1;
-      tongue.setAttribute('stroke-width', 5 * z * thin);
-      tip.setAttribute('cx', x); tip.setAttribute('cy', y); tip.setAttribute('r', dist > 2 ? 13 * z * (PHONE.matches ? .55 : 1) : 0);
+      tongue.setAttribute('d', dist > 2 ? `M${m.x},${m.y} L${x},${y}` : '');
+      tongue.setAttribute('stroke-width', 5);
+      tip.setAttribute('cx', x); tip.setAttribute('cy', y); tip.setAttribute('r', dist > 2 ? 13 : 0);
       cards[target].classList.toggle('work-card--stuck', ext >= 1);
     }
     requestAnimationFrame(frame);

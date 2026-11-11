@@ -31,7 +31,7 @@ PROJECTS = [
        year='2026', client='Moea', url='',
        tools=[('src/assets/tools/aftereffects.svg', 'After Effects'), ('src/assets/type01/icon-figma.svg', 'Figma'), ('src/assets/tools/blender.webp', 'Blender')],
        desktop=('src/assets/moea/site.webp', 2000, 1240, 'The Moea homepage with its 3D hero'),
-       mobile=('src/assets/moea/site-mobile.webp', 1001, 1812, 'The Moea homepage on mobile, with the 3D hero'), mobile_screen=True, result_phone=True,
+       mobile=('src/assets/moea/phone.webp', 760, 1377, 'The Moea homepage on mobile, with the 3D hero'), mobile_screen=True, result_phone=True,
        lead='A client has heard that <b>3D is the next big thing on the web</b> and wants it on their website as a <b>promotional header</b>.',
        brief=['For this assignment, I could pick the brand myself, so I chose <b>Moea</b>, short for <b>Mother Earth</b>, a label that rethinks how fashion is made, with respect for the planet.<br>The hero had to tell a <b>visual concept</b>, a little world built around the product, and needed to be <b>animated</b> (the animation is coming soon!).'],
        palettes=None,
@@ -48,7 +48,7 @@ PROJECTS = [
        year='2025', client='TYPE01 Magazine', url='TYPE01 prototype',
        tools=[('src/assets/type01/icon-ps.svg', 'Photoshop'), ('src/assets/type01/icon-figma.svg', 'Figma')],
        desktop=('src/assets/type01/site.webp', 2000, 1280, 'The TYPE01 conference homepage'),
-       mobile=('src/assets/type01/site-mobile.webp', 1118, 2000, 'The TYPE01 homepage on mobile'), mobile_screen=True, result_phone=True,
+       mobile=('src/assets/type01/phone.webp', 760, 1360, 'The TYPE01 homepage on mobile'), mobile_screen=True, result_phone=True,
        lead='<b>TYPE01 Magazine</b>, a publication for graphic designers and typographers, was hosting its first-ever <b>conference</b>: two days in London on typography in print, motion design and branding.',
        brief=['My task was to design a responsive <b>conference website</b> for desktop and mobile that fits TYPE01’s identity but takes a <b>bolder approach</b>. Text and photos of the speakers were already provided.'],
        palettes=None,
@@ -65,7 +65,7 @@ PROJECTS = [
        year='2026', client='Miles &amp; Meals<br><span class="d-note">(fictional company)</span>', url='Miles &amp; Meals prototype',
        tools=[('src/assets/tools/illustrator.svg', 'Illustrator'), ('src/assets/type01/icon-figma.svg', 'Figma'), ('src/assets/type01/icon-ps.svg', 'Photoshop')],
        desktop=('src/assets/miles/site.webp', 2000, 1288, 'Miles & Meals: brand photography and social media'),
-       mobile=('src/assets/miles/site-mobile.webp', 1112, 2000, 'The Miles & Meals app: Discover the world in your kitchen'), mobile_screen=True, result_mode='phone', title_html='Miles<span class="amp">&amp;</span>Meals',
+       mobile=('src/assets/miles/phone.webp', 760, 1368, 'The Miles & Meals app: Discover the world in your kitchen'), phone_colour='#2263AC', mobile_screen=True, result_mode='phone', title_html='Miles<span class="amp">&amp;</span>Meals',
        lead='<b>Miles &amp; Meals</b> is a food-box subscription that brings <b>iconic local dishes</b> from cities around the world to your kitchen.',
        brief=['Every box explores a different city through authentic recipes, inspired by how locals really eat. The audience: adults aged 25–50 with middle to upper-middle incomes, and four brand values to build on: <b>travel</b>, <b>warm &amp; welcoming</b>, <b>out &amp; social</b> and <b>authentic</b>.<br>First I had to create the <b>visual identity</b>, presented in a brandboard, then design the <b>app</b> where users could manage their box and cook the recipes.'],
        palettes=None,
@@ -87,14 +87,14 @@ def slug(p):
 
 def colours(p):
     page = f'.project-page--{slug(p)}'
-    rules = [f'{page} {{ --accent: {p["tab"]}; }}']
+    rules = [f'{page} {{ --accent: {p["tab"]};' + (f' --phone: {p["phone_colour"]};' if p.get('phone_colour') else '') + ' }']
     if p.get('palette_squares'):
         qa, qb = p['palette_squares'], p.get('palette_squares_b') or p['palette_squares']
-        cs, ul = [(qa + [None] * 9)[k] or qb[k] for k in range(max(len(qa), len(qb)))], 'd-squares'
+        cs, ul = [(qa + [None] * 9)[k] or qb[k] for k in range(max(len(qa), len(qb)))], 'd-dots-pal'
     elif p.get('palette_dots'):
         cs, ul = p['palette_dots'], 'd-dots-pal'
     else:
-        cs, ul = p['palettes'][0][1], 'd-swatches'
+        cs, ul = p['palettes'][0][1], 'd-dots-pal'
     rules += [f'{page} .{ul} li:nth-child({k + 1}) {{ --c: {c}; }}' for k, c in enumerate(cs)]
     return '\n'.join(rules)
 
@@ -136,7 +136,7 @@ def dior_main(p):
         palette = (f'<div class="p-switch" role="tablist" aria-label="Styleboard">'
                    f'<button role="tab" aria-selected="true" data-board="a">{sa}</button><button role="tab" aria-selected="false" data-board="b">{sb_}</button>'
                    f'<span class="p-switch-pill" aria-hidden="true"></span></div>'
-                   '<ul class="d-squares" aria-label="Colour palette">' + squares + '</ul>')
+                   '<ul class="d-dots-pal" aria-label="Colour palette">' + squares + '</ul>')
     elif p.get('palette_dots'):
         palette = '<ul class="d-dots-pal" aria-label="Colour palette">' + '<li></li>' * len(p['palette_dots']) + '</ul>'
     else:
@@ -144,7 +144,7 @@ def dior_main(p):
         pal = ''.join(f'<li data-a="{pa[k]}" data-b="{pb[k] if k < len(pb) else ""}"></li>' for k in range(len(pa)))
         palette = (f'<div class="p-switch" role="tablist" aria-label="Palette">'
                    f'<button role="tab" aria-selected="true" data-board="a">{pa_name}</button><button role="tab" aria-selected="false" data-board="b">{pb_name}</button>'
-                   f'<span class="p-switch-pill" aria-hidden="true"></span></div><ul class="d-swatches" aria-label="Colour palette">{pal}</ul>')
+                   f'<span class="p-switch-pill" aria-hidden="true"></span></div><ul class="d-dots-pal" aria-label="Colour palette">{pal}</ul>')
     d, m, sb = p['desktop'], p['mobile'], p['styleboard']
     url, cta = p['url'], p['cta']
     if p.get('styleboard_b'):
