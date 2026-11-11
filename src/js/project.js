@@ -1,10 +1,9 @@
 const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-const progress = document.getElementById('progress'), topBar = document.querySelector('.p-top');
+const progress = document.getElementById('progress');
 function onScroll() {
   const max = document.documentElement.scrollHeight - innerHeight;
   progress.style.setProperty('--p', max > 0 ? (scrollY / max).toFixed(4) : 0);
-  topBar.style.setProperty('--solid', scrollY > 20 ? 1 : 0);
 }
 addEventListener('scroll', onScroll, { passive: true });
 addEventListener('resize', onScroll);

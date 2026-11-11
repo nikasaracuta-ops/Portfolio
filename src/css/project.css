@@ -17,7 +17,6 @@
   display: flex; align-items: center; justify-content: space-between; gap: 12px;
   font: .9375rem/1 var(--font-body);
 }
-.p-top::before { content: ""; position: absolute; z-index: -1; inset: 0 calc(50% - 50vw); background: rgba(255, 255, 255, .55); -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px); opacity: var(--solid, 0); transition: opacity .3s; }
 .p-back { display: inline-flex; align-items: center; gap: 12px; color: var(--accent); text-decoration: none; font: 600 1.125rem/1 var(--font-body); text-transform: uppercase; letter-spacing: .02em; }
 .p-back-dot { display: grid; place-items: center; width: 48px; height: 48px; border-radius: 50%; background: var(--accent); transition: transform .35s cubic-bezier(.3, 1.6, .5, 1); }
 .p-back-dot svg { width: 22px; height: 22px; fill: none; stroke: #ECF5FF; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
