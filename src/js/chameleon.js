@@ -4,10 +4,10 @@
   const $ = s => document.querySelector(s);
 
   const PROJECTS = [
-    { page: 'dior.html', name: 'Dior', kind: 'UI · UX · Web design', tab: '#E770B2', bg: '#FB72BE', img: 'src/assets/projects/p-dior.webp' },
-    { page: 'moea.html', name: 'Moea', kind: 'UI · UX · Web design', tab: '#3EBDCD', bg: '#3BBDCC', img: 'src/assets/projects/p-moea.webp' },
-    { page: 'type01.html', name: 'Type01', kind: 'UI · UX · Web design', tab: '#E770B2', bg: '#6f9bd4', img: 'src/assets/projects/p-type01.webp' },
-    { page: 'miles.html', name: 'Miles & Meals', kind: 'App · Demo', tab: '#1A5BA4', bg: '#D5FF59', img: 'src/assets/projects/p-miles.webp' }
+    { page: 'dior.html', name: 'Dior', tab: '#E770B2', bg: '#FB72BE', img: 'src/assets/projects/p-dior.webp' },
+    { page: 'moea.html', name: 'Moea', tab: '#3EBDCD', bg: '#3BBDCC', img: 'src/assets/projects/p-moea.webp' },
+    { page: 'type01.html', name: 'Type01', tab: '#E770B2', bg: '#6f9bd4', img: 'src/assets/projects/p-type01.webp' },
+    { page: 'miles.html', name: 'Miles & Meals', tab: '#1A5BA4', bg: '#D5FF59', img: 'src/assets/projects/p-miles.webp' }
   ];
 
   const list = $('#workList'), workStage = $('.work__stage'), nowName = $('#nowName');
@@ -43,7 +43,7 @@
     const b = document.createElement('button');
     b.className = `work-card work-card--${p.page.replace('.html', '')}`; b.style.setProperty('--c', p.bg); b.style.setProperty('--tab', p.tab || '#E770B2');
     b.setAttribute('aria-label', `Open project ${i + 1}: ${p.name}`);
-    b.innerHTML = `<span class="work-card__window"><span class="work-card__thumb"><img src="${p.img}" alt="" loading="lazy" decoding="async"></span>${tabSvg(i)}</span><span class="work-card__caption" aria-hidden="true"><b>${p.name}</b><small>${p.kind}</small></span>`;
+    b.innerHTML = `<span class="work-card__window"><span class="work-card__thumb"><img src="${p.img}" alt="" loading="lazy" decoding="async"></span>${tabSvg(i)}</span>`;
     b.addEventListener('click', () => window.goTo(p.page));
     b.addEventListener('mouseenter', () => activate(i));
     b.addEventListener('focus', () => activate(i));
