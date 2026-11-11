@@ -31,7 +31,7 @@ PROJECTS = [
        year='2026', client='Moea', url='',
        tools=[('src/assets/tools/aftereffects.svg', 'After Effects'), ('src/assets/type01/icon-figma.svg', 'Figma'), ('src/assets/tools/blender.webp', 'Blender')],
        desktop=('src/assets/moea/site.webp', 2000, 1240, 'The Moea homepage with its 3D hero'),
-       mobile=('src/assets/moea/phone.webp', 760, 1377, 'The Moea homepage on mobile, with the 3D hero'), mobile_screen=True, result_phone=True,
+       mobile=('src/assets/moea/phone.webp', 667, 1159, 'The Moea homepage on mobile, with the 3D hero'), result_phone=True,
        lead='A client has heard that <b>3D is the next big thing on the web</b> and wants it on their website as a <b>promotional header</b>.',
        brief=['For this assignment, I could pick the brand myself, so I chose <b>Moea</b>, short for <b>Mother Earth</b>, a label that rethinks how fashion is made, with respect for the planet.<br>The hero had to tell a <b>visual concept</b>, a little world built around the product, and needed to be <b>animated</b> (the animation is coming soon!).'],
        palettes=None,
@@ -48,7 +48,7 @@ PROJECTS = [
        year='2025', client='TYPE01 Magazine', url='TYPE01 prototype',
        tools=[('src/assets/type01/icon-ps.svg', 'Photoshop'), ('src/assets/type01/icon-figma.svg', 'Figma')],
        desktop=('src/assets/type01/site.webp', 2000, 1280, 'The TYPE01 conference homepage'),
-       mobile=('src/assets/type01/phone.webp', 760, 1360, 'The TYPE01 homepage on mobile'), mobile_screen=True, result_phone=True,
+       mobile=('src/assets/type01/phone.webp', 670, 1149, 'The TYPE01 homepage on mobile'), result_phone=True,
        lead='<b>TYPE01 Magazine</b>, a publication for graphic designers and typographers, was hosting its first-ever <b>conference</b>: two days in London on typography in print, motion design and branding.',
        brief=['My task was to design a responsive <b>conference website</b> for desktop and mobile that fits TYPE01’s identity but takes a <b>bolder approach</b>. Text and photos of the speakers were already provided.'],
        palettes=None,
@@ -63,9 +63,9 @@ PROJECTS = [
   dict(file='miles.html', name='Miles & Meals', tab='#1A5BA4',
        subtitle=('Miles &amp; Meals – food-box subscription', 'Brand identity and mobile app for a start-up'),
        year='2026', client='Miles &amp; Meals<br><span class="d-note">(fictional company)</span>', url='Miles &amp; Meals prototype',
-       tools=[('src/assets/tools/illustrator.svg', 'Illustrator'), ('src/assets/type01/icon-figma.svg', 'Figma'), ('src/assets/type01/icon-ps.svg', 'Photoshop')],
+       tools=[('src/assets/tools/illustrator.svg', 'Illustrator'), ('src/assets/type01/icon-figma.svg', 'Figma'), ('src/assets/type01/icon-ps.svg', 'Photoshop'), ('src/assets/tools/procreate.webp', 'Procreate')],
        desktop=('src/assets/miles/site.webp', 2000, 1288, 'Miles & Meals: brand photography and social media'),
-       mobile=('src/assets/miles/phone.webp', 760, 1368, 'The Miles & Meals app: Discover the world in your kitchen'), phone_colour='#2263AC', mobile_screen=True, result_mode='phone', title_html='Miles<span class="amp">&amp;</span>Meals',
+       mobile=('src/assets/miles/phone.webp', 667, 1152, 'The Miles & Meals app: Discover the world in your kitchen'), result_mode='phone', title_html='Miles<span class="amp">&amp;</span>Meals',
        lead='<b>Miles &amp; Meals</b> is a food-box subscription that brings <b>iconic local dishes</b> from cities around the world to your kitchen.',
        brief=['Every box explores a different city through authentic recipes, inspired by how locals really eat. The audience: adults aged 25–50 with middle to upper-middle incomes, and four brand values to build on: <b>travel</b>, <b>warm &amp; welcoming</b>, <b>out &amp; social</b> and <b>authentic</b>.<br>First I had to create the <b>visual identity</b>, presented in a brandboard, then design the <b>app</b> where users could manage their box and cook the recipes.'],
        palettes=None,
@@ -87,7 +87,7 @@ def slug(p):
 
 def colours(p):
     page = f'.project-page--{slug(p)}'
-    rules = [f'{page} {{ --accent: {p["tab"]};' + (f' --phone: {p["phone_colour"]};' if p.get('phone_colour') else '') + ' }']
+    rules = [f'{page} {{ --accent: {p["tab"]}; }}']
     if p.get('palette_squares'):
         qa, qb = p['palette_squares'], p.get('palette_squares_b') or p['palette_squares']
         cs, ul = [(qa + [None] * 9)[k] or qb[k] for k in range(max(len(qa), len(qb)))], 'd-dots-pal'
@@ -153,7 +153,7 @@ def dior_main(p):
                   f'<img data-board="b" src="{b2[0]}" width="{b2[1]}" height="{b2[2]}" alt="{html.escape(b2[3])}" loading="lazy">')
     else:
         boards = f'<img class="on" src="{sb[0]}" width="{sb[1]}" height="{sb[2]}" alt="{html.escape(sb[3])}" loading="lazy">'
-    rphone = (f'<button class="d-result-phone" data-zoom aria-label="Enlarge the mobile version"><img class="on" src="{m[0]}" width="{m[1]}" height="{m[2]}" alt="{html.escape(m[3])}" loading="lazy"></button>'
+    rphone = (f'<button class="phone phone--overlay" data-zoom aria-label="Enlarge the mobile version"><img class="phone__image on" src="{m[0]}" width="{m[1]}" height="{m[2]}" alt="{html.escape(m[3])}" loading="lazy"></button>'
               if p.get('result_phone') else '')
     if p.get('live') == 'site':
         result = f'<div class="d-panes d-live" data-src="{html.escape(cta[1])}"></div>'
@@ -165,7 +165,7 @@ def dior_main(p):
                   + rphone)
     shot = window(*d, p['tab']).replace('</figure>', f'  <span class="d-url" aria-hidden="true">{p["url"]}</span>\n      </figure>', 1)
     link = (ROOT / 'src/assets/dior/icon-link.svg').read_text().replace('fill="white"', 'fill="currentColor"').replace('<svg ', '<svg class="d-cta-icon" aria-hidden="true" ', 1)
-    phone_result = (f'<div class="d-phone-result reveal"><button class="d-phone-screen" data-zoom aria-label="Enlarge the app screen"><img class="on" src="{m[0]}" width="{m[1]}" height="{m[2]}" alt="{html.escape(m[3])}" loading="lazy"></button>'
+    phone_result = (f'<div class="app-result reveal"><button class="phone phone--app" data-zoom aria-label="Enlarge the app screen"><img class="phone__image on" src="{m[0]}" width="{m[1]}" height="{m[2]}" alt="{html.escape(m[3])}" loading="lazy"></button>'
                     + (f'<a class="d-badge" href="{html.escape(cta[1])}" target="_blank" rel="noopener" aria-label="{cta[0]} (opens the prototype)">'
                        '<svg class="d-badge-ring" viewBox="0 0 120 120" aria-hidden="true"><defs><path id="prRing" d="M60 60m-44 0a44 44 0 1 1 88 0a44 44 0 1 1-88 0"/></defs>'
                        f'<text><textPath href="#prRing" textLength="272">{cta[0].upper()} • {cta[0].upper()} •</textPath></text></svg>{link}</a>' if cta else '') + '</div>')
@@ -189,7 +189,7 @@ def dior_main(p):
       </div>
       <div class="d-devices reveal">
         {shot}
-        <figure class="d-phone{' d-phone-screen' if p.get('mobile_screen') else ''}{' d-phone-right' if p.get('phone_right') else ''}"><img src="{m[0]}" width="{m[1]}" height="{m[2]}" alt="{html.escape(m[3])}"></figure>
+        <figure class="phone phone--intro"><img class="phone__image" src="{m[0]}" width="{m[1]}" height="{m[2]}" alt="{html.escape(m[3])}"></figure>
       </div>
       <dl class="d-facts reveal">{facts}</dl>
     </section>

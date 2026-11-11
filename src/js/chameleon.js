@@ -11,7 +11,14 @@
   ];
 
   const list = $('#workList'), workStage = $('.work__stage'), nowName = $('#nowName');
-  const cham = $('#cham'), mouth = $('#mouth'), tongue = $('#tongue'), tip = $('#tongueTip');
+  const mouth = $('#mouth'), tongue = $('#tongue'), tip = $('#tongueTip');
+  // the tongue is drawn on its own sticky layer, the twin of the chameleon's (same cell, same height),
+  // above the projects; the chameleon's shape is cut out of it so it comes out of the mouth
+  const layer = $('#workTongue'), chamBody = $('.cham-body'), chamCut = $('#tongueMaskCham');
+  chamCut.setAttribute('d', chamBody.querySelector('path').getAttribute('d'));
+  const syncLayer = () => { layer.style.height = workStage.offsetHeight + 'px'; };
+  new ResizeObserver(syncLayer).observe(workStage);
+  syncLayer();
 
   const tabSvg = i => `<svg class="work-card__svg" viewBox="0 0 742 497" fill="none" aria-hidden="true">
 <path d="M0 13.7C0 6.13367 6.13368 0 13.7 0H727.344C734.91 0 741.044 6.13368 741.044 13.7V48.5726H0V13.7Z" fill="currentColor"/>
@@ -111,10 +118,12 @@
     else if (goal < ext) ext = Math.max(0, ext - dt / .12);
 
     if (target >= 0 && !PHONE.matches) {
-      const cb = cham.getBoundingClientRect(), z = cb.width / parseFloat(getComputedStyle(cham).width);
-      const local = (px, py) => ({ x: (px - cb.left) / z, y: (py - cb.top) / z });
+      const lr = layer.getBoundingClientRect(), z = lr.width / parseFloat(getComputedStyle(layer).width);
+      const local = (px, py) => ({ x: (px - lr.left) / z, y: (py - lr.top) / z });
       const mc = centre(mouth), r = cards[target].querySelector('.work-card__thumb').getBoundingClientRect();
-      const m = local(mc.x, mc.y), t = local(Math.max(mc.x, r.left), mc.y);
+      const m = local(mc.x, mc.y), t = local(clamp(mc.x, r.left + 28 * z, r.right - 28 * z), mc.y);
+      const cb = chamBody.getBoundingClientRect(), o = local(cb.left, cb.top);
+      chamCut.setAttribute('transform', `translate(${o.x} ${o.y}) scale(${cb.width / z / 361} ${cb.height / z / 308})`);
       const k = easeOut(ext), x = m.x + (t.x - m.x) * k, y = m.y + (t.y - m.y) * k;
       const dist = Math.hypot(x - m.x, y - m.y);
       tongue.setAttribute('d', dist > 2 ? `M${m.x},${m.y} L${x},${y}` : '');
