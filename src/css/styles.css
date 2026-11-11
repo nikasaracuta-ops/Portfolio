@@ -141,7 +141,7 @@ body::before {
 .ttl-hello { font-weight: 700; font-size: 8rem; line-height: 1.25; color: #fff; }
 .ttl-work { font-size: 6rem; line-height: 6.3125rem; color: var(--color-pink); }
 .ttl-open { font-size: 6rem; line-height: 6.5625rem; color: #fff; text-align: center; }
-.ttl-open span { color: #D8FF66; }
+.ttl-open .ttl__line--accent { color: #D8FF66; }
 
 .hero-sub { margin: 0; font: 300 3.1463rem/1.3 var(--font-heading); color: #fff; white-space: nowrap; }
 
@@ -628,6 +628,46 @@ a:focus-visible { outline: 2px solid var(--color-white); outline-offset: 4px; }
 .work-card.work-card--drop[hidden] { display: none; }
 
 /* ---------- Phones ---------- */
+/* ---------- Scroll effects ---------- */
+.bubbles { display: none; position: absolute; left: 0; top: -120px; width: 100%; height: 900px; pointer-events: none; view-timeline: --sea; }
+.bubbles i { position: absolute; left: var(--bl); top: var(--bt); width: var(--bs); aspect-ratio: 1; }
+.bubbles i::before {
+  content: ""; position: absolute; inset: 0; border-radius: 50%; border: 1.5px solid rgba(255, 255, 255, .55);
+  background: radial-gradient(circle at 32% 30%, rgba(255, 255, 255, .8) 0 10%, rgba(255, 255, 255, .14) 34%, rgba(255, 255, 255, .04) 70%);
+  animation: bubble-wobble var(--bw, 3s) ease-in-out infinite alternate;
+}
+.bubbles i:nth-child(1) { --bl: 8%; --bt: 70%; --bs: 26px; --rise: 260px; }
+.bubbles i:nth-child(2) { --bl: 14%; --bt: 82%; --bs: 12px; --rise: 140px; --bw: 2.2s; }
+.bubbles i:nth-child(3) { --bl: 27%; --bt: 60%; --bs: 18px; --rise: 200px; --bw: 3.6s; }
+.bubbles i:nth-child(4) { --bl: 41%; --bt: 88%; --bs: 9px; --rise: 110px; --bw: 2.6s; }
+.bubbles i:nth-child(5) { --bl: 58%; --bt: 74%; --bs: 22px; --rise: 240px; }
+.bubbles i:nth-child(6) { --bl: 66%; --bt: 92%; --bs: 11px; --rise: 130px; --bw: 2.4s; }
+.bubbles i:nth-child(7) { --bl: 77%; --bt: 64%; --bs: 16px; --rise: 190px; --bw: 3.3s; }
+.bubbles i:nth-child(8) { --bl: 86%; --bt: 80%; --bs: 30px; --rise: 280px; --bw: 4s; }
+.bubbles i:nth-child(9) { --bl: 93%; --bt: 90%; --bs: 10px; --rise: 120px; --bw: 2.8s; }
+@keyframes bubble-wobble { to { transform: translateX(6px); } }
+@keyframes bubble-rise { from { translate: 0 var(--rise); } to { translate: 0 calc(var(--rise) * -1); } }
+@keyframes split { to { transform: translateX(var(--split)); opacity: 0; } }
+@keyframes drift-up { to { transform: translateY(-120px); opacity: 0; } }
+@keyframes line-in { from { transform: translateX(var(--from)); opacity: 0; } }
+@keyframes lit { from { opacity: .28; } }
+
+@supports (animation-timeline: scroll()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .ttl-portfolio .pf1, .ttl-portfolio .pf2 { display: inline-block; animation: split linear both; animation-timeline: scroll(root); animation-range: 0 80vh; }
+    .ttl-portfolio .pf1 { --split: -30%; }
+    .ttl-portfolio .pf2 { --split: 30%; }
+    .hero .hero-sub { animation: drift-up linear both; animation-timeline: scroll(root); animation-range: 0 80vh; }
+
+    .ttl__line { display: inline-block; animation: line-in linear both; animation-timeline: view(); animation-range: entry 10% cover 45%; }
+    .ttl__line:first-child { --from: -40%; }
+    .ttl__line:last-child { --from: 40%; }
+
+    .bubbles { display: block; }
+    .bubbles i { animation: bubble-rise linear both; animation-timeline: --sea; }
+  }
+}
+
 @media (max-width: 760px) {
   .stage {
     width: 100%; height: auto; display: flex; flex-direction: column;
@@ -648,6 +688,12 @@ a:focus-visible { outline: 2px solid var(--color-white); outline-offset: 4px; }
   #contact .ocean { position: absolute; left: 0; right: 0; bottom: 64px; height: 90px; width: auto; top: auto; }
   #contact .fish-swimmer { top: 0; }
   #contact .fish { width: 130px; filter: blur(2px); }
+  #contact .bubbles { top: 0; height: 100%; }
+  @supports (animation-timeline: view()) {
+    @media (prefers-reduced-motion: no-preference) {
+      .t-intro__word { animation: lit linear both; animation-timeline: view(); animation-range: entry 100% cover 62%; }
+    }
+  }
   #contact .coral { position: absolute; left: auto; right: 32px; top: auto; bottom: -6px; width: 128px; height: auto; }
   .pin-wrap, .pin { display: contents; }
 

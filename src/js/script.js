@@ -108,6 +108,24 @@ if (about && puff && cloudsL && cloudsR) {
   moveSky();
 }
 
+const intro = document.querySelector('.t-intro');
+if (intro) {
+  const walker = document.createTreeWalker(intro, NodeFilter.SHOW_TEXT), texts = [];
+  while (walker.nextNode()) texts.push(walker.currentNode);
+  for (const node of texts) {
+    const frag = document.createDocumentFragment();
+    for (const part of node.textContent.split(/(\s+)/)) {
+      if (!part) continue;
+      if (/^\s+$/.test(part)) { frag.append(part); continue; }
+      const word = document.createElement('span');
+      word.className = 't-intro__word';
+      word.textContent = part;
+      frag.append(word);
+    }
+    node.replaceWith(frag);
+  }
+}
+
 const fishSwimmer = document.getElementById('fishSwimmer');
 const ocean = fishSwimmer && fishSwimmer.closest('.ocean'), coral = document.querySelector('.stage > .coral');
 const oceanHome = ocean && ocean.nextElementSibling, coralHome = coral && coral.nextElementSibling;
