@@ -104,11 +104,12 @@ if (about && puff && cloudsL && cloudsR) {
 }
 
 const fishSwimmer = document.getElementById('fishSwimmer');
-const ocean = fishSwimmer && fishSwimmer.closest('.ocean'), oceanHome = ocean && ocean.nextElementSibling;
+const ocean = fishSwimmer && fishSwimmer.closest('.ocean'), coral = document.querySelector('.stage > .coral');
+const oceanHome = ocean && ocean.nextElementSibling, coralHome = coral && coral.nextElementSibling;
 function placeOcean() {
-  if (!ocean || !contact) return;
-  if (MOBILE.matches && ocean.parentElement !== contact) contact.appendChild(ocean);
-  else if (!MOBILE.matches && ocean.parentElement === contact) stage.insertBefore(ocean, oceanHome);
+  if (!ocean || !coral || !contact) return;
+  if (MOBILE.matches && ocean.parentElement !== contact) contact.append(ocean, coral);
+  else if (!MOBILE.matches && ocean.parentElement === contact) { stage.insertBefore(ocean, oceanHome); stage.insertBefore(coral, coralHome); }
 }
 placeOcean();
 MOBILE.addEventListener('change', placeOcean);

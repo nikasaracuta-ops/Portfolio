@@ -637,6 +637,7 @@ a:focus-visible { outline: 2px solid var(--color-white); outline-offset: 4px; }
   #contact .ocean { position: absolute; left: 0; right: 0; bottom: 64px; height: 90px; width: auto; top: auto; }
   #contact .fish-swimmer { top: 0; }
   #contact .fish { width: 130px; filter: blur(2px); }
+  #contact .coral { position: absolute; left: auto; right: 32px; top: auto; bottom: -6px; width: 128px; height: auto; }
   .pin-wrap, .pin { display: contents; }
 
   .sec {
@@ -716,8 +717,7 @@ a:focus-visible { outline: 2px solid var(--color-white); outline-offset: 4px; }
   .stage > .deco, .stage > .sea { display: none; }
   .pin-fog { display: none; }
   #contact {
-    background: url("../assets/coral.svg") right 32px bottom -6px / 128px auto no-repeat,
-                url("../assets/coral-small.svg") left 81px bottom -6px / 70px auto no-repeat,
+    background: url("../assets/coral-small.svg") left 81px bottom -6px / 70px auto no-repeat,
                 url("../assets/seabed.svg") center bottom -6px / 110% auto no-repeat, linear-gradient(var(--color-aqua), var(--color-blue));
   }
   #open { width: auto; font-size: clamp(2.75rem, 13vw, 3.168rem); line-height: 1.094; white-space: normal; }
