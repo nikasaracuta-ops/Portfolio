@@ -2,14 +2,14 @@
 PROJECTS list below and one shared template, so they all share the same structure.
 Edit the texts here, then run:  python3 scripts/build-projects.py && scripts/bump-versions.sh"""
 import html, pathlib, re
-from urllib.parse import quote
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 
 TAB = re.search(r"const tabSvg = i => `(<svg[\s\S]*?</svg>)`", (ROOT / 'src/js/chameleon.js').read_text()).group(1)
 
 PROJECTS = [
-  dict(file='dior.html', name='Dior', tab='#E770B2', live='site', fields_rows=True,
+  dict(file='dior.html', name='Dior', tab='#E770B2', fields_rows=True,
+       result_video=('src/assets/dior/site-scroll.mp4', 'src/assets/dior/site-scroll.webp', 1440, 778, 'Scrolling through the Dior story'),
        title_text='Dior',
        lede='MoMu – Dress to Impress: an interactive longread for MoMu – Fashion Museum Antwerp',
        subtitle=('MoMu – Dress to Impress', 'An interactive longread for MoMu – Fashion Museum Antwerp'),
@@ -37,7 +37,7 @@ PROJECTS = [
        palettes=None,
        palette_dots=['linear-gradient(160deg, #787D85, #B5B7B9 50%, #747C80)', '#BECD8D', '#AF9BE9', '#4796A4', 'linear-gradient(#142B2C, #106C81)'],
        styleboard=('src/assets/moea/styleboard.webp', 2000, 1413, 'Moea styleboard: chrome, stone, moss, flowers and water', 'I wanted to go for a chrome style in combination with natural elements: liquid metal next to stone, moss, flowers and water.'),
-       live=None, zoom=True,
+       zoom=True,
               title_text='MOEA',
        lede='An animated 3D website hero for Moea, a sustainable fashion brand',
        tags=['3D hero', 'Animation', 'Web design'],
@@ -56,7 +56,7 @@ PROJECTS = [
        board_switch=('Light', 'Dark'),
        styleboard=('src/assets/type01/styleboard-light.webp', 2000, 1258, 'Styleboard, light version', 'I created two styleboards, one for a light and one for a dark mode, both mixing bold type with pixel and halftone patterns, collaged photography, pink and green. The final website uses the light mode.'),
        styleboard_b=('src/assets/type01/styleboard-dark.webp', 2000, 1246, 'Styleboard, dark version'),
-       live='figma',
+       result_image=('src/assets/type01/tickets.webp', 1600, 1000, 'The TYPE01 tickets page'),
               lede='Conference website for desktop and mobile',
        tags=['UI', 'UX', 'Graphic design', 'Web design'],
        cta=('See Prototype', 'https://www.figma.com/proto/PsD6Cg8ngFq6yRWCCm5I9q/Type01?page-id=0%3A1&node-id=468-7480&viewport=-2609%2C-2191%2C0.15&t=KQAR1eAcC8Ls4MeP-1&scaling=min-zoom&content-scaling=fixed&starting-point-node-id=580%3A48961')),
@@ -74,7 +74,6 @@ PROJECTS = [
        board_switch=('Brandboard', 'App'),
        board_badge=('See brandboard', 'src/assets/miles/brandboard.webp', 'The Miles & Meals brandboard'),
        styleboard=('src/assets/miles/styleboard.webp', 2000, 1320, 'Miles & Meals styleboard: linocut fish and waves, tile patterns, navy and red', 'At first the style focused on linocut imagery and traditional patterns from different cultures, but during the app design process it became simpler.'),
-       live='figma',
               title_text='Miles &amp; Meals',
        lede='A world of flavours in every box — brand identity and app',
        
@@ -155,13 +154,14 @@ def dior_main(p):
         boards = f'<img class="on" src="{sb[0]}" width="{sb[1]}" height="{sb[2]}" alt="{html.escape(sb[3])}" loading="lazy">'
     rphone = (f'<button class="phone phone--overlay" data-zoom aria-label="Enlarge the mobile version"><img class="phone__image on" src="{m[0]}" width="{m[1]}" height="{m[2]}" alt="{html.escape(m[3])}" loading="lazy"></button>'
               if p.get('result_phone') else '')
-    if p.get('live') == 'site':
-        result = f'<div class="d-panes d-live" data-src="{html.escape(cta[1])}"></div>'
-    elif p.get('live') == 'figma':
-        emb = 'https://www.figma.com/embed?embed_host=share&url=' + quote(cta[1], safe='')
-        result = f'<div class="d-panes d-live" data-src="{html.escape(emb)}"></div>' + rphone
+    if p.get('result_video'):
+        v = p['result_video']
+        result = (f'<video class="d-panes d-video" poster="{v[1]}" width="{v[2]}" height="{v[3]}" muted loop playsinline preload="none" aria-label="{html.escape(v[4])}">'
+                  f'<source src="{v[0].replace(".mp4", ".webm")}" type="video/webm"><source src="{v[0]}" type="video/mp4"></video>'
+                  + rphone)
     else:
-        result = (f'<button class="d-panes d-zoomable" data-zoom aria-label="Enlarge the website"><img class="d-still on" src="{d[0]}" width="{d[1]}" height="{d[2]}" alt="{html.escape(d[3])}" loading="lazy"></button>'
+        still = p.get('result_image') or d
+        result = (f'<button class="d-panes d-zoomable" data-zoom aria-label="Enlarge the website"><img class="d-still on" src="{still[0]}" width="{still[1]}" height="{still[2]}" alt="{html.escape(still[3])}" loading="lazy"></button>'
                   + rphone)
     shot = window(*d, p['tab']).replace('</figure>', f'  <span class="d-url" aria-hidden="true">{p["url"]}</span>\n      </figure>', 1)
     link = (ROOT / 'src/assets/dior/icon-link.svg').read_text().replace('fill="white"', 'fill="currentColor"').replace('<svg ', '<svg class="d-cta-icon" aria-hidden="true" ', 1)
@@ -181,6 +181,14 @@ def dior_main(p):
     badge = zoom_badge if p.get('zoom') else '' if not cta else (f'<a class="d-badge" href="{html.escape(cta[1])}" target="_blank" rel="noopener" aria-label="{cta[0]} (opens the website)">'
              f'<svg class="d-badge-ring" viewBox="0 0 120 120" aria-hidden="true"><defs><path id="badgeRing" d="M60 60m-44 0a44 44 0 1 1 88 0a44 44 0 1 1-88 0"/></defs>'
              f'<text><textPath href="#badgeRing" textLength="272">{cta[0].upper()} • {cta[0].upper()} •</textPath></text></svg>{link}</a>')
+    browser = f'''<div class="d-browser reveal">
+        <div class="d-browser-bar">
+          <span class="d-lights" aria-hidden="true"><i></i><i></i><i></i></span>
+          <div class="d-browser-addr"><span class="d-addr">{url}</span></div>
+        </div>
+        {result}
+        {badge}
+      </div>'''
     return f"""
     <section class="d-intro">
       <div class="d-intro-text">
@@ -218,14 +226,7 @@ def dior_main(p):
 
     <section class="p-result d-result" aria-labelledby="result-h">
       <h2 class="p-h reveal" id="result-h">{ink("The Result")}</h2>
-      {phone_result if p.get('result_mode') == 'phone' else ''}<div class="d-browser reveal"{' hidden' if p.get('result_mode') == 'phone' else ''}>
-        <div class="d-browser-bar">
-          <span class="d-lights" aria-hidden="true"><i></i><i></i><i></i></span>
-          <div class="d-browser-addr"><span class="d-addr">{url}</span></div>
-        </div>
-        {result}
-        {badge}
-      </div>
+      {phone_result if p.get('result_mode') == 'phone' else browser}
     </section>
 """
 

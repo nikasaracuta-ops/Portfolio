@@ -63,16 +63,7 @@ if (sw && swatches.length) {
   }));
 }
 
-const live = document.querySelector('.d-live');
-if (live) {
-  const load = () => {
-    if (live.querySelector('iframe')) return;
-    const f = document.createElement('iframe');
-    f.src = live.dataset.src; f.title = 'The live Dior story'; f.loading = 'lazy';
-    live.append(f);
-  };
-  if ('IntersectionObserver' in window) {
-    const io = new IntersectionObserver((es) => { if (es.some((e) => e.isIntersecting)) { load(); io.disconnect(); } }, { rootMargin: '600px 0px' });
-    io.observe(live);
-  } else load();
-}
+document.querySelectorAll('.d-video').forEach((video) => {
+  if (reduced) { video.controls = true; video.preload = 'metadata'; return; }
+  new IntersectionObserver(([e]) => { if (e.isIntersecting) video.play().catch(() => {}); else video.pause(); }, { threshold: 0.25 }).observe(video);
+});

@@ -151,7 +151,7 @@ button.phone { cursor: zoom-in; }
 .phone--overlay { position: absolute; z-index: 2; left: -3%; bottom: -16%; width: 21%; }
 .phone--app { position: relative; width: 100%; }
 .d-result:has(.phone--overlay) .d-browser { margin-bottom: 9%; }
-.app-result { position: relative; width: min(46%, 23.75rem); margin: clamp(32px, 4vw, 52px) auto 0; }
+.app-result { position: relative; width: min(46%, 23.75rem, (100svh - 18rem) * .58); margin: clamp(24px, 3vw, 40px) auto 0; }
 .app-result .d-badge { right: -38%; bottom: 6%; }
 @media (max-width: 640px) {
   .phone--overlay { width: 30%; left: 2%; bottom: -12%; }
@@ -174,7 +174,7 @@ button.phone { cursor: zoom-in; }
 
 .d-result .p-h { margin: 0 auto; }
 .d-browser {
-  position: relative; margin: clamp(32px, 4vw, 52px) auto 0; width: min(100%, 1040px); text-align: left;
+  position: relative; margin: clamp(24px, 3vw, 40px) auto 0; width: min(100%, 1040px, (100svh - 18rem) * 1.6); text-align: left;
   padding: 0 10px 10px; border-radius: 20px; background: var(--tab, var(--accent));
 }
 .d-browser-bar { display: flex; align-items: center; gap: 14px; padding: 14px 8px 12px; }
@@ -187,7 +187,7 @@ button.phone { cursor: zoom-in; }
 .d-addr { display: block; padding: 8px 16px; border-radius: 999px; background: #fff; font: .8125rem/1 var(--font-body); color: #454545; text-align: center; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .d-panes { position: relative; aspect-ratio: 16 / 9.2; overflow: hidden; border-radius: 4px 4px 12px 12px; background: #F0F1ED; }
 
-.d-live iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; background: #F0F1ED; }
+.d-video { display: block; width: 100%; height: auto; object-fit: cover; object-position: top center; }
 
 .d-badge {
   position: absolute; z-index: 3; right: -4%; bottom: -6%; width: clamp(104px, 12vw, 148px); aspect-ratio: 1; border-radius: 50%;
