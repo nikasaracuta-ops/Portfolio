@@ -34,8 +34,7 @@ body { background: #fff; overflow-x: hidden; font-stretch: 125%; font-family: va
   height: 6034px;
   overflow: clip;
 
-  background: url("../assets/clouds-hero.png?v=3") 0 0 / 1440px 2000px no-repeat,
-              var(--sky-h) 0 0 / 1440px 2000px no-repeat, var(--sky-v) 0 0 / 1440px 2000px no-repeat, #fff;
+  background: var(--sky-h) 0 0 / 1440px 2000px no-repeat, var(--sky-v) 0 0 / 1440px 2000px no-repeat, #fff;
 
 }
 
@@ -96,12 +95,17 @@ body { background: #fff; overflow-x: hidden; font-stretch: 125%; font-family: va
 @keyframes fish-tail { from { transform: rotate(-13deg); } to { transform: rotate(13deg); } }
 @media (prefers-reduced-motion: reduce) { .fish, .fish-tail, .fish-fin { animation: none; } }
 
+.cloud-half { --w: 1440px; --h: 459px; pointer-events: none; background: url("../assets/clouds-hero.png?v=3") 0 0 / 1440px 2000px no-repeat; }
+.pin .cloud-half { --h: 1541px; background-position: 0 -459px; }
+.cloud-half--l { --split: -30%; -webkit-mask-image: linear-gradient(to right, #000 38%, transparent 62%); mask-image: linear-gradient(to right, #000 38%, transparent 62%); }
+.cloud-half--r { --split: 30%; -webkit-mask-image: linear-gradient(to left, #000 38%, transparent 62%); mask-image: linear-gradient(to left, #000 38%, transparent 62%); }
+.clouds-front { --split: -30%; }
+
 /* ---------- About, pinned ---------- */
 .pin-wrap { position: absolute; left: 0; top: 459px; width: 1440px; height: 1880px; }
 .pin {
   position: sticky; top: var(--pin-top, -361px); width: 1440px; height: 1500px; overflow: clip;
-  background: url("../assets/clouds-hero.png?v=3") 0 -459px / 1440px 2000px no-repeat,
-              var(--sky-h) 0 -459px / 1440px 2000px no-repeat, var(--sky-v) 0 -459px / 1440px 2000px no-repeat, #fff;
+  background: var(--sky-h) 0 -459px / 1440px 2000px no-repeat, var(--sky-v) 0 -459px / 1440px 2000px no-repeat, #fff;
 }
 
 .sky-puff, .clouds-px { pointer-events: none; }
@@ -654,9 +658,7 @@ a:focus-visible { outline: 2px solid var(--color-white); outline-offset: 4px; }
 
 @supports (animation-timeline: scroll()) {
   @media (prefers-reduced-motion: no-preference) {
-    .ttl-portfolio .pf1, .ttl-portfolio .pf2 { display: inline-block; animation: split linear both; animation-timeline: scroll(root); animation-range: 0 80vh; }
-    .ttl-portfolio .pf1 { --split: -30%; }
-    .ttl-portfolio .pf2 { --split: 30%; }
+    .cloud-half, .clouds-front { animation: split linear both; animation-timeline: scroll(root); animation-range: 0 80vh; }
     .hero .hero-sub { animation: drift-up linear both; animation-timeline: scroll(root); animation-range: 0 80vh; }
 
     .ttl__line { display: inline-block; animation: line-in linear both; animation-timeline: view(); animation-range: entry 10% cover 45%; }
@@ -675,7 +677,7 @@ a:focus-visible { outline: 2px solid var(--color-white); outline-offset: 4px; }
       rgb(189, 153, 200) 980px, rgb(220, 207, 230) 1080px, rgb(239, 237, 246) 1180px, #fff 1280px) 0 0 / 100% 1280px no-repeat, #fff;
   }
   .hero { order: 1; } #about { order: 2; } .clouds-px { order: 3; } #work { order: 4; } .sunset { order: 5; } #contact { order: 6; }
-  .sky-puff, .clouds-front { display: none !important; }
+  .sky-puff, .clouds-front, .cloud-half { display: none !important; }
   .clouds-px { position: relative; z-index: 2; left: 0; top: 0; width: 160vw; max-width: none; height: auto; aspect-ratio: 720 / 455; margin: -400px 0 0 -30vw;
     --puff: rgba(255, 255, 255, .9); filter: blur(6px);
     background: radial-gradient(16% 22% at 26% 46%, var(--puff), transparent), radial-gradient(14% 20% at 38% 52%, var(--puff), transparent),
