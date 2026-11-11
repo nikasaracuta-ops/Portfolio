@@ -281,6 +281,7 @@ a:focus-visible { outline: 2px solid var(--color-white); outline-offset: 4px; }
   font: 400 30px var(--font-heading); color: #fff;
 }
 .work-card .work-card__thumb img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: top center; }
+.work-card--dior .work-card__thumb img, .work-card--miles .work-card__thumb img { object-position: center; }
 
 @media (prefers-reduced-motion: reduce) {
   .work-card, .work-card .work-card__window::after, .cham path, #tongue, #tongueTip { transition: none; }

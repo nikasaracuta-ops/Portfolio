@@ -37,7 +37,7 @@
   const cards = PROJECTS.map((p, i) => {
     const li = document.createElement('li');
     const b = document.createElement('button');
-    b.className = 'work-card'; b.style.setProperty('--c', p.bg); b.style.setProperty('--tab', p.tab || '#E770B2');
+    b.className = `work-card work-card--${p.page.replace('.html', '')}`; b.style.setProperty('--c', p.bg); b.style.setProperty('--tab', p.tab || '#E770B2');
     b.setAttribute('aria-label', `Open project ${i + 1}: ${p.name}`);
     b.innerHTML = `<span class="work-card__window"><span class="work-card__thumb"><img src="${p.img}" alt="" loading="lazy" decoding="async"></span>${tabSvg(i)}</span><span class="work-card__caption" aria-hidden="true"><b>${p.name}</b><small>${p.kind}</small></span>`;
     b.addEventListener('click', () => window.goTo(p.page));
