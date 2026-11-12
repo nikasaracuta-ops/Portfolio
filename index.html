@@ -12,7 +12,7 @@
   <link rel="stylesheet" href="https://use.typekit.net/gfn8yzd.css">
   <link rel="stylesheet" href="https://fonts.cdnfonts.com/css/wasted-vindey">
   <link rel="stylesheet" href="src/css/reset.css?v=f0fbd376">
-  <link rel="stylesheet" href="src/css/styles.css?v=b5d07733">
+  <link rel="stylesheet" href="src/css/styles.css?v=f99c061b">
   <script>document.documentElement.classList.add('js', 'is-loading'); try { if (sessionStorage.getItem('dreamIn')) { sessionStorage.removeItem('dreamIn'); document.documentElement.classList.add('dream-in'); } } catch (e) {}</script>
 </head>
 <body>
@@ -97,7 +97,6 @@
     </section>
 
     <footer class="sec" id="contact" aria-labelledby="open">
-      <div class="bubbles" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
       <h2 class="l reveal ttl ttl-open" id="open"><span class="ttl__line">Open for</span><br><span class="ttl__line ttl__line--accent">New projects</span></h2>
       <address>
         <a class="l reveal t-email" href="mailto:nikasaracuta@gmail.com">nikasaracuta@gmail.com <span aria-hidden="true">→</span></a>
@@ -136,32 +135,37 @@
   <div class="cloudpop" id="aboutPop" role="dialog" aria-modal="true" aria-labelledby="about-h" hidden>
     <button class="cp-close cp-back" id="cpClose" type="button" aria-label="Back to the portfolio"><span class="cp-back-dot" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M20 12H5M11 5l-7 7 7 7"/></svg></span><span>Back</span></button>
     <section class="field">
-    <header class="field-head">
-      <p class="fg-eyebrow"><span>Field guide</span><i aria-hidden="true"></i><span>Species no. 2005</span></p>
-      <h2 id="about-h" class="fg-name">Nika Saracuta</h2>
+    <header class="bio__head">
+      <h2 id="about-h" class="bio__name">Nika Saracuta</h2>
+      <p class="bio__species">Species no. #2005</p>
     </header>
 
-    <div class="plate" id="plate">
-      <figure class="portrait">
-        <div class="photo-card"><div class="photo" id="polaroid">
-          <img class="me" src="src/assets/about/me.webp" width="700" height="1000" alt="Portrait of Nika Saracuta">
-        </div></div>
-      </figure>
-      <dl class="facts-list">
-        <div><dt>Age</dt><dd>21</dd></div>
-        <div><dt>Education</dt><dd>Bachelor of Digital Design and Development, DEVINE / Howest University of Applied Sciences</dd></div>
-        <div><dt>Specialises in</dt><dd>Visual design &amp; experience design</dd></div>
-        <div><dt>Languages</dt><dd>Italian, Russian, French, English, Chinese</dd></div>
-        <div><dt>Drawn to</dt><dd>Sustainability, nature, art</dd></div>
-        <div><dt>Inspired by</dt><dd>All kinds of creative fields</dd></div>
-        <div class="wide"><dt>Status</dt><dd><i class="pulse" aria-hidden="true"></i>Looking for an internship, February 15 – May 21, 2027</dd></div>
-      </dl>
+    <div class="bio__portrait" id="plate">
+      <figure class="bio__polaroid"><span class="bio__frame"><img class="bio__photo" src="src/assets/about/me.webp" width="700" height="1000" alt="Portrait of Nika Saracuta"></span></figure>
+      <p class="bio__hello" aria-hidden="true"><svg class="bio__sun" viewBox="0 0 100 100"><polygon points="50.0,0.0 54.9,9.3 62.0,1.5 64.5,11.7 73.2,5.7 73.3,16.3 83.2,12.6 80.7,22.8 91.1,21.6 86.3,30.9 96.8,32.3 89.8,40.2 99.6,44.0 91.0,50.0 99.6,56.0 89.8,59.8 96.8,67.7 86.3,69.1 91.1,78.4 80.7,77.2 83.2,87.4 73.3,83.7 73.2,94.3 64.5,88.3 62.0,98.5 54.9,90.7 50.0,100.0 45.1,90.7 38.0,98.5 35.5,88.3 26.8,94.3 26.7,83.7 16.8,87.4 19.3,77.2 8.9,78.4 13.7,69.1 3.2,67.7 10.2,59.8 0.4,56.0 9.0,50.0 0.4,44.0 10.2,40.2 3.2,32.3 13.7,30.9 8.9,21.6 19.3,22.8 16.8,12.6 26.7,16.3 26.8,5.7 35.5,11.7 38.0,1.5 45.1,9.3"/></svg><span class="bio__word" id="helloWord">Ciao!</span></p>
     </div>
 
-    <button class="cp-more" id="cpMore" type="button"><span>Main tools</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12l7 7 7-7"/></svg></button>
+    <div class="bio__story">
+      <p class="bio__lead">I’m an Italian design student based in Belgium, currently in the final year of my studies.</p>
+      <div class="bio__text">
+        <p>I’m inspired by a little bit of everything: nature, art, science, photography, fashion, history, culture and more. I enjoy collecting ideas and finding ways to bring them together through design.</p>
+        <p>This semester, I’m learning about <b>More-than-Human Design</b> and <b>Blender</b>, and I’m looking for a spring internship where I can put my skills into practice and improve them along the way.</p>
+      </div>
+    </div>
+
+    <dl class="facts-list">
+      <div><dt>Age</dt><dd>21</dd></div>
+      <div><dt>Specialises in</dt><dd>Visual design &amp; experience design</dd></div>
+      <div><dt>Languages</dt><dd>Italian, Russian, French, English, Chinese</dd></div>
+      <div><dt>Education</dt><dd>Bachelor of Digital Design and Development, DEVINE / Howest University of Applied Sciences</dd></div>
+      <div><dt>Drawn to</dt><dd>Sustainability, nature, art</dd></div>
+      <div><dt>Status</dt><dd>Looking for an internship, February 15 – May 21, 2027</dd></div>
+    </dl>
+
+    <button class="cp-more" id="cpMore" type="button"><span>What I use</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12l7 7 7-7"/></svg></button>
 
     <div class="toolbox" id="toolbox">
-      <h3>Main tools</h3>
+      <h3>What I use…</h3>
       <div class="tool-groups">
         <div class="tg"><span class="tg-label">Visual &amp; experience design</span><ul class="tools g1"><li class="tool" tabindex="0" aria-label="Figma"><span class="flower"><span class="head"><svg class="burst" viewBox="0 0 100 100" aria-hidden="true"><polygon points="50.0,2.0 58.7,12.0 70.8,6.8 74.3,19.5 87.5,20.1 85.1,33.1 96.8,39.3 89.0,50.0 96.8,60.7 85.1,66.9 87.5,79.9 74.3,80.5 70.8,93.2 58.7,88.0 50.0,98.0 41.3,88.0 29.2,93.2 25.7,80.5 12.5,79.9 14.9,66.9 3.2,60.7 11.0,50.0 3.2,39.3 14.9,33.1 12.5,20.1 25.7,19.5 29.2,6.8 41.3,12.0"/></svg><img src="src/assets/tools/figma.svg" width="64" height="64" alt="" loading="lazy"><span class="word" aria-hidden="true">Figma</span></span><svg class="stem" viewBox="0 0 40 160" preserveAspectRatio="none" aria-hidden="true"><path class="st" d="M20 0 C18 50 23 100 20 160"/><path class="lf" d="M20 92 C8 82 2 70 4 58 C14 62 20 74 20 92Z"/><path class="lf r" d="M20 120 C32 110 38 98 36 86 C26 90 20 102 20 120Z"/></svg></span></li><li class="tool" tabindex="0" aria-label="Miro"><span class="flower"><span class="head"><svg class="burst" viewBox="0 0 100 100" aria-hidden="true"><polygon points="50.0,2.0 58.7,12.0 70.8,6.8 74.3,19.5 87.5,20.1 85.1,33.1 96.8,39.3 89.0,50.0 96.8,60.7 85.1,66.9 87.5,79.9 74.3,80.5 70.8,93.2 58.7,88.0 50.0,98.0 41.3,88.0 29.2,93.2 25.7,80.5 12.5,79.9 14.9,66.9 3.2,60.7 11.0,50.0 3.2,39.3 14.9,33.1 12.5,20.1 25.7,19.5 29.2,6.8 41.3,12.0"/></svg><img src="src/assets/tools/miro.svg" width="64" height="64" alt="" loading="lazy"><span class="word" aria-hidden="true">Miro</span></span><svg class="stem" viewBox="0 0 40 160" preserveAspectRatio="none" aria-hidden="true"><path class="st" d="M20 0 C18 50 23 100 20 160"/><path class="lf" d="M20 92 C8 82 2 70 4 58 C14 62 20 74 20 92Z"/><path class="lf r" d="M20 120 C32 110 38 98 36 86 C26 90 20 102 20 120Z"/></svg></span></li><li class="tool mid" tabindex="0" aria-label="Photoshop"><span class="flower"><span class="head"><svg class="burst" viewBox="0 0 100 100" aria-hidden="true"><polygon points="50.0,2.0 58.7,12.0 70.8,6.8 74.3,19.5 87.5,20.1 85.1,33.1 96.8,39.3 89.0,50.0 96.8,60.7 85.1,66.9 87.5,79.9 74.3,80.5 70.8,93.2 58.7,88.0 50.0,98.0 41.3,88.0 29.2,93.2 25.7,80.5 12.5,79.9 14.9,66.9 3.2,60.7 11.0,50.0 3.2,39.3 14.9,33.1 12.5,20.1 25.7,19.5 29.2,6.8 41.3,12.0"/></svg><img src="src/assets/tools/photoshop.svg" width="64" height="64" alt="" loading="lazy"><span class="word" aria-hidden="true">Photoshop</span></span><svg class="stem" viewBox="0 0 40 160" preserveAspectRatio="none" aria-hidden="true"><path class="st" d="M20 0 C18 50 23 100 20 160"/><path class="lf" d="M20 92 C8 82 2 70 4 58 C14 62 20 74 20 92Z"/><path class="lf r" d="M20 120 C32 110 38 98 36 86 C26 90 20 102 20 120Z"/></svg></span></li><li class="tool long" tabindex="0" aria-label="Illustrator"><span class="flower"><span class="head"><svg class="burst" viewBox="0 0 100 100" aria-hidden="true"><polygon points="50.0,2.0 58.7,12.0 70.8,6.8 74.3,19.5 87.5,20.1 85.1,33.1 96.8,39.3 89.0,50.0 96.8,60.7 85.1,66.9 87.5,79.9 74.3,80.5 70.8,93.2 58.7,88.0 50.0,98.0 41.3,88.0 29.2,93.2 25.7,80.5 12.5,79.9 14.9,66.9 3.2,60.7 11.0,50.0 3.2,39.3 14.9,33.1 12.5,20.1 25.7,19.5 29.2,6.8 41.3,12.0"/></svg><img src="src/assets/tools/illustrator.svg" width="64" height="64" alt="" loading="lazy"><span class="word" aria-hidden="true">Illustrator</span></span><svg class="stem" viewBox="0 0 40 160" preserveAspectRatio="none" aria-hidden="true"><path class="st" d="M20 0 C18 50 23 100 20 160"/><path class="lf" d="M20 92 C8 82 2 70 4 58 C14 62 20 74 20 92Z"/><path class="lf r" d="M20 120 C32 110 38 98 36 86 C26 90 20 102 20 120Z"/></svg></span></li><li class="tool mid" tabindex="0" aria-label="Procreate"><span class="flower"><span class="head"><svg class="burst" viewBox="0 0 100 100" aria-hidden="true"><polygon points="50.0,2.0 58.7,12.0 70.8,6.8 74.3,19.5 87.5,20.1 85.1,33.1 96.8,39.3 89.0,50.0 96.8,60.7 85.1,66.9 87.5,79.9 74.3,80.5 70.8,93.2 58.7,88.0 50.0,98.0 41.3,88.0 29.2,93.2 25.7,80.5 12.5,79.9 14.9,66.9 3.2,60.7 11.0,50.0 3.2,39.3 14.9,33.1 12.5,20.1 25.7,19.5 29.2,6.8 41.3,12.0"/></svg><img src="src/assets/tools/procreate.webp" width="64" height="64" alt="" loading="lazy"><span class="word" aria-hidden="true">Procreate</span></span><svg class="stem" viewBox="0 0 40 160" preserveAspectRatio="none" aria-hidden="true"><path class="st" d="M20 0 C18 50 23 100 20 160"/><path class="lf" d="M20 92 C8 82 2 70 4 58 C14 62 20 74 20 92Z"/><path class="lf r" d="M20 120 C32 110 38 98 36 86 C26 90 20 102 20 120Z"/></svg></span></li></ul></div>
         <div class="tg"><span class="tg-label">Motion &amp; 3D</span><ul class="tools g2"><li class="tool long" tabindex="0" aria-label="After Effects"><span class="flower"><span class="head"><svg class="burst" viewBox="0 0 100 100" aria-hidden="true"><polygon points="50.0,2.0 58.7,12.0 70.8,6.8 74.3,19.5 87.5,20.1 85.1,33.1 96.8,39.3 89.0,50.0 96.8,60.7 85.1,66.9 87.5,79.9 74.3,80.5 70.8,93.2 58.7,88.0 50.0,98.0 41.3,88.0 29.2,93.2 25.7,80.5 12.5,79.9 14.9,66.9 3.2,60.7 11.0,50.0 3.2,39.3 14.9,33.1 12.5,20.1 25.7,19.5 29.2,6.8 41.3,12.0"/></svg><img src="src/assets/tools/aftereffects.svg" width="64" height="64" alt="" loading="lazy"><span class="word" aria-hidden="true">After Effects</span></span><svg class="stem" viewBox="0 0 40 160" preserveAspectRatio="none" aria-hidden="true"><path class="st" d="M20 0 C18 50 23 100 20 160"/><path class="lf" d="M20 92 C8 82 2 70 4 58 C14 62 20 74 20 92Z"/><path class="lf r" d="M20 120 C32 110 38 98 36 86 C26 90 20 102 20 120Z"/></svg></span></li><li class="tool mid" tabindex="0" aria-label="Blender"><span class="flower"><span class="head"><svg class="burst" viewBox="0 0 100 100" aria-hidden="true"><polygon points="50.0,2.0 58.7,12.0 70.8,6.8 74.3,19.5 87.5,20.1 85.1,33.1 96.8,39.3 89.0,50.0 96.8,60.7 85.1,66.9 87.5,79.9 74.3,80.5 70.8,93.2 58.7,88.0 50.0,98.0 41.3,88.0 29.2,93.2 25.7,80.5 12.5,79.9 14.9,66.9 3.2,60.7 11.0,50.0 3.2,39.3 14.9,33.1 12.5,20.1 25.7,19.5 29.2,6.8 41.3,12.0"/></svg><img src="src/assets/tools/blender.webp" width="64" height="64" alt="" loading="lazy"><span class="word" aria-hidden="true">Blender</span></span><svg class="stem" viewBox="0 0 40 160" preserveAspectRatio="none" aria-hidden="true"><path class="st" d="M20 0 C18 50 23 100 20 160"/><path class="lf" d="M20 92 C8 82 2 70 4 58 C14 62 20 74 20 92Z"/><path class="lf r" d="M20 120 C32 110 38 98 36 86 C26 90 20 102 20 120Z"/></svg></span></li></ul></div>
@@ -180,7 +184,7 @@
   <script src="src/js/common.js?v=43381422"></script>
   <script src="src/js/loader.js?v=2f1249f5"></script>
   <script src="src/js/script.js?v=8c6b7368"></script>
-  <script src="src/js/about.js?v=5a08b923"></script>
+  <script src="src/js/about.js?v=a87ad87d"></script>
   <script src="src/js/bird.js?v=82b9588a"></script>
   <script src="src/js/chameleon.js?v=befcd5fa"></script>
 </body>

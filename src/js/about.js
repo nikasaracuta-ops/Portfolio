@@ -5,6 +5,19 @@
   const pop = $('#aboutPop'), plate = $('#plate'), closeBtn = $('#cpClose');
   let opener = null, origin = null, anim = 0;
 
+  const helloWord = $('#helloWord'), GREETINGS = ['Ciao!', 'Hola!', '你好!', 'Hello!', 'Salut!', 'Hallo!', 'Привет!'];
+  let greet = 0, greetTimer = 0, swapTimer = 0;
+  function cycleGreeting() {
+    helloWord.classList.add('bio__word--out');
+    swapTimer = setTimeout(() => {
+      greet = (greet + 1) % GREETINGS.length;
+      helloWord.textContent = GREETINGS[greet];
+      helloWord.classList.remove('bio__word--out');
+    }, 300);
+  }
+  const startGreetings = () => { if (!reduce) greetTimer = setInterval(cycleGreeting, 1800); };
+  const stopGreetings = () => { clearInterval(greetTimer); clearTimeout(swapTimer); greet = 0; helloWord.textContent = GREETINGS[0]; helloWord.classList.remove('bio__word--out'); };
+
   function setMask(r, cx, cy, t) {
     pop.style.setProperty('--r', `${r}px`);
     pop.style.setProperty('--cx', `${cx}px`);
@@ -32,7 +45,7 @@
     pop.hidden = false; pop.scrollTop = 0; more.classList.remove('gone'); toolbox.classList.remove('in'); document.body.style.overflow = 'hidden'; plate.classList.remove('in');
     const finish = () => {
       pop.classList.add('full');
-      setTimeout(() => { plate.classList.add('in'); onPopScroll(); }, 250);
+      setTimeout(() => { plate.classList.add('in'); onPopScroll(); startGreetings(); }, 250);
       closeBtn.focus({ preventScroll: true, focusVisible: false });
     };
     if (reduce) { finish(); return; }
@@ -42,7 +55,7 @@
   function closeAbout() {
     if (pop.hidden) return;
     const end = () => {
-      pop.hidden = true; pop.classList.remove('full'); document.body.style.overflow = '';
+      pop.hidden = true; pop.classList.remove('full'); document.body.style.overflow = ''; stopGreetings();
       if (opener) opener.focus({ preventScroll: true });
     };
     if (reduce) { end(); return; }
@@ -55,6 +68,7 @@
   more.addEventListener('click', () => toolbox.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'start' }));
   const onPopScroll = () => {
     more.classList.toggle('gone', pop.scrollTop > 40);
+    pop.classList.toggle('cloudpop--scrolled', pop.scrollTop > 40);
     if (toolbox.getBoundingClientRect().top < innerHeight * .85) toolbox.classList.add('in');
   };
   pop.addEventListener('scroll', onPopScroll, { passive: true });
