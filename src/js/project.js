@@ -37,7 +37,7 @@ const lb = document.getElementById('lightbox');
 if (lb && lb.showModal) {
   const big = lb.querySelector('img');
   document.querySelectorAll('[data-zoom]').forEach(btn => btn.addEventListener('click', () => {
-    const img = btn.querySelector('img.on'); big.src = img.src; big.alt = img.alt; lb.showModal();
+    const img = btn.querySelector('img.on'); big.src = btn.dataset.full || img.src; big.alt = img.alt; lb.showModal();
   }));
   lb.querySelector('.p-lb-close').addEventListener('click', () => lb.close());
   lb.addEventListener('click', e => { if (e.target === lb) lb.close(); });

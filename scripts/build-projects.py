@@ -25,7 +25,7 @@ PROJECTS = [
                  ('Final website', ['#F0F1ED', '#E5ECEC', '#8EB5C5', '#AE7284', '#303030'])],
        styleboard=('src/assets/dior/styleboard.webp', 2400, 1697, 'Styleboard for the Dior longread',
                    'Archive photography of Dior’s couture, fashion sketches and a soft, powdery palette. While designing, the colours changed towards cooler tones.'),
-       cta=('See Prototype', 'https://nikasaracuta.github.io/Integration-3/')),
+       cta=('See website', 'https://nikasaracuta.github.io/Integration-3/')),
   dict(file='moea.html', name='Moea', tab='#3EBDCD',
        subtitle=('Moea – Mother Earth', 'An animated 3D website hero for a sustainable fashion brand'),
        year='2026', client='Moea', url='',
@@ -37,7 +37,7 @@ PROJECTS = [
        palettes=None,
        palette_dots=['linear-gradient(160deg, #787D85, #B5B7B9 50%, #747C80)', '#BECD8D', '#AF9BE9', '#4796A4', 'linear-gradient(#142B2C, #106C81)'],
        styleboard=('src/assets/moea/styleboard.webp', 2000, 1413, 'Moea styleboard: chrome, stone, moss, flowers and water', 'I wanted to go for a chrome style in combination with natural elements: liquid metal next to stone, moss, flowers and water.'),
-       zoom=True,
+       zoom=True, zoom_full=('src/assets/moea/zoom-desktop.webp', 'src/assets/moea/zoom-mobile.webp'),
               title_text='MOEA',
        lede='An animated 3D website hero for Moea, a sustainable fashion brand',
        tags=['3D hero', 'Animation', 'Web design'],
@@ -72,7 +72,6 @@ PROJECTS = [
        palette_squares=['#0C2968', '#FFC933', '#D42F25', '#D5F0FF'],
        palette_squares_b=['#0C2968', '#FFC933', '#D42F25', '#D5F0FF', '#BBD760'],
        board_switch=('Brandboard', 'App'),
-       board_badge=('See brandboard', 'src/assets/miles/brandboard.webp', 'The Miles & Meals brandboard'),
        styleboard=('src/assets/miles/styleboard.webp', 2000, 1320, 'Miles & Meals styleboard: linocut fish and waves, tile patterns, navy and red', 'At first the style focused on linocut imagery and traditional patterns from different cultures, but during the app design process it became simpler.'),
               title_text='Miles &amp; Meals',
        lede='A world of flavours in every box — brand identity and app',
@@ -138,13 +137,14 @@ def dior_main(p):
                    f'<span class="p-switch-pill" aria-hidden="true"></span></div><ul class="d-dots-pal" aria-label="Colour palette">{pal}</ul>')
     d, m, sb = p['desktop'], p['mobile'], p['styleboard']
     url, cta = p['url'], p['cta']
+    full_d, full_m = (f' data-full="{f}"' for f in p['zoom_full']) if p.get('zoom_full') else ('', '')
     if p.get('styleboard_b'):
         b2 = p['styleboard_b']
         boards = (f'<img class="on" data-board="a" src="{sb[0]}" width="{sb[1]}" height="{sb[2]}" alt="{html.escape(sb[3])}" loading="lazy">'
                   f'<img data-board="b" src="{b2[0]}" width="{b2[1]}" height="{b2[2]}" alt="{html.escape(b2[3])}" loading="lazy">')
     else:
         boards = f'<img class="on" src="{sb[0]}" width="{sb[1]}" height="{sb[2]}" alt="{html.escape(sb[3])}" loading="lazy">'
-    rphone = (f'<button class="phone phone--overlay" data-zoom aria-label="Enlarge the mobile version"><img class="phone__image on" src="{m[0]}" width="{m[1]}" height="{m[2]}" alt="{html.escape(m[3])}" loading="lazy"></button>'
+    rphone = (f'<button class="phone phone--overlay" data-zoom{full_m} aria-label="Enlarge the mobile version"><img class="phone__image on" src="{m[0]}" width="{m[1]}" height="{m[2]}" alt="{html.escape(m[3])}" loading="lazy"></button>'
               if p.get('result_phone') else '')
     if p.get('result_video'):
         v = p['result_video']
@@ -153,7 +153,7 @@ def dior_main(p):
                   + rphone)
     else:
         still = p.get('result_image') or d
-        result = (f'<button class="d-panes d-zoomable" data-zoom aria-label="Enlarge the website"><img class="d-still on" src="{still[0]}" width="{still[1]}" height="{still[2]}" alt="{html.escape(still[3])}" loading="lazy"></button>'
+        result = (f'<button class="d-panes d-zoomable" data-zoom{full_d} aria-label="Enlarge the website"><img class="d-still on" src="{still[0]}" width="{still[1]}" height="{still[2]}" alt="{html.escape(still[3])}" loading="lazy"></button>'
                   + rphone)
     shot = window(*d, p['tab']).replace('</figure>', f'  <span class="d-url" aria-hidden="true">{p["url"]}</span>\n      </figure>', 1)
     link = (ROOT / 'src/assets/dior/icon-link.svg').read_text().replace('fill="white"', 'fill="currentColor"').replace('<svg ', '<svg class="d-cta-icon" aria-hidden="true" ', 1)
@@ -161,13 +161,8 @@ def dior_main(p):
                     + (f'<a class="d-badge" href="{html.escape(cta[1])}" target="_blank" rel="noopener" aria-label="{cta[0]} (opens the prototype)">'
                        '<svg class="d-badge-ring" viewBox="0 0 120 120" aria-hidden="true"><defs><path id="prRing" d="M60 60m-44 0a44 44 0 1 1 88 0a44 44 0 1 1-88 0"/></defs>'
                        f'<text><textPath href="#prRing" textLength="272">{cta[0].upper()} • {cta[0].upper()} •</textPath></text></svg>{link}</a>' if cta else '') + '</div>')
-    bb = p.get('board_badge')
-    board_badge = '' if not bb else (f'<button class="d-badge d-board-badge" data-zoom aria-label="{bb[0]}"><img class="on" src="{bb[1]}" alt="{html.escape(bb[2])}" hidden>'
-        '<svg class="d-badge-ring" viewBox="0 0 120 120" aria-hidden="true"><defs><path id="bbRing" d="M60 60m-44 0a44 44 0 1 1 88 0a44 44 0 1 1-88 0"/></defs>'
-        f'<text><textPath href="#bbRing" textLength="272">{bb[0].upper()} • {bb[0].upper()} •</textPath></text></svg>'
-        '<svg class="d-cta-icon" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="10.5" cy="10.5" r="6.5"/><path d="M15.5 15.5 21 21M10.5 7.5v6M7.5 10.5h6"/></svg></button>')
     zoom_icon = '<svg class="d-cta-icon" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="10.5" cy="10.5" r="6.5"/><path d="M15.5 15.5 21 21M10.5 7.5v6M7.5 10.5h6"/></svg>'
-    zoom_badge = (f'<button class="d-badge" data-zoom aria-label="Click to zoom in"><img class="on" src="{d[0]}" alt="{html.escape(d[3])}" hidden>'
+    zoom_badge = (f'<button class="d-badge" data-zoom{full_d} aria-label="Click to zoom in"><img class="on" src="{d[0]}" alt="{html.escape(d[3])}" hidden>'
                   '<svg class="d-badge-ring" viewBox="0 0 120 120" aria-hidden="true"><defs><path id="badgeRing" d="M60 60m-44 0a44 44 0 1 1 88 0a44 44 0 1 1-88 0"/></defs>'
                   f'<text><textPath href="#badgeRing" textLength="272">CLICK TO ZOOM IN • CLICK TO ZOOM IN •</textPath></text></svg>{zoom_icon}</button>')
     badge = zoom_badge if p.get('zoom') else '' if not cta else (f'<a class="d-badge" href="{html.escape(cta[1])}" target="_blank" rel="noopener" aria-label="{cta[0]} (opens the website)">'
@@ -212,7 +207,6 @@ def dior_main(p):
           {boards}
           <span class="p-zoom-hint" aria-hidden="true">Click to enlarge</span>
         </button>
-        {board_badge}
       </div>
     </section>
 

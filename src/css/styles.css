@@ -516,7 +516,7 @@ a:focus-visible { outline: 2px solid var(--color-white); outline-offset: 4px; }
 
 .p-back { display: inline-flex; align-items: center; gap: 12px; padding: 0; border: 0; background: none; cursor: pointer; color: var(--accent, var(--color-pink)); text-decoration: none; font: 600 1.125rem/1 var(--font-body); text-transform: uppercase; letter-spacing: .02em; }
 .p-back-dot { display: grid; place-items: center; width: 48px; height: 48px; border-radius: 50%; background: var(--accent, var(--color-pink)); transition: transform .35s cubic-bezier(.3, 1.6, .5, 1); }
-.p-back-dot svg { width: 22px; height: 22px; fill: none; stroke: #ECF5FF; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.p-back-dot svg { width: 22px; height: 22px; fill: none; stroke: #fff; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
 .p-back:hover .p-back-dot, .p-back:focus-visible .p-back-dot { transform: translateX(-4px); }
 .p-back:focus-visible { outline: none; }
 .p-back:focus-visible .p-back-dot { outline: 2px solid var(--color-blue); outline-offset: 3px; }

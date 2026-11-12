@@ -160,7 +160,7 @@ button.phone { cursor: zoom-in; }
 .phone--app { position: relative; width: 100%; }
 .d-result:has(.phone--overlay) .d-browser { margin-bottom: 9%; }
 .app-result { position: relative; width: min(46%, 23.75rem, (100svh - 18rem) * .58); margin: clamp(24px, 3vw, 40px) auto 0; }
-.app-result .d-badge { right: -38%; bottom: 6%; }
+.app-result .d-badge { right: -30%; bottom: -7%; }
 @media (max-width: 640px) {
   .phone--overlay { width: 30%; left: 2%; bottom: -12%; }
   .app-result { width: 64%; }
@@ -277,7 +277,6 @@ button.d-badge { border: 0; cursor: zoom-in; font: inherit; }
 
 .p-title-text .amp { margin: 0 .14em; }
 
-.d-board-badge { right: -2%; bottom: -8%; }
 
 .d-title { margin-top: 0; --d: .05s; }
 .d-sub { margin-top: 22px; display: grid; gap: 6px; font: clamp(1.0625rem, 1.6vw, 1.3125rem)/1.45 var(--font-body); color: var(--muted); --d: .1s; }
