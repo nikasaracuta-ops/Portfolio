@@ -151,10 +151,10 @@ def dior_main(p):
         boards = f'<img class="on" src="{sb[0]}" width="{sb[1]}" height="{sb[2]}" alt="{html.escape(sb[3])}" loading="lazy">'
     if p.get('board_scroll'):
         bs = p['board_scroll']
-        board = (f'<div class="p-board p-board--scroll"><div class="p-pane p-pane--scroll on" data-board="a" tabindex="0" aria-label="{html.escape(bs[3])}, scroll to see all of it">'
+        board = (f'<div class="p-board p-board--scroll"><div class="p-pane p-pane--scroll on" tabindex="0" aria-label="{html.escape(bs[3])}, scroll to see all of it">'
                  f'<img src="{bs[0]}" width="{bs[1]}" height="{bs[2]}" alt="{html.escape(bs[3])}" loading="lazy"></div>'
                  '<span class="p-scroll-hint" aria-hidden="true">Scroll to explore <svg viewBox="0 0 24 24"><path d="M12 5v14M5 12l7 7 7-7"/></svg></span>'
-                 f'<button class="p-pane" data-board="b" data-zoom aria-label="Enlarge the styleboard"><img class="on" src="{sb[0]}" width="{sb[1]}" height="{sb[2]}" alt="{html.escape(sb[3])}" loading="lazy"></button></div>')
+                 '</div>')
     else:
         board = (f'<button class="p-board" data-zoom aria-label="Enlarge the styleboard">{boards}'
                  '<span class="p-zoom-hint" aria-hidden="true">Click to enlarge</span></button>')
