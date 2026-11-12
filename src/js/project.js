@@ -12,7 +12,7 @@ onScroll();
 const sw = document.querySelector('.p-switch');
 if (sw) {
   const pill = sw.querySelector('.p-switch-pill'), tabs = [...sw.querySelectorAll('button')];
-  const boards = document.querySelectorAll('.p-board img[data-board]');
+  const boards = document.querySelectorAll('.p-board [data-board]');
   const current = () => tabs.find(t => t.getAttribute('aria-selected') === 'true');
   const place = btn => { pill.style.setProperty('--px', (btn.offsetLeft - 4) + 'px'); pill.style.setProperty('--pw', btn.offsetWidth + 'px'); };
   const pick = btn => {

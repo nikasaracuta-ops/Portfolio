@@ -10,12 +10,7 @@
 .project-page :where(p, li, dd, dt) { white-space: normal; }
 .p-main { width: var(--wrap); margin: 0 auto; }
 
-.p-progress {
-  --dots: radial-gradient(circle, currentColor 2px, transparent 2.5px) 4px 50% / 14px 8px repeat-x;
-  position: fixed; z-index: 80; left: 0; top: 2px; width: 100%; height: 8px; pointer-events: none;
-  color: color-mix(in srgb, var(--accent) 22%, transparent); background: var(--dots);
-}
-.p-progress::after { content: ""; position: absolute; inset: 0; color: var(--accent); background: var(--dots); clip-path: inset(0 calc(100% - var(--p, 0) * 100%) 0 0); }
+.p-progress { position: fixed; z-index: 80; left: 0; top: 0; width: 100%; height: 3px; background: var(--accent); pointer-events: none; clip-path: inset(0 calc(100% - var(--p, 0) * 100%) 0 0); }
 
 /* ---------- Top bar ---------- */
 .p-top {
@@ -61,6 +56,16 @@
 }
 .p-board img { grid-area: 1 / 1; display: block; width: 100%; height: auto; opacity: 0; transition: opacity .5s, transform .6s ease; }
 .p-board img.on { opacity: 1; }
+.p-board--scroll { aspect-ratio: 2000 / 1320; cursor: auto; }
+.p-pane { grid-area: 1 / 1; min-height: 0; padding: 0; border: 0; background: none; opacity: 0; visibility: hidden; transition: opacity .5s, visibility 0s .5s; }
+.p-pane.on { opacity: 1; visibility: visible; transition: opacity .5s; }
+.p-pane img { opacity: 1; }
+button.p-pane { cursor: zoom-in; }
+.p-pane--scroll {
+  overflow-y: auto; overscroll-behavior: contain; scrollbar-width: thin; background: #FDF6EC;
+  -webkit-mask-image: linear-gradient(#000 82%, transparent); mask-image: linear-gradient(#000 82%, transparent);
+}
+.p-pane--scroll img { width: 100%; }
 .p-board:hover img.on { transform: scale(1.02); }
 .p-board:focus-visible { outline: 2px solid var(--color-blue); outline-offset: 3px; }
 .p-zoom-hint {

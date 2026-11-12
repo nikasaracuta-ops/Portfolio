@@ -66,14 +66,12 @@ PROJECTS = [
        tools=[('src/assets/tools/illustrator.webp', 'Illustrator'), ('src/assets/tools/figma.webp', 'Figma'), ('src/assets/tools/photoshop.webp', 'Photoshop'), ('src/assets/tools/procreate.webp', 'Procreate')],
        desktop=('src/assets/miles/site.webp', 2000, 1288, 'Miles & Meals: brand photography and social media'),
        mobile=('src/assets/miles/phone.webp', 667, 1152, 'The Miles & Meals app: Discover the world in your kitchen'), result_mode='phone', title_html='Miles<span class="amp">&amp;</span>Meals',
-       lead='<b>Miles &amp; Meals</b> lets people experience the <b>world’s street food from home</b>: curated boxes bring iconic dishes, local flavours and cultural stories from one city straight to your kitchen.',
-       brief=['Three words carry the concept: <b>Street food. Local stories. At home.</b> Each edition is created with a local from that city, around one signature dish that tells their craft and personal story. Pre-portioned ingredients and step-by-step recipe cards turn it into an easy cooking experience: no professional skills needed, just curiosity.',
-              'Customers choose one of <b>three boxes</b>, each with four recipes, in a vegetarian or meat version, delivered weekly or every two weeks:<br><b>Local Legend</b>, the classics everyone grows up with, like tacos al pastor or bánh mì;<br><b>Street Made</b>, fast, bold dishes full of heat, smoke and crunch;<br><b>Neighbourhood Bakes</b>, breads, fritters and sweet treats from street corners and markets.',
-              'The brand also cares for the planet, with compostable packaging, bicycle delivery and ingredients bought directly from local producers. It speaks to urban adults aged 25–50 who love discovering new places and flavours, starting in Antwerp.<br>My task was to create the <b>visual identity</b>, presented in a brandboard, and design the <b>app</b> where users choose and manage their box and cook the recipes.'],
+       lead='<b>Miles &amp; Meals</b> brings the <b>world’s street food home</b>: every box holds signature dishes from one city, created with a local who shares their recipes and story.',
+       brief=['Customers pick one of <b>three boxes</b>, <b>Local Legend</b>, <b>Street Made</b> or <b>Neighbourhood Bakes</b>, each with four recipes, pre-portioned ingredients and clear recipe cards, delivered by bike in compostable packaging.<br>My task was to create the <b>visual identity</b>, presented in a brandboard, and design the <b>app</b> to manage the box and cook the recipes.'],
        palettes=None,
        palette_squares=['#0C2968', '#FFC933', '#D42F25', '#D5F0FF'],
        palette_squares_b=['#0C2968', '#FFC933', '#D42F25', '#D5F0FF', '#BBD760'],
-       board_switch=('Brandboard', 'App'),
+       board_switch=('Brandboard', 'App'), board_scroll=('src/assets/miles/brandboard.webp', 269, 2000, 'The Miles & Meals brandboard: logo, colours, typography, iconography, photography and packaging'),
        styleboard=('src/assets/miles/styleboard.webp', 2000, 1320, 'Miles & Meals styleboard: linocut fish and waves, tile patterns, navy and red', 'At first the style focused on linocut imagery and traditional patterns from different cultures, but during the app design process it became simpler.'),
               title_text='Miles &amp; Meals',
        lede='A world of flavours in every box — brand identity and app',
@@ -130,7 +128,7 @@ def dior_main(p):
                   f'<button role="tab" aria-selected="true" data-board="a">{sa}</button><button role="tab" aria-selected="false" data-board="b">{sb_}</button>'
                   f'<span class="p-switch-pill" aria-hidden="true"></span></div>')
         dots = '<ul class="d-dots-pal" aria-label="Colour palette">' + squares + '</ul>'
-        if p.get('styleboard_b'):
+        if p.get('styleboard_b') or p.get('board_scroll'):
             palette, board_switch = dots, switch
         else:
             palette = switch + dots
@@ -151,6 +149,14 @@ def dior_main(p):
                   f'<img data-board="b" src="{b2[0]}" width="{b2[1]}" height="{b2[2]}" alt="{html.escape(b2[3])}" loading="lazy">')
     else:
         boards = f'<img class="on" src="{sb[0]}" width="{sb[1]}" height="{sb[2]}" alt="{html.escape(sb[3])}" loading="lazy">'
+    if p.get('board_scroll'):
+        bs = p['board_scroll']
+        board = (f'<div class="p-board p-board--scroll"><div class="p-pane p-pane--scroll on" data-board="a" tabindex="0" aria-label="{html.escape(bs[3])}, scroll to see all of it">'
+                 f'<img src="{bs[0]}" width="{bs[1]}" height="{bs[2]}" alt="{html.escape(bs[3])}" loading="lazy"></div>'
+                 f'<button class="p-pane" data-board="b" data-zoom aria-label="Enlarge the styleboard"><img class="on" src="{sb[0]}" width="{sb[1]}" height="{sb[2]}" alt="{html.escape(sb[3])}" loading="lazy"></button></div>')
+    else:
+        board = (f'<button class="p-board" data-zoom aria-label="Enlarge the styleboard">{boards}'
+                 '<span class="p-zoom-hint" aria-hidden="true">Click to enlarge</span></button>')
     rphone = (f'<button class="phone phone--overlay" data-zoom{full_m} aria-label="Enlarge the mobile version"><img class="phone__image on" src="{m[0]}" width="{m[1]}" height="{m[2]}" alt="{html.escape(m[3])}" loading="lazy"></button>'
               if p.get('result_phone') else '')
     if p.get('result_video'):
@@ -211,10 +217,7 @@ def dior_main(p):
           </div>
         </div>
         <div class="p-board-wrap">
-          <button class="p-board" data-zoom aria-label="Enlarge the styleboard">
-            {boards}
-            <span class="p-zoom-hint" aria-hidden="true">Click to enlarge</span>
-          </button>
+          {board}
           {board_switch}
         </div>
       </div>
