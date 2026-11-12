@@ -2,8 +2,8 @@
   const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
   const $ = (s) => document.querySelector(s);
 
-  const pop = $('#aboutPop'), plate = $('#plate'), closeBtn = $('#cpClose');
-  let opener = null, origin = null, anim = 0;
+  const pop = $('#aboutPop'), plate = $('#plate'), stage = $('#bioStage'), closeBtn = $('#cpClose');
+  let opener = null, origin = null, anim = 0, splitTimer = 0;
 
   const helloWord = $('#helloWord'), GREETINGS = ['Ciao!', 'Hola!', '你好!', 'Hello!', 'Salut!', 'Hallo!', 'Привет!'];
   let greet = 0, greetTimer = 0, swapTimer = 0;
@@ -42,10 +42,11 @@
     opener = el || null;
     const r = (el && el.getBoundingClientRect()) || { left: innerWidth / 2, top: innerHeight / 2, width: 0, height: 0 };
     origin = { x: r.left + r.width / 2, y: r.top + r.height / 2, w: Math.max(80, r.width * 1.8) };
-    pop.hidden = false; pop.scrollTop = 0; more.classList.remove('gone'); toolbox.classList.remove('in'); document.body.style.overflow = 'hidden'; plate.classList.remove('in');
+    pop.hidden = false; pop.scrollTop = 0; more.classList.remove('gone'); toolbox.classList.remove('in'); document.body.style.overflow = 'hidden'; plate.classList.remove('in'); clearTimeout(splitTimer); stage.classList.remove('bio__stage--split');
     const finish = () => {
       pop.classList.add('full');
       setTimeout(() => { plate.classList.add('in'); onPopScroll(); startGreetings(); }, 250);
+      splitTimer = setTimeout(() => stage.classList.add('bio__stage--split'), reduce ? 0 : 1300);
       closeBtn.focus({ preventScroll: true, focusVisible: false });
     };
     if (reduce) { finish(); return; }
