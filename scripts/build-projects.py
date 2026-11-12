@@ -15,8 +15,8 @@ PROJECTS = [
        subtitle=('MoMu – Dress to Impress', 'An interactive longread for MoMu – Fashion Museum Antwerp'),
        year='2026', client='MoMu – Fashion Museum Antwerp', url='https://nikasaracuta.github.io/Integration-3/',
        tags=['UI/UX', 'Visual design', 'Web design', 'Web development'],
-       tools=[('src/assets/dior/icon-ps.svg', 'Photoshop'), ('src/assets/dior/icon-figma.svg', 'Figma'), ('src/assets/tools/procreate.webp', 'Procreate'),
-              ('src/assets/tools/vscode.webp', 'VS Code'), ('src/assets/dior/icon-gsap.svg', 'GSAP')],
+       tools=[('src/assets/tools/photoshop.webp', 'Photoshop'), ('src/assets/tools/figma.webp', 'Figma'), ('src/assets/tools/procreate.webp', 'Procreate'),
+              ('src/assets/tools/vscode.webp', 'VS Code'), ('src/assets/tools/gsap.webp', 'GSAP')],
        desktop=('src/assets/dior/site-desktop.webp', 2314, 1427, 'The Art of Dressmaking by Christian Dior, the homepage on desktop'),
        mobile=('src/assets/dior/site-mobile.webp', 729, 1253, 'The homepage on mobile'),
        lead='<b>MoMu</b>, the Fashion Museum of Antwerp, wants to launch its new digital marketing plan with a series of <b>six interactive online stories</b>, each about a fashion designer.',
@@ -29,7 +29,7 @@ PROJECTS = [
   dict(file='moea.html', name='Moea', tab='#3EBDCD',
        subtitle=('Moea – Mother Earth', 'An animated 3D website hero for a sustainable fashion brand'),
        year='2026', client='Moea', url='',
-       tools=[('src/assets/tools/aftereffects.svg', 'After Effects'), ('src/assets/type01/icon-figma.svg', 'Figma'), ('src/assets/tools/blender.webp', 'Blender')],
+       tools=[('src/assets/tools/aftereffects.webp', 'After Effects'), ('src/assets/tools/figma.webp', 'Figma'), ('src/assets/tools/blender.webp', 'Blender')],
        desktop=('src/assets/moea/site.webp', 2000, 1240, 'The Moea homepage with its 3D hero'),
        mobile=('src/assets/moea/phone.webp', 667, 1159, 'The Moea homepage on mobile, with the 3D hero'), result_phone=True,
        lead='A client has heard that <b>3D is the next big thing on the web</b> and wants it on their website as a <b>promotional header</b>.',
@@ -46,7 +46,7 @@ PROJECTS = [
        title_text='TYPE01',
        subtitle=('TYPE01 Conference', 'A conference website for desktop and mobile'),
        year='2025', client='TYPE01 Magazine', url='TYPE01 prototype',
-       tools=[('src/assets/type01/icon-ps.svg', 'Photoshop'), ('src/assets/type01/icon-figma.svg', 'Figma')],
+       tools=[('src/assets/tools/photoshop.webp', 'Photoshop'), ('src/assets/tools/figma.webp', 'Figma')],
        desktop=('src/assets/type01/site.webp', 2000, 1280, 'The TYPE01 conference homepage'),
        mobile=('src/assets/type01/phone.webp', 670, 1149, 'The TYPE01 homepage on mobile'), result_phone=True,
        lead='<b>TYPE01 Magazine</b>, a publication for graphic designers and typographers, was hosting its first-ever <b>conference</b>: two days in London on typography in print, motion design and branding.',
@@ -63,7 +63,7 @@ PROJECTS = [
   dict(file='miles.html', name='Miles & Meals', tab='#1A5BA4',
        subtitle=('Miles &amp; Meals – food-box subscription', 'Brand identity and mobile app for a start-up'),
        year='2026', client='Miles &amp; Meals<br><span class="d-note">(fictional company)</span>', url='Miles &amp; Meals prototype',
-       tools=[('src/assets/tools/illustrator.svg', 'Illustrator'), ('src/assets/type01/icon-figma.svg', 'Figma'), ('src/assets/type01/icon-ps.svg', 'Photoshop'), ('src/assets/tools/procreate.webp', 'Procreate')],
+       tools=[('src/assets/tools/illustrator.webp', 'Illustrator'), ('src/assets/tools/figma.webp', 'Figma'), ('src/assets/tools/photoshop.webp', 'Photoshop'), ('src/assets/tools/procreate.webp', 'Procreate')],
        desktop=('src/assets/miles/site.webp', 2000, 1288, 'Miles & Meals: brand photography and social media'),
        mobile=('src/assets/miles/phone.webp', 667, 1152, 'The Miles & Meals app: Discover the world in your kitchen'), result_mode='phone', title_html='Miles<span class="amp">&amp;</span>Meals',
        lead='<b>Miles &amp; Meals</b> is a food-box subscription that brings <b>iconic local dishes</b> from cities around the world to your kitchen.',
@@ -112,11 +112,12 @@ def dior_main(p):
     """Dior, after the Figma frame 846:133: the title with the site on desktop and mobile,
     the facts, the brief, the visual style (styleboard + palette switch) and the result:
     the live prototype in a browser window."""
-    tools = ''.join(f'<li><img src="{src}" width="48" height="48" alt="{name}" title="{name}"></li>' for src, name in p['tools'])
+    burst = '<span class="d-burst" aria-hidden="true"></span>'
+    tools = ''.join(f'<li title="{name}">{burst}<img class="d-icon" src="{src}" width="64" height="64" alt="{name}"></li>' for src, name in p['tools'])
     stamp = f'<span class="d-stamp"><span class="d-stamp-k">Year</span>{p["year"]}</span>'
     spec = ('<dl class="d-spec reveal">'
             f'<div><dt>Client</dt><dd>{p["client"]}</dd></div>'
-            '<div><dt>Fields</dt><dd>' + ' <span class="d-sep" aria-hidden="true">·</span> '.join(p['tags']) + '</dd></div>'
+            '<div><dt>Creative fields</dt><dd class="d-fields">' + ''.join(f'<span class="d-pill">{t}</span>' for t in p['tags']) + '</dd></div>'
             f'<div><dt>Built with</dt><dd><ul class="d-tools">{tools}</ul></dd></div></dl>')
     brief = ''.join(f'\n        <p class="d-text reveal">{t}</p>' for t in p['brief'])
     if p.get('palette_squares'):
