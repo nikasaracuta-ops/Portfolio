@@ -12,8 +12,8 @@
   <link rel="stylesheet" href="https://use.typekit.net/gfn8yzd.css">
   <link rel="stylesheet" href="https://fonts.cdnfonts.com/css/wasted-vindey">
   <link rel="stylesheet" href="src/css/reset.css?v=f0fbd376">
-  <link rel="stylesheet" href="src/css/styles.css?v=80931961">
-  <link rel="stylesheet" href="src/css/project.css?v=bcb66cb6">
+  <link rel="stylesheet" href="src/css/styles.css?v=bf467e32">
+  <link rel="stylesheet" href="src/css/project.css?v=b9faad1c">
   <script>document.documentElement.classList.add('js'); try { if (sessionStorage.getItem('dreamIn')) { sessionStorage.removeItem('dreamIn'); document.documentElement.classList.add('dream-in'); } } catch (e) {}</script>
 </head>
 <body class="project-page project-page--type01">
@@ -71,13 +71,16 @@
         <div class="d-style-text">
           <p class="p-note">I created two styleboards, one for a light and one for a dark mode, both mixing bold type with pixel and halftone patterns, collaged photography, pink and green. The final website uses the light mode.</p>
           <div class="d-palette">
-            <div class="p-switch" role="tablist" aria-label="Styleboard"><button role="tab" aria-selected="true" data-board="a">Light</button><button role="tab" aria-selected="false" data-board="b">Dark</button><span class="p-switch-pill" aria-hidden="true"></span></div><ul class="d-dots-pal" aria-label="Colour palette"><li data-a="#262221" data-b="#262221"></li><li data-a="#E6A2D9" data-b="#E6A2D9"></li><li data-a="#2AA764" data-b="#2AA764"></li><li data-a="#FFFFFF" data-b="#FFFFFF"></li></ul>
+            <ul class="d-dots-pal" aria-label="Colour palette"><li data-a="#262221" data-b="#262221"></li><li data-a="#E6A2D9" data-b="#E6A2D9"></li><li data-a="#2AA764" data-b="#2AA764"></li><li data-a="#FFFFFF" data-b="#FFFFFF"></li></ul>
           </div>
         </div>
-        <button class="p-board" data-zoom aria-label="Enlarge the styleboard">
-          <img class="on" data-board="a" src="src/assets/type01/styleboard-light.webp" width="2000" height="1258" alt="Styleboard, light version" loading="lazy"><img data-board="b" src="src/assets/type01/styleboard-dark.webp" width="2000" height="1246" alt="Styleboard, dark version" loading="lazy">
-          <span class="p-zoom-hint" aria-hidden="true">Click to enlarge</span>
-        </button>
+        <div class="p-board-wrap">
+          <button class="p-board" data-zoom aria-label="Enlarge the styleboard">
+            <img class="on" data-board="a" src="src/assets/type01/styleboard-light.webp" width="2000" height="1258" alt="Styleboard, light version" loading="lazy"><img data-board="b" src="src/assets/type01/styleboard-dark.webp" width="2000" height="1246" alt="Styleboard, dark version" loading="lazy">
+            <span class="p-zoom-hint" aria-hidden="true">Click to enlarge</span>
+          </button>
+          <div class="p-switch" role="tablist" aria-label="Styleboard"><button role="tab" aria-selected="true" data-board="a">Light</button><button role="tab" aria-selected="false" data-board="b">Dark</button><span class="p-switch-pill" aria-hidden="true"></span></div>
+        </div>
       </div>
     </section>
 

@@ -1,5 +1,6 @@
 .project-page {
   --ink: #1d1d1f; --muted: #6b6b73;
+  --dotline: radial-gradient(circle, color-mix(in srgb, var(--accent) 45%, transparent) 1.5px, transparent 2px);
   --wrap: min(1200px, 100% - 2 * clamp(20px, 5vw, 64px));
 
   color: var(--ink);
@@ -9,7 +10,12 @@
 .project-page :where(p, li, dd, dt) { white-space: normal; }
 .p-main { width: var(--wrap); margin: 0 auto; }
 
-.p-progress { position: fixed; z-index: 80; left: 0; top: 0; height: 3px; width: 100%; background: var(--accent); transform-origin: 0 50%; transform: scaleX(var(--p, 0)); }
+.p-progress {
+  --dots: radial-gradient(circle, currentColor 2px, transparent 2.5px) 4px 50% / 14px 8px repeat-x;
+  position: fixed; z-index: 80; left: 0; top: 2px; width: 100%; height: 8px; pointer-events: none;
+  color: color-mix(in srgb, var(--accent) 22%, transparent); background: var(--dots);
+}
+.p-progress::after { content: ""; position: absolute; inset: 0; color: var(--accent); background: var(--dots); clip-path: inset(0 calc(100% - var(--p, 0) * 100%) 0 0); }
 
 /* ---------- Top bar ---------- */
 .p-top {
@@ -28,7 +34,7 @@
 }
 
 .p-window .p-shot {
-  position: absolute; left: 1.348%; top: 11.67%; width: 97.17%; height: 86.32%;
+  position: absolute; left: 1.05%; top: 11.4%; width: 97.8%; height: 86.9%;
   object-fit: cover; object-position: top center; border-radius: 0 0 1.4% 1.4% / 0 0 2.3% 2.3%;
 }
 .project-page--dior .p-shot, .project-page--miles .p-shot { object-position: center; }
@@ -47,6 +53,8 @@
 .p-switch button:focus-visible { outline: 2px solid var(--color-blue); outline-offset: 2px; }
 .p-switch-pill { position: absolute; top: 4px; bottom: 4px; left: 4px; width: var(--pw, 0); transform: translateX(var(--px, 0)); border-radius: 999px; background: var(--accent); transition: transform .4s cubic-bezier(.65, 0, .35, 1), width .4s cubic-bezier(.65, 0, .35, 1); }
 
+.p-board-wrap { position: relative; }
+.p-board-wrap .p-switch { position: absolute; z-index: 2; top: 16px; right: 16px; background: rgba(255, 255, 255, .92); -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px); }
 .p-board {
   position: relative; display: grid; width: 100%; margin-top: 20px; padding: 0; border: 0; cursor: zoom-in;
   border-radius: 16px; overflow: hidden; background: #f3f3f3;
@@ -65,7 +73,7 @@
 .p-result { padding: clamp(80px, 11vw, 150px) 0 0; text-align: center; }
 
 .p-next {
-  margin: clamp(80px, 10vw, 140px) 0 0; padding: 36px 0 56px; border-top: 1px solid color-mix(in srgb, var(--accent) 45%, transparent);
+  margin: clamp(80px, 10vw, 140px) 0 0; padding: 36px 0 56px; background: var(--dotline) top / 10px 4px repeat-x;
   display: grid; grid-template-columns: 1fr 1fr; align-items: center; gap: 20px;
 }
 
@@ -111,8 +119,8 @@
 .d-stamp-k { font: 600 .625rem/1 var(--font-body); text-transform: uppercase; }
 
 .d-spec { max-width: 500px; margin-top: clamp(28px, 3.5vw, 44px); --d: .15s; }
-.d-spec > div { display: grid; grid-template-columns: 120px minmax(0, 1fr); gap: 16px; align-items: center; padding: 14px 0; border-top: 1px solid color-mix(in srgb, var(--accent) 25%, transparent); }
-.d-spec > div:last-child { border-bottom: 1px solid color-mix(in srgb, var(--accent) 25%, transparent); }
+.d-spec > div { display: grid; grid-template-columns: 120px minmax(0, 1fr); gap: 16px; align-items: center; padding: 14px 0; background: var(--dotline) top / 10px 4px repeat-x; }
+.d-spec > div:last-child { background: var(--dotline) top / 10px 4px repeat-x, var(--dotline) bottom / 10px 4px repeat-x; }
 .d-spec dt { font: 600 1rem/1.3 var(--font-body); color: var(--accent); }
 .d-spec dd { font: 400 clamp(1.0625rem, 1.3vw, 1.1875rem)/1.4 var(--font-body); color: #454545; }
 .d-spec .d-note { color: var(--muted); }

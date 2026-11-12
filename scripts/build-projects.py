@@ -66,8 +66,10 @@ PROJECTS = [
        tools=[('src/assets/tools/illustrator.webp', 'Illustrator'), ('src/assets/tools/figma.webp', 'Figma'), ('src/assets/tools/photoshop.webp', 'Photoshop'), ('src/assets/tools/procreate.webp', 'Procreate')],
        desktop=('src/assets/miles/site.webp', 2000, 1288, 'Miles & Meals: brand photography and social media'),
        mobile=('src/assets/miles/phone.webp', 667, 1152, 'The Miles & Meals app: Discover the world in your kitchen'), result_mode='phone', title_html='Miles<span class="amp">&amp;</span>Meals',
-       lead='<b>Miles &amp; Meals</b> is a food-box subscription that brings <b>iconic local dishes</b> from cities around the world to your kitchen.',
-       brief=['Every box explores a different city through authentic recipes, inspired by how locals really eat. The audience: adults aged 25–50 with middle to upper-middle incomes, and four brand values to build on: <b>travel</b>, <b>warm &amp; welcoming</b>, <b>out &amp; social</b> and <b>authentic</b>.<br>First I had to create the <b>visual identity</b>, presented in a brandboard, then design the <b>app</b> where users could manage their box and cook the recipes.'],
+       lead='<b>Miles &amp; Meals</b> lets people experience the <b>world’s street food from home</b>: curated boxes bring iconic dishes, local flavours and cultural stories from one city straight to your kitchen.',
+       brief=['Three words carry the concept: <b>Street food. Local stories. At home.</b> Each edition is created with a local from that city, around one signature dish that tells their craft and personal story. Pre-portioned ingredients and step-by-step recipe cards turn it into an easy cooking experience: no professional skills needed, just curiosity.',
+              'Customers choose one of <b>three boxes</b>, each with four recipes, in a vegetarian or meat version, delivered weekly or every two weeks:<br><b>Local Legend</b>, the classics everyone grows up with, like tacos al pastor or bánh mì;<br><b>Street Made</b>, fast, bold dishes full of heat, smoke and crunch;<br><b>Neighbourhood Bakes</b>, breads, fritters and sweet treats from street corners and markets.',
+              'The brand also cares for the planet, with compostable packaging, bicycle delivery and ingredients bought directly from local producers. It speaks to urban adults aged 25–50 who love discovering new places and flavours, starting in Antwerp.<br>My task was to create the <b>visual identity</b>, presented in a brandboard, and design the <b>app</b> where users choose and manage their box and cook the recipes.'],
        palettes=None,
        palette_squares=['#0C2968', '#FFC933', '#D42F25', '#D5F0FF'],
        palette_squares_b=['#0C2968', '#FFC933', '#D42F25', '#D5F0FF', '#BBD760'],
@@ -119,14 +121,19 @@ def dior_main(p):
             '<div><dt>Creative fields</dt><dd class="d-fields">' + ''.join(f'<span class="d-pill">{t}</span>' for t in p['tags']) + '</dd></div>'
             f'<div><dt>Built with</dt><dd><ul class="d-tools">{tools}</ul></dd></div></dl>')
     brief = ''.join(f'\n        <p class="d-text reveal">{t}</p>' for t in p['brief'])
+    board_switch = ''
     if p.get('palette_squares'):
         sa, sb_ = p['board_switch']
         qa, qb = p['palette_squares'], p.get('palette_squares_b') or p['palette_squares']
         squares = ''.join(f'<li{"" if k < len(qa) else ' class="off"'} data-a="{qa[k] if k < len(qa) else ""}" data-b="{qb[k] if k < len(qb) else ""}"></li>' for k in range(max(len(qa), len(qb))))
-        palette = (f'<div class="p-switch" role="tablist" aria-label="Styleboard">'
-                   f'<button role="tab" aria-selected="true" data-board="a">{sa}</button><button role="tab" aria-selected="false" data-board="b">{sb_}</button>'
-                   f'<span class="p-switch-pill" aria-hidden="true"></span></div>'
-                   '<ul class="d-dots-pal" aria-label="Colour palette">' + squares + '</ul>')
+        switch = (f'<div class="p-switch" role="tablist" aria-label="Styleboard">'
+                  f'<button role="tab" aria-selected="true" data-board="a">{sa}</button><button role="tab" aria-selected="false" data-board="b">{sb_}</button>'
+                  f'<span class="p-switch-pill" aria-hidden="true"></span></div>')
+        dots = '<ul class="d-dots-pal" aria-label="Colour palette">' + squares + '</ul>'
+        if p.get('styleboard_b'):
+            palette, board_switch = dots, switch
+        else:
+            palette = switch + dots
     elif p.get('palette_dots'):
         palette = '<ul class="d-dots-pal" aria-label="Colour palette">' + '<li></li>' * len(p['palette_dots']) + '</ul>'
     else:
@@ -203,10 +210,13 @@ def dior_main(p):
             {palette}
           </div>
         </div>
-        <button class="p-board" data-zoom aria-label="Enlarge the styleboard">
-          {boards}
-          <span class="p-zoom-hint" aria-hidden="true">Click to enlarge</span>
-        </button>
+        <div class="p-board-wrap">
+          <button class="p-board" data-zoom aria-label="Enlarge the styleboard">
+            {boards}
+            <span class="p-zoom-hint" aria-hidden="true">Click to enlarge</span>
+          </button>
+          {board_switch}
+        </div>
       </div>
     </section>
 

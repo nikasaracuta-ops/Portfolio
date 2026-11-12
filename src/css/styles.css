@@ -290,7 +290,7 @@ a:focus-visible { outline: 2px solid var(--color-white); outline-offset: 4px; }
 .work-card .work-card__window { position: relative; display: block; aspect-ratio: 742 / 497; color: var(--tab); }
 .work-card .work-card__svg { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
 .work-card .work-card__thumb {
-  position: absolute; left: 1.348%; top: 11.67%; width: 97.17%; height: 86.32%; overflow: hidden;
+  position: absolute; left: 1.05%; top: 11.4%; width: 97.8%; height: 86.9%; overflow: hidden;
   display: grid; place-items: center; border-radius: 0 0 1.4% 1.4% / 0 0 2.3% 2.3%;
   background: radial-gradient(120% 90% at 25% 20%, color-mix(in srgb, var(--c) 30%, #fff) 0%, var(--c) 55%, color-mix(in srgb, var(--c) 70%, var(--color-blue)) 120%);
   font: 400 1.875rem var(--font-heading); color: #fff;
