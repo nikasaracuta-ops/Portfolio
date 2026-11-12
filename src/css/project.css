@@ -17,12 +17,6 @@
   display: flex; align-items: center; justify-content: space-between; gap: 12px;
   font: .9375rem/1 var(--font-body);
 }
-.p-back { display: inline-flex; align-items: center; gap: 12px; color: var(--accent); text-decoration: none; font: 600 1.125rem/1 var(--font-body); text-transform: uppercase; letter-spacing: .02em; }
-.p-back-dot { display: grid; place-items: center; width: 48px; height: 48px; border-radius: 50%; background: var(--accent); transition: transform .35s cubic-bezier(.3, 1.6, .5, 1); }
-.p-back-dot svg { width: 22px; height: 22px; fill: none; stroke: #ECF5FF; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
-.p-back:hover .p-back-dot, .p-back:focus-visible .p-back-dot { transform: translateX(-4px); }
-.p-back:focus-visible { outline: none; }
-.p-back:focus-visible .p-back-dot { outline: 2px solid var(--color-blue); outline-offset: 3px; }
 
 /* ---------- Browser window ---------- */
 

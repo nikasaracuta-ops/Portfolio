@@ -12,7 +12,7 @@
   <link rel="stylesheet" href="https://use.typekit.net/gfn8yzd.css">
   <link rel="stylesheet" href="https://fonts.cdnfonts.com/css/wasted-vindey">
   <link rel="stylesheet" href="src/css/reset.css?v=f0fbd376">
-  <link rel="stylesheet" href="src/css/styles.css?v=f99c061b">
+  <link rel="stylesheet" href="src/css/styles.css?v=d038666c">
   <script>document.documentElement.classList.add('js', 'is-loading'); try { if (sessionStorage.getItem('dreamIn')) { sessionStorage.removeItem('dreamIn'); document.documentElement.classList.add('dream-in'); } } catch (e) {}</script>
 </head>
 <body>
@@ -133,7 +133,11 @@
   </nav>
 
   <div class="cloudpop" id="aboutPop" role="dialog" aria-modal="true" aria-labelledby="about-h" hidden>
-    <button class="cp-close cp-back" id="cpClose" type="button" aria-label="Back to the portfolio"><span class="cp-back-dot" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M20 12H5M11 5l-7 7 7 7"/></svg></span><span>Back</span></button>
+    <button class="p-back" id="cpClose" type="button" aria-label="Back to the portfolio"><span class="p-back-dot" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M20 12H5M11 5l-7 7 7 7"/></svg></span><span>Back</span></button>
+    <svg class="cp-defs" aria-hidden="true"><defs>
+      <linearGradient id="stemGrad" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="0" y2="160"><stop offset="0" stop-color="#1A5BA4"/><stop offset="1" stop-color="#3EBDCD"/></linearGradient>
+      <linearGradient id="leafGrad" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#1A5BA4"/><stop offset="1" stop-color="#3EBDCD"/></linearGradient>
+    </defs></svg>
     <section class="field">
     <header class="bio__head">
       <h2 id="about-h" class="bio__name">Nika Saracuta</h2>
@@ -146,21 +150,13 @@
     </div>
 
     <div class="bio__story">
-      <p class="bio__lead">I’m an Italian design student based in Belgium, currently in the final year of my studies.</p>
+      <p class="bio__lead">I’m a 21-year-old Italian design student based in Belgium, currently in the final year of my studies.</p>
       <div class="bio__text">
         <p>I’m inspired by a little bit of everything: nature, art, science, photography, fashion, history, culture and more. I enjoy collecting ideas and finding ways to bring them together through design.</p>
-        <p>This semester, I’m learning about <b>More-than-Human Design</b> and <b>Blender</b>, and I’m looking for a spring internship where I can put my skills into practice and improve them along the way.</p>
+        <p>This semester, I’m learning about <b>More-than-Human Design</b> and <b>Blender</b>, and I’m looking for a spring internship, <b>from February 15 to May 21, 2027</b>, where I can put my skills into practice and improve them along the way.</p>
       </div>
     </div>
 
-    <dl class="facts-list">
-      <div><dt>Age</dt><dd>21</dd></div>
-      <div><dt>Specialises in</dt><dd>Visual design &amp; experience design</dd></div>
-      <div><dt>Languages</dt><dd>Italian, Russian, French, English, Chinese</dd></div>
-      <div><dt>Education</dt><dd>Bachelor of Digital Design and Development, DEVINE / Howest University of Applied Sciences</dd></div>
-      <div><dt>Drawn to</dt><dd>Sustainability, nature, art</dd></div>
-      <div><dt>Status</dt><dd>Looking for an internship, February 15 – May 21, 2027</dd></div>
-    </dl>
 
     <button class="cp-more" id="cpMore" type="button"><span>What I use</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12l7 7 7-7"/></svg></button>
 
