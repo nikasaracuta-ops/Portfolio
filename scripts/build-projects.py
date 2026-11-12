@@ -112,14 +112,12 @@ def dior_main(p):
     """Dior, after the Figma frame 846:133: the title with the site on desktop and mobile,
     the facts, the brief, the visual style (styleboard + palette switch) and the result:
     the live prototype in a browser window."""
-    star = '<svg class="d-star" viewBox="0 0 100 100" aria-hidden="true"><polygon points="50.0,2.0 58.7,12.0 70.8,6.8 74.3,19.5 87.5,20.1 85.1,33.1 96.8,39.3 89.0,50.0 96.8,60.7 85.1,66.9 87.5,79.9 74.3,80.5 70.8,93.2 58.7,88.0 50.0,98.0 41.3,88.0 29.2,93.2 25.7,80.5 12.5,79.9 14.9,66.9 3.2,60.7 11.0,50.0 3.2,39.3 14.9,33.1 12.5,20.1 25.7,19.5 29.2,6.8 41.3,12.0"/></svg>'
-    stem = ('<svg class="d-stem" viewBox="0 0 40 160" preserveAspectRatio="none" aria-hidden="true"><path class="st" d="M20 0 C18 50 23 100 20 160"/>'
-            '<path class="lf" d="M20 92 C8 82 2 70 4 58 C14 62 20 74 20 92Z"/><path class="lf" d="M20 120 C32 110 38 98 36 86 C26 90 20 102 20 120Z"/></svg>')
-    tools = ''.join(f'<li title="{name}">{star}<img src="{src}" width="48" height="48" alt="{name}">{stem}</li>' for src, name in p['tools'])
-    stamp = f'<p class="d-stamp"><span class="d-stamp-k">Year</span>{p["year"]}</p>'
-    label = (f'<div class="d-label reveal"><p class="d-label-k">Client</p><p class="d-label-v">{p["client"]}</p></div>'
-             '<ul class="d-fields reveal" aria-label="Creative fields">' + ''.join(f'<li>{t}</li>' for t in p['tags']) + '</ul>')
-    flowers = f'<ul class="d-tools" aria-label="Built with">{tools}</ul>'
+    tools = ''.join(f'<li><img src="{src}" width="48" height="48" alt="{name}" title="{name}"></li>' for src, name in p['tools'])
+    stamp = f'<span class="d-stamp"><span class="d-stamp-k">Year</span>{p["year"]}</span>'
+    spec = ('<dl class="d-spec reveal">'
+            f'<div><dt>Client</dt><dd>{p["client"]}</dd></div>'
+            '<div><dt>Fields</dt><dd>' + ' <span class="d-sep" aria-hidden="true">·</span> '.join(p['tags']) + '</dd></div>'
+            f'<div><dt>Built with</dt><dd><ul class="d-tools">{tools}</ul></dd></div></dl>')
     brief = ''.join(f'\n        <p class="d-text reveal">{t}</p>' for t in p['brief'])
     if p.get('palette_squares'):
         sa, sb_ = p['board_switch']
@@ -185,15 +183,13 @@ def dior_main(p):
     return f"""
     <section class="d-intro">
       <div class="d-intro-text">
-        <h1 class="d-title{" d-title-long" if len(html.unescape(p["title_text"])) > 6 else ""} reveal"><span class="p-title-text">{p.get("title_html") or p["title_text"]}</span></h1>
+        <h1 class="d-title{" d-title-long" if len(html.unescape(p["title_text"])) > 6 else ""} reveal"><span class="p-title-text">{p.get("title_html") or p["title_text"]}</span>{stamp}</h1>
         <p class="d-sub reveal"><b>{p["subtitle"][0]}</b>{p["subtitle"][1]}</p>
-        {label}
+        {spec}
       </div>
       <div class="d-devices reveal">
         {shot}
         <figure class="phone phone--intro"><img class="phone__image" src="{m[0]}" width="{m[1]}" height="{m[2]}" alt="{html.escape(m[3])}"></figure>
-        {stamp}
-        {flowers}
       </div>
     </section>
 
