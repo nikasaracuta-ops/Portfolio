@@ -69,8 +69,8 @@ PROJECTS = [
        lead='<b>Miles &amp; Meals</b> brings the <b>world’s street food home</b>: every box holds signature dishes from one city, created with a local who shares their recipes and story.',
        brief=['Customers pick one of <b>three boxes</b>, <b>Local Legend</b>, <b>Street Made</b> or <b>Neighbourhood Bakes</b>, each with four recipes, pre-portioned ingredients and clear recipe cards, delivered by bike in compostable packaging.<br>My task was to create the <b>visual identity</b>, presented in a brandboard, and design the <b>app</b> to manage the box and cook the recipes.'],
        palettes=None,
-       palette_squares=['#0C2968', '#FFC933', '#D42F25', '#D5F0FF'],
-       palette_squares_b=['#0C2968', '#FFC933', '#D42F25', '#D5F0FF', '#BBD760'],
+       palette_squares=['#0C2968', '#FFC933', '#D42F25', '#D5F0FF', '#FDF4E3'],
+       palette_squares_b=['#0C2968', '#FFC933', '#D42F25', '#D5F0FF', '#FDF4E3', '#BBD760'],
        board_switch=('Brandboard', 'App'), board_scroll=('src/assets/miles/brandboard.jpg', 1440, 10708, 'The Miles & Meals brandboard: logo, colours, typography, iconography, photography and packaging'),
        styleboard=('src/assets/miles/styleboard.webp', 2000, 1320, 'Miles & Meals styleboard: linocut fish and waves, tile patterns, navy and red', 'At first the style focused on linocut imagery and traditional patterns from different cultures, but during the app design process it became simpler.'),
               title_text='Miles &amp; Meals',
@@ -128,7 +128,7 @@ def dior_main(p):
                   f'<button role="tab" aria-selected="true" data-board="a">{sa}</button><button role="tab" aria-selected="false" data-board="b">{sb_}</button>'
                   f'<span class="p-switch-pill" aria-hidden="true"></span></div>')
         dots = '<ul class="d-dots-pal" aria-label="Colour palette">' + squares + '</ul>'
-        if p.get('styleboard_b') or p.get('board_scroll'):
+        if p.get('styleboard_b'):
             palette, board_switch = dots, switch
         else:
             palette = switch + dots
@@ -153,6 +153,7 @@ def dior_main(p):
         bs = p['board_scroll']
         board = (f'<div class="p-board p-board--scroll"><div class="p-pane p-pane--scroll on" data-board="a" tabindex="0" aria-label="{html.escape(bs[3])}, scroll to see all of it">'
                  f'<img src="{bs[0]}" width="{bs[1]}" height="{bs[2]}" alt="{html.escape(bs[3])}" loading="lazy"></div>'
+                 '<span class="p-scroll-hint" aria-hidden="true">Scroll to explore <svg viewBox="0 0 24 24"><path d="M12 5v14M5 12l7 7 7-7"/></svg></span>'
                  f'<button class="p-pane" data-board="b" data-zoom aria-label="Enlarge the styleboard"><img class="on" src="{sb[0]}" width="{sb[1]}" height="{sb[2]}" alt="{html.escape(sb[3])}" loading="lazy"></button></div>')
     else:
         board = (f'<button class="p-board" data-zoom aria-label="Enlarge the styleboard">{boards}'

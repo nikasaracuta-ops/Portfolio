@@ -67,3 +67,6 @@ document.querySelectorAll('.d-video').forEach((video) => {
   if (reduced) { video.controls = true; video.preload = 'metadata'; return; }
   new IntersectionObserver(([e]) => { if (e.isIntersecting) video.play().catch(() => {}); else video.pause(); }, { threshold: 0.25 }).observe(video);
 });
+
+const scrollPane = document.querySelector('.p-pane--scroll');
+if (scrollPane) scrollPane.addEventListener('scroll', () => scrollPane.parentElement.classList.toggle('p-board--scrolled', scrollPane.scrollTop > 40), { passive: true });
