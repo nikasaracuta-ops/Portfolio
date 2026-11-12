@@ -10,11 +10,11 @@
 .project-page :where(p, li, dd, dt) { white-space: normal; }
 .p-main { width: var(--wrap); margin: 0 auto; }
 
-.p-progress { position: fixed; z-index: 80; left: 0; top: 0; width: 100%; height: 3px; background: var(--accent); pointer-events: none; clip-path: inset(0 calc(100% - var(--p, 0) * 100%) 0 0); }
+.p-progress { position: fixed; z-index: 94; left: 0; top: 0; width: 100%; height: 3px; background: var(--accent); pointer-events: none; clip-path: inset(0 calc(100% - var(--p, 0) * 100%) 0 0); }
 
 /* ---------- Top bar ---------- */
 .p-top {
-  position: sticky; top: 0; z-index: 70; width: var(--wrap); margin: 0 auto; padding: 18px 0;
+  position: sticky; top: 0; z-index: 93; width: var(--wrap); margin: 0 auto; padding: 18px 0;
   display: flex; align-items: center; justify-content: space-between; gap: 12px;
   font: .9375rem/1 var(--font-body);
 }
@@ -48,7 +48,7 @@
 .p-switch button:focus-visible { outline: 2px solid var(--color-blue); outline-offset: 2px; }
 .p-switch-pill { position: absolute; top: 4px; bottom: 4px; left: 4px; width: var(--pw, 0); transform: translateX(var(--px, 0)); border-radius: 999px; background: var(--accent); transition: transform .4s cubic-bezier(.65, 0, .35, 1), width .4s cubic-bezier(.65, 0, .35, 1); }
 
-.p-board-wrap { position: relative; }
+.p-board-wrap { position: relative; z-index: 91; }
 .p-board-wrap .p-switch { position: absolute; z-index: 2; top: 16px; right: 16px; background: rgba(255, 255, 255, .92); -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px); }
 .p-board {
   position: relative; display: grid; width: 100%; margin-top: 20px; padding: 0; border: 0; cursor: zoom-in;
