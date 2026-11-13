@@ -87,7 +87,7 @@ button.p-pane { cursor: zoom-in; }
 .p-result { padding: clamp(80px, 11vw, 150px) 0 0; text-align: center; }
 
 .p-next {
-  margin: clamp(80px, 10vw, 140px) 0 0; padding: 36px 0 56px; background: var(--dotline) top / 10px 4px repeat-x;
+  margin: clamp(120px, 12vw, 170px) 0 0; padding: 36px 0 56px; background: var(--dotline) top / 10px 4px repeat-x;
   display: grid; grid-template-columns: 1fr 1fr; align-items: center; gap: 20px;
 }
 
@@ -242,7 +242,7 @@ button.phone { cursor: zoom-in; }
 @media (max-width: 860px) {
   .d-intro { grid-template-columns: 1fr; }
   .d-intro-text { display: contents; }
-  .d-title { order: 1; } .d-sub { order: 2; } .d-devices { order: 3; margin-top: 36px; } .d-spec { order: 4; }
+  .d-title { order: 1; } .d-sub { order: 2; } .d-devices { order: 3; margin-top: 36px; } .d-spec { order: 4; max-width: none; }
   .d-style { grid-template-columns: 1fr; }
 }
 @media (max-width: 640px) {

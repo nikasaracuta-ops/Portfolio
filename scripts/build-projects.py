@@ -77,7 +77,7 @@ PROJECTS = [
        lede='A world of flavours in every box — brand identity and app',
        
        tags=['UI', 'UX', 'Branding', 'App design'],
-       cta=('See Prototype', 'https://www.figma.com/proto/JhFdOzlcgGCV38btM2Tumv/Miles---Meals?page-id=6817%3A1887&node-id=59585-34744&viewport=-13885%2C-407%2C0.32&t=BZlwAt149MrtAhmE-1&scaling=min-zoom&content-scaling=fixed&starting-point-node-id=59585%3A34763&show-proto-sidebar=1')),
+       cta=('See Prototype', 'https://www.figma.com/design/JhFdOzlcgGCV38btM2Tumv/Miles---Meals?node-id=59585-34763&t=P7UUEVUcaU91MzRI-1')),
 ]
 
 def slug(p):

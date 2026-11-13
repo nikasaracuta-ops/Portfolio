@@ -92,7 +92,7 @@ function moveSky() {
   about.style.opacity = fade ? (1 - fade).toFixed(3) : '';
   about.style.transform = !reduceMotion.matches && t ? `translateY(${(-260 * ramp(t, 0, .58) * z).toFixed(1)}px)` : '';
   about.style.visibility = fade >= 1 ? 'hidden' : '';
-  if (qmark) qmark.style.opacity = t > .3 ? (1 - ramp(t, .3, .42)).toFixed(3) : '';
+  if (qmark) qmark.style.opacity = t > .2 ? (1 - ramp(t, .2, .34)).toFixed(3) : '';
   const move = !reduceMotion.matches;
   const cx = 420 * part * z, cy = -200 * part * z;
   cloudsL.style.transform = move && part ? `translate(${-cx}px, ${cy}px)` : '';
