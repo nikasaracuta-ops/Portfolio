@@ -231,7 +231,6 @@ button.phone { cursor: zoom-in; }
 .d-badge:hover, .d-badge:focus-visible { transform: scale(1.08) rotate(-8deg); outline: none; }
 .d-badge:hover .d-cta-icon, .d-badge:focus-visible .d-cta-icon { transform: translate(3px, -3px); }
 .d-badge:focus-visible { box-shadow: 0 0 0 3px #fff, 0 0 0 5px var(--color-blue); }
-@keyframes d-spin { to { rotate: 360deg; } }
 
 .d-devices { position: relative; width: 100%; padding: 0 0 12% 0; align-self: start; margin-top: 30px; --d: .2s; }
 .d-style {

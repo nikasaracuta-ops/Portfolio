@@ -303,14 +303,19 @@ a:focus-visible { outline: 2px solid var(--color-white); outline-offset: 4px; }
 }
 
 .work-card__cta {
-  position: absolute; z-index: 2; right: 3%; bottom: 5%; display: inline-flex; align-items: center; gap: 8px;
-  padding: 8px 14px 8px 16px; border-radius: 999px; background: var(--tab); color: #fff; font: 600 .9375rem/1 var(--font-body);
-  box-shadow: 0 10px 22px -12px rgba(14, 63, 115, .6); opacity: 0; translate: 0 8px; transition: opacity .3s, translate .4s cubic-bezier(.3, 1.6, .5, 1);
+  position: absolute; z-index: 2; left: var(--mx, 50%); top: var(--my, 50%); width: 112px; aspect-ratio: 1; margin: -56px 0 0 -56px;
+  display: grid; place-items: center; border-radius: 50%; background: var(--tab); color: #fff; pointer-events: none;
+  box-shadow: 0 18px 34px -16px rgba(14, 63, 115, .55); scale: 0; transition: scale .45s cubic-bezier(.3, 1.6, .5, 1);
 }
-.work-card__cta svg { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; transition: transform .3s; }
-.work-card.work-card--active .work-card__cta { opacity: 1; translate: 0 0; }
-.work-card:hover .work-card__cta svg, .work-card:focus-visible .work-card__cta svg { transform: translateX(4px); }
+.work-card__ring { position: absolute; inset: 0; width: 100%; height: 100%; animation: d-spin 12s linear infinite; }
+.work-card__ring text { font: 700 .75rem var(--font-body); fill: #fff; }
+.work-card__arrow { width: 30%; height: 30%; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+@media (hover: hover) and (pointer: fine) { .work-card:hover .work-card__cta { scale: 1; } }
+html.cta-on .sparkle { opacity: 0; }
 .work-card--laptop .work-card__cta { display: none; }
+@keyframes d-spin { to { rotate: 360deg; } }
+@keyframes cta-pop { 0% { scale: 0; } 60% { scale: 1.15; } 100% { scale: 1; } }
+@media (prefers-reduced-motion: reduce) { .work-card__ring { animation: none; } }
 
 /* ---------- Reveals ---------- */
 .js .reveal {
@@ -775,8 +780,10 @@ a:focus-visible { outline: 2px solid var(--color-white); outline-offset: 4px; }
   .work-card.work-card--stuck { transform: none; }
   .work__tongue { display: none; }
   .work-card .work-card__thumb { font-size: 1.375rem; }
-  .work-card__cta { right: 4%; bottom: 6%; padding: 6px 11px 6px 12px; gap: 6px; font-size: .8125rem; }
-  .work-card__cta svg { width: 13px; height: 13px; }
+  .work-card__cta { left: auto; top: auto; right: 4%; bottom: 7%; width: 44px; margin: 0; }
+  .work-card__ring { display: none; }
+  .work-card__arrow { width: 46%; height: 46%; }
+  .work-card.work-card--active .work-card__cta { scale: 1; animation: cta-pop .5s cubic-bezier(.3, 1.4, .5, 1) both; }
   .work__dots { order: 3; display: flex; justify-content: center; gap: 10px; margin-top: 62px; }
   .work__dots button { width: 10px; height: 10px; padding: 0; border: 0; border-radius: 5px; background: color-mix(in srgb, var(--color-pink) 30%, #fff); cursor: pointer; transition: width .35s cubic-bezier(.3, 1.6, .5, 1), background .3s; }
   .work__dots button[aria-current="true"] { width: 28px; background: var(--color-pink); }
