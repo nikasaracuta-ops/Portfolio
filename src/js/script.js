@@ -3,14 +3,19 @@ document.querySelectorAll('[data-behance]').forEach(a => { if (BEHANCE_URL) a.hr
 const stage = document.querySelector('.stage');
 const DESIGN_WIDTH = 1440;
 
+const PHONE_WIDTH = 430;
 const MOBILE = matchMedia('(max-width: 760px), (max-width: 1100px) and (orientation: portrait)');
 
 function fit() {
   const w = document.documentElement.clientWidth;
   if (MOBILE.matches) {
-    stage.style.zoom = '';
-    stage.style.setProperty('--mz', (w / 840).toFixed(4));
+    const k = w > PHONE_WIDTH ? w / PHONE_WIDTH : 1;
+    stage.style.zoom = siteNav.style.zoom = k > 1 ? k.toFixed(4) : '';
+    stage.style.setProperty('--pw', k > 1 ? PHONE_WIDTH / 100 + 'px' : '1vw');
+    stage.style.width = k > 1 ? PHONE_WIDTH + 'px' : '';
+    stage.style.setProperty('--mz', (Math.min(w, PHONE_WIDTH) / 840).toFixed(4));
   } else {
+    siteNav.style.zoom = stage.style.width = '';
     stage.style.zoom = w / DESIGN_WIDTH;
   }
   updateTopbar();
@@ -87,7 +92,7 @@ function moveSky() {
     for (const el of [about, puff]) { el.style.transform = el.style.opacity = el.style.visibility = ''; }
     about.style.setProperty('--sink', reduceMotion.matches ? 0 : ramp(scrollY / (innerHeight * .7), 0, 1).toFixed(3));
     const open = ramp((innerHeight * .5 - cloudsL.getBoundingClientRect().top) / (innerHeight * .45), 0, 1);
-    const dx = reduceMotion.matches ? 0 : innerWidth * .55 * open;
+    const dx = reduceMotion.matches ? 0 : stage.offsetWidth * .55 * open;
     cloudsL.style.transform = dx ? `translateX(${-dx.toFixed(1)}px)` : '';
     cloudsR.style.transform = dx ? `translateX(${-dx.toFixed(1)}px)` : '';
     cloudsL.style.opacity = cloudsR.style.opacity = open ? (1 - open).toFixed(3) : '';
@@ -151,7 +156,7 @@ MOBILE.addEventListener('change', placeOcean);
 if (fishSwimmer) {
   const calm = matchMedia('(prefers-reduced-motion: reduce)').matches;
   let START = -380, END = 1500, SLOW = 70, FAST = 620;
-  const sizeSea = () => { [START, END, SLOW, FAST] = MOBILE.matches ? [-160, innerWidth + 30, 38, 340] : [-380, 1500, 70, 620]; };
+  const sizeSea = () => { [START, END, SLOW, FAST] = MOBILE.matches ? [-160, stage.offsetWidth + 30, 38, 340] : [-380, 1500, 70, 620]; };
   sizeSea(); addEventListener('resize', sizeSea);
   let x = 420, y = 0, vy = 0, speed = SLOW, last = performance.now(), px = -1e4, py = -1e4;
   addEventListener('pointermove', (e) => { px = e.clientX; py = e.clientY; }, { passive: true });

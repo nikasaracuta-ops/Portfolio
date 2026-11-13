@@ -188,7 +188,8 @@
           const w = $('#work').getBoundingClientRect();
           drop.innerHTML = src.querySelector('.work-card__window').outerHTML;
           if (!drop.querySelector('.work-card__frame')) drop.querySelector('.work-card__window').insertAdjacentHTML('beforeend', last.querySelector('.work-card__frame').outerHTML);
-          drop.style.left = (z.left - w.left) + 'px'; drop.style.top = (z.top - w.top) + 'px'; drop.style.width = z.width + 'px';
+          const u = z.width / home.offsetWidth;
+          drop.style.left = (z.left - w.left) / u + 'px'; drop.style.top = (z.top - w.top) / u + 'px'; drop.style.width = home.offsetWidth + 'px';
           drop.hidden = false; src.style.visibility = 'hidden';
         }
         if (p <= 0 && !drop.hidden) { drop.hidden = true; src.style.visibility = ''; dropIdx = -1; }
@@ -203,7 +204,7 @@
         if (img) img.style.opacity = '';
         if (cta) cta.style.opacity = '';
       } else {
-        const e = smooth(p), unit = z.width / (phone ? z.width : home.offsetWidth);
+        const e = smooth(p), unit = z.width / home.offsetWidth;
         const dx = (a.left + g.x * k - z.left) / unit, dy = (a.top + g.y * k - z.top) / unit;
         const sc = 1 + ((g.w * k) / z.width - 1) * e;
         const rot = g.rot * e + 5 * Math.sin(Math.PI * p);
