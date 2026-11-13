@@ -43,7 +43,7 @@
     const b = document.createElement('button');
     b.className = `work-card work-card--${p.page.replace('.html', '')}`; b.style.setProperty('--c', p.bg); b.style.setProperty('--tab', p.tab || '#E770B2');
     b.setAttribute('aria-label', `Open project ${i + 1}: ${p.name}`);
-    b.innerHTML = `<span class="work-card__window"><span class="work-card__thumb"><img src="${p.img}" alt="" loading="lazy" decoding="async"></span>${tabSvg(i)}</span>`;
+    b.innerHTML = `<span class="work-card__window"><span class="work-card__thumb"><img src="${p.img}" alt="" loading="lazy" decoding="async"></span>${tabSvg(i)}<span class="work-card__cta" aria-hidden="true">View project<svg viewBox="0 0 24 24"><path d="M4 12h15M13 5l7 7-7 7"/></svg></span></span>`;
     b.addEventListener('click', () => window.goTo(p.page));
     b.addEventListener('mouseenter', () => activate(i));
     b.addEventListener('focus', () => activate(i));
@@ -196,11 +196,12 @@
         last.classList.toggle('work-card--flying', p > 0);
         if (!drop.hidden) { drop.hidden = true; cards.forEach(c => { c.style.visibility = ''; }); dropIdx = -1; }
       }
-      const img = fly.querySelector('.work-card__thumb img');
+      const img = fly.querySelector('.work-card__thumb img'), cta = fly.querySelector('.work-card__cta');
       if (p <= 0) {
         fly.style.transform = fly.style.opacity = ''; fly.style.setProperty('--deep', 0);
         fly.style.setProperty('--tab', P.tab); fly.style.setProperty('--c', P.bg);
         if (img) img.style.opacity = '';
+        if (cta) cta.style.opacity = '';
       } else {
         const e = smooth(p), unit = z.width / (phone ? z.width : home.offsetWidth);
         const dx = (a.left + g.x * k - z.left) / unit, dy = (a.top + g.y * k - z.top) / unit;
@@ -208,6 +209,7 @@
         const rot = g.rot * e + 5 * Math.sin(Math.PI * p);
         fly.style.transform = `translate(${dx * e}px, ${dy * e}px) rotate(${rot}deg) scale(${sc})`;
         if (img) img.style.opacity = 1 - clamp(p / .12, 0, 1);
+        if (cta) cta.style.opacity = 1 - clamp(p / .06, 0, 1);
         const c = clamp((p - .2) / .6, 0, 1);
         fly.style.setProperty('--tab', mix(hex(P.tab), TEAL, c));
         fly.style.setProperty('--c', mix(WHITE, TEAL, c));
