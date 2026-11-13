@@ -1,6 +1,10 @@
 (() => {
   const root = document.documentElement;
 
+  const scaleUp = () => root.style.setProperty('--kb', Math.max(1, innerWidth / 1440).toFixed(4));
+  scaleUp();
+  addEventListener('resize', scaleUp);
+
   addEventListener('pointerdown', () => root.classList.add('pointer-nav'), true);
   addEventListener('keydown', (e) => { if (e.key === 'Tab') root.classList.remove('pointer-nav'); }, true);
 

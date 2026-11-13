@@ -79,6 +79,7 @@ function moveSky() {
   stage.style.setProperty('--pin-top', ((vh - (PIN_BOTTOM - PIN_TOP)) * z).toFixed(1) + 'px');
   if (MOBILE.matches) {
     for (const el of [about, puff]) { el.style.transform = el.style.opacity = el.style.visibility = ''; }
+    if (qmark) qmark.style.translate = qmark.style.opacity = '';
     about.style.setProperty('--sink', reduceMotion.matches ? 0 : ramp(scrollY / (innerHeight * .7), 0, 1).toFixed(3));
     const open = ramp((innerHeight * .5 - cloudsL.getBoundingClientRect().top) / (innerHeight * .45), 0, 1);
     const dx = reduceMotion.matches ? 0 : stage.offsetWidth * .55 * open;
@@ -90,7 +91,9 @@ function moveSky() {
   const t = Math.max(0, Math.min(1, (-stage.getBoundingClientRect().top / z - (PIN_BOTTOM - vh - LEAD)) / (HOLD + LEAD)));
   const fade = ramp(t, .3, .58), part = ramp(t, .3, .65), glide = ramp(t, .35, .7), sink = ramp(t, .62, 1);
   about.style.opacity = fade ? (1 - fade).toFixed(3) : '';
-  about.style.transform = !reduceMotion.matches && t ? `translateY(${(-260 * ramp(t, 0, .58) * z).toFixed(1)}px)` : '';
+  const rise = !reduceMotion.matches && t ? -260 * ramp(t, 0, .58) * z : 0;
+  about.style.transform = rise ? `translateY(${rise.toFixed(1)}px)` : '';
+  if (qmark) qmark.style.translate = rise ? `0 ${(-rise).toFixed(1)}px` : '';
   about.style.visibility = fade >= 1 ? 'hidden' : '';
   if (qmark) qmark.style.opacity = t > .2 ? (1 - ramp(t, .2, .34)).toFixed(3) : '';
   const move = !reduceMotion.matches;
@@ -186,7 +189,8 @@ function toneNav() {
   const r = siteNav.getBoundingClientRect(), y = r.top + r.height / 2;
   const art = sunsetArt.getBoundingClientRect();
   const lead = (MOBILE.matches ? -40 : 420) * K;
-  siteNav.classList.toggle('site-nav--light', work.getBoundingClientRect().top - lead <= y && art.top + art.height * .64 > y);
+  const fogged = !MOBILE.matches && fog && fog.getBoundingClientRect().top + 450 * K <= y;
+  siteNav.classList.toggle('site-nav--light', (fogged || work.getBoundingClientRect().top - lead <= y) && art.top + art.height * .64 > y);
   let cur = -1;
   navSections.forEach((el, i) => { if (el && el.getBoundingClientRect().top <= innerHeight * .4) cur = i; });
   navLinks.forEach((a, i) => i === cur ? a.setAttribute('aria-current', 'location') : a.removeAttribute('aria-current'));
