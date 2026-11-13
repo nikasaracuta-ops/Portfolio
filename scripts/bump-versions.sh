@@ -1,8 +1,4 @@
 #!/usr/bin/env bash
-# Cache-busting: stamp each CSS/JS link in the pages (index.html and the project pages) with a short hash of the
-# file's contents (?v=…), so browsers fetch fresh files after every change
-# instead of mixing a new page with old cached styles/scripts.
-# Run it before committing whenever a CSS or JS file in src/ changed.
 set -euo pipefail
 cd "$(dirname "$0")/.."
 pages=(index.html dior.html type01.html moea.html miles.html)

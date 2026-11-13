@@ -1,6 +1,3 @@
-"""Builds the project pages (dior.html, type01.html, moea.html, miles.html) from the
-PROJECTS list below and one shared template, so they all share the same structure.
-Edit the texts here, then run:  python3 scripts/build-projects.py && scripts/bump-versions.sh"""
 import html, pathlib, re
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
@@ -97,7 +94,6 @@ def colours(p):
     return '\n'.join(rules)
 
 def ink(alt):
-    """A heading set live in The Seasons (Adobe Fonts), in the page's accent colour."""
     return f'<span class="p-ink">{html.escape(alt)}</span>'
 
 def window(src, w, h, alt, tab, extra='', lazy=False):
@@ -107,10 +103,7 @@ def window(src, w, h, alt, tab, extra='', lazy=False):
         {svg}
       </figure>'''
 
-def dior_main(p):
-    """Dior, after the Figma frame 846:133: the title with the site on desktop and mobile,
-    the facts, the brief, the visual style (styleboard + palette switch) and the result:
-    the live prototype in a browser window."""
+def project_main(p):
     burst = '<span class="d-burst" aria-hidden="true"></span>'
     tools = ''.join(f'<li title="{name}">{burst}<img class="d-icon" src="{src}" width="64" height="64" alt="{name}"></li>' for src, name in p['tools'])
     stamp = f'<span class="d-stamp"><span class="d-stamp-k">Year</span>{p["year"]}</span>'
@@ -261,7 +254,7 @@ def page(i, p):
     </a>
   </header>
 
-  <main class="p-main d-main">{dior_main(p)}
+  <main class="p-main d-main">{project_main(p)}
     <footer>
       <nav class="p-next reveal" aria-label="More projects">
         <a class="p-prev-link" href="{prev["file"]}">

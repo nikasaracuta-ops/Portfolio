@@ -20,8 +20,8 @@
   --cham: var(--color-pink);
   transition: --cham .8s ease;
 
-  --sky-v: linear-gradient(rgb(140,173,210) 0px, rgb(112,151,197) 40px, rgb(87,132,187) 80px, rgb(69,116,178) 120px, rgb(57,106,172) 160px, rgb(51,99,169) 200px, rgb(50,96,167) 240px, rgb(51,95,166) 280px, rgb(53,94,166) 320px, rgb(56,94,166) 360px, rgb(59,94,166) 400px, rgb(62,95,166) 440px, rgb(66,95,167) 480px, rgb(69,95,167) 520px, rgb(72,96,167) 560px, rgb(75,96,167) 600px, rgb(79,96,168) 640px, rgb(82,97,168) 680px, rgb(85,97,168) 720px, rgb(89,97,168) 760px, rgb(92,98,168) 800px, rgb(95,98,169) 840px, rgb(98,98,169) 880px, rgb(102,99,169) 920px, rgb(105,99,169) 960px, rgb(108,99,170) 1000px, rgb(112,100,170) 1040px, rgb(115,100,170) 1080px, rgb(118,100,170) 1120px, rgb(121,101,171) 1160px, rgb(125,101,171) 1200px, rgb(128,101,171) 1240px, rgb(131,102,171) 1280px, rgb(135,102,171) 1320px, rgb(138,103,172) 1360px, rgb(141,103,172) 1400px, rgb(145,104,172) 1440px, rgb(149,105,173) 1480px, rgb(153,107,174) 1520px, rgb(159,112,177) 1560px, rgb(167,119,181) 1600px, rgb(177,130,187) 1640px, rgb(189,145,195) 1680px, rgb(203,166,207) 1720px, rgb(222,196,223) 1760px, rgb(238,224,238) 1800px, rgb(249,243,248) 1840px, rgb(253,252,253) 1880px, rgb(255,255,255) 1920px, rgb(255,255,255) 1940px);
-  --sky-h: linear-gradient(to right, rgba(255,255,255,0.272) 0px, rgba(255,255,255,0.218) 20px, rgba(255,255,255,0.170) 40px, rgba(255,255,255,0.130) 60px, rgba(255,255,255,0.097) 80px, rgba(255,255,255,0.070) 100px, rgba(255,255,255,0.050) 120px, rgba(255,255,255,0.034) 140px, rgba(255,255,255,0.023) 160px, rgba(255,255,255,0.015) 180px, rgba(255,255,255,0.010) 200px, rgba(255,255,255,0.004) 240px, rgba(255,255,255,0.001) 280px, rgba(255,255,255,0) 50%, rgba(255,255,255,0.003) 1160px, rgba(255,255,255,0.008) 1200px, rgba(255,255,255,0.020) 1240px, rgba(255,255,255,0.029) 1260px, rgba(255,255,255,0.043) 1280px, rgba(255,255,255,0.061) 1300px, rgba(255,255,255,0.085) 1320px, rgba(255,255,255,0.116) 1340px, rgba(255,255,255,0.153) 1360px, rgba(255,255,255,0.198) 1380px, rgba(255,255,255,0.249) 1400px, rgba(255,255,255,0.307) 1420px, rgba(255,255,255,0.371) 1440px);
+  --sky-v: linear-gradient(rgb(140,173,210) 0, rgb(112,151,197) calc(40px * var(--k)), rgb(87,132,187) calc(80px * var(--k)), rgb(69,116,178) calc(120px * var(--k)), rgb(57,106,172) calc(160px * var(--k)), rgb(51,99,169) calc(200px * var(--k)), rgb(50,96,167) calc(240px * var(--k)), rgb(51,95,166) calc(280px * var(--k)), rgb(53,94,166) calc(320px * var(--k)), rgb(56,94,166) calc(360px * var(--k)), rgb(59,94,166) calc(400px * var(--k)), rgb(62,95,166) calc(440px * var(--k)), rgb(66,95,167) calc(480px * var(--k)), rgb(69,95,167) calc(520px * var(--k)), rgb(72,96,167) calc(560px * var(--k)), rgb(75,96,167) calc(600px * var(--k)), rgb(79,96,168) calc(640px * var(--k)), rgb(82,97,168) calc(680px * var(--k)), rgb(85,97,168) calc(720px * var(--k)), rgb(89,97,168) calc(760px * var(--k)), rgb(92,98,168) calc(800px * var(--k)), rgb(95,98,169) calc(840px * var(--k)), rgb(98,98,169) calc(880px * var(--k)), rgb(102,99,169) calc(920px * var(--k)), rgb(105,99,169) calc(960px * var(--k)), rgb(108,99,170) calc(1000px * var(--k)), rgb(112,100,170) calc(1040px * var(--k)), rgb(115,100,170) calc(1080px * var(--k)), rgb(118,100,170) calc(1120px * var(--k)), rgb(121,101,171) calc(1160px * var(--k)), rgb(125,101,171) calc(1200px * var(--k)), rgb(128,101,171) calc(1240px * var(--k)), rgb(131,102,171) calc(1280px * var(--k)), rgb(135,102,171) calc(1320px * var(--k)), rgb(138,103,172) calc(1360px * var(--k)), rgb(141,103,172) calc(1400px * var(--k)), rgb(145,104,172) calc(1440px * var(--k)), rgb(149,105,173) calc(1480px * var(--k)), rgb(153,107,174) calc(1520px * var(--k)), rgb(159,112,177) calc(1560px * var(--k)), rgb(167,119,181) calc(1600px * var(--k)), rgb(177,130,187) calc(1640px * var(--k)), rgb(189,145,195) calc(1680px * var(--k)), rgb(203,166,207) calc(1720px * var(--k)), rgb(222,196,223) calc(1760px * var(--k)), rgb(238,224,238) calc(1800px * var(--k)), rgb(249,243,248) calc(1840px * var(--k)), rgb(253,252,253) calc(1880px * var(--k)), rgb(255,255,255) calc(1920px * var(--k)), rgb(255,255,255) calc(1940px * var(--k)));
+  --sky-h: linear-gradient(to right, rgba(255,255,255,0.272) 0, rgba(255,255,255,0.218) calc(20px * var(--k)), rgba(255,255,255,0.170) calc(40px * var(--k)), rgba(255,255,255,0.130) calc(60px * var(--k)), rgba(255,255,255,0.097) calc(80px * var(--k)), rgba(255,255,255,0.070) calc(100px * var(--k)), rgba(255,255,255,0.050) calc(120px * var(--k)), rgba(255,255,255,0.034) calc(140px * var(--k)), rgba(255,255,255,0.023) calc(160px * var(--k)), rgba(255,255,255,0.015) calc(180px * var(--k)), rgba(255,255,255,0.010) calc(200px * var(--k)), rgba(255,255,255,0.004) calc(240px * var(--k)), rgba(255,255,255,0.001) calc(280px * var(--k)), rgba(255,255,255,0) 50%, rgba(255,255,255,0.003) calc(1160px * var(--k)), rgba(255,255,255,0.008) calc(1200px * var(--k)), rgba(255,255,255,0.020) calc(1240px * var(--k)), rgba(255,255,255,0.029) calc(1260px * var(--k)), rgba(255,255,255,0.043) calc(1280px * var(--k)), rgba(255,255,255,0.061) calc(1300px * var(--k)), rgba(255,255,255,0.085) calc(1320px * var(--k)), rgba(255,255,255,0.116) calc(1340px * var(--k)), rgba(255,255,255,0.153) calc(1360px * var(--k)), rgba(255,255,255,0.198) calc(1380px * var(--k)), rgba(255,255,255,0.249) calc(1400px * var(--k)), rgba(255,255,255,0.307) calc(1420px * var(--k)), rgba(255,255,255,0.371) calc(1440px * var(--k)));
   --star6: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 0l2.6 7.5L22.4 6l-5.2 6 5.2 6-7.8-1.5L12 24l-2.6-7.5L1.6 18l5.2-6-5.2-6 7.8 1.5z'/%3E%3C/svg%3E");
 }
 
@@ -53,7 +53,7 @@ body { background: #fff; overflow-x: hidden; font-stretch: 125%; font-family: va
 /* ---------- Positions on the calc(1440px * var(--k)) stage (Figma coordinates) ---------- */
 .clouds-px { --y: calc(641px * var(--k)); --w: calc(1440px * var(--k)); --h: calc(910px * var(--k)); }
 #about { top: calc(560px * var(--k)); }
-#hello { --x: calc(173px * var(--k)); --y: calc(-10px * var(--k)); }
+#hello { --x: calc(173px * var(--k)); --y: calc(30px * var(--k)); }
 .hero { top: 0; }
 .hero-sub--name { --d: .25s; --x: calc(56px * var(--k)); --y: calc(425px * var(--k)); }
 .hero-sub--role { --d: .3s; --y: calc(426px * var(--k)); left: auto; right: calc(44px * var(--k)); }
@@ -142,7 +142,7 @@ body::before {
 /* ---------- Text, links and buttons ---------- */
 
 .ttl { margin: 0; font-family: var(--font-heading); font-weight: 700; font-style: normal; letter-spacing: 0; white-space: nowrap; }
-.ttl-hello { font-weight: 700; font-size: calc(8rem * var(--k)); line-height: 1.25; color: #fff; }
+.ttl-hello { font-weight: 700; font-size: calc(6rem * var(--k)); line-height: 1.25; color: #fff; }
 .ttl-work { font-size: calc(6rem * var(--k)); line-height: calc(6.3125rem * var(--k)); color: var(--color-pink); }
 .ttl-open { font-size: calc(6rem * var(--k)); line-height: calc(6.5625rem * var(--k)); color: #fff; text-align: center; }
 .ttl-open .ttl__line--accent { color: #D8FF66; }
@@ -157,9 +157,9 @@ body::before {
 .t-intro {
   --d: .15s;
   --x: calc(176px * var(--k));
-  --y: calc(156px * var(--k));
-  --w: calc(477px * var(--k));
-  font: 400 calc(1.25rem * var(--k))/1.6 var(--font-body);
+  --y: calc(170px * var(--k));
+  --w: calc(440px * var(--k));
+  font: 400 calc(1.125rem * var(--k))/1.6 var(--font-body);
   color: color-mix(in srgb, var(--color-ice) 88%, transparent);
   letter-spacing: .005em;
 }
@@ -755,8 +755,9 @@ a:focus-visible { outline: calc(2px * var(--k)) solid var(--color-white); outlin
     opacity: calc(.62 * (1 - var(--sink, 0))); transform: translateY(calc(var(--sink, 0) * calc(140px * var(--k))));
   }
   #about > * { z-index: 1; }
-  #hello { font-size: clamp(calc(3.75rem * var(--k)), 19vw, calc(4.632rem * var(--k))); line-height: 1.28; }
-  .t-intro { max-width: calc(320px * var(--k)); font-size: calc(.9172rem * var(--k)); line-height: calc(1.375rem * var(--k)); }
+  #hello { font-size: calc(3.125rem * var(--k)); line-height: 1.2; }
+  #hello, #about .t-intro, #about .btn-hello { width: 100%; max-width: calc(340px * var(--k)); margin-inline: auto; }
+  .t-intro { font-size: calc(.875rem * var(--k)); line-height: calc(1.375rem * var(--k)); }
   .t-intro p + p { margin-top: calc(1.375rem * var(--k)); }
 
   #about .qbtn { position: absolute; left: 0; right: 0; top: calc(24px * var(--k)); margin: 0 auto; width: fit-content; opacity: calc(1 - var(--sink, 0)); }

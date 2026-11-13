@@ -185,8 +185,8 @@ function toneNav() {
   navQueued = false;
   const r = siteNav.getBoundingClientRect(), y = r.top + r.height / 2;
   const art = sunsetArt.getBoundingClientRect();
-  const z = MOBILE.matches ? 1 : K;
-  siteNav.classList.toggle('site-nav--light', work.getBoundingClientRect().top - 620 * z <= y && art.top + art.height * .64 > y);
+  const lead = (MOBILE.matches ? -40 : 420) * K;
+  siteNav.classList.toggle('site-nav--light', work.getBoundingClientRect().top - lead <= y && art.top + art.height * .64 > y);
   let cur = -1;
   navSections.forEach((el, i) => { if (el && el.getBoundingClientRect().top <= innerHeight * .4) cur = i; });
   navLinks.forEach((a, i) => i === cur ? a.setAttribute('aria-current', 'location') : a.removeAttribute('aria-current'));
