@@ -72,7 +72,7 @@ PROJECTS = [
        palette_squares=['#0C2968', '#FFC933', '#D42F25', '#D5F0FF', '#FDF4E3'],
        palette_squares_b=['#0C2968', '#FFC933', '#D42F25', '#D5F0FF', '#FDF4E3', '#BBD760'],
        board_switch=('Brandboard', 'App'), board_scroll=('src/assets/miles/brandboard-v4.jpg', 1440, 10708, 'The Miles & Meals brandboard: logo, colours, typography, iconography, photography and packaging'),
-       styleboard=('src/assets/miles/styleboard.webp', 2000, 1320, 'Miles & Meals styleboard: linocut fish and waves, tile patterns, navy and red', 'At first the style focused on linocut imagery and traditional patterns from different cultures, but during the app design process it became simpler.'),
+       styleboard=('src/assets/miles/brandboard-v4.jpg', 1440, 10708, 'Miles & Meals styleboard: linocut fish and waves, tile patterns, navy and red', 'At first the style focused on linocut imagery and traditional patterns from different cultures, but during the app design process it became simpler.'),
               title_text='Miles &amp; Meals',
        lede='A world of flavours in every box — brand identity and app',
        
@@ -243,6 +243,7 @@ def page(i, p):
   <link rel="icon" type="image/png" sizes="192x192" href="src/assets/favicon-192.png">
   <link rel="apple-touch-icon" href="src/assets/apple-touch-icon.png">
   <link rel="preconnect" href="https://use.typekit.net" crossorigin>
+  <link rel="preconnect" href="https://fonts.cdnfonts.com" crossorigin>
   <link rel="stylesheet" href="https://use.typekit.net/gfn8yzd.css">
   <link rel="stylesheet" href="https://fonts.cdnfonts.com/css/wasted-vindey">
   <link rel="stylesheet" href="src/css/reset.css">

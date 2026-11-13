@@ -1,6 +1,6 @@
 (() => {
   const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const PHONE = matchMedia('(max-width: 760px), (max-width: 1100px) and (orientation: portrait)');
+  const PHONE = matchMedia('(max-width: 760px), (max-width: 1100px) and (orientation: portrait), (max-height: 500px)');
   const $ = s => document.querySelector(s);
 
   const PROJECTS = [
@@ -12,8 +12,6 @@
 
   const list = $('#workList'), workStage = $('.work__stage'), nowName = $('#nowName');
   const mouth = $('#mouth'), tongue = $('#tongue'), tip = $('#tongueTip');
-  // the tongue is drawn on its own sticky layer, the twin of the chameleon's (same cell, same height),
-  // above the projects; the chameleon's shape is cut out of it so it comes out of the mouth
   const layer = $('#workTongue'), chamBody = $('.cham-body'), chamCut = $('#tongueMaskCham');
   chamCut.setAttribute('d', chamBody.querySelector('path').getAttribute('d'));
   const syncLayer = () => { layer.style.height = workStage.offsetHeight + 'px'; };

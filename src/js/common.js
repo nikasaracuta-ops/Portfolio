@@ -30,14 +30,13 @@
 
   const DREAM = 800;
   const calm = matchMedia('(prefers-reduced-motion: reduce)').matches;
-  // grow from the middle of the screen, whatever each part's position on the page
   const centre = () => document.querySelectorAll('body > :not(script)').forEach((el) => {
     el.style.transformOrigin = `50% ${innerHeight / 2 - el.getBoundingClientRect().top}px`;
   });
 
   window.goTo = (url) => {
     if (calm) { location.href = url; return; }
-    try { sessionStorage.setItem('dreamIn', '1'); } catch (e) { /* storage blocked: the next page simply appears */ }
+    try { sessionStorage.setItem('dreamIn', '1'); } catch (e) { }
     centre();
     root.classList.add('dream-out');
     setTimeout(() => { location.href = url; }, DREAM);
@@ -63,6 +62,5 @@
     }));
   }
 
-  // coming back with the browser's Back button: the page is restored as it was left
   addEventListener('pageshow', (e) => { if (e.persisted) root.classList.remove('dream-out', 'dream-in', 'dream-entering'); });
 })();

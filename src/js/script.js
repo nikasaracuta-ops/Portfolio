@@ -4,16 +4,17 @@ const stage = document.querySelector('.stage');
 const DESIGN_WIDTH = 1440;
 
 const PHONE_WIDTH = 430;
-const MOBILE = matchMedia('(max-width: 760px), (max-width: 1100px) and (orientation: portrait)');
+const MOBILE = matchMedia('(max-width: 760px), (max-width: 1100px) and (orientation: portrait), (max-height: 500px)');
 
 function fit() {
   const w = document.documentElement.clientWidth;
   if (MOBILE.matches) {
-    const k = w > PHONE_WIDTH ? w / PHONE_WIDTH : 1;
+    const k = Math.max(1, Math.min(w / PHONE_WIDTH, 1 + (innerHeight - 390) / 330));
     stage.style.zoom = siteNav.style.zoom = k > 1 ? k.toFixed(4) : '';
-    stage.style.setProperty('--pw', k > 1 ? PHONE_WIDTH / 100 + 'px' : '1vw');
-    stage.style.width = k > 1 ? PHONE_WIDTH + 'px' : '';
-    stage.style.setProperty('--mz', (Math.min(w, PHONE_WIDTH) / 840).toFixed(4));
+    const lw = w / k;
+    stage.style.setProperty('--pw', k > 1 ? (lw / 100).toFixed(3) + 'px' : '1vw');
+    stage.style.width = k > 1 ? lw.toFixed(1) + 'px' : '';
+    stage.style.setProperty('--mz', (lw / 840).toFixed(4));
   } else {
     siteNav.style.zoom = stage.style.width = '';
     stage.style.zoom = w / DESIGN_WIDTH;
@@ -145,11 +146,11 @@ if (intro) {
 
 const fishSwimmer = document.getElementById('fishSwimmer');
 const ocean = fishSwimmer && fishSwimmer.closest('.ocean'), coral = document.querySelector('.stage > .coral');
-const oceanHome = ocean && ocean.nextElementSibling, coralHome = coral && coral.nextElementSibling;
+const coralHome = coral && coral.nextElementSibling;
 function placeOcean() {
   if (!ocean || !coral || !contact) return;
   if (MOBILE.matches && ocean.parentElement !== contact) contact.append(ocean, coral);
-  else if (!MOBILE.matches && ocean.parentElement === contact) { stage.insertBefore(ocean, oceanHome); stage.insertBefore(coral, coralHome); }
+  else if (!MOBILE.matches && ocean.parentElement === contact) { stage.insertBefore(coral, coralHome); stage.insertBefore(ocean, coral); }
 }
 placeOcean();
 MOBILE.addEventListener('change', placeOcean);

@@ -69,10 +69,9 @@ body { background: #fff; overflow-x: hidden; font-stretch: 125%; font-family: va
 /* ---------- Bird and fish ---------- */
 .bird { --x: -6.61px; --y: 349px; --w: 1328.29px; --h: 558.57px; opacity: var(--a, 0); filter: blur(3px); overflow: visible; pointer-events: none; }
 .bird path { fill: #fff; }
-/* the clouds on the left again, above the bird: it sets off behind them, then flies over the rest */
 .clouds-front {
-  --w: 1440px; --h: 1000px; pointer-events: none;
-  background: url("../assets/clouds-hero.png?v=3") 0 0 / 1440px 2000px no-repeat;
+  --split: -30%; --w: 1440px; --h: 1000px; pointer-events: none;
+  background: url("../assets/clouds-hero.webp") 0 0 / 1440px 2000px no-repeat;
   -webkit-mask-image: radial-gradient(30% 22% at 18% 76%, #000 55%, transparent 100%);
           mask-image: radial-gradient(30% 22% at 18% 76%, #000 55%, transparent 100%);
 }
@@ -95,11 +94,10 @@ body { background: #fff; overflow-x: hidden; font-stretch: 125%; font-family: va
 @keyframes fish-tail { from { transform: rotate(-13deg); } to { transform: rotate(13deg); } }
 @media (prefers-reduced-motion: reduce) { .fish, .fish-tail, .fish-fin { animation: none; } }
 
-.cloud-half { --w: 1440px; --h: 459px; pointer-events: none; background: url("../assets/clouds-hero.png?v=3") 0 0 / 1440px 2000px no-repeat; }
+.cloud-half { --w: 1440px; --h: 459px; pointer-events: none; background: url("../assets/clouds-hero.webp") 0 0 / 1440px 2000px no-repeat; }
 .pin .cloud-half { --h: 1541px; background-position: 0 -459px; }
 .cloud-half--l { --split: -30%; -webkit-mask-image: linear-gradient(to right, #000 38%, transparent 62%); mask-image: linear-gradient(to right, #000 38%, transparent 62%); }
 .cloud-half--r { --split: 30%; -webkit-mask-image: linear-gradient(to left, #000 38%, transparent 62%); mask-image: linear-gradient(to left, #000 38%, transparent 62%); }
-.clouds-front { --split: -30%; }
 
 /* ---------- About, pinned ---------- */
 .pin-wrap { position: absolute; left: 0; top: 459px; width: 1440px; height: 1880px; }
@@ -486,7 +484,6 @@ a:focus-visible { outline: 2px solid var(--color-white); outline-offset: 4px; }
   position: relative;
   padding: 0 clamp(16px, 3vw, 44px);
 }
-/* the field: light pink grass from the flowers' feet to the bottom of the pop-up, across its whole width */
 .tool-groups::after {
   content: ""; position: absolute; z-index: -1; left: calc(50% - 50vw); right: calc(50% - 50vw);
   bottom: -14px; height: calc(100vw * 66 / 1440); min-height: 40px;
@@ -685,7 +682,6 @@ a:focus-visible { outline: 2px solid var(--color-white); outline-offset: 4px; }
 .work-card.work-card--drop { position: absolute; }
 .work-card.work-card--drop[hidden] { display: none; }
 
-/* ---------- Phones ---------- */
 /* ---------- Scroll effects ---------- */
 @keyframes split { to { transform: translateX(var(--split)); opacity: 0; } }
 @keyframes slide-out { to { transform: translateX(var(--out)); opacity: 0; } }
@@ -702,15 +698,14 @@ a:focus-visible { outline: 2px solid var(--color-white); outline-offset: 4px; }
   }
 }
 
-@media (max-width: 760px), (max-width: 1100px) and (orientation: portrait) {
+@media (max-width: 760px), (max-width: 1100px) and (orientation: portrait), (max-height: 500px) {
   .stage {
     width: 100%; height: auto; display: flex; flex-direction: column;
     background: linear-gradient(rgb(87, 118, 180), rgb(112, 121, 181) 430px, rgb(142, 125, 184) 680px, rgb(168, 128, 185) 880px,
       rgb(189, 153, 200) 980px, rgb(220, 207, 230) 1080px, rgb(239, 237, 246) 1180px, #fff 1280px) 0 0 / 100% 1280px no-repeat, #fff;
   }
-  .hero { order: 1; } #about { order: 2; } .clouds-px { order: 3; } #work { order: 4; } .sunset { order: 5; } #contact { order: 6; }
   .sky-puff, .clouds-front, .cloud-half { display: none !important; }
-  .clouds-px { position: relative; z-index: 2; left: 0; top: 0; width: calc(160 * var(--pw, 1vw)); max-width: none; height: auto; aspect-ratio: 720 / 455; margin: -230px 0 0 calc(-30 * var(--pw, 1vw));
+  .clouds-px { order: 3; position: relative; z-index: 2; left: 0; top: 0; width: calc(160 * var(--pw, 1vw)); max-width: none; height: auto; aspect-ratio: 720 / 455; margin: -230px 0 0 calc(-30 * var(--pw, 1vw));
     --puff: rgba(255, 255, 255, .9); filter: blur(6px);
     background: radial-gradient(16% 22% at 26% 46%, var(--puff), transparent), radial-gradient(14% 20% at 38% 52%, var(--puff), transparent),
       radial-gradient(20% 18% at 22% 62%, var(--puff), transparent), radial-gradient(18% 17% at 44% 64%, var(--puff), transparent),
@@ -734,7 +729,7 @@ a:focus-visible { outline: 2px solid var(--color-white); outline-offset: 4px; }
     position: relative; top: auto !important; width: 100%; padding: 0 20px;
 
     --sky-pos: center calc(var(--y0, 0) * var(--s, 1) * -1px);
-    background: url("../assets/clouds-hero.png?v=3"), var(--sky-h), var(--sky-v);
+    background: url("../assets/clouds-hero.webp"), var(--sky-h), var(--sky-v);
     background-repeat: no-repeat;
     background-size: calc(1440px * var(--s, 1)) calc(2000px * var(--s, 1));
     background-position: var(--sky-pos);
@@ -742,7 +737,7 @@ a:focus-visible { outline: 2px solid var(--color-white); outline-offset: 4px; }
   .sec .l { position: relative; left: auto; right: auto; top: auto; width: auto; height: auto; }
 
   .hero {
-    height: 300px; padding: 89px 19px 0; background: none;
+    order: 1; height: 300px; padding: 89px 19px 0; background: none;
     display: grid; grid-template-rows: auto auto auto; align-content: start;
   }
   .hero .hero-sub { font-size: clamp(1.5rem, calc(7.7 * var(--pw, 1vw)), 1.875rem); line-height: 1.3; }
@@ -751,7 +746,7 @@ a:focus-visible { outline: 2px solid var(--color-white); outline-offset: 4px; }
   .hero .hero-sub:last-of-type { grid-row: 3; justify-self: end; margin-top: -12px; font-size: clamp(1.25rem, calc(6 * var(--pw, 1vw)), 1.4631rem); }
 
   #about {
-    padding: 310px 23px 110px; overflow-x: clip; background: none;
+    order: 2; padding: 310px 23px 110px; overflow-x: clip; background: none;
   }
   #about::before {
     content: ""; position: absolute; left: calc(9.2 * var(--pw, 1vw)); top: -70px; width: calc(78.7 * var(--pw, 1vw)); aspect-ratio: 307 / 384; pointer-events: none;
@@ -767,7 +762,7 @@ a:focus-visible { outline: 2px solid var(--color-white); outline-offset: 4px; }
   #about .qbtn .q-glyph { margin: 0; font-size: clamp(5rem, calc(25.4 * var(--pw, 1vw)), 6.1875rem); line-height: 1.03; color: rgb(108, 120, 181); }
   #about .btn-hello { display: flex; width: 100%; max-width: 320px; margin-top: 14px; height: 48px; padding: 0 30px; border-radius: 10px; font-size: 1.08rem; }
 
-  #work { margin-top: calc(230px - calc(160 * var(--pw, 1vw)) * 455 / 720); padding: 70px 0 8px; background: linear-gradient(rgba(255, 255, 255, 0), #fff 240px); }
+  #work { order: 4; margin-top: calc(230px - calc(160 * var(--pw, 1vw)) * 455 / 720); padding: 70px 0 8px; background: linear-gradient(rgba(255, 255, 255, 0), #fff 240px); }
   #mywork { order: 0; align-self: flex-end; margin: 0 26px 0 0; font-size: clamp(2.75rem, calc(12.8 * var(--pw, 1vw)), 3.125rem); line-height: 1.08; text-align: right; white-space: normal; }
   .work__layout { display: flex; flex-direction: column; align-items: stretch; gap: 0; margin-top: 0; min-width: 0; }
   .work__stage { display: contents; }
@@ -793,21 +788,21 @@ a:focus-visible { outline: 2px solid var(--color-white); outline-offset: 4px; }
   .work__dots button[aria-current="true"] { width: 28px; background: var(--color-pink); }
 
   .cham-wrap { order: 1; position: relative; display: flex; justify-content: flex-start; margin-top: -20px; padding: 0 20px; overflow: hidden; }
-  .cham { width: 140px; }
-  .cham .branch { display: block; left: -74px; top: 48px; width: calc(147 * var(--pw, 1vw)); height: calc(calc(147 * var(--pw, 1vw)) * 139 / 1440); }
+  .cham { width: min(calc(35.9 * var(--pw, 1vw)), 180px); }
+  .cham .branch { display: block; left: -53%; top: 34%; width: calc(147 * var(--pw, 1vw)); height: calc(calc(147 * var(--pw, 1vw)) * 139 / 1440); }
 
-  .sunset { padding: 0; overflow: hidden; background: none; }
+  .sunset { order: 5; padding: 0; overflow: hidden; background: none; }
   .sunset-art { zoom: var(--mz, .45); margin-left: -300px;
     background: linear-gradient(rgba(62, 189, 205, 0) 320px, rgba(62, 189, 205, .02) 416px, rgba(62, 189, 205, .16) 513px,
       rgba(62, 189, 205, .5) 610px, rgba(62, 189, 205, .84) 707px, rgba(62, 189, 205, .98) 804px, var(--color-aqua) 900px); }
   .sunset-art .l { position: absolute; left: var(--x); top: var(--y); width: auto; height: auto; }
   .sunset-art .screen { width: 449px; height: 301px; }
 
-  #contact { padding-top: 104px; padding-bottom: 170px; text-align: center; overflow: hidden; }
 
   .stage > .deco, .stage > .sea { display: none; }
   .pin-fog { display: none; }
   #contact {
+    order: 6; padding-top: 104px; padding-bottom: 170px; text-align: center; overflow: hidden;
     background: url("../assets/coral-small.svg") left 81px bottom -6px / 70px auto no-repeat,
                 url("../assets/seabed.svg") center bottom -6px / 110% auto no-repeat, linear-gradient(var(--color-aqua), var(--color-blue));
   }
@@ -840,7 +835,7 @@ a:focus-visible { outline: 2px solid var(--color-white); outline-offset: 4px; }
   .site-nav__links {
     position: fixed; z-index: -1; inset: 0; left: 0; width: auto; top: 0; padding: 112px 28px 40px;
     display: flex; flex-direction: column; align-items: flex-start; justify-content: flex-start; gap: 4px;
-    background: url("../assets/clouds-hero.png?v=3") -48px 0 / 1152px auto no-repeat, var(--sky-h), var(--sky-v);
+    background: url("../assets/clouds-hero.webp") -48px 0 / 1152px auto no-repeat, var(--sky-h), var(--sky-v);
     background-color: var(--color-blue);
     visibility: hidden; opacity: 0; pointer-events: none; transition: opacity .35s, visibility 0s .35s;
   }
@@ -881,7 +876,7 @@ html.sparkle-on, html.sparkle-on * { cursor: none !important; }
 @keyframes sparkle-spin { to { rotate: 360deg; } }
 @media (prefers-reduced-motion: reduce) { .sparkle img { animation: none; } }
 
-/* ---------- Page transition: the page blurs, grows and fades; the next one comes into focus ---------- */
+/* ---------- Page transition ---------- */
 html.dream-in body > :not(script), html.dream-out body > :not(script) {
   filter: blur(18px) !important; transform: scale(1.04) !important; opacity: 0 !important;
 }
