@@ -666,14 +666,16 @@ a:focus-visible { outline: 2px solid var(--color-white); outline-offset: 4px; }
 /* ---------- Phones ---------- */
 /* ---------- Scroll effects ---------- */
 @keyframes split { to { transform: translateX(var(--split)); opacity: 0; } }
-@keyframes drift-up { to { transform: translateY(-120px); opacity: 0; } }
+@keyframes slide-out { to { transform: translateX(var(--out)); opacity: 0; } }
 @keyframes line-in { from { transform: translateX(var(--from)); opacity: 0; } }
 @keyframes lit { from { opacity: .28; } }
 
 @supports (animation-timeline: scroll()) {
   @media (prefers-reduced-motion: no-preference) {
     .cloud-half, .clouds-front { animation: split linear both; animation-timeline: scroll(root); animation-range: 0 80vh; }
-    .hero .hero-sub { animation: drift-up linear both; animation-timeline: scroll(root); animation-range: 0 80vh; }
+    .hero .hero-sub { animation: slide-out linear both; animation-timeline: scroll(root); animation-range: 0 60vh; }
+    .hero .hero-sub--name { --out: -40vw; }
+    .hero .hero-sub--role { --out: 40vw; }
 
     .ttl__line { display: inline-block; animation: line-in linear both; animation-timeline: view(); animation-range: entry 0% entry 60%; }
     .ttl__line:first-child { --from: -40%; }
@@ -690,7 +692,7 @@ a:focus-visible { outline: 2px solid var(--color-white); outline-offset: 4px; }
   }
   .hero { order: 1; } #about { order: 2; } .clouds-px { order: 3; } #work { order: 4; } .sunset { order: 5; } #contact { order: 6; }
   .sky-puff, .clouds-front, .cloud-half { display: none !important; }
-  .clouds-px { position: relative; z-index: 2; left: 0; top: 0; width: 160vw; max-width: none; height: auto; aspect-ratio: 720 / 455; margin: -400px 0 0 -30vw;
+  .clouds-px { position: relative; z-index: 2; left: 0; top: 0; width: 160vw; max-width: none; height: auto; aspect-ratio: 720 / 455; margin: -230px 0 0 -30vw;
     --puff: rgba(255, 255, 255, .9); filter: blur(6px);
     background: radial-gradient(16% 22% at 26% 46%, var(--puff), transparent), radial-gradient(14% 20% at 38% 52%, var(--puff), transparent),
       radial-gradient(20% 18% at 22% 62%, var(--puff), transparent), radial-gradient(18% 17% at 44% 64%, var(--puff), transparent),
@@ -731,7 +733,7 @@ a:focus-visible { outline: 2px solid var(--color-white); outline-offset: 4px; }
   .hero .hero-sub:last-of-type { grid-row: 3; justify-self: end; margin-top: -12px; font-size: clamp(1.25rem, 6vw, 1.4631rem); }
 
   #about {
-    padding: 310px 23px 240px; overflow-x: clip; background: none;
+    padding: 310px 23px 110px; overflow-x: clip; background: none;
   }
   #about::before {
     content: ""; position: absolute; left: 9.2vw; top: -70px; width: 78.7vw; aspect-ratio: 307 / 384; pointer-events: none;
@@ -747,7 +749,7 @@ a:focus-visible { outline: 2px solid var(--color-white); outline-offset: 4px; }
   #about .qbtn .q-glyph { margin: 0; font-size: clamp(5rem, 25.4vw, 6.1875rem); line-height: 1.03; color: rgb(108, 120, 181); }
   #about .btn-hello { display: flex; width: 100%; max-width: 320px; margin-top: 14px; height: 48px; padding: 0 30px; border-radius: 10px; font-size: 1.08rem; }
 
-  #work { margin-top: calc(400px - 160vw * 455 / 720); padding: 70px 0 8px; background: linear-gradient(rgba(255, 255, 255, 0), #fff 240px); }
+  #work { margin-top: calc(230px - 160vw * 455 / 720); padding: 70px 0 8px; background: linear-gradient(rgba(255, 255, 255, 0), #fff 240px); }
   #mywork { order: 0; align-self: flex-end; margin: 0 26px 0 0; font-size: clamp(2.75rem, 12.8vw, 3.125rem); line-height: 1.08; text-align: right; white-space: normal; }
   .work__layout { display: flex; flex-direction: column; align-items: stretch; gap: 0; margin-top: 0; min-width: 0; }
   .work__stage { display: contents; }

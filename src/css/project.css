@@ -179,6 +179,7 @@ button.phone { cursor: zoom-in; }
 }
 .d-devices:hover .phone--intro { rotate: 0deg; translate: 0 -10px; }
 .phone--overlay { position: absolute; z-index: 2; left: -3%; bottom: -16%; width: 21%; }
+.phone--phone-only { display: none; }
 .phone--app { position: relative; width: 100%; }
 .d-result:has(.phone--overlay) .d-browser { margin-bottom: 9%; }
 .app-result { position: relative; width: min(46%, 23.75rem, (100svh - 18rem) * .58); margin: clamp(24px, 3vw, 40px) auto 0; }
@@ -259,11 +260,11 @@ button.phone { cursor: zoom-in; }
   .d-dots-pal li, .phone--intro { transition: none; }
 }
 
-.p-next a { text-decoration: none; display: grid; grid-template-columns: auto auto; align-items: center; column-gap: 18px; row-gap: 2px; }
+.p-next a { text-decoration: none; display: grid; grid-template-columns: auto auto; align-items: center; column-gap: 14px; row-gap: 4px; }
 .p-prev-link { justify-content: start; }
 .p-next-link { text-align: right; justify-content: end; }
 .p-arrow {
-  grid-row: 1 / span 2; display: grid; place-items: center; width: clamp(56px, 5vw, 71px); aspect-ratio: 1; border-radius: 50%;
+  grid-row: 1 / span 2; display: grid; place-items: center; width: clamp(40px, 3.4vw, 48px); aspect-ratio: 1; border-radius: 50%;
   background: var(--accent); transition: transform .35s cubic-bezier(.3, 1.6, .5, 1);
 }
 .p-arrow svg { width: 46%; height: 46%; fill: none; stroke: #fff; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
@@ -271,10 +272,10 @@ button.phone { cursor: zoom-in; }
 .p-next-link .p-dir, .p-next-link .p-name { grid-column: 1;  text-align: right; }
 .p-next-link .p-dir { grid-row: 1; }
 .p-next-link .p-name { justify-self: end; grid-row: 2; }
-.p-dir { transition: color .25s; font: 1.125rem/1 var(--font-body); color: #454545; align-self: end; }
+.p-dir { transition: color .25s; font: .875rem/1 var(--font-body); color: var(--muted); align-self: end; }
 .p-prev-link:hover .p-arrow, .p-prev-link:focus-visible .p-arrow { transform: translateX(-6px); }
 .p-next-link:hover .p-arrow, .p-next-link:focus-visible .p-arrow { transform: translateX(6px); }
-.p-next .p-name { font: 600 1.125rem/1.875rem var(--font-body); color: var(--accent); text-transform: uppercase; letter-spacing: .02em; align-self: start; }
+.p-next .p-name { font: 600 1rem/1.25 var(--font-body); color: var(--accent); text-transform: uppercase; letter-spacing: .02em; align-self: start; }
 .p-prev-link:hover .p-name, .p-next-link:hover .p-name, .p-prev-link:focus-visible .p-name, .p-next-link:focus-visible .p-name { transform: none; }
 
 .d-still { display: block; width: 100%; height: 100%; object-fit: cover; object-position: top center; }
@@ -304,6 +305,19 @@ button.d-badge { border: 0; cursor: zoom-in; font: inherit; }
 
 .d-title { margin-top: 0; --d: .05s; }
 .d-sub { margin-top: 22px; display: grid; gap: 6px; font: clamp(1.0625rem, 1.6vw, 1.3125rem)/1.45 var(--font-body); color: var(--muted); --d: .1s; }
+
+@media (max-width: 640px) {
+  .d-url { visibility: hidden; }
+  .d-browser { width: min(64%, 300px); padding: 0; background: none; }
+  .d-browser-bar, .d-panes { display: none; }
+  .d-result .phone--overlay { display: block; position: static; width: 100%; }
+  .d-result:has(.phone--overlay) .d-browser { margin-bottom: 0; }
+  .d-browser .d-badge { right: -22%; bottom: -7%; width: 96px; }
+  .p-next { gap: 12px; padding: 28px 0 40px; }
+  .p-next a { column-gap: 10px; }
+  .p-arrow { width: 36px; }
+  .p-next .p-name { font-size: .875rem; }
+}
 
 /* project colours: written by scripts/build-projects.py */
 .project-page--dior { --accent: #E770B2; }

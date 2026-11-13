@@ -159,7 +159,7 @@ def dior_main(p):
         board = (f'<button class="p-board" data-zoom aria-label="Enlarge the styleboard">{boards}'
                  '<span class="p-zoom-hint" aria-hidden="true">Click to enlarge</span></button>')
     rphone = (f'<button class="phone phone--overlay" data-zoom{full_m} aria-label="Enlarge the mobile version"><img class="phone__image on" src="{m[0]}" width="{m[1]}" height="{m[2]}" alt="{html.escape(m[3])}" loading="lazy"></button>'
-              if p.get('result_phone') else '')
+              .replace('phone--overlay"', 'phone--overlay' + ('' if p.get('result_phone') else ' phone--phone-only') + '"'))
     if p.get('result_video'):
         v = p['result_video']
         result = (f'<video class="d-panes d-video" poster="{v[1]}" width="{v[2]}" height="{v[3]}" muted loop playsinline preload="none" aria-label="{html.escape(v[4])}">'
@@ -265,12 +265,12 @@ def page(i, p):
       <nav class="p-next reveal" aria-label="More projects">
         <a class="p-prev-link" href="{prev["file"]}">
           <span class="p-arrow" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M20 12H5M11 5l-7 7 7 7"/></svg></span>
-          <span class="p-dir">project</span>
+          <span class="p-dir">Previous</span>
           <span class="p-name">{prev["name"].replace("&", "&amp;")}</span>
         </a>
         <a class="p-next-link" href="{nxt["file"]}">
           <span class="p-arrow" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 12h15M13 5l7 7-7 7"/></svg></span>
-          <span class="p-dir">project</span>
+          <span class="p-dir">Next</span>
           <span class="p-name">{nxt["name"].replace("&", "&amp;")}</span>
         </a>
       </nav>
