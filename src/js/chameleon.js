@@ -1,6 +1,6 @@
 (() => {
   const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const PHONE = matchMedia('(max-width: 760px)');
+  const PHONE = matchMedia('(max-width: 760px), (max-width: 1100px) and (orientation: portrait)');
   const $ = s => document.querySelector(s);
 
   const PROJECTS = [

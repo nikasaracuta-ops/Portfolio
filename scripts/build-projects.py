@@ -9,7 +9,7 @@ TAB = re.search(r"const tabSvg = i => `(<svg[\s\S]*?</svg>)`", (ROOT / 'src/js/c
 
 PROJECTS = [
   dict(file='dior.html', name='Dior', tab='#E770B2',
-       result_video=('src/assets/dior/site-scroll.mp4', 'src/assets/dior/site-scroll.webp', 1440, 778, 'Scrolling through the Dior story'),
+       result_phone=True, result_video=('src/assets/dior/site-scroll.mp4', 'src/assets/dior/site-scroll.webp', 1440, 778, 'Scrolling through the Dior story'),
        title_text='Dior',
        lede='MoMu – Dress to Impress: an interactive longread for MoMu – Fashion Museum Antwerp',
        subtitle=('MoMu – Dress to Impress', 'An interactive longread for MoMu – Fashion Museum Antwerp'),
@@ -45,7 +45,7 @@ PROJECTS = [
   dict(file='type01.html', name='Type01', tab='#E770B2',
        title_text='TYPE01',
        subtitle=('TYPE01 Conference', 'A conference website for desktop and mobile'),
-       year='2025', client='TYPE01 Magazine', url='TYPE01 prototype',
+       year='2025', client='TYPE01 Magazine', url='',
        tools=[('src/assets/tools/photoshop.webp', 'Photoshop'), ('src/assets/tools/figma.webp', 'Figma')],
        desktop=('src/assets/type01/site.webp', 2000, 1280, 'The TYPE01 conference homepage'),
        mobile=('src/assets/type01/phone.webp', 670, 1149, 'The TYPE01 homepage on mobile'), result_phone=True,
@@ -62,7 +62,7 @@ PROJECTS = [
        cta=('See Prototype', 'https://www.figma.com/proto/PsD6Cg8ngFq6yRWCCm5I9q/Type01?page-id=0%3A1&node-id=468-7480&viewport=-2609%2C-2191%2C0.15&t=KQAR1eAcC8Ls4MeP-1&scaling=min-zoom&content-scaling=fixed&starting-point-node-id=580%3A48961')),
   dict(file='miles.html', name='Miles & Meals', tab='#1A5BA4',
        subtitle=('Miles &amp; Meals – food-box subscription', 'Brand identity and mobile app for a start-up'),
-       year='2026', client='Miles &amp; Meals<br><span class="d-note">(fictional company)</span>', url='Miles &amp; Meals prototype',
+       year='2026', client='Miles &amp; Meals<br><span class="d-note">(fictional company)</span>', url='',
        tools=[('src/assets/tools/illustrator.webp', 'Illustrator'), ('src/assets/tools/figma.webp', 'Figma'), ('src/assets/tools/photoshop.webp', 'Photoshop'), ('src/assets/tools/procreate.webp', 'Procreate')],
        desktop=('src/assets/miles/site.webp', 2000, 1288, 'Miles & Meals: brand photography and social media'),
        mobile=('src/assets/miles/phone.webp', 667, 1152, 'The Miles & Meals app: Discover the world in your kitchen'), result_mode='phone', title_html='Miles<span class="amp">&amp;</span>Meals',
@@ -159,7 +159,7 @@ def dior_main(p):
         board = (f'<button class="p-board" data-zoom aria-label="Enlarge the styleboard">{boards}'
                  '<span class="p-zoom-hint" aria-hidden="true">Click to enlarge</span></button>')
     rphone = (f'<button class="phone phone--overlay" data-zoom{full_m} aria-label="Enlarge the mobile version"><img class="phone__image on" src="{m[0]}" width="{m[1]}" height="{m[2]}" alt="{html.escape(m[3])}" loading="lazy"></button>'
-              .replace('phone--overlay"', 'phone--overlay' + ('' if p.get('result_phone') else ' phone--phone-only') + '"'))
+              if p.get('result_phone') else '')
     if p.get('result_video'):
         v = p['result_video']
         result = (f'<video class="d-panes d-video" poster="{v[1]}" width="{v[2]}" height="{v[3]}" muted loop playsinline preload="none" aria-label="{html.escape(v[4])}">'

@@ -3,7 +3,7 @@ document.querySelectorAll('[data-behance]').forEach(a => { if (BEHANCE_URL) a.hr
 const stage = document.querySelector('.stage');
 const DESIGN_WIDTH = 1440;
 
-const MOBILE = matchMedia('(max-width: 760px)');
+const MOBILE = matchMedia('(max-width: 760px), (max-width: 1100px) and (orientation: portrait)');
 
 function fit() {
   const w = document.documentElement.clientWidth;
@@ -61,7 +61,6 @@ if (sparkle && matchMedia('(hover: hover) and (pointer: fine)').matches) {
     if (!sparkle.classList.contains('show')) { sx = x; sy = y; sparkle.classList.add('show'); }
     const card = e.target.closest('#workList .work-card');
     sparkle.classList.toggle('sparkle--view', !!card);
-    sparkle.style.setProperty('--view', card ? getComputedStyle(card).getPropertyValue('--tab') : '');
     sparkle.classList.toggle('big', !card && !!e.target.closest(CLICKABLE));
     if (!raf) raf = requestAnimationFrame(move);
   }, { passive: true });

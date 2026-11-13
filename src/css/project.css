@@ -179,7 +179,6 @@ button.phone { cursor: zoom-in; }
 }
 .d-devices:hover .phone--intro { rotate: 0deg; translate: 0 -10px; }
 .phone--overlay { position: absolute; z-index: 2; left: -3%; bottom: -16%; width: 21%; }
-.phone--phone-only { display: none; }
 .phone--app { position: relative; width: 100%; }
 .d-result:has(.phone--overlay) .d-browser { margin-bottom: 9%; }
 .app-result { position: relative; width: min(46%, 23.75rem, (100svh - 18rem) * .58); margin: clamp(24px, 3vw, 40px) auto 0; }
