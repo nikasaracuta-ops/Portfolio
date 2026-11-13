@@ -116,17 +116,17 @@
     else if (goal < ext) ext = Math.max(0, ext - dt / .12);
 
     if (target >= 0 && !PHONE.matches) {
-      const lr = layer.getBoundingClientRect(), z = lr.width / parseFloat(getComputedStyle(layer).width);
-      const local = (px, py) => ({ x: (px - lr.left) / z, y: (py - lr.top) / z });
+      const lr = layer.getBoundingClientRect(), z = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--k')) || 1;
+      const local = (px, py) => ({ x: px - lr.left, y: py - lr.top });
       const mc = centre(mouth), r = cards[target].querySelector('.work-card__thumb').getBoundingClientRect();
       const m = local(mc.x, mc.y), t = local(clamp(mc.x, r.left + 28 * z, r.right - 28 * z), mc.y);
       const cb = chamBody.getBoundingClientRect(), o = local(cb.left, cb.top);
-      chamCut.setAttribute('transform', `translate(${o.x} ${o.y}) scale(${cb.width / z / 361} ${cb.height / z / 308})`);
+      chamCut.setAttribute('transform', `translate(${o.x} ${o.y}) scale(${cb.width / 361} ${cb.height / 308})`);
       const k = easeOut(ext), x = m.x + (t.x - m.x) * k, y = m.y + (t.y - m.y) * k;
       const dist = Math.hypot(x - m.x, y - m.y);
       tongue.setAttribute('d', dist > 2 ? `M${m.x},${m.y} L${x},${y}` : '');
-      tongue.setAttribute('stroke-width', 5);
-      tip.setAttribute('cx', x); tip.setAttribute('cy', y); tip.setAttribute('r', dist > 2 ? 13 : 0);
+      tongue.setAttribute('stroke-width', 5 * z);
+      tip.setAttribute('cx', x); tip.setAttribute('cy', y); tip.setAttribute('r', dist > 2 ? 13 * z : 0);
       cards[target].classList.toggle('work-card--stuck', ext >= 1);
     }
     requestAnimationFrame(frame);
@@ -228,7 +228,8 @@
       const settle = clamp(1 - Math.abs(v) / 120, 0, 1);
       bob = landed || reduce ? wave(O.x, t) * settle : 0;
       tilt = landed || reduce ? (wave(O.x + 60, t) - wave(O.x - 60, t)) / 120 * 57.3 * .8 * settle : 0;
-      laptop.style.transform = `translateY(${(y + bob).toFixed(2)}px) rotate(${tilt.toFixed(2)}deg) scale(${S})`;
+      const u = art.getBoundingClientRect().width / 1440;
+      laptop.style.transform = `translateY(${((y + bob) * u).toFixed(2)}px) rotate(${tilt.toFixed(2)}deg) scale(${S})`;
     }
 
     function tick(now) {

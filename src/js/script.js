@@ -6,42 +6,30 @@ const DESIGN_WIDTH = 1440;
 const PHONE_WIDTH = 430;
 const MOBILE = matchMedia('(max-width: 760px), (max-width: 1100px) and (orientation: portrait), (max-height: 500px)');
 
+let K = 1;
 function fit() {
   const w = document.documentElement.clientWidth;
-  if (MOBILE.matches) {
-    const k = Math.max(1, Math.min(w / PHONE_WIDTH, 1 + (innerHeight - 390) / 330));
-    stage.style.zoom = siteNav.style.zoom = k > 1 ? k.toFixed(4) : '';
-    const lw = w / k;
-    stage.style.setProperty('--pw', k > 1 ? (lw / 100).toFixed(3) + 'px' : '1vw');
-    stage.style.width = k > 1 ? lw.toFixed(1) + 'px' : '';
-    stage.style.setProperty('--mz', (lw / 840).toFixed(4));
-  } else {
-    siteNav.style.zoom = stage.style.width = '';
-    stage.style.zoom = w / DESIGN_WIDTH;
-  }
-  updateTopbar();
+  K = MOBILE.matches ? Math.max(1, Math.min(w / PHONE_WIDTH, 1 + (innerHeight - 390) / 330)) : w / DESIGN_WIDTH;
+  document.documentElement.style.setProperty('--k', K.toFixed(4));
+  stage.style.setProperty('--mz', (w / 840).toFixed(4));
   placeFooter();
 }
 
 const contact = document.getElementById('contact');
 function placeFooter() {
   if (!contact) return;
-  const z = parseFloat(stage.style.zoom) || 1;
-  const shift = MOBILE.matches ? 0 : Math.max(0, Math.min(150, 866 - innerHeight / z));
-  contact.style.top = MOBILE.matches ? '' : `${5244 + shift}px`;
+  const shift = MOBILE.matches ? 0 : Math.max(0, Math.min(150, 866 - innerHeight / K));
+  contact.style.top = MOBILE.matches ? '' : `${(5244 + shift) * K}px`;
 }
 
 const siteNav = document.getElementById('site-nav');
-function updateTopbar() {
-  if (siteNav) siteNav.style.setProperty('--z', MOBILE.matches ? 1 : (document.documentElement.clientWidth / DESIGN_WIDTH).toFixed(4));
-}
 
 const heroTitle = document.querySelector('.ttl-portfolio');
 function fitHero() {
   if (!heroTitle) return;
   heroTitle.style.removeProperty('--fit');
   if (MOBILE.matches) return;
-  const room = DESIGN_WIDTH - 45 - 20, w = heroTitle.scrollWidth;
+  const room = (DESIGN_WIDTH - 45 - 20) * K, w = heroTitle.scrollWidth;
   if (w > room) heroTitle.style.setProperty('--fit', (room / w).toFixed(3));
 }
 fit();
@@ -87,8 +75,8 @@ const ramp = (t, a, b) => { const x = Math.max(0, Math.min(1, (t - a) / (b - a))
 let skyQueued = false;
 function moveSky() {
   skyQueued = false;
-  const z = parseFloat(stage.style.zoom) || 1, vh = innerHeight / z;
-  stage.style.setProperty('--pin-top', (vh - (PIN_BOTTOM - PIN_TOP)).toFixed(1) + 'px');
+  const z = K, vh = innerHeight / z;
+  stage.style.setProperty('--pin-top', ((vh - (PIN_BOTTOM - PIN_TOP)) * z).toFixed(1) + 'px');
   if (MOBILE.matches) {
     for (const el of [about, puff]) { el.style.transform = el.style.opacity = el.style.visibility = ''; }
     about.style.setProperty('--sink', reduceMotion.matches ? 0 : ramp(scrollY / (innerHeight * .7), 0, 1).toFixed(3));
@@ -102,21 +90,21 @@ function moveSky() {
   const t = Math.max(0, Math.min(1, (-stage.getBoundingClientRect().top / z - (PIN_BOTTOM - vh - LEAD)) / (HOLD + LEAD)));
   const fade = ramp(t, .3, .58), part = ramp(t, .3, .65), glide = ramp(t, .35, .7), sink = ramp(t, .62, 1);
   about.style.opacity = fade ? (1 - fade).toFixed(3) : '';
-  about.style.transform = !reduceMotion.matches && t ? `translateY(${(-260 * ramp(t, 0, .58)).toFixed(1)}px)` : '';
+  about.style.transform = !reduceMotion.matches && t ? `translateY(${(-260 * ramp(t, 0, .58) * z).toFixed(1)}px)` : '';
   about.style.visibility = fade >= 1 ? 'hidden' : '';
   if (qmark) qmark.style.opacity = t > .3 ? (1 - ramp(t, .3, .42)).toFixed(3) : '';
   const move = !reduceMotion.matches;
-  const cx = 420 * part, cy = -200 * part;
+  const cx = 420 * part * z, cy = -200 * part * z;
   cloudsL.style.transform = move && part ? `translate(${-cx}px, ${cy}px)` : '';
   cloudsR.style.transform = move && part ? `translate(${cx}px, ${cy}px)` : '';
   cloudsL.style.opacity = cloudsR.style.opacity = part ? (1 - part).toFixed(3) : '';
   const g = move ? glide : 0, dy = 180 * g + (move ? 500 * sink : 0);
-  puff.style.transform = g ? `translate(${((720 - PUFF_CX) * g).toFixed(1)}px, ${dy.toFixed(1)}px) scale(${(1 - .2 * g).toFixed(3)})` : '';
+  puff.style.transform = g ? `translate(${((720 - PUFF_CX) * g * z).toFixed(1)}px, ${(dy * z).toFixed(1)}px) scale(${(1 - .2 * g).toFixed(3)})` : '';
   const gone = move ? dy / 680 : ramp(t, .85, 1);
   puff.style.opacity = gone ? (1 - gone).toFixed(3) : '';
   if (fog) {
     const end = (PIN_BOTTOM - PIN_TOP) - vh * 1.05, k = ramp(t, .42, 1);
-    fog.style.transform = `translateY(${(1500 - (1500 - end) * k).toFixed(1)}px)`;
+    fog.style.transform = `translateY(${((1500 - (1500 - end) * k) * z).toFixed(1)}px)`;
   }
 }
 if (about && puff && cloudsL && cloudsR) {
@@ -157,7 +145,7 @@ MOBILE.addEventListener('change', placeOcean);
 if (fishSwimmer) {
   const calm = matchMedia('(prefers-reduced-motion: reduce)').matches;
   let START = -380, END = 1500, SLOW = 70, FAST = 620;
-  const sizeSea = () => { [START, END, SLOW, FAST] = MOBILE.matches ? [-160, stage.offsetWidth + 30, 38, 340] : [-380, 1500, 70, 620]; };
+  const sizeSea = () => { [START, END, SLOW, FAST] = MOBILE.matches ? [-160, stage.offsetWidth / K + 30, 38, 340] : [-380, 1500, 70, 620]; };
   sizeSea(); addEventListener('resize', sizeSea);
   let x = 420, y = 0, vy = 0, speed = SLOW, last = performance.now(), px = -1e4, py = -1e4;
   addEventListener('pointermove', (e) => { px = e.clientX; py = e.clientY; }, { passive: true });
@@ -166,7 +154,7 @@ if (fishSwimmer) {
     const dt = Math.min(.05, (now - last) / 1000); last = now;
     const r = fishSwimmer.getBoundingClientRect();
     if (r.bottom > -100 && r.top < innerHeight + 100 && !calm) {
-      const z = parseFloat(stage.style.zoom) || 1;
+      const z = K;
       const cx = r.left + r.width / 2, cy = r.top + r.height / 2;
       const d = Math.hypot(px - cx, py - cy) / z;
       const scared = d < (MOBILE.matches ? 120 : 260);
@@ -176,14 +164,14 @@ if (fishSwimmer) {
       y += vy * dt;
       x += speed * dt;
       if (x > END) { x = START; y = vy = 0; }
-      fishSwimmer.style.setProperty('--fx', `${x.toFixed(1)}px`);
-      fishSwimmer.style.setProperty('--fy', `${y.toFixed(1)}px`);
+      fishSwimmer.style.setProperty('--fx', `${(x * z).toFixed(1)}px`);
+      fishSwimmer.style.setProperty('--fy', `${(y * z).toFixed(1)}px`);
       const beat = speed > 300 ? '.22s' : '.7s';
       if (beat !== fishSwimmer.dataset.beat) { fishSwimmer.dataset.beat = beat; fishSwimmer.style.setProperty('--beat', beat); }
     }
     requestAnimationFrame(swim);
   }
-  if (calm) fishSwimmer.style.setProperty('--fx', MOBILE.matches ? '40px' : '560px');
+  if (calm) fishSwimmer.style.setProperty('--fx', (MOBILE.matches ? 40 : 560) * K + 'px');
   requestAnimationFrame(swim);
 }
 
@@ -197,7 +185,7 @@ function toneNav() {
   navQueued = false;
   const r = siteNav.getBoundingClientRect(), y = r.top + r.height / 2;
   const art = sunsetArt.getBoundingClientRect();
-  const z = MOBILE.matches ? 1 : parseFloat(stage.style.zoom) || 1;
+  const z = MOBILE.matches ? 1 : K;
   siteNav.classList.toggle('site-nav--light', work.getBoundingClientRect().top - 620 * z <= y && art.top + art.height * .64 > y);
   let cur = -1;
   navSections.forEach((el, i) => { if (el && el.getBoundingClientRect().top <= innerHeight * .4) cur = i; });
