@@ -30,8 +30,18 @@ function updateTopbar() {
   if (siteNav) siteNav.style.setProperty('--z', MOBILE.matches ? 1 : (document.documentElement.clientWidth / DESIGN_WIDTH).toFixed(4));
 }
 
+const heroTitle = document.querySelector('.ttl-portfolio');
+function fitHero() {
+  if (!heroTitle) return;
+  heroTitle.style.removeProperty('--fit');
+  if (MOBILE.matches) return;
+  const room = DESIGN_WIDTH - 45 - 20, w = heroTitle.scrollWidth;
+  if (w > room) heroTitle.style.setProperty('--fit', (room / w).toFixed(3));
+}
 fit();
-window.addEventListener('resize', fit);
+fitHero();
+window.addEventListener('resize', () => { fit(); fitHero(); });
+if (document.fonts) document.fonts.ready.then(fitHero);
 
 const sparkle = document.getElementById('sparkle');
 if (sparkle && matchMedia('(hover: hover) and (pointer: fine)').matches) {

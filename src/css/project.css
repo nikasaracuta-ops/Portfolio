@@ -242,6 +242,8 @@ button.phone { cursor: zoom-in; }
 }
 @media (max-width: 860px) {
   .d-intro { grid-template-columns: 1fr; }
+  .d-intro-text { display: contents; }
+  .d-title { order: 1; } .d-sub { order: 2; } .d-devices { order: 3; } .d-spec { order: 4; }
   .d-devices { margin-top: 36px; }
   .d-style { grid-template-columns: 1fr; }
 }

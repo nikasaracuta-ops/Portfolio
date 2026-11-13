@@ -174,7 +174,7 @@
 
     function flight() {
       const phone = PHONE.matches;
-      if (phone && dropIdx < 0) dropIdx = Math.max(0, middleCard());
+      if (phone && drop.hidden) dropIdx = Math.max(0, middleCard());
       const src = phone ? cards[dropIdx] : last, P = phone ? PROJECTS[dropIdx] : LAST;
       const home = src.parentElement;
       const z = home.getBoundingClientRect(), a = art.getBoundingClientRect(), k = a.width / 1440, g = glass();
