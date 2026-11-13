@@ -59,7 +59,10 @@ if (sparkle && matchMedia('(hover: hover) and (pointer: fine)').matches) {
     if (e.pointerType !== 'mouse') return;
     x = e.clientX; y = e.clientY;
     if (!sparkle.classList.contains('show')) { sx = x; sy = y; sparkle.classList.add('show'); }
-    sparkle.classList.toggle('big', !!e.target.closest(CLICKABLE));
+    const card = e.target.closest('#workList .work-card');
+    sparkle.classList.toggle('sparkle--view', !!card);
+    sparkle.style.setProperty('--view', card ? getComputedStyle(card).getPropertyValue('--tab') : '');
+    sparkle.classList.toggle('big', !card && !!e.target.closest(CLICKABLE));
     if (!raf) raf = requestAnimationFrame(move);
   }, { passive: true });
   document.addEventListener('pointerleave', () => sparkle.classList.remove('show'));

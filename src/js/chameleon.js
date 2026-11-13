@@ -46,14 +46,6 @@
     b.innerHTML = `<span class="work-card__window"><span class="work-card__thumb"><img src="${p.img}" alt="" loading="lazy" decoding="async"></span>${tabSvg(i)}<span class="work-card__cta" aria-hidden="true"><svg class="work-card__ring" viewBox="0 0 120 120"><defs><path id="ctaRing${i}" d="M60 60m-42 0a42 42 0 1 1 84 0a42 42 0 1 1-84 0"/></defs><text><textPath href="#ctaRing${i}" textLength="262">VIEW PROJECT • VIEW PROJECT •</textPath></text></svg><svg class="work-card__arrow" viewBox="0 0 24 24"><path d="M7 17 17 7M9 7h8v8"/></svg></span></span>`;
     b.addEventListener('click', () => window.goTo(p.page));
     b.addEventListener('mouseenter', () => activate(i));
-    b.addEventListener('pointermove', (e) => {
-      if (e.pointerType !== 'mouse') return;
-      const r = b.querySelector('.work-card__window').getBoundingClientRect(), z = r.width / b.querySelector('.work-card__window').offsetWidth;
-      b.style.setProperty('--mx', ((e.clientX - r.left) / z).toFixed(1) + 'px');
-      b.style.setProperty('--my', ((e.clientY - r.top) / z).toFixed(1) + 'px');
-      document.documentElement.classList.add('cta-on');
-    });
-    b.addEventListener('pointerleave', () => document.documentElement.classList.remove('cta-on'));
     b.addEventListener('focus', () => activate(i));
     li.appendChild(b); list.appendChild(li);
     return b;
